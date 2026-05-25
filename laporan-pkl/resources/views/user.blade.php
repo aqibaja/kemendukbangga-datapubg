@@ -182,7 +182,7 @@
                                     </td>
                                     @if ($authUser->id_role == 1)
                                         <td class="p-2 sm:p-3">
-                                            {{ $page->user->name ?? '-' }}
+                                            {{ $page->creator->nama ?? '-' }}
                                         </td>
                                     @endif
                                     <td class="p-2 sm:p-3 text-center">
@@ -194,6 +194,74 @@
                                             </button>
                                             <button onclick="deletePage({{ $page->id }})"
                                                 class="text-red-600 hover:underline text-xs sm:text-sm">Hapus</button>
+                                        </div>
+                                    </td>
+                                </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- ================= LAPORAN CAPAIAN TABLE ================= -->
+            <div class="bg-white rounded-2xl sm:rounded-3xl shadow-lg p-4 sm:p-6">
+
+                <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-6">
+                    <div>
+                        <h2 class="text-xl sm:text-2xl font-bold text-gray-800">Data Laporan Capaian</h2>
+                        <p class="text-xs sm:text-sm text-gray-500">Kelola data laporan capaian bulanan</p>
+                    </div>
+
+                    <a href="/laporan-capaian/input"
+                        class="w-full sm:w-auto px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition text-sm sm:text-base text-center">
+                        + Tambah Laporan
+                    </a>
+                </div>
+
+                <!-- Search Bar -->
+                <div class="mb-4">
+                    <input type="text" id="searchLaporan" onkeyup="searchTable('searchLaporan', 'laporanTableBody')"
+                        placeholder="Cari laporan..."
+                        class="w-full px-3 sm:px-4 py-2 text-sm sm:text-base border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+                </div>
+
+                <div class="overflow-x-auto max-h-[400px] overflow-y-auto border rounded-lg">
+                    <table class="w-full text-xs sm:text-sm text-left border-collapse min-w-[700px]">
+                        <thead class="bg-gray-100 sticky top-0 text-slate-800">
+                            <tr>
+                                <th class="p-2 sm:p-3 font-semibold border-b">No</th>
+                                <th class="p-2 sm:p-3 font-semibold border-b">Tipe Laporan</th>
+                                <th class="p-2 sm:p-3 font-semibold border-b">Judul Laporan</th>
+                                <th class="p-2 sm:p-3 font-semibold border-b">Bulan</th>
+                                <th class="p-2 sm:p-3 font-semibold border-b">Tahun</th>
+                                @if ($authUser->id_role == 1)
+                                    <th class="p-2 sm:p-3 font-semibold border-b">Dibuat Oleh</th>
+                                @endif
+                                <th class="p-2 sm:p-3 font-semibold border-b text-center">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody id="laporanTableBody">
+                            @foreach ($laporanCapaian as $laporan)
+                                <tr class="border-b hover:bg-gray-50 transition text-slate-700" data-laporan-id="{{ $laporan->id }}">
+                                    <td class="p-2 sm:p-3">{{ $loop->iteration }}</td>
+                                    <td class="p-2 sm:p-3 font-semibold text-blue-700">
+                                        {{ \App\Models\LaporanCapaian::labelTipe($laporan->tipe) }}
+                                    </td>
+                                    <td class="p-2 sm:p-3 font-medium text-gray-800">{{ $laporan->judul }}</td>
+                                    <td class="p-2 sm:p-3">{{ \App\Models\LaporanCapaian::namaBulan($laporan->bulan) }}</td>
+                                    <td class="p-2 sm:p-3 font-medium">{{ $laporan->tahun }}</td>
+                                    @if ($authUser->id_role == 1)
+                                        <td class="p-2 sm:p-3">
+                                            {{ $laporan->creator->nama ?? '-' }}
+                                        </td>
+                                    @endif
+                                    <td class="p-2 sm:p-3 text-center">
+                                        <div class="flex flex-col sm:flex-row gap-1 sm:gap-2 justify-center">
+                                            <a href="{{ route('laporan-capaian.edit', $laporan->id) }}" class="px-2 sm:px-3 py-1 bg-blue-500 text-white rounded text-xs whitespace-nowrap text-center">
+                                                Edit
+                                            </a>
+                                            <button onclick="deleteLaporan({{ $laporan->id }})"
+                                                class="px-2 sm:px-3 py-1 bg-red-500 text-white rounded text-xs whitespace-nowrap">Hapus</button>
                                         </div>
                                     </td>
                                 </tr>
@@ -624,6 +692,32 @@
                         .catch(err => {
                             console.error(err);
                             alert('Terjadi kesalahan saat menghapus halaman');
+                        });
+                }
+
+                // Delete Laporan Capaian
+                function deleteLaporan(id) {
+                    if (!confirm('Apakah Anda yakin ingin menghapus laporan ini?')) return;
+
+                    fetch(`/laporan-capaian/${id}`, {
+                            method: 'DELETE',
+                            headers: {
+                                'X-CSRF-TOKEN': '{{ csrf_token() }}',
+                                'Accept': 'application/json'
+                            }
+                        })
+                        .then(res => {
+                            if (!res.ok) throw new Error('Gagal menghapus laporan');
+                            return res.json();
+                        })
+                        .then(data => {
+                            const row = document.querySelector(`#laporanTableBody tr[data-laporan-id="${id}"]`);
+                            if (row) row.remove();
+                            alert('Laporan berhasil dihapus!');
+                        })
+                        .catch(err => {
+                            console.error(err);
+                            alert('Terjadi kesalahan saat menghapus laporan');
                         });
                 }
 

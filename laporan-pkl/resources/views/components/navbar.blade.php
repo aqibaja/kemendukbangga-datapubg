@@ -33,6 +33,9 @@
         <x-nav-link href="/zoomdesk" class="flex items-center px-3 py-2 rounded-md hover:bg-black/10 transition">
             <i class="fa-solid fa-desktop text-2xl"></i>
         </x-nav-link>
+        <x-nav-link href="/laporan-capaian" :active="request()->is('laporan-capaian')" class="flex items-center px-3 py-2 rounded-md hover:bg-black/10 transition" title="Laporan Capaian">
+            <i class="fa-solid fa-chart-line text-2xl"></i>
+        </x-nav-link>
         @auth
             <x-nav-link href="/user" :active="request()->is('user')">
                 <i class="fa-solid fa-gear text-2xl"></i>
@@ -158,6 +161,9 @@
         <x-nav-link href="/datas"><i class="fa-solid fa-database text-2xl"></i></x-nav-link>
         <x-nav-link href="/zoomdesk" :active="request()->is('zoomdesk')">
             <i class="fa-solid fa-desktop text-2xl"></i>
+        </x-nav-link>
+        <x-nav-link href="/laporan-capaian" :active="request()->is('laporan-capaian')">
+            <i class="fa-solid fa-chart-line text-2xl"></i>
         </x-nav-link>
         @auth
             <x-nav-link href="/user"><i class="fa-solid fa-gear text-2xl"></i></x-nav-link>

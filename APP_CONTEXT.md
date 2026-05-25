@@ -561,3 +561,46 @@ composer setup  # install, env, key:generate, migrate, npm install, npm run buil
 ---
 
 *Dokumen ini di-generate otomatis berdasarkan analisis source code pada 20 Mei 2026.*
+
+---
+
+## 21. Fitur Baru: Laporan Capaian (Mei 2026)
+
+### Overview
+Halaman `/laporan-capaian` menampilkan data capaian program BKKBN Aceh dalam bentuk **poster/flayer interaktif** yang bisa di-download sebagai PNG atau PDF.
+
+### 3 Tipe Dashboard
+| Tab | Tipe | Route View |
+|-----|------|------------|
+| Pengendalian Lapangan | `pengendalian_lapangan` | 6 program (BKB, BKR, BKL, PIK-R, UPPKA, PPKS) |
+| Capaian Program | `capaian_program` | Fasyankes, Stock Opname, KB Baru, KB Aktif, mCPR/Unmet Need |
+| ELSIMIL | `elsimil` | Trend Catin & Bumil Jan-Apr (line chart) |
+
+### Tech Stack (View)
+- **html2canvas** — render DOM ke canvas untuk PNG/PDF download
+- **jsPDF** — generate PDF A4 dari canvas
+- **Chart.js** — line chart untuk ELSIMIL
+- **TailwindCSS CDN** + **Font Awesome 7** + **Google Fonts Inter**
+- **SVG circular gauges** — persentase di semua metric cards
+
+### Color System (Logogram BKKBN)
+- **Header**: `teal-600 → blue-800 → blue-500 → amber-500 → amber-700` (diagonal 135deg)
+- **Content bg**: `sky-100 → sky-200 → amber-100 → amber-200` (vertical soft blend)
+- **Capaian Program**: dark section `#0f172a → #1e293b` + gold accent
+- **Program cards**: unique colors: teal, cyan, indigo, orange, pink, lime
+- **Footer**: `emerald-950 → blue-dark`
+
+### File Terkait
+| File | Peran |
+|------|-------|
+| `resources/views/laporan-capaian.blade.php` | View utama (~345 lines) — 3 tab, download buttons, Chart.js |
+| `app/Http/Controllers/LaporanCapaianController.php` | Controller — store/update/destroy/edit, 3 assembler methods |
+| `app/Models/LaporanCapaian.php` | Model — casts data→array, helper `namaBulan()`, `labelTipe()` |
+| `database/migrations/2026_05_20_150000_create_laporan_capaian_table.php` | Migration |
+| `database/seeders/LaporanCapaianSeeder.php` | Seeder — data April 2026 asli |
+| `tests/Feature/LaporanCapaianTest.php` | 5 test cases |
+
+### Cara Download
+- Tombol **🖼️ PNG** & **📄 PDF** di kanan bawah
+- Download **per tab** (tidak gabung): `laporan-pengendalian-lapangan-...`, `laporan-capaian-program-...`, `laporan-elsimil-...`
+- PDF single page, no split

@@ -8,6 +8,7 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use App\Models\DashboardPage;
 use App\Models\DashboardView;
+use App\Models\LaporanCapaian;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -16,6 +17,7 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\ContactController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\DashboardPageController;
+use App\Http\Controllers\LaporanCapaianController;
 
 Route::get('/', function (Request $request) {
     $dashboardPages = DashboardPage::withCount('views')->orderByDesc('views_count')->take(3)->get();
@@ -38,7 +40,7 @@ Route::get('/', function (Request $request) {
         ->get();
 
     $viewsPerMonth = DB::table('dashboard_views')
-        ->selectRaw('MONTH(created_at) as month, COUNT(*) as total')
+        ->selectRaw("strftime('%m', created_at) as month, COUNT(*) as total")
         ->whereYear('created_at', $selectedYear)
         ->groupBy('month')
         ->orderBy('month')
@@ -113,12 +115,18 @@ Route::get('/user', function () {
     // Ambil presentation links untuk admin
     $presentationLinks = $authUser->id_role == 1 ? \App\Models\PresentationLink::all() : collect();
 
+    // Ambil laporan capaian
+    $laporanCapaian = $authUser->id_role == 1
+        ? LaporanCapaian::latest()->get()
+        : LaporanCapaian::where('dibuat_oleh', $authUser->id)->latest()->get();
+
     return view('user', [
         'title' => 'User',
         'pages' => $pages,
         'users' => $users,
         'authUser' => $authUser,
-        'presentationLinks' => $presentationLinks
+        'presentationLinks' => $presentationLinks,
+        'laporanCapaian' => $laporanCapaian,
     ]);
 });
 
@@ -165,3 +173,44 @@ Route::get('/login', function () {
 Route::post('/login', [AuthController::class, 'login'])->name('login.process');
 
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
+
+// ======= LAPORAN CAPAIAN =======
+Route::get('/laporan-capaian', function (Request $request) {
+    $bulan = $request->get('bulan', now()->month);
+    $tahun = $request->get('tahun', now()->year);
+
+    $laporans = LaporanCapaian::where('bulan', $bulan)
+        ->where('tahun', $tahun)
+        ->get()
+        ->keyBy('tipe');
+
+    $availableMonths = LaporanCapaian::selectRaw('DISTINCT bulan, tahun')
+        ->orderByDesc('tahun')
+        ->orderByDesc('bulan')
+        ->get();
+
+    return view('laporan-capaian', [
+        'title'           => 'Laporan Capaian',
+        'laporans'        => $laporans,
+        'bulan'           => (int) $bulan,
+        'tahun'           => (int) $tahun,
+        'availableMonths' => $availableMonths,
+    ]);
+});
+
+Route::middleware(['auth'])->group(function () {
+    Route::get('/laporan-capaian/input', function () {
+        if (!Auth::check()) abort(404);
+        return view('laporan-capaian-input', [
+            'title'    => 'Input Laporan Capaian',
+            'laporan'  => null,
+            'editMode' => false,
+        ]);
+    });
+
+    Route::get('/laporan-capaian/edit/{id}', [LaporanCapaianController::class, 'edit'])->name('laporan-capaian.edit');
+    Route::post('/laporan-capaian/store', [LaporanCapaianController::class, 'store'])->name('laporan-capaian.store');
+    Route::post('/laporan-capaian/{id}/update', [LaporanCapaianController::class, 'update'])->name('laporan-capaian.update');
+    Route::delete('/laporan-capaian/{id}', [LaporanCapaianController::class, 'destroy'])->name('laporan-capaian.destroy');
+});
+

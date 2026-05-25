@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Laporan Capaian BKKBN Aceh</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        body { 
+            font-family: 'Montserrat', sans-serif; 
+            background: radial-gradient(circle at 50% 30%, #2dd4bf 0%, #0f766e 40%, #854d0e 90%, #451a03 100%);
+            background-attachment: fixed;
+        }
+
+        .text-gold {
+            background: linear-gradient(to bottom, #fef08a 0%, #eab308 50%, #a16207 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            filter: drop-shadow(0px 2px 2px rgba(0,0,0,0.6));
+        }
+        .text-neon-yellow {
+            color: #fde047;
+            text-shadow: 0 0 5px rgba(253, 224, 71, 0.5);
+        }
+
+        .gold-wrap {
+            background: linear-gradient(135deg, #fef08a 0%, #b45309 25%, #fef08a 50%, #713f12 75%, #fde047 100%);
+            padding: 3px; 
+            box-shadow: 0 10px 25px rgba(0,0,0,0.5), inset 0 0 5px rgba(255,255,255,0.5);
+        }
+        .dark-inner {
+            background: linear-gradient(to bottom, #064e3b, #022c22);
+            box-shadow: inset 0 0 20px rgba(0,0,0,0.8);
+        }
+
+        .badge-shape {
+            clip-path: polygon(10px 0, calc(100% - 10px) 0, 100% 10px, 100% calc(100% - 15px), 50% 100%, 0 calc(100% - 15px), 0 10px);
+            padding-bottom: 2rem;
+        }
+
+        .number-orb {
+            background: radial-gradient(circle at top left, #fef08a, #a16207);
+            border: 2px solid white;
+            box-shadow: 2px 2px 5px rgba(0,0,0,0.5);
+        }
+
+        .percent-orb {
+            background: radial-gradient(circle at center, #064e3b, #022c22);
+            border: 3px solid #eab308;
+            box-shadow: 0 5px 10px rgba(0,0,0,0.6), inset 0 0 10px rgba(234, 179, 8, 0.4);
+        }
+
+        /* Utility table untuk menyejajarkan titik dua / sama dengan */
+        .data-table { width: 100%; }
+        .data-table td { vertical-align: top; padding-top: 2px; padding-bottom: 2px; }
+        .data-table .label { text-align: left; }
+        .data-table .separator { width: 15px; text-align: center; }
+        .data-table .value { text-align: right; }
+    </style>
+</head>
+<body class="min-h-screen text-white relative pb-24 overflow-x-hidden">
+
+    <div class="max-w-5xl mx-auto px-4 pt-8 relative z-10">
+        
+        <!-- HEADER -->
+        <div class="flex justify-center items-center gap-3 mb-6">
+            <div class="w-12 h-12 bg-white/10 backdrop-blur-sm rounded-lg flex items-center justify-center p-1 border border-white/30">
+                <i class="fa-solid fa-users text-2xl text-blue-200"></i>
+            </div>
+            <div class="text-xs md:text-sm font-semibold text-left text-white/90 leading-tight">
+                Kementerian Kependudukan dan<br>
+                Pembangunan Keluarga/BKKBN<br>
+                Perwakilan BKKBN Provinsi Aceh
+            </div>
+        </div>
+
+        <!-- JUDUL -->
+        <div class="text-center mb-14 text-center flex flex-col items-center">
+            <h1 class="text-3xl md:text-4xl font-black tracking-wide uppercase drop-shadow-xl text-white mb-2 leading-tight">
+                LAPORAN CAPAIAN PROGRAM<br>
+                KEMENDUKBANGGA (BKKBN) PROV ACEH
+            </h1>
+            <h2 class="text-2xl md:text-3xl font-black uppercase text-gold inline-block mt-1">
+                APRIL TAHUN 2026
+            </h2>
+        </div>
+
+        <!-- SECTION 1: 5 BADGE FASKES -->
+        <div class="grid grid-cols-2 md:grid-cols-5 gap-4 mb-16">
+            <!-- Badge 1 -->
+            <div class="relative mt-4">
+                <div class="absolute -top-3 -left-2 w-8 h-8 rounded-full number-orb text-white font-black flex items-center justify-center z-20 text-sm">1</div>
+                <div class="gold-wrap rounded-xl badge-shape h-full relative">
+                    <div class="dark-inner h-full flex flex-col items-center p-3">
+                        <i class="fa-solid fa-building text-3xl text-blue-300 drop-shadow-md mb-2"></i>
+                        <h3 class="font-bold text-red-600 bg-white px-2 py-0.5 rounded text-[11px] mb-2 uppercase w-full text-center tracking-wide">Pemerintah</h3>
+                        <!-- Menggunakan tabel agar titik dua rata -->
+                        <table class="data-table text-[11px] font-bold text-gray-200 mt-1">
+                            <tr><td class="label">ADA</td><td class="separator">:</td><td class="value">451</td></tr>
+                            <tr><td class="label">LAPOR</td><td class="separator">:</td><td class="value">443</td></tr>
+                        </table>
+                    </div>
+                </div>
+                <!-- whitespace-nowrap agar teks % tidak turun -->
+                <div class="absolute -bottom-6 left-1/2 transform -translate-x-1/2 w-[70px] h-[70px] rounded-full percent-orb flex items-center justify-center z-20 whitespace-nowrap">
+                    <span class="text-xs font-black text-white">% 98.23</span>
+                </div>
+            </div>
+
+            <!-- Badge 2 -->
+            <div class="relative mt-4">
+                <div class="absolute -top-3 -left-2 w-8 h-8 rounded-full number-orb text-white font-black flex items-center justify-center z-20 text-sm">2</div>
+                <div class="gold-wrap rounded-xl badge-shape h-full relative">
+                    <div class="dark-inner h-full flex flex-col items-center p-3">
+                        <i class="fa-solid fa-network-wired text-3xl text-purple-300 drop-shadow-md mb-2"></i>
+                        <h3 class="font-bold text-red-600 bg-white px-2 py-0.5 rounded text-[11px] mb-2 uppercase w-full text-center tracking-wide">Jaringan</h3>
+                        <table class="data-table text-[11px] font-bold text-gray-200 mt-1">
+                            <tr><td class="label">ADA</td><td class="separator">:</td><td class="value">1.779</td></tr>
+                            <tr><td class="label">LAPOR</td><td class="separator">:</td><td class="value">1.704</td></tr>
+                        </table>
+                    </div>
+                </div>
+                <div class="absolute -bottom-6 left-1/2 transform -translate-x-1/2 w-[70px] h-[70px] rounded-full percent-orb flex items-center justify-center z-20 whitespace-nowrap">
+                    <span class="text-xs font-black text-white">% 99.13</span>
+                </div>
+            </div>
+
+            <!-- Badge 3 -->
+            <div class="relative mt-4">
+                <div class="absolute -top-3 -left-2 w-8 h-8 rounded-full number-orb text-white font-black flex items-center justify-center z-20 text-sm">3</div>
+                <div class="gold-wrap rounded-xl badge-shape h-full relative">
+                    <div class="dark-inner h-full flex flex-col items-center p-3">
+                        <i class="fa-solid fa-hospital text-3xl text-red-300 drop-shadow-md mb-2"></i>
+                        <h3 class="font-bold text-red-600 bg-white px-2 py-0.5 rounded text-[11px] mb-2 uppercase w-full text-center tracking-wide">Swasta</h3>
+                        <table class="data-table text-[11px] font-bold text-gray-200 mt-1">
+                            <tr><td class="label">ADA</td><td class="separator">:</td><td class="value">104</td></tr>
+                            <tr><td class="label">LAPOR</td><td class="separator">:</td><td class="value">102</td></tr>
+                        </table>
+                    </div>
+                </div>
+                <div class="absolute -bottom-6 left-1/2 transform -translate-x-1/2 w-[70px] h-[70px] rounded-full percent-orb flex items-center justify-center z-20 whitespace-nowrap">
+                    <span class="text-xs font-black text-white">% 98.06</span>
+                </div>
+            </div>
+
+            <!-- Badge 4 -->
+            <div class="relative mt-4">
+                <div class="absolute -top-3 -left-2 w-8 h-8 rounded-full number-orb text-white font-black flex items-center justify-center z-20 text-sm">4</div>
+                <div class="gold-wrap rounded-xl badge-shape h-full relative">
+                    <div class="dark-inner h-full flex flex-col items-center p-3">
+                        <i class="fa-solid fa-user-nurse text-3xl text-orange-300 drop-shadow-md mb-2"></i>
+                        <h3 class="font-bold text-red-600 bg-white px-2 py-0.5 rounded text-[11px] mb-2 uppercase w-full text-center tracking-wide">PMB Setara</h3>
+                        <table class="data-table text-[11px] font-bold text-gray-200 mt-1">
+                            <tr><td class="label">ADA</td><td class="separator">:</td><td class="value">131</td></tr>
+                            <tr><td class="label">LAPOR</td><td class="separator">:</td><td class="value">137</td></tr>
+                        </table>
+                    </div>
+                </div>
+                <div class="absolute -bottom-6 left-1/2 transform -translate-x-1/2 w-[70px] h-[70px] rounded-full percent-orb flex items-center justify-center z-20 whitespace-nowrap">
+                    <span class="text-xs font-black text-white">% 96.95</span>
+                </div>
+            </div>
+
+            <!-- Badge 5 -->
+            <div class="relative mt-4 col-span-2 md:col-span-1 max-w-[200px] mx-auto w-full">
+                <div class="absolute -top-3 -left-2 w-8 h-8 rounded-full number-orb text-white font-black flex items-center justify-center z-20 text-sm">5</div>
+                <div class="gold-wrap rounded-xl badge-shape h-full relative">
+                    <div class="dark-inner h-full flex flex-col items-center p-3">
+                        <i class="fa-solid fa-hands-holding-child text-3xl text-green-300 drop-shadow-md mb-2"></i>
+                        <h3 class="font-bold text-red-600 bg-white px-1 py-0.5 rounded text-[10px] mb-2 uppercase w-full text-center tracking-tighter">PMB Jejaring</h3>
+                        <table class="data-table text-[11px] font-bold text-gray-200 mt-1">
+                            <tr><td class="label">ADA</td><td class="separator">:</td><td class="value">230</td></tr>
+                            <tr><td class="label">LAPOR</td><td class="separator">:</td><td class="value">219</td></tr>
+                        </table>
+                    </div>
+                </div>
+                <div class="absolute -bottom-6 left-1/2 transform -translate-x-1/2 w-[70px] h-[70px] rounded-full percent-orb flex items-center justify-center z-20 whitespace-nowrap">
+                    <span class="text-xs font-black text-white">% 95.22</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- SECTION: STOCK OPNAME SIRIKA -->
+        <div class="relative mb-14 mt-12 flex justify-center">
+            <div class="absolute -top-5 z-20 bg-[#064e3b] border-2 border-[#facc15] rounded-full px-8 py-1.5 shadow-lg shadow-black/50 text-center whitespace-nowrap">
+                <h2 class="font-bold text-neon-yellow text-lg uppercase tracking-wide">STOCK OPNAME SIRIKA</h2>
+            </div>
+            
+            <div class="gold-wrap rounded-2xl w-full">
+                <div class="dark-inner rounded-[12px] p-6 pt-10 grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <!-- A -->
+                    <div>
+                        <div class="flex items-center mb-3 border-b border-white/20 pb-2">
+                            <div class="w-6 h-6 rounded-full bg-white text-black font-bold flex items-center justify-center mr-2 text-sm shrink-0">a</div>
+                            <h4 class="font-bold text-yellow-300 text-sm md:text-base whitespace-nowrap">a. Gudang Provinsi</h4>
+                        </div>
+                        <div class="pl-8">
+                            <table class="data-table text-[13px] text-gray-200">
+                                <tr><td class="label">- ada</td><td class="separator">=</td><td class="value">1</td></tr>
+                                <tr><td class="label">- laporan</td><td class="separator">=</td><td class="value">1</td></tr>
+                                <tr class="font-bold text-neon-yellow"><td class="label">- persentase</td><td class="separator">=</td><td class="value">100%</td></tr>
+                            </table>
+                        </div>
+                    </div>
+                    <!-- B -->
+                    <div>
+                        <div class="flex items-center mb-3 border-b border-white/20 pb-2">
+                            <div class="w-6 h-6 rounded-full bg-white text-black font-bold flex items-center justify-center mr-2 text-sm shrink-0">b</div>
+                            <h4 class="font-bold text-yellow-300 text-sm md:text-base whitespace-nowrap">b. Gudang Kab/Kota</h4>
+                        </div>
+                        <div class="pl-8">
+                            <table class="data-table text-[13px] text-gray-200">
+                                <tr><td class="label">- ada</td><td class="separator">=</td><td class="value">23</td></tr>
+                                <tr><td class="label">- laporan</td><td class="separator">=</td><td class="value">23</td></tr>
+                                <tr class="font-bold text-neon-yellow"><td class="label">- persentase</td><td class="separator">=</td><td class="value">100%</td></tr>
+                            </table>
+                        </div>
+                    </div>
+                    <!-- C -->
+                    <div>
+                        <div class="flex items-center mb-3 border-b border-white/20 pb-2">
+                            <div class="w-6 h-6 rounded-full bg-white text-black font-bold flex items-center justify-center mr-2 text-sm shrink-0">c</div>
+                            <h4 class="font-bold text-yellow-300 text-sm md:text-base whitespace-nowrap">c. Gudang Fasyankes</h4>
+                        </div>
+                        <div class="pl-8">
+                            <table class="data-table text-[13px] text-gray-200">
+                                <tr><td class="label">- ada</td><td class="separator">=</td><td class="value">651</td></tr>
+                                <tr><td class="label">- laporan</td><td class="separator">=</td><td class="value">557</td></tr>
+                                <tr class="font-bold text-neon-yellow"><td class="label">- persentase</td><td class="separator">=</td><td class="value">85.56%</td></tr>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- SECTION: KB BARU -->
+        <div class="relative mb-14 mt-12 flex justify-center">
+            <div class="absolute -top-5 z-20 bg-white border border-gray-300 rounded-full px-8 py-1.5 shadow-lg shadow-black/50 text-center whitespace-nowrap">
+                <h2 class="font-bold text-teal-900 text-lg uppercase tracking-wide">CAPAIAN PESERTA KB BARU</h2>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-4 w-full pt-4">
+                <div class="gold-wrap rounded-xl"><div class="dark-inner rounded-lg p-4 h-full flex flex-col justify-center">
+                    <h4 class="font-bold text-center text-neon-yellow text-sm mb-4">Peserta KB Baru (PB)</h4>
+                    <table class="data-table text-xs text-gray-200 mt-auto">
+                        <tr><td class="label">PPM</td><td class="separator">=</td><td class="value">101.342</td></tr>
+                        <tr><td class="label">Capaian</td><td class="separator">=</td><td class="value">22.945</td></tr>
+                        <tr class="font-bold text-white"><td class="label">Persentase</td><td class="separator text-neon-yellow">=</td><td class="value text-neon-yellow">22.64%</td></tr>
+                    </table>
+                </div></div>
+                
+                <div class="gold-wrap rounded-xl"><div class="dark-inner rounded-lg p-4 h-full flex flex-col justify-center">
+                    <h4 class="font-bold text-center text-neon-yellow text-[13px] mb-4 leading-tight">Peserta KB Pasca Persalinan</h4>
+                    <table class="data-table text-xs text-gray-200 mt-auto">
+                        <tr><td class="label">PPM</td><td class="separator">=</td><td class="value">65.118</td></tr>
+                        <tr><td class="label">Capaian</td><td class="separator">=</td><td class="value">14.159</td></tr>
+                        <tr class="font-bold text-white"><td class="label">Persentase</td><td class="separator text-neon-yellow">=</td><td class="value text-neon-yellow">21.74%</td></tr>
+                    </table>
+                </div></div>
+
+                <div class="gold-wrap rounded-xl"><div class="dark-inner rounded-lg p-4 h-full flex flex-col justify-center">
+                    <h4 class="font-bold text-center text-neon-yellow text-sm mb-4">PB MKJP</h4>
+                    <table class="data-table text-xs text-gray-200 mt-auto">
+                        <tr><td class="label">PPM</td><td class="separator">=</td><td class="value">22.343</td></tr>
+                        <tr><td class="label">Capaian</td><td class="separator">=</td><td class="value">5.666</td></tr>
+                        <tr class="font-bold text-white"><td class="label">Persentase</td><td class="separator text-neon-yellow">=</td><td class="value text-neon-yellow">25.13%</td></tr>
+                    </table>
+                </div></div>
+
+                <div class="gold-wrap rounded-xl"><div class="dark-inner rounded-lg p-4 h-full flex flex-col justify-center">
+                    <h4 class="font-bold text-center text-neon-yellow text-sm mb-4">PB Non MKJP</h4>
+                    <table class="data-table text-xs text-gray-200 mt-auto">
+                        <tr><td class="label">PPM</td><td class="separator">=</td><td class="value">78.799</td></tr>
+                        <tr><td class="label">Capaian</td><td class="separator">=</td><td class="value">17.279</td></tr>
+                        <tr class="font-bold text-white"><td class="label">Persentase</td><td class="separator text-neon-yellow">=</td><td class="value text-neon-yellow">21.93%</td></tr>
+                    </table>
+                </div></div>
+            </div>
+        </div>
+
+        <!-- SECTION: KB AKTIF -->
+        <div class="relative mb-14 mt-12 flex justify-center">
+            <div class="absolute -top-5 z-20 bg-white border border-gray-300 rounded-full px-8 py-1.5 shadow-lg shadow-black/50 text-center whitespace-nowrap">
+                <h2 class="font-bold text-teal-900 text-lg uppercase tracking-wide">CAPAIAN PESERTA KB AKTIF</h2>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 w-full pt-4 items-center">
+                <!-- Aktif MKJP -->
+                <div class="gold-wrap rounded-xl"><div class="dark-inner rounded-lg p-5 h-full flex flex-col justify-center">
+                    <h4 class="font-bold text-center text-white pb-3 mb-4 uppercase text-sm border-b border-white/20">PESERTA KB AKTIF<br>MKJP</h4>
+                    <table class="data-table text-sm text-gray-200">
+                        <tr><td class="label">PPM</td><td class="separator">=</td><td class="value">92.100</td></tr>
+                        <tr><td class="label">Capaian</td><td class="separator">=</td><td class="value">78.164</td></tr>
+                        <tr class="font-bold text-white"><td class="label">Persentase</td><td class="separator text-neon-yellow">=</td><td class="value text-neon-yellow">84.87%</td></tr>
+                    </table>
+                </div></div>
+                
+                <!-- Detail PA -->
+                <div class="gold-wrap rounded-xl transform md:scale-105 z-10 shadow-2xl"><div class="dark-inner rounded-lg p-5 h-full">
+                    <h4 class="font-bold text-center text-white pb-2 mb-3 text-xs uppercase border-b border-white/20">DETAIL PA (MODERN & TRADISIONAL)</h4>
+                    <div class="font-bold text-yellow-300 text-xs mb-1">PA Modern:</div>
+                    <div class="pl-4">
+                        <table class="data-table text-xs text-gray-200">
+                            <tr><td class="label">PPM</td><td class="separator">=</td><td class="value">501.984</td></tr>
+                            <tr><td class="label">Capaian</td><td class="separator">=</td><td class="value">458.781</td></tr>
+                            <tr class="font-bold text-white"><td class="label">Persentase</td><td class="separator text-neon-yellow">=</td><td class="value text-neon-yellow">91.39%</td></tr>
+                        </table>
+                    </div>
+                    <table class="data-table text-xs mt-3 pt-2 border-t border-white/20 text-yellow-300 font-bold w-full">
+                        <tr><td class="label">PA Tradisional</td><td class="separator">=</td><td class="value">6.204</td></tr>
+                    </table>
+                    <table class="data-table text-sm mt-2 pt-2 border-t border-white/40 text-white font-bold w-full">
+                        <tr><td class="label">Total PA</td><td class="separator">=</td><td class="value">464.985</td></tr>
+                    </table>
+                </div></div>
+
+                <!-- Aktif Non MKJP -->
+                <div class="gold-wrap rounded-xl"><div class="dark-inner rounded-lg p-5 h-full flex flex-col justify-center">
+                    <h4 class="font-bold text-center text-white pb-3 mb-4 uppercase text-sm border-b border-white/20">PESERTA KB AKTIF<br>NON MKJP</h4>
+                    <table class="data-table text-sm text-gray-200">
+                        <tr><td class="label">PPM</td><td class="separator">=</td><td class="value">409.884</td></tr>
+                        <tr><td class="label">Capaian</td><td class="separator">=</td><td class="value">380.617</td></tr>
+                        <tr class="font-bold text-white"><td class="label">Persentase</td><td class="separator text-neon-yellow">=</td><td class="value text-neon-yellow">92.86%</td></tr>
+                    </table>
+                </div></div>
+            </div>
+        </div>
+
+        <!-- SECTION: mCPR & UNMET -->
+        <div class="flex flex-col items-center mb-10 text-center">
+            <h2 class="text-xl md:text-2xl font-black uppercase mb-6 text-white drop-shadow-xl tracking-wider w-full text-center">mCPR DAN UNMET NEED</h2>
+            <div class="flex flex-wrap justify-center gap-12">
+                
+                <!-- mCPR -->
+                <div class="gold-wrap rounded-full p-2">
+                    <div class="dark-inner rounded-full w-44 h-44 flex flex-col items-center justify-center p-4">
+                        <div class="font-black text-xl text-yellow-300 mb-1 leading-none">mCPR</div>
+                        <div class="text-[11px] text-center leading-tight mb-2 text-gray-300 border-b border-white/20 pb-2 w-full px-2">
+                            PUS = 804.792<br>
+                            PA Mod = 458.781
+                        </div>
+                        <div class="font-bold text-[10px] text-white">Persentase</div>
+                        <div class="font-black text-neon-yellow text-lg leading-none mt-1">57,01%</div>
+                    </div>
+                </div>
+                
+                <!-- Unmet -->
+                <div class="gold-wrap rounded-full p-2">
+                    <div class="dark-inner rounded-full w-44 h-44 flex flex-col items-center justify-center p-4">
+                        <div class="font-black text-xl text-yellow-300 mb-1 leading-none text-center">UNMET<br>NEED</div>
+                        <div class="text-[11px] text-center leading-tight mb-2 text-gray-300 border-b border-white/20 pb-2 w-full px-2 mt-1">
+                            PUS = 804.792<br>
+                            UN = 34.300
+                        </div>
+                        <div class="font-bold text-[10px] text-white">Persentase</div>
+                        <div class="font-black text-neon-yellow text-lg leading-none mt-1">4,26%</div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+</body>
+</html>
