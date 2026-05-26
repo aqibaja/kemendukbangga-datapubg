@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Laporan Capaian Elsimil BKKBN Aceh</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    
+    <style>
+        body { 
+            font-family: 'Montserrat', sans-serif; 
+            /* Background gradient teal-blue ke yellowish seperti flyer baru */
+            background: linear-gradient(135deg, #0d9488 0%, #0369a1 40%, #ca8a04 100%);
+            background-attachment: fixed;
+        }
+
+        /* Trik Wrapper Emas yang sudah disempurnakan */
+        .gold-wrap {
+            background: linear-gradient(135deg, #fef08a 0%, #b45309 25%, #fef08a 50%, #713f12 75%, #fde047 100%);
+            padding: 3px; 
+            box-shadow: 0 10px 25px rgba(0,0,0,0.5), inset 0 0 5px rgba(255,255,255,0.5);
+            border-radius: 1.5rem; /* Lebih melengkung */
+        }
+        
+        .dark-inner {
+            background: linear-gradient(to bottom, #022c22, #064e3b);
+            box-shadow: inset 0 0 30px rgba(0,0,0,0.9);
+            border-radius: calc(1.5rem - 3px);
+            position: relative;
+        }
+
+        /* Banner Header Bentuk Pita (Ribbon) */
+        .ribbon-banner {
+            position: relative;
+            background: linear-gradient(to bottom, #064e3b, #022c22);
+            border: 2px solid #facc15;
+            box-shadow: 0 10px 15px rgba(0,0,0,0.5);
+        }
+        .ribbon-banner::before, .ribbon-banner::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            border: 20px solid transparent;
+            z-index: -1;
+        }
+        /* Ekor pita kiri dan kanan menggunakan border trick */
+        .ribbon-banner::before {
+            left: -30px;
+            border-right-color: #064e3b;
+            border-width: 25px 30px 25px 0;
+        }
+        .ribbon-banner::after {
+            right: -30px;
+            border-left-color: #064e3b;
+            border-width: 25px 0 25px 30px;
+        }
+
+        /* Bulatan Icon di Sudut Chart Kiri Atas */
+        .chart-icon-orb {
+            position: absolute;
+            top: -25px;
+            left: -20px;
+            width: 80px;
+            height: 80px;
+            background: radial-gradient(circle at center, #064e3b, #022c22);
+            border: 4px solid #facc15;
+            border-radius: 50%;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.6), inset 0 0 10px rgba(250, 204, 21, 0.4);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 20;
+        }
+
+        /* Judul Chart Overlapping Border Atas */
+        .chart-title-box {
+            position: absolute;
+            top: -15px;
+            left: 50px; /* Offset karena ada icon bulat */
+            background: linear-gradient(to bottom, #022c22, #064e3b);
+            border: 2px solid #facc15;
+            border-radius: 10px;
+            padding: 4px 15px;
+            box-shadow: 0 5px 10px rgba(0,0,0,0.5);
+            z-index: 10;
+        }
+
+        .text-neon-yellow {
+            color: #fde047;
+            text-shadow: 0 0 5px rgba(253, 224, 71, 0.5);
+        }
+    </style>
+</head>
+<body class="min-h-screen text-white relative pb-20 overflow-x-hidden pt-8">
+
+    <div class="max-w-6xl mx-auto px-4 relative z-10">
+
+        <!-- HEADER PITA (RIBBON) -->
+        <div class="flex justify-center mb-10">
+            <div class="ribbon-banner px-8 py-3 flex items-center gap-4 rounded-sm">
+                <!-- Placeholder Logo -->
+                <i class="fa-solid fa-users text-4xl text-yellow-400"></i>
+                <div class="text-xs md:text-sm font-bold text-left text-white leading-tight border-l-2 border-yellow-400 pl-4">
+                    Kementerian Kependudukan<br>
+                    dan Pembangunan Keluarga /<br>
+                    BKKBN Prov Aceh
+                </div>
+            </div>
+        </div>
+
+        <!-- JUDUL -->
+        <div class="text-center mb-16">
+            <h1 class="text-2xl md:text-4xl font-black tracking-wide uppercase drop-shadow-xl text-white mb-2 leading-tight">
+                LAPORAN CAPAIAN ELSIMIL<br>
+                KEMENDUKBANGGA BKKBN PROV ACEH
+            </h1>
+            <h2 class="text-2xl md:text-3xl font-black uppercase text-neon-yellow inline-block">
+                HINGGA APRIL 2026
+            </h2>
+        </div>
+
+        <!-- KONTENER 2 GRAFIK UTAMA -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-10 md:gap-8 lg:gap-12 mt-12 px-2 md:px-6">
+            
+            <!-- GRAFIK 1: CATIN -->
+            <div class="relative mt-4">
+                <!-- Bulatan Icon Kiri Atas -->
+                <div class="chart-icon-orb">
+                    <!-- Menggunakan icon FontAwesome sebagai ilustrasi Catin -->
+                    <i class="fa-solid fa-people-arrows text-3xl text-orange-300"></i>
+                </div>
+                <!-- Box Judul -->
+                <div class="chart-title-box">
+                    <div class="text-yellow-300 text-xs font-semibold leading-tight">Trend</div>
+                    <div class="text-white font-black text-sm md:text-base leading-tight uppercase">JUMLAH CATIN<br>TERDAMPINGI</div>
+                </div>
+
+                <div class="gold-wrap h-full">
+                    <div class="dark-inner p-4 pt-16 h-full flex flex-col">
+                        <!-- Canvas untuk Chart.js -->
+                        <div class="w-full grow relative" style="min-height: 250px;">
+                            <canvas id="catinChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- GRAFIK 2: BUMIL -->
+            <div class="relative mt-4">
+                <!-- Bulatan Icon Kiri Atas -->
+                <div class="chart-icon-orb">
+                    <!-- Menggunakan icon FontAwesome sebagai ilustrasi Bumil -->
+                    <i class="fa-solid fa-person-pregnant text-3xl text-pink-300"></i>
+                </div>
+                <!-- Box Judul -->
+                <div class="chart-title-box">
+                    <div class="text-yellow-300 text-xs font-semibold leading-tight">Trend</div>
+                    <div class="text-white font-black text-sm md:text-base leading-tight uppercase">JUMLAH BUMIL<br>TERDAMPINGI</div>
+                </div>
+
+                <div class="gold-wrap h-full">
+                    <div class="dark-inner p-4 pt-16 h-full flex flex-col">
+                        <!-- Canvas untuk Chart.js -->
+                        <div class="w-full grow relative" style="min-height: 250px;">
+                            <canvas id="bumilChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- FOOTER -->
+    <div class="bg-white fixed bottom-0 left-0 right-0 p-2 z-50 flex flex-col md:flex-row justify-between items-center px-4 md:px-10 text-gray-800 border-t-4 border-yellow-400">
+        <div class="flex items-center gap-3">
+            <div class="bg-teal-700 p-1.5 rounded-full">
+                <i class="fa-brands fa-whatsapp text-white text-lg"></i>
+            </div>
+            <div>
+                <div class="text-teal-700 text-[10px] uppercase font-bold">No Layanan Pengaduan</div>
+                <div class="font-black text-lg text-teal-900 leading-none">085361209387</div>
+            </div>
+        </div>
+        <div class="flex flex-wrap justify-center gap-4 items-center text-sm font-bold text-teal-800">
+            <a href="#" class="flex items-center gap-1 hover:text-teal-500">
+                <i class="fa-solid fa-globe"></i> aceh.kemendukbangga.go.id
+            </a>
+            <div class="flex gap-3 text-lg">
+                <a href="#" class="hover:text-blue-600"><i class="fa-brands fa-facebook"></i></a>
+                <a href="#" class="hover:text-pink-600"><i class="fa-brands fa-instagram"></i></a>
+                <a href="#" class="hover:text-black"><i class="fa-brands fa-tiktok"></i></a>
+                <a href="#" class="hover:text-red-600"><i class="fa-brands fa-youtube"></i></a>
+            </div>
+            <span class="text-xs">kemendukbangga_bkkbnaceh</span>
+        </div>
+    </div>
+
+    <!-- SCRIPT INIT CHART.JS -->
+    <script>
+        // Data Hardcode dari Gambar
+        const labels = ['Jan', 'Feb', 'Maret', 'April'];
+        
+        // Data Catin
+        const dataCatin = [1577, 1462, 1911, 3841];
+        // Data Bumil
+        const dataBumil = [2513, 4127, 5503, 10852];
+
+        // Custom Plugin untuk menggambar teks nilai & persentase langsung di atas titik (nodes)
+        const pointLabelsPlugin = {
+            id: 'pointLabels',
+            afterDatasetsDraw(chart, args, options) {
+                const { ctx } = chart;
+                ctx.font = 'bold 13px Montserrat';
+                ctx.textAlign = 'center';
+                ctx.textBaseline = 'bottom';
+                
+                chart.data.datasets.forEach((dataset, i) => {
+                    const meta = chart.getDatasetMeta(i);
+                    meta.data.forEach((point, index) => {
+                        const value = dataset.data[index];
+                        const percentage = dataset.percentages ? dataset.percentages[index] : '';
+                        
+                        // Gambar Value (Kuning)
+                        ctx.fillStyle = '#fde047'; // Kuning neon
+                        ctx.fillText(value.toLocaleString('id-ID'), point.x, point.y - 12);
+                        
+                        // Gambar Persentase (Hijau/Merah) di bawah nilai jika ada
+                        if (percentage) {
+                            // Cek jika persentase mengandung min (-)
+                            if(percentage.includes('-')) {
+                                ctx.fillStyle = '#fca5a5'; // Merah muda untuk minus
+                                ctx.fillText('▼ ' + percentage, point.x, point.y - 28);
+                            } else {
+                                ctx.fillStyle = '#6ee7b7'; // Hijau muda untuk plus
+                                ctx.fillText('▲ ' + percentage, point.x, point.y - 28);
+                            }
+                        }
+                    });
+                });
+            }
+        };
+
+        // Konfigurasi umum chart agar bersih seperti flyer
+        const commonOptions = {
+            responsive: true,
+            maintainAspectRatio: false,
+            layout: {
+                padding: { top: 40, right: 20, left: 10, bottom: 10 } // Ruang untuk teks di atas node
+            },
+            plugins: {
+                legend: { display: false },
+                tooltip: { enabled: false } // Matikan tooltip hover, karena nilai sudah ditampilkan permanen via plugin
+            },
+            scales: {
+                x: {
+                    grid: { display: false, drawBorder: true, color: '#ffffff' },
+                    ticks: { color: '#ffffff', font: { family: 'Montserrat', size: 13, weight: 'bold' } }
+                },
+                y: {
+                    display: false, // Hilangkan sumbu Y sama sekali seperti di gambar
+                    min: 0,
+                    suggestedMax: 12000 // Agar chart tidak mentok atas
+                }
+            },
+            elements: {
+                line: {
+                    tension: 0.4 // Membuat kurva melengkung mulus (bezier)
+                },
+                point: {
+                    radius: 5,
+                    backgroundColor: '#ffffff',
+                    borderWidth: 2,
+                    borderColor: '#0284c7', // Warna biru border titik
+                    hoverRadius: 7
+                }
+            }
+        };
+
+        // 1. Inisialisasi Chart Catin
+        const ctxCatin = document.getElementById('catinChart').getContext('2d');
+        // Membuat efek gradient fill di bawah garis
+        let gradientCatin = ctxCatin.createLinearGradient(0, 0, 0, 400);
+        gradientCatin.addColorStop(0, 'rgba(56, 189, 248, 0.5)'); // Light blue transparent
+        gradientCatin.addColorStop(1, 'rgba(6, 78, 59, 0)'); // Dark green transparent
+
+        new Chart(ctxCatin, {
+            type: 'line',
+            data: {
+                labels: labels,
+                datasets: [{
+                    data: dataCatin,
+                    // Hardcode persentase tren sesuai gambar (index 0 kosong karena tidak ada perbandingan sebelumnya)
+                    percentages: ['', '-7.29%', '+30.71%', '+101.00%'],
+                    borderColor: '#38bdf8', // Light blue line
+                    borderWidth: 3,
+                    backgroundColor: gradientCatin,
+                    fill: true
+                }]
+            },
+            options: { ...commonOptions, scales: { ...commonOptions.scales, y: { display: false, min: 1000, suggestedMax: 4500 } } },
+            plugins: [pointLabelsPlugin]
+        });
+
+        // 2. Inisialisasi Chart Bumil
+        const ctxBumil = document.getElementById('bumilChart').getContext('2d');
+        let gradientBumil = ctxBumil.createLinearGradient(0, 0, 0, 400);
+        gradientBumil.addColorStop(0, 'rgba(56, 189, 248, 0.5)');
+        gradientBumil.addColorStop(1, 'rgba(6, 78, 59, 0)');
+
+        new Chart(ctxBumil, {
+            type: 'line',
+            data: {
+                labels: labels,
+                datasets: [{
+                    data: dataBumil,
+                    // Hardcode persentase tren sesuai gambar
+                    percentages: ['', '+64.21%', '+33.34%', '+97.20%'],
+                    borderColor: '#38bdf8', // Light blue line
+                    borderWidth: 3,
+                    backgroundColor: gradientBumil,
+                    fill: true
+                }]
+            },
+            options: { ...commonOptions, scales: { ...commonOptions.scales, y: { display: false, min: 2000, suggestedMax: 12000 } } },
+            plugins: [pointLabelsPlugin]
+        });
+    </script>
+</body>
+</html>

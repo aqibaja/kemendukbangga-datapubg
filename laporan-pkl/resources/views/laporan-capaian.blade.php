@@ -4,11 +4,11 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;800&display=swap');
         .bg-main { 
             background: linear-gradient(135deg, #1fa2a8 0%, #0d5f5a 50%, #d48e15 100%); 
-            background-attachment: fixed;
             font-family: 'Poppins', sans-serif;
         }
         .gold-card { 
@@ -73,6 +73,8 @@
                             LAPORAN CAPAIAN PROGRAM PENGENDALIAN LAPANGAN<br>
                         @elseif(request('tipe') == 'capaian_program')
                             LAPORAN CAPAIAN PROGRAM<br>
+                        @elseif(request('tipe') == 'elsimil')
+                            LAPORAN CAPAIAN ELSIMIL<br>
                         @endif
                         KEMENDUKBANGGA (BKKBN) PROV ACEH<br>
                         <span class="text-yellow-300 drop-shadow-md uppercase">{{ \App\Models\LaporanCapaian::namaBulan($bulan) }} TAHUN {{ $tahun }}</span>
@@ -83,6 +85,7 @@
                         <select name="tipe" class="bg-white/10 text-white border border-white/30 rounded-lg px-3 py-1.5 text-sm font-bold focus:outline-none focus:ring-2 focus:ring-yellow-400">
                             <option value="pengendalian_lapangan" {{ request('tipe', 'pengendalian_lapangan') == 'pengendalian_lapangan' ? 'selected' : '' }} class="bg-teal-800 text-white">Pengendalian Lapangan</option>
                             <option value="capaian_program" {{ request('tipe') == 'capaian_program' ? 'selected' : '' }} class="bg-teal-800 text-white">Capaian Program</option>
+                            <option value="elsimil" {{ request('tipe') == 'elsimil' ? 'selected' : '' }} class="bg-teal-800 text-white">Capaian Elsimil</option>
                         </select>
                         <select name="bulan" class="bg-white/10 text-white border border-white/30 rounded-lg px-3 py-1.5 text-sm font-bold focus:outline-none focus:ring-2 focus:ring-yellow-400">
                             @for($m=1;$m<=12;$m++)
@@ -536,13 +539,65 @@
                     @else
                         <div class="text-center py-32 text-yellow-300 font-bold text-2xl drop-shadow-md">Data Capaian Program tidak tersedia untuk periode ini</div>
                     @endif
+                @elseif(request('tipe') == 'elsimil')
+                    @if(!isset($laporans['elsimil']))
+                        <div class="text-center py-32 text-yellow-300 font-bold text-2xl drop-shadow-md">Data Capaian Elsimil tidak tersedia untuk periode ini</div>
+                    @else
+                        @php
+                            $d = $laporans['elsimil']->data;
+                        @endphp
+                        
+                        <!-- Elsimil Layout -->
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-10 md:gap-8 lg:gap-12 mt-12 px-2 md:px-6 pb-10">
+                            <!-- CHART CATIN -->
+                            <div class="relative mt-4">
+                                <div class="absolute -top-[25px] -left-[20px] w-20 h-20 rounded-full border-4 border-yellow-400 flex items-center justify-center z-20 overflow-hidden" style="background: radial-gradient(circle at center, #064e3b, #022c22); box-shadow: 0 5px 15px rgba(0,0,0,0.6), inset 0 0 10px rgba(250, 204, 21, 0.4);">
+                                    <img src="{{ asset('image/catin_icon_3d.png') }}?v={{ time() }}" alt="Catin" class="w-full h-full object-cover">
+                                </div>
+                                <div class="absolute -top-[15px] left-[50px] border-2 border-yellow-400 rounded-lg px-4 py-1 z-10 flex flex-col justify-center" style="background: linear-gradient(to bottom, #022c22, #064e3b); box-shadow: 0 5px 10px rgba(0,0,0,0.5); min-height: 48px;">
+                                    <div class="text-yellow-300 text-xs font-semibold leading-none mb-1">Trend</div>
+                                    <div class="text-white font-black text-sm md:text-base leading-none uppercase">JUMLAH CATIN TERDAMPINGI</div>
+                                </div>
+                                <div class="gold-card h-full p-[3px]">
+                                    <div class="dark-green-card p-4 pt-16 h-full flex flex-col rounded-[9px]" style="min-height: 350px;">
+                                        <div class="w-full grow relative">
+                                            <canvas id="catinChart"></canvas>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- CHART BUMIL -->
+                            <div class="relative mt-4">
+                                <div class="absolute -top-[25px] -left-[20px] w-20 h-20 rounded-full border-4 border-yellow-400 flex items-center justify-center z-20 overflow-hidden" style="background: radial-gradient(circle at center, #064e3b, #022c22); box-shadow: 0 5px 15px rgba(0,0,0,0.6), inset 0 0 10px rgba(250, 204, 21, 0.4);">
+                                    <img src="{{ asset('image/bumil_icon_3d.png') }}?v={{ time() }}" alt="Bumil" class="w-full h-full object-cover">
+                                </div>
+                                <div class="absolute -top-[15px] left-[50px] border-2 border-yellow-400 rounded-lg px-4 py-1 z-10 flex flex-col justify-center" style="background: linear-gradient(to bottom, #022c22, #064e3b); box-shadow: 0 5px 10px rgba(0,0,0,0.5); min-height: 48px;">
+                                    <div class="text-yellow-300 text-xs font-semibold leading-none mb-1">Trend</div>
+                                    <div class="text-white font-black text-sm md:text-base leading-none uppercase">JUMLAH BUMIL TERDAMPINGI</div>
+                                </div>
+                                <div class="gold-card h-full p-[3px]">
+                                    <div class="dark-green-card p-4 pt-16 h-full flex flex-col rounded-[9px]" style="min-height: 350px;">
+                                        <div class="w-full grow relative">
+                                            <canvas id="bumilChart"></canvas>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- JSON DATA FOR CHART.JS -->
+                        <script>
+                            window.elsimilData = @json($d);
+                        </script>
+                    @endif
                 @endif
 
             </div>
         </div>
 
         <!-- FOOTER STATIS RESPONSIF -->
-        <div class="w-full flex flex-col items-center mt-8 relative z-20 px-2 sm:px-8 bg-gradient-to-t from-teal-950 to-transparent pt-8 pb-8">
+        <div class="w-full flex flex-col items-center mt-8 relative z-20 px-2 sm:px-8 pt-8 pb-8">
             
             <!-- Kotak Layanan -->
             <div class="w-full max-w-4xl bg-teal-900/95 backdrop-blur-md border border-yellow-400 text-white rounded-2xl sm:rounded-full p-4 sm:px-8 sm:py-3 mb-6 relative z-30 shadow-[0_10px_30px_rgba(0,0,0,0.5)] flex flex-col sm:flex-row justify-center items-center gap-3 sm:gap-6 text-xs sm:text-sm">
@@ -614,11 +669,17 @@
                         texts.forEach(t => t.style.top = '-8px');
 
                         // 2. Perbaiki teks mCPR dan persentase yang turun
-                        // Kita pilih elemen yang diberi class khusus 'shift-up-export'
                         const shiftElements = clonedDoc.querySelectorAll('.shift-up-export');
                         shiftElements.forEach(t => {
                             t.style.position = 'relative';
                             t.style.top = '-6px'; // Naikkan
+                        });
+
+                        // 3. Fix Chart.js overflow due to fixed windowWidth cloning
+                        const charts = clonedDoc.querySelectorAll('canvas');
+                        charts.forEach(c => {
+                            c.style.width = '100%';
+                            c.style.height = '100%';
                         });
                         
                         // 3. Hilangkan margin dan border radius agar export rapi
@@ -670,5 +731,123 @@
                 zoom = origZoom; updateZoom();
             }
         }
+    </script>
+
+    <!-- Elsimil Chart Setup -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            if (window.elsimilData) {
+                const pointLabelsPlugin = {
+                    id: 'pointLabels',
+                    afterDatasetsDraw(chart) {
+                        const { ctx } = chart;
+                        ctx.font = 'bold 13px Poppins';
+                        ctx.textAlign = 'center';
+                        ctx.textBaseline = 'bottom';
+                        
+                        chart.data.datasets.forEach((dataset, i) => {
+                            const meta = chart.getDatasetMeta(i);
+                            meta.data.forEach((point, index) => {
+                                const value = dataset.data[index];
+                                const percentage = dataset.percentages ? dataset.percentages[index] : '';
+
+                                ctx.fillStyle = '#fde047';
+                                ctx.fillText(value.toLocaleString('id-ID'), point.x, point.y - 12);
+
+                                if (percentage) {
+                                    if (percentage.includes('-')) {
+                                        ctx.fillStyle = '#fca5a5';
+                                        ctx.fillText('▼ ' + percentage.replace('-', ''), point.x, point.y - 28);
+                                    } else {
+                                        ctx.fillStyle = '#6ee7b7';
+                                        ctx.fillText('▲ ' + percentage.replace('+', ''), point.x, point.y - 28);
+                                    }
+                                }
+                            });
+                        });
+                    }
+                };
+
+                Chart.register(pointLabelsPlugin);
+
+                const commonOptions = {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    layout: { padding: { top: 80, right: 45, left: 35, bottom: 10 } },
+                    plugins: { legend: { display: false }, tooltip: { enabled: false }, pointLabels: true },
+                    scales: {
+                        x: { grid: { display: false, drawBorder: true, color: '#ffffff' }, ticks: { color: '#ffffff', font: { family: 'Poppins', size: 13, weight: 'bold' } } },
+                        y: { display: false, min: 0 }
+                    },
+                    elements: {
+                        line: { tension: 0.4 },
+                        point: { radius: 5, backgroundColor: '#ffffff', borderWidth: 2, borderColor: '#0284c7', hoverRadius: 7 }
+                    }
+                };
+
+                const initElsimilChart = (canvasId, dataObj, color, gradientStart, gradientEnd) => {
+                    const canvas = document.getElementById(canvasId);
+                    if (!canvas) return;
+                    const ctx = canvas.getContext('2d');
+                    
+                    let gradient = ctx.createLinearGradient(0, 0, 0, 400);
+                    gradient.addColorStop(0, gradientStart);
+                    gradient.addColorStop(1, gradientEnd);
+
+                    const monthNames = ['Jan', 'Feb', 'Mar', 'Apr', 'Mei', 'Jun', 'Jul', 'Agu', 'Sep', 'Okt', 'Nov', 'Des'];
+                    const labels = Object.keys(dataObj).map(m => monthNames[parseInt(m) - 1]);
+                    const dataPoints = Object.values(dataObj);
+                    
+                    const percentages = [];
+                    for (let i = 0; i < dataPoints.length; i++) {
+                        if (i === 0) {
+                            percentages.push('');
+                        } else {
+                            const prev = dataPoints[i - 1];
+                            const curr = dataPoints[i];
+                            if (prev === 0) {
+                                percentages.push('');
+                            } else {
+                                const diff = ((curr - prev) / prev) * 100;
+                                let formatted = diff.toFixed(1) + '%';
+                                if (diff > 0) formatted = '+' + formatted;
+                                percentages.push(formatted);
+                            }
+                        }
+                    }
+
+                    // adjust max y to prevent top text clipping
+                    const maxVal = Math.max(...dataPoints.map(Number));
+                    const options = JSON.parse(JSON.stringify(commonOptions));
+                    options.scales.y.max = maxVal + (maxVal * 0.5); // Add 50% headroom
+                    options.layout.padding.top = 85; 
+                    options.clip = false;
+                    options.elements.point.borderColor = color;
+
+                    new Chart(ctx, {
+                        type: 'line',
+                        data: {
+                            labels: labels,
+                            datasets: [{
+                                data: dataPoints,
+                                percentages: percentages,
+                                borderColor: color,
+                                backgroundColor: gradient,
+                                borderWidth: 3,
+                                fill: true,
+                            }]
+                        },
+                        options: options
+                    });
+                };
+
+                if (window.elsimilData.catin) {
+                    initElsimilChart('catinChart', window.elsimilData.catin, '#38bdf8', 'rgba(56, 189, 248, 0.5)', 'rgba(6, 78, 59, 0)');
+                }
+                if (window.elsimilData.bumil) {
+                    initElsimilChart('bumilChart', window.elsimilData.bumil, '#f472b6', 'rgba(244, 114, 182, 0.5)', 'rgba(6, 78, 59, 0)');
+                }
+            }
+        });
     </script>
 </x-layout>
