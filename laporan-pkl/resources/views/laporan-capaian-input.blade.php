@@ -51,7 +51,7 @@
                         </div>
                         <div>
                             <label class="text-sm font-semibold text-gray-700 block mb-1">Bulan</label>
-                            <select name="bulan" class="w-full border rounded-lg p-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500" required>
+                            <select name="bulan" id="bulanSelect" class="w-full border rounded-lg p-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500" required onchange="toggleElsimilMonths()">
                                 @for($m = 1; $m <= 12; $m++)
                                     <option value="{{ $m }}" {{ ($laporan->bulan ?? now()->month) == $m ? 'selected' : '' }}>
                                         {{ \App\Models\LaporanCapaian::namaBulan($m) }}
@@ -280,9 +280,9 @@
                     <div id="section-elsimil" class="form-section hidden">
                         <h3 class="text-lg font-bold text-emerald-700 mb-3 border-l-4 border-emerald-500 pl-3">Trend Jumlah Catin Terdampingi</h3>
                         <p class="text-xs text-gray-500 mb-3">Isi data per bulan (dari Januari sampai bulan yang dilaporkan)</p>
-                        <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3 mb-6">
+                        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 mb-6">
                             @for($m = 1; $m <= 12; $m++)
-                                <div>
+                                <div class="elsimil-month-group" data-month="{{ $m }}">
                                     <label class="lbl">{{ \App\Models\LaporanCapaian::namaBulan($m) }}</label>
                                     <input type="number" name="elsimil_catin_{{ $m }}" class="inp"
                                            value="{{ $d['catin'][$m] ?? $d['catin'][(string)$m] ?? '' }}">
@@ -292,9 +292,9 @@
 
                         <h3 class="text-lg font-bold text-emerald-700 mb-3 border-l-4 border-emerald-500 pl-3">Trend Jumlah Bumil Terdampingi</h3>
                         <p class="text-xs text-gray-500 mb-3">Isi data per bulan (dari Januari sampai bulan yang dilaporkan)</p>
-                        <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3 mb-6">
+                        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 mb-6">
                             @for($m = 1; $m <= 12; $m++)
-                                <div>
+                                <div class="elsimil-month-group" data-month="{{ $m }}">
                                     <label class="lbl">{{ \App\Models\LaporanCapaian::namaBulan($m) }}</label>
                                     <input type="number" name="elsimil_bumil_{{ $m }}" class="inp"
                                            value="{{ $d['bumil'][$m] ?? $d['bumil'][(string)$m] ?? '' }}">
@@ -367,13 +367,33 @@
                 }
                 placeholder.classList.add('hidden');
                 submitBtn.classList.remove('hidden');
+                
+                if (tipe === 'elsimil') {
+                    toggleElsimilMonths();
+                }
             } else {
                 placeholder.classList.remove('hidden');
                 submitBtn.classList.add('hidden');
             }
         }
 
+        function toggleElsimilMonths() {
+            const selectedMonth = document.getElementById('bulanSelect').value;
+            const elsimilGroups = document.querySelectorAll('.elsimil-month-group');
+            
+            elsimilGroups.forEach(group => {
+                if (group.getAttribute('data-month') === selectedMonth) {
+                    group.style.display = 'block';
+                } else {
+                    group.style.display = 'none';
+                }
+            });
+        }
+
         // Init on page load
-        document.addEventListener('DOMContentLoaded', toggleFormSections);
+        document.addEventListener('DOMContentLoaded', () => {
+            toggleFormSections();
+            toggleElsimilMonths();
+        });
     </script>
 </x-layout>

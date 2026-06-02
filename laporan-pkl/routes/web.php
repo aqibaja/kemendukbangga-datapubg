@@ -204,9 +204,24 @@ Route::get('/laporan-capaian', function (Request $request) {
 Route::middleware(['auth'])->group(function () {
     Route::get('/laporan-capaian/input', function () {
         if (!Auth::check()) abort(404);
+
+        // Ambil data elsimil terakhir di tahun yang sama untuk pre-fill form
+        $latestElsimil = LaporanCapaian::where('tipe', 'elsimil')
+            ->where('tahun', now()->year)
+            ->orderByDesc('bulan')
+            ->first();
+
+        $dummyLaporan = new LaporanCapaian();
+        if ($latestElsimil) {
+            $dummyLaporan->data = [
+                'catin' => $latestElsimil->data['catin'] ?? [],
+                'bumil' => $latestElsimil->data['bumil'] ?? [],
+            ];
+        }
+
         return view('laporan-capaian-input', [
             'title'    => 'Input Laporan Capaian',
-            'laporan'  => null,
+            'laporan'  => $dummyLaporan,
             'editMode' => false,
         ]);
     });
