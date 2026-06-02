@@ -26,6 +26,11 @@
                 <label style="margin-right:0;font-weight:500;display:flex;flex-direction:column;justify-content:flex-end;">
                     <button onclick="resetRequest()" style="padding:0 15px;margin:0;border:none;border-radius:8px;font-size:1rem;background-color:#4a6fa5;color:white;cursor:pointer;font-weight:600;height:44px;display:flex;align-items:center;justify-content:center;transition:all 0.3s ease;" onmouseover="this.style.backgroundColor='#3a5a80';this.style.transform='translateY(-2px)';this.style.boxShadow='0 4px 8px rgba(0,0,0,0.1)'" onmouseout="this.style.backgroundColor='#4a6fa5';this.style.transform='translateY(0)';this.style.boxShadow='none'">Request Link Zoom</button>
                 </label>
+                <label style="margin-right:0;font-weight:500;display:flex;flex-direction:column;justify-content:flex-end;">
+                    <button onclick="printToPDF()" style="padding:0 15px;margin:0;border:none;border-radius:8px;font-size:1rem;background-color:#e53e3e;color:white;cursor:pointer;font-weight:600;height:44px;display:flex;align-items:center;justify-content:center;transition:all 0.3s ease;" onmouseover="this.style.backgroundColor='#c53030';this.style.transform='translateY(-2px)';this.style.boxShadow='0 4px 8px rgba(0,0,0,0.1)'" onmouseout="this.style.backgroundColor='#e53e3e';this.style.transform='translateY(0)';this.style.boxShadow='none'">
+                        <i class="fas fa-file-pdf" style="margin-right: 8px;"></i> Print ke PDF
+                    </button>
+                </label>
             </div>
         </div>
         <div id="loading" class="loading-spinner" style="position:fixed;top:0;left:0;width:100%;height:100%;background-color:rgba(255,255,255,0.8);display:flex;flex-direction:column;justify-content:center;align-items:center;z-index:1000;font-weight:bold;color:#4a6fa5;">
@@ -35,14 +40,14 @@
         <table id="jadwalTable" style="width:100%;border-collapse:separate;border-spacing:0;margin-top:30px;background:#fff;box-shadow:0 10px 15px -3px rgba(0,0,0,0.1),0 4px 6px -2px rgba(0,0,0,0.05);border-radius:10px;overflow:hidden;table-layout:fixed;">
             <thead>
                 <tr>
-                    <th onclick="sortTable(0)" style="padding:15px;text-align:left;background:#4a6fa5;color:white;cursor:pointer;font-weight:600;position:sticky;top:0;transition:all 0.3s ease;position:relative;">Tanggal<span class="sort-icon" style="font-size:0.8em;margin-left:5px;opacity:0.7;">↕</span></th>
-                    <th onclick="sortTable(3)" style="padding:15px;text-align:left;background:#4a6fa5;color:white;cursor:pointer;font-weight:600;position:sticky;top:0;transition:all 0.3s ease;position:relative;">Jam<span class="sort-icon" style="font-size:0.8em;margin-left:5px;opacity:0.7;">↕</span></th>
-                    <th onclick="sortTable(4)" style="padding:15px;text-align:left;background:#4a6fa5;color:white;cursor:pointer;font-weight:600;position:sticky;top:0;transition:all 0.3s ease;position:relative;">Durasi Sampai<span class="sort-icon" style="font-size:0.8em;margin-left:5px;opacity:0.7;">↕</span></th>
-                    <th onclick="sortTable(1)" style="padding:15px;text-align:left;background:#4a6fa5;color:white;cursor:pointer;font-weight:600;position:sticky;top:0;transition:all 0.3s ease;position:relative;">Nama PIC<span class="sort-icon" style="font-size:0.8em;margin-left:5px;opacity:0.7;">↕</span></th>
-                    <th onclick="sortTable(2)" style="padding:15px;text-align:left;background:#4a6fa5;color:white;cursor:pointer;font-weight:600;position:sticky;top:0;transition:all 0.3s ease;position:relative;">Tim Kerja<span class="sort-icon" style="font-size:0.8em;margin-left:5px;opacity:0.7;">↕</span></th>
-                    <th onclick="sortTable(5)" style="padding:15px;text-align:left;background:#4a6fa5;color:white;cursor:pointer;font-weight:600;position:sticky;top:0;transition:all 0.3s ease;position:relative;">Topik<span class="sort-icon" style="font-size:0.8em;margin-left:5px;opacity:0.7;">↕</span></th>
-                    <th onclick="sortTable(6)" style="padding:15px;text-align:left;background:#4a6fa5;color:white;cursor:pointer;font-weight:600;position:sticky;top:0;transition:all 0.3s ease;position:relative;">Peserta<span class="sort-icon" style="font-size:0.8em;margin-left:5px;opacity:0.7;">↕</span></th>
-                    <th onclick="sortTable(7)" style="padding:15px;text-align:left;background:#4a6fa5;color:white;cursor:pointer;font-weight:600;position:sticky;top:0;transition:all 0.3s ease;position:relative;">Tipe Zoom<span class="sort-icon" style="font-size:0.8em;margin-left:5px;opacity:0.7;">↕</span></th>
+                    <th onclick="sortTable(0)" style="width:11%;padding:15px;text-align:left;background:#4a6fa5;color:white;cursor:pointer;font-weight:600;position:sticky;top:0;transition:all 0.3s ease;position:relative;">Tanggal<span class="sort-icon" style="font-size:0.8em;margin-left:5px;opacity:0.7;">↕</span></th>
+                    <th onclick="sortTable(3)" style="width:7%;padding:15px;text-align:left;background:#4a6fa5;color:white;cursor:pointer;font-weight:600;position:sticky;top:0;transition:all 0.3s ease;position:relative;">Jam<span class="sort-icon" style="font-size:0.8em;margin-left:5px;opacity:0.7;">↕</span></th>
+                    <th onclick="sortTable(4)" style="width:8%;padding:15px;text-align:left;background:#4a6fa5;color:white;cursor:pointer;font-weight:600;position:sticky;top:0;transition:all 0.3s ease;position:relative;">Durasi Sampai<span class="sort-icon" style="font-size:0.8em;margin-left:5px;opacity:0.7;">↕</span></th>
+                    <th onclick="sortTable(1)" style="width:12%;padding:15px;text-align:left;background:#4a6fa5;color:white;cursor:pointer;font-weight:600;position:sticky;top:0;transition:all 0.3s ease;position:relative;">Nama PIC<span class="sort-icon" style="font-size:0.8em;margin-left:5px;opacity:0.7;">↕</span></th>
+                    <th onclick="sortTable(2)" style="width:17%;padding:15px;text-align:left;background:#4a6fa5;color:white;cursor:pointer;font-weight:600;position:sticky;top:0;transition:all 0.3s ease;position:relative;">Tim Kerja<span class="sort-icon" style="font-size:0.8em;margin-left:5px;opacity:0.7;">↕</span></th>
+                    <th onclick="sortTable(5)" style="width:22%;padding:15px;text-align:left;background:#4a6fa5;color:white;cursor:pointer;font-weight:600;position:sticky;top:0;transition:all 0.3s ease;position:relative;">Topik<span class="sort-icon" style="font-size:0.8em;margin-left:5px;opacity:0.7;">↕</span></th>
+                    <th onclick="sortTable(6)" style="width:13%;padding:15px;text-align:left;background:#4a6fa5;color:white;cursor:pointer;font-weight:600;position:sticky;top:0;transition:all 0.3s ease;position:relative;">Peserta<span class="sort-icon" style="font-size:0.8em;margin-left:5px;opacity:0.7;">↕</span></th>
+                    <th onclick="sortTable(7)" style="width:10%;padding:15px;text-align:left;background:#4a6fa5;color:white;cursor:pointer;font-weight:600;position:sticky;top:0;transition:all 0.3s ease;position:relative;">Tipe Zoom<span class="sort-icon" style="font-size:0.8em;margin-left:5px;opacity:0.7;">↕</span></th>
                 </tr>
             </thead>
             <tbody></tbody>
@@ -60,6 +65,63 @@
     #jadwalTable tr:last-child td { border-bottom:none; }
     .icon img { width:50px;height:auto;margin-right:10px; }
     #jadwalTable td { padding:15px;text-align:left;border-bottom:1px solid #e2e8f0; }
+    #jadwalTable tr { page-break-inside: avoid !important; break-inside: avoid !important; }
+
+    @media print {
+        /* Sembunyikan navbar/menu atas dari layout utama */
+        .min-h-screen > *:not(main) {
+            display: none !important;
+        }
+
+        /* Matikan fungsi scroll dan flex pada layout karena merusak halaman PDF (membuat elemen hilang/terpotong) */
+        body, html, .min-h-screen, main {
+            display: block !important;
+            height: auto !important;
+            min-height: auto !important;
+            overflow: visible !important;
+            padding: 0 !important;
+            margin: 0 !important;
+            background: white !important;
+        }
+
+        .filter-container, .resizer {
+            display: none !important;
+        }
+
+        #zoomdesk-container {
+            background: white !important;
+            min-height: auto !important;
+            padding: 0 !important;
+            display: block !important;
+        }
+
+        #jadwalTable {
+            box-shadow: none !important;
+        }
+
+        /* Hapus efek sticky agar header tabel (thead) tidak hilang di halaman pertama */
+        #jadwalTable th {
+            position: static !important;
+            border-bottom: 2px solid #000 !important;
+            color: #000 !important;
+        }
+
+        #jadwalTable td {
+            border-bottom: 1px solid #ccc !important;
+            color: #000 !important;
+        }
+
+        h1 {
+            color: #000 !important;
+            text-shadow: none !important;
+            display: block !important;
+            text-align: center;
+        }
+        h1 .icon {
+            display: inline-block;
+            vertical-align: middle;
+        }
+    }
 </style>
 <script>
 const SHEET_URL = 'https://script.google.com/macros/s/AKfycbx_JqXKxsNanPlK_M-IbQk-883hGKpm483PpMBlixWcEwhbhe5XJfxQAiLmJ4mvzsU8/exec';
@@ -218,5 +280,14 @@ function setupResizableColumns() {
 }
 loadData();
 setupResizableColumns();
+
+function printToPDF() {
+    // Menggunakan print bawaan browser karena mesin PDF browser (Chrome/Edge/Safari/Firefox) 
+    // memiliki rendering pemotongan halaman (page-break) tabel yang jauh lebih sempurna.
+    const originalTitle = document.title;
+    document.title = 'Jadwal_Zoom_Meeting'; // Mengubah nama file default saat disimpan
+    window.print();
+    document.title = originalTitle;
+}
 </script>
 </x-layout>
