@@ -1,8 +1,8 @@
 <div x-data="{ openMenu: false }"
-    class="z-50 sticky top-0 flex items-center h-20 px-6 lg:px-8 bg-gradient-to-r from-[#b0f5fd97] to-[#eaf9ff7f] border-b-2 border-black">
+    class="z-50 sticky top-0 flex items-center justify-between h-20 px-4 lg:px-8 bg-gradient-to-r from-[#b0f5fd97] to-[#eaf9ff7f] border-b-2 border-black">
 
    {{-- KIRI: LOGO --}}
-    <div class="flex items-center lg:gap-6 z-10 h-full">
+    <div class="flex-1 flex items-center lg:gap-6 z-10 h-full">
         <a href="/"
            class="flex items-center h-full pl-3 hover:bg-black/5 transition rounded-lg">
             <img src="{{ asset('public/image/bkkbn.png') }}"
@@ -17,7 +17,7 @@
     @endphp
 
     {{-- NAV ICON TENGAH (DESKTOP) --}}
-    <div class="hidden lg:flex absolute left-1/2 -translate-x-1/2 items-center gap-4">
+    <div class="hidden lg:flex flex-none justify-center items-center gap-2 xl:gap-4">
         <x-nav-link href="/" :active="request()->is('/')">
             <i class="fa-solid fa-house text-2xl"></i>
         </x-nav-link>
@@ -44,7 +44,7 @@
     </div>
 
     {{-- KANAN DESKTOP --}}
-    <div class="hidden lg:flex ml-auto items-center gap-5">
+    <div class="hidden lg:flex flex-1 justify-end items-center gap-3 xl:gap-5">
         @auth
             @php
                 $nama = auth()->user()->nama;
@@ -79,25 +79,25 @@
         {{-- TOMBOL PRESENSI --}}
         <div class="flex items-center gap-2">
             <a href="{{ $apelSenin }}"
-               class="flex items-center gap-2 px-4 py-2 rounded-md
+               class="flex items-center gap-2 px-3 xl:px-4 py-2 rounded-md
                       bg-white text-black border border-black/20
-                  hover:bg-gray-100 transition text-sm font-medium">
+                  hover:bg-gray-100 transition text-xs xl:text-sm font-medium whitespace-nowrap">
                 <i class="fa-solid fa-clipboard-check"></i>
-                Presensi Apel Senin
+                <span class="hidden xl:inline">Presensi</span> Apel Senin
             </a>
 
             <a href="{{ $zoomPresensi }}"
-               class="flex items-center gap-2 px-4 py-2 rounded-md
+               class="flex items-center gap-2 px-3 xl:px-4 py-2 rounded-md
                       rounded-lg bg-blue-600 text-white border border-blue-700/30
-                  hover:bg-blue-700 transition text-sm font-medium">
+                  hover:bg-blue-700 transition text-xs xl:text-sm font-medium whitespace-nowrap">
                 <i class="fa-solid fa-video"></i>
-                Presensi Zoom
+                <span class="hidden xl:inline">Presensi</span> Zoom
             </a>
         </div>
             <a href="/login"
-                class="flex items-center gap-2 px-4 py-2 rounded-md
+                class="flex items-center gap-2 px-3 xl:px-4 py-2 rounded-md
                         bg-[#b0f5fd97]/90 text-black border
-                        hover:bg-[#91bec3d4] transition text-sm font-medium">
+                        hover:bg-[#91bec3d4] transition text-xs xl:text-sm font-medium whitespace-nowrap">
                 <i class="fa-solid fa-right-to-bracket"></i>
                 Login
             </a>

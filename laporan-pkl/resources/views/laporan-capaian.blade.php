@@ -108,11 +108,13 @@
                     <!-- BKB -->
                     <div class="mt-6">
                         <div class="flex justify-center mb-6 mt-4">
-                            <div class="relative flex items-center justify-center text-center font-bold text-sm sm:text-xl text-teal-900 bg-yellow-400 pl-16 sm:pl-20 pr-6 py-2 rounded-full shadow-[0_5px_15px_rgba(255,215,0,0.4)] uppercase border-2 border-white">
-                                <div class="absolute -left-4 sm:-left-6 top-1/2 -translate-y-1/2 w-14 h-14 sm:w-20 sm:h-20 bg-teal-900 rounded-full border-2 sm:border-4 border-yellow-400 flex items-center justify-center shadow-lg z-20">
-                                    <img src="{{ asset('image/bkb_icon_v2.png') }}" class="w-10 sm:w-14 drop-shadow-[0_0_10px_rgba(255,215,0,0.5)] object-contain" alt="BKB">
+                            <div class="inline-flex items-center">
+                                <div class="relative w-14 h-14 sm:w-20 sm:h-20 bg-teal-900 rounded-full border-2 sm:border-4 border-yellow-400 flex items-center justify-center shadow-lg z-20 overflow-hidden flex-shrink-0 -mr-6 sm:-mr-10">
+                                    <img src="{{ asset('public/image/bkb_3d.png') }}?v={{ time() }}" class="w-full h-full object-cover" alt="BKB">
                                 </div>
-                                <span class="pill-text inline-block relative z-10" style="top: 0px;">BINA KELUARGA BALITA (BKB)</span>
+                                <div class="text-center font-bold text-sm sm:text-xl text-teal-900 bg-yellow-400 pl-10 sm:pl-14 pr-6 py-2 rounded-full shadow-[0_5px_15px_rgba(255,215,0,0.4)] uppercase border-2 border-white relative z-10">
+                                    <span class="pill-text inline-block relative z-10" style="top: 0px;">BINA KELUARGA BALITA (BKB)</span>
+                                </div>
                             </div>
                         </div>
                         <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4 px-2">
@@ -164,12 +166,14 @@
                         <!-- BKR -->
                         <div>
                             <div class="flex justify-center mb-6 mt-4">
-                                <div class="relative flex items-center justify-center text-center font-bold text-sm sm:text-lg text-teal-900 bg-yellow-400 pl-16 sm:pl-20 pr-6 py-2 rounded-full shadow-[0_5px_15px_rgba(255,215,0,0.4)] uppercase border-2 border-white">
-                                    <div class="absolute -left-4 sm:-left-6 top-1/2 -translate-y-1/2 w-14 h-14 sm:w-20 sm:h-20 bg-teal-900 rounded-full border-2 sm:border-4 border-yellow-400 flex items-center justify-center shadow-lg z-20">
-                                        <img src="{{ asset('image/bkr_icon_v2.png') }}" class="w-10 sm:w-14 drop-shadow-[0_0_10px_rgba(255,215,0,0.5)] object-contain" alt="BKR">
-                                    </div>
+                                <div class="inline-flex items-center">
+                                <div class="relative w-14 h-14 sm:w-20 sm:h-20 bg-teal-900 rounded-full border-2 sm:border-4 border-yellow-400 flex items-center justify-center shadow-lg z-20 overflow-hidden flex-shrink-0 -mr-6 sm:-mr-10">
+                                    <img src="{{ asset('public/image/bkr_3d.png') }}?v={{ time() }}" class="w-full h-full object-cover" alt="BKR">
+                                </div>
+                                <div class="text-center font-bold text-sm sm:text-lg text-teal-900 bg-yellow-400 pl-10 sm:pl-14 pr-6 py-2 rounded-full shadow-[0_5px_15px_rgba(255,215,0,0.4)] uppercase border-2 border-white relative z-10">
                                     <span class="pill-text inline-block relative z-10" style="top: 0px;">BINA KELUARGA REMAJA (BKR)</span>
                                 </div>
+                            </div>
                             </div>
                             <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 px-2">
                                 @php $bkr1 = $d['bkr']['cakupan_laporan'] ?? []; @endphp
@@ -196,12 +200,14 @@
                         <!-- BKL -->
                         <div>
                             <div class="flex justify-center mb-6 mt-4">
-                                <div class="relative flex items-center justify-center text-center font-bold text-sm sm:text-lg text-teal-900 bg-yellow-400 pl-16 sm:pl-20 pr-6 py-2 rounded-full shadow-[0_5px_15px_rgba(255,215,0,0.4)] uppercase border-2 border-white">
-                                    <div class="absolute -left-4 sm:-left-6 top-1/2 -translate-y-1/2 w-14 h-14 sm:w-20 sm:h-20 bg-teal-900 rounded-full border-2 sm:border-4 border-yellow-400 flex items-center justify-center shadow-lg z-20">
-                                        <img src="{{ asset('image/bkl_icon_v2.png') }}" class="w-10 sm:w-14 drop-shadow-[0_0_10px_rgba(255,215,0,0.5)] object-contain" alt="BKL">
-                                    </div>
+                                <div class="inline-flex items-center">
+                                <div class="relative w-14 h-14 sm:w-20 sm:h-20 bg-teal-900 rounded-full border-2 sm:border-4 border-yellow-400 flex items-center justify-center shadow-lg z-20 overflow-hidden flex-shrink-0 -mr-6 sm:-mr-10">
+                                    <img src="{{ asset('public/image/bkl_3d.png') }}?v={{ time() }}" class="w-full h-full object-cover" alt="BKL">
+                                </div>
+                                <div class="text-center font-bold text-sm sm:text-lg text-teal-900 bg-yellow-400 pl-10 sm:pl-14 pr-6 py-2 rounded-full shadow-[0_5px_15px_rgba(255,215,0,0.4)] uppercase border-2 border-white relative z-10">
                                     <span class="pill-text inline-block relative z-10" style="top: 0px;">BINA KELUARGA LANSIA (BKL)</span>
                                 </div>
+                            </div>
                             </div>
                             <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 px-2">
                                 @php $bkl1 = $d['bkl']['cakupan_laporan'] ?? []; @endphp
@@ -231,12 +237,14 @@
                         <!-- PIK-R -->
                         <div>
                             <div class="flex justify-center mb-6 mt-4">
-                                <div class="relative flex items-center justify-center text-center font-bold text-sm sm:text-lg text-teal-900 bg-yellow-400 pl-16 sm:pl-20 pr-6 py-2 rounded-full shadow-[0_5px_15px_rgba(255,215,0,0.4)] uppercase border-2 border-white">
-                                    <div class="absolute -left-4 sm:-left-6 top-1/2 -translate-y-1/2 w-14 h-14 sm:w-20 sm:h-20 bg-teal-900 rounded-full border-2 sm:border-4 border-yellow-400 flex items-center justify-center shadow-lg z-20">
-                                        <img src="{{ asset('image/pikr_icon_v2.png') }}" class="w-10 sm:w-14 drop-shadow-[0_0_10px_rgba(255,215,0,0.5)] object-contain" alt="PIK-R">
-                                    </div>
+                                <div class="inline-flex items-center">
+                                <div class="relative w-14 h-14 sm:w-20 sm:h-20 bg-teal-900 rounded-full border-2 sm:border-4 border-yellow-400 flex items-center justify-center shadow-lg z-20 overflow-hidden flex-shrink-0 -mr-6 sm:-mr-10">
+                                    <img src="{{ asset('public/image/pikr_3d.png') }}?v={{ time() }}" class="w-full h-full object-cover" alt="PIK-R">
+                                </div>
+                                <div class="text-center font-bold text-sm sm:text-lg text-teal-900 bg-yellow-400 pl-10 sm:pl-14 pr-6 py-2 rounded-full shadow-[0_5px_15px_rgba(255,215,0,0.4)] uppercase border-2 border-white relative z-10">
                                     <span class="pill-text inline-block relative z-10" style="top: 0px;">PIK REMAJA (PIK-R)</span>
                                 </div>
+                            </div>
                             </div>
                             <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 px-2">
                                 @php $pikr1 = $d['pikr']['cakupan_laporan'] ?? []; @endphp
@@ -263,12 +271,14 @@
                         <!-- UPPKA -->
                         <div>
                             <div class="flex justify-center mb-6 mt-4">
-                                <div class="relative flex items-center justify-center text-center font-bold text-sm sm:text-lg text-teal-900 bg-yellow-400 pl-16 sm:pl-20 pr-6 py-2 rounded-full shadow-[0_5px_15px_rgba(255,215,0,0.4)] uppercase border-2 border-white">
-                                    <div class="absolute -left-4 sm:-left-6 top-1/2 -translate-y-1/2 w-14 h-14 sm:w-20 sm:h-20 bg-teal-900 rounded-full border-2 sm:border-4 border-yellow-400 flex items-center justify-center shadow-lg z-20">
-                                        <img src="{{ asset('image/uppka_icon_v2.png') }}" class="w-10 sm:w-14 drop-shadow-[0_0_10px_rgba(255,215,0,0.5)] object-contain" alt="UPPKA">
-                                    </div>
+                                <div class="inline-flex items-center">
+                                <div class="relative w-14 h-14 sm:w-20 sm:h-20 bg-teal-900 rounded-full border-2 sm:border-4 border-yellow-400 flex items-center justify-center shadow-lg z-20 overflow-hidden flex-shrink-0 -mr-6 sm:-mr-10">
+                                    <img src="{{ asset('public/image/uppka_3d.png') }}?v={{ time() }}" class="w-full h-full object-cover" alt="UPPKA">
+                                </div>
+                                <div class="text-center font-bold text-sm sm:text-lg text-teal-900 bg-yellow-400 pl-10 sm:pl-14 pr-6 py-2 rounded-full shadow-[0_5px_15px_rgba(255,215,0,0.4)] uppercase border-2 border-white relative z-10">
                                     <span class="pill-text inline-block relative z-10" style="top: 0px;">UPPKA</span>
                                 </div>
+                            </div>
                             </div>
                             <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 px-2">
                                 @php $uppka1 = $d['uppka']['cakupan_laporan'] ?? []; @endphp
@@ -296,20 +306,22 @@
                     <!-- PPKS -->
                     <div class="mt-8 mb-6 relative">
                         <div class="flex justify-center mb-6 mt-4 relative z-10">
-                            <div class="relative flex items-center justify-center text-center font-bold text-sm sm:text-xl text-teal-900 bg-yellow-400 pl-16 sm:pl-20 pr-6 py-2 rounded-full shadow-[0_5px_15px_rgba(255,215,0,0.4)] uppercase border-2 border-white">
-                                <div class="absolute -left-4 sm:-left-6 top-1/2 -translate-y-1/2 w-14 h-14 sm:w-20 sm:h-20 bg-teal-900 rounded-full border-2 sm:border-4 border-yellow-400 flex items-center justify-center shadow-lg z-20">
-                                    <img src="{{ asset('image/ppks_icon_v2.png') }}" class="w-10 sm:w-14 drop-shadow-[0_0_10px_rgba(255,215,0,0.5)] object-contain" alt="PPKS">
+                            <div class="inline-flex items-center">
+                                <div class="relative w-14 h-14 sm:w-20 sm:h-20 bg-teal-900 rounded-full border-2 sm:border-4 border-yellow-400 flex items-center justify-center shadow-lg z-20 overflow-hidden flex-shrink-0 -mr-6 sm:-mr-10">
+                                    <img src="{{ asset('public/image/ppks_3d.png') }}?v={{ time() }}" class="w-full h-full object-cover" alt="PPKS">
                                 </div>
-                                <span class="pill-text inline-block relative z-10" style="top: 0px;">PUSAT PELAYANAN KELUARGA SEJAHTERA (PPKS)</span>
+                                <div class="text-center font-bold text-sm sm:text-xl text-teal-900 bg-yellow-400 pl-10 sm:pl-14 pr-6 py-2 rounded-full shadow-[0_5px_15px_rgba(255,215,0,0.4)] uppercase border-2 border-white relative z-10">
+                                    <span class="pill-text inline-block relative z-10" style="top: 0px;">PUSAT PELAYANAN KELUARGA SEJAHTERA (PPKS)</span>
+                                </div>
                             </div>
                         </div>
                         <!-- Card and Images Container -->
-                        <div class="flex flex-row justify-center items-center gap-4 sm:gap-12 px-2 relative z-10 w-full max-w-5xl mx-auto mt-2">
+                        <div class="flex justify-center items-center px-2 relative z-10 w-full max-w-5xl mx-auto mt-2 py-4">
                             <!-- Image 1 (Left) -->
-                            <img src="{{ asset('image/rumah_aceh.png') }}" alt="Rumah Adat Aceh" class="w-80 sm:w-96 drop-shadow-[0_0_15px_rgba(255,215,0,0.3)] pointer-events-none hidden sm:block">
+                            <img src="{{ asset('public/image/rumah_aceh.png') }}" alt="Rumah Adat Aceh" class="absolute left-0 md:left-10 top-1/2 -translate-y-1/2 w-40 md:w-64 drop-shadow-[0_0_15px_rgba(255,215,0,0.3)] pointer-events-none hidden sm:block z-0 opacity-80">
 
                             @php $ppks1 = $d['ppks']['cakupan_laporan'] ?? []; @endphp
-                            <div class="dark-green-card rounded-xl p-5 text-sm relative w-full sm:w-80 flex-shrink-0">
+                            <div class="dark-green-card rounded-xl p-5 text-sm relative w-full sm:w-80 flex-shrink-0 z-10">
                                 <h3 class="text-white font-bold mb-3 text-center border-b border-teal-700 pb-2">a. Cakupan Laporan</h3>
                                 <div class="text-gray-200">
                                     <div class="flex justify-between mb-2 text-base"><span>Ada</span> <span class="font-bold text-white">{{ number_format($ppks1['ada'] ?? 0, 0, ',', '.') }}</span></div>
@@ -319,7 +331,7 @@
                             </div>
 
                             <!-- Image 2 (Right) -->
-                            <img src="{{ asset('image/masjid_emas.png') }}" alt="Masjid Emas" class="w-80 sm:w-96 drop-shadow-[0_0_15px_rgba(255,215,0,0.3)] pointer-events-none hidden sm:block">
+                            <img src="{{ asset('public/image/masjid_emas.png') }}" alt="Masjid Emas" class="absolute right-0 md:right-10 top-1/2 -translate-y-1/2 w-40 md:w-64 drop-shadow-[0_0_15px_rgba(255,215,0,0.3)] pointer-events-none hidden sm:block z-0 opacity-80">
                         </div>
                     </div>
 
@@ -342,29 +354,28 @@
                                 <span class="pill-text inline-block relative z-10" style="top: 0px;">CAKUPAN TEMPAT PELAYANAN KESEHATAN</span>
                             </div>
                         </div>
-                        <div class="grid grid-cols-2 md:grid-cols-5 gap-4 gap-y-10 mt-6 px-2 pb-6">
+                        <div class="grid grid-cols-2 md:grid-cols-5 gap-4 mt-6 px-2 pb-6">
                             @php
                                 $faskes = [
-                                    ['title' => 'Pemerintah', 'svg' => '<img src="/image/icon_pemerintah.png" class="w-10 h-10 drop-shadow-md mb-2 object-contain" alt="Pemerintah">', 'data' => $d['cakupan_fasyankes']['pemerintah'] ?? []],
-                                    ['title' => 'Jaringan', 'svg' => '<img src="/image/icon_jaringan.png" class="w-10 h-10 drop-shadow-md mb-2 object-contain" alt="Jaringan">', 'data' => $d['cakupan_fasyankes']['jaringan'] ?? []],
-                                    ['title' => 'Swasta', 'svg' => '<img src="/image/icon_swasta.png" class="w-10 h-10 drop-shadow-md mb-2 object-contain" alt="Swasta">', 'data' => $d['cakupan_fasyankes']['swasta'] ?? []],
-                                    ['title' => 'PMB Setara', 'svg' => '<img src="/image/icon_pmb_setara.png" class="w-10 h-10 drop-shadow-md mb-2 object-contain" alt="PMB Setara">', 'data' => $d['cakupan_fasyankes']['pmb_setara'] ?? []],
-                                    ['title' => 'PMB Jejaring', 'svg' => '<img src="/image/icon_pmb_jejaring.png" class="w-10 h-10 drop-shadow-md mb-2 object-contain" alt="PMB Jejaring">', 'data' => $d['cakupan_fasyankes']['pmb_jejaring'] ?? []]
+                                    ['title' => 'Pemerintah', 'svg' => asset('public/image/pemerintah_3d.png') . '?v=' . time(), 'data' => $d['cakupan_fasyankes']['pemerintah'] ?? []],
+                                    ['title' => 'Jaringan', 'svg' => asset('public/image/jaringan_3d.png') . '?v=' . time(), 'data' => $d['cakupan_fasyankes']['jaringan'] ?? []],
+                                    ['title' => 'Swasta', 'svg' => asset('public/image/swasta_3d.png') . '?v=' . time(), 'data' => $d['cakupan_fasyankes']['swasta'] ?? []],
+                                    ['title' => 'PMB Setara', 'svg' => asset('public/image/pmb_setara_3d.png') . '?v=' . time(), 'data' => $d['cakupan_fasyankes']['pmb_setara'] ?? []],
+                                    ['title' => 'PMB Jejaring', 'svg' => asset('public/image/pmb_jejaring_3d.png') . '?v=' . time(), 'data' => $d['cakupan_fasyankes']['pmb_jejaring'] ?? []]
                                 ];
                             @endphp
                             @foreach($faskes as $i => $f)
-                            <div class="gold-card relative p-3 text-center flex flex-col items-center mt-6" style="border-radius: 12px 12px 24px 24px;">
-                                <div class="absolute -top-4 -left-4 w-8 h-8 rounded-full bg-teal-900 border-2 border-yellow-400 text-white font-black flex items-center justify-center z-20 text-sm">
-                                    <span class="shift-up-export inline-block">{{ $i+1 }}</span>
+                            <div class="dark-green-card rounded-xl p-3 text-sm relative flex flex-col justify-center">
+                                <div class="flex items-center mb-2 border-b border-teal-700 pb-2">
+                                    <div class="w-10 h-10 rounded-full border-2 border-yellow-400 overflow-hidden bg-teal-900 shrink-0 mr-2 flex items-center justify-center">
+                                        <img src="{{ $f['svg'] }}" class="w-full h-full object-cover">
+                                    </div>
+                                    <h4 class="font-bold text-white text-xs md:text-[13px] leading-tight">{{ $f['title'] }}</h4>
                                 </div>
-                                {!! $f['svg'] !!}
-                                <h3 class="font-bold text-teal-900 bg-white px-2 py-0.5 rounded text-[10px] mb-2 uppercase w-full text-center tracking-wide whitespace-nowrap overflow-hidden text-ellipsis">{{ $f['title'] }}</h3>
-                                <div class="text-[11px] font-bold text-gray-800 w-full text-left mt-1 bg-white/50 p-1.5 rounded">
-                                    <div class="flex justify-between border-b border-gray-300 pb-1 mb-1"><span>ADA:</span> <span>{{ number_format($f['data']['ada'] ?? 0, 0, ',', '.') }}</span></div>
-                                    <div class="flex justify-between"><span>LAPOR:</span> <span>{{ number_format($f['data']['lapor'] ?? 0, 0, ',', '.') }}</span></div>
-                                </div>
-                                <div class="absolute -bottom-5 w-16 h-16 rounded-full bg-teal-900 border-4 border-yellow-400 flex items-center justify-center z-20 shadow-lg">
-                                    <span class="text-white font-bold text-xs shift-up-export inline-block">{{ number_format($f['data']['persentase'] ?? 0, 2, ',', '.') }}%</span>
+                                <div class="text-gray-200 text-xs mt-auto">
+                                    <div class="flex justify-between mb-1"><span>Ada</span> <span>= {{ number_format($f['data']['ada'] ?? 0, 0, ',', '.') }}</span></div>
+                                    <div class="flex justify-between mb-1"><span>Lapor</span> <span>= {{ number_format($f['data']['lapor'] ?? 0, 0, ',', '.') }}</span></div>
+                                    <div class="flex justify-between mt-2 pt-2 border-t border-teal-700 text-white font-bold"><span>Persentase</span> <span class="text-yellow-300">{{ number_format($f['data']['persentase'] ?? 0, 2, ',', '.') }}%</span></div>
                                 </div>
                             </div>
                             @endforeach
@@ -373,12 +384,14 @@
                         <!-- SECTION 2: STOCK OPNAME SIRIKA -->
                         <div class="mt-8 relative">
                             <div class="flex justify-center mb-6 relative z-10 mt-4 text-center">
-                                <div class="relative flex items-center justify-center font-bold text-sm sm:text-xl text-teal-900 bg-yellow-400 pl-16 sm:pl-20 pr-6 py-2 rounded-full shadow-[0_5px_15px_rgba(255,215,0,0.4)] uppercase border-2 border-white">
-                                    <div class="absolute -left-4 sm:-left-6 top-1/2 -translate-y-1/2 w-14 h-14 sm:w-20 sm:h-20 bg-teal-900 rounded-full border-2 sm:border-4 border-yellow-400 flex items-center justify-center shadow-lg z-20">
-                                        <img src="/image/icon_stock_opname.png" class="w-10 h-10 sm:w-12 sm:h-12 drop-shadow-[0_0_10px_rgba(255,215,0,0.5)] object-contain" alt="Stock Opname">
-                                    </div>
+                                <div class="inline-flex items-center">
+                                <div class="relative w-14 h-14 sm:w-20 sm:h-20 bg-teal-900 rounded-full border-2 sm:border-4 border-yellow-400 flex items-center justify-center shadow-lg z-20 overflow-hidden flex-shrink-0 -mr-6 sm:-mr-10">
+                                    <img src="{{ asset('public/image/stock_opname_3d.png') }}?v={{ time() }}" class="w-full h-full object-cover" alt="Stock Opname">
+                                </div>
+                                <div class="text-center font-bold text-sm sm:text-xl text-teal-900 bg-yellow-400 pl-10 sm:pl-14 pr-6 py-2 rounded-full shadow-[0_5px_15px_rgba(255,215,0,0.4)] uppercase border-2 border-white relative z-10">
                                     <span class="pill-text inline-block relative z-10" style="top: 0px;">STOCK OPNAME SIRIKA</span>
                                 </div>
+                            </div>
                             </div>
                             <div class="grid grid-cols-1 md:grid-cols-3 gap-6 px-2">
                                 @php
@@ -407,12 +420,14 @@
                         <!-- SECTION 3: KB BARU -->
                         <div class="mt-8 relative">
                             <div class="flex justify-center mb-6 relative z-10 mt-4 text-center">
-                                <div class="relative flex items-center justify-center font-bold text-sm sm:text-xl text-teal-900 bg-yellow-400 pl-16 sm:pl-20 pr-6 py-2 rounded-full shadow-[0_5px_15px_rgba(255,215,0,0.4)] uppercase border-2 border-white">
-                                    <div class="absolute -left-4 sm:-left-6 top-1/2 -translate-y-1/2 w-14 h-14 sm:w-20 sm:h-20 bg-teal-900 rounded-full border-2 sm:border-4 border-yellow-400 flex items-center justify-center shadow-lg z-20">
-                                        <img src="/image/icon_kb_baru.png" class="w-10 h-10 sm:w-12 sm:h-12 drop-shadow-[0_0_10px_rgba(255,215,0,0.5)] object-contain" alt="KB Baru">
-                                    </div>
+                                <div class="inline-flex items-center">
+                                <div class="relative w-14 h-14 sm:w-20 sm:h-20 bg-teal-900 rounded-full border-2 sm:border-4 border-yellow-400 flex items-center justify-center shadow-lg z-20 overflow-hidden flex-shrink-0 -mr-6 sm:-mr-10">
+                                    <img src="{{ asset('public/image/kb_baru_3d.png') }}?v={{ time() }}" class="w-full h-full object-cover" alt="KB Baru">
+                                </div>
+                                <div class="text-center font-bold text-sm sm:text-xl text-teal-900 bg-yellow-400 pl-10 sm:pl-14 pr-6 py-2 rounded-full shadow-[0_5px_15px_rgba(255,215,0,0.4)] uppercase border-2 border-white relative z-10">
                                     <span class="pill-text inline-block relative z-10" style="top: 0px;">CAPAIAN PESERTA KB BARU</span>
                                 </div>
+                            </div>
                             </div>
                             <div class="grid grid-cols-1 md:grid-cols-4 gap-4 px-2">
                                 @php
@@ -439,12 +454,14 @@
                         <!-- SECTION 4: KB AKTIF -->
                         <div class="mt-8 relative">
                             <div class="flex justify-center mb-6 relative z-10 mt-4 text-center">
-                                <div class="relative flex items-center justify-center font-bold text-sm sm:text-xl text-teal-900 bg-yellow-400 pl-16 sm:pl-20 pr-6 py-2 rounded-full shadow-[0_5px_15px_rgba(255,215,0,0.4)] uppercase border-2 border-white">
-                                    <div class="absolute -left-4 sm:-left-6 top-1/2 -translate-y-1/2 w-14 h-14 sm:w-20 sm:h-20 bg-teal-900 rounded-full border-2 sm:border-4 border-yellow-400 flex items-center justify-center shadow-lg z-20">
-                                        <img src="/image/icon_kb_aktif.png" class="w-10 h-10 sm:w-12 sm:h-12 drop-shadow-[0_0_10px_rgba(255,215,0,0.5)] object-contain" alt="KB Aktif">
-                                    </div>
+                                <div class="inline-flex items-center">
+                                <div class="relative w-14 h-14 sm:w-20 sm:h-20 bg-teal-900 rounded-full border-2 sm:border-4 border-yellow-400 flex items-center justify-center shadow-lg z-20 overflow-hidden flex-shrink-0 -mr-6 sm:-mr-10">
+                                    <img src="{{ asset('public/image/kb_aktif_3d.png') }}?v={{ time() }}" class="w-full h-full object-cover" alt="KB Aktif">
+                                </div>
+                                <div class="text-center font-bold text-sm sm:text-xl text-teal-900 bg-yellow-400 pl-10 sm:pl-14 pr-6 py-2 rounded-full shadow-[0_5px_15px_rgba(255,215,0,0.4)] uppercase border-2 border-white relative z-10">
                                     <span class="pill-text inline-block relative z-10" style="top: 0px;">CAPAIAN PESERTA KB AKTIF</span>
                                 </div>
+                            </div>
                             </div>
                             <div class="grid grid-cols-1 md:grid-cols-3 gap-6 px-2 items-center">
                                 <!-- Aktif MKJP -->
@@ -490,16 +507,18 @@
                         <div class="mt-8 mb-6 flex flex-col items-center text-center relative w-full">
                             
                             <!-- Ornamen Background (Rumah Aceh & Masjid) -->
-                            <img src="{{ asset('image/rumah_aceh.png') }}" alt="Rumah Adat Aceh" class="absolute bottom-0 left-0 w-64 sm:w-80 drop-shadow-[0_0_15px_rgba(255,215,0,0.3)] pointer-events-none hidden md:block z-0 opacity-90">
-                            <img src="{{ asset('image/masjid_emas.png') }}" alt="Masjid Emas" class="absolute bottom-0 right-0 w-64 sm:w-80 drop-shadow-[0_0_15px_rgba(255,215,0,0.3)] pointer-events-none hidden md:block z-0 opacity-90">
+                            <img src="{{ asset('public/image/rumah_aceh.png') }}" alt="Rumah Adat Aceh" class="absolute bottom-0 left-0 w-64 sm:w-80 drop-shadow-[0_0_15px_rgba(255,215,0,0.3)] pointer-events-none hidden md:block z-0 opacity-90">
+                            <img src="{{ asset('public/image/masjid_emas.png') }}" alt="Masjid Emas" class="absolute bottom-0 right-0 w-64 sm:w-80 drop-shadow-[0_0_15px_rgba(255,215,0,0.3)] pointer-events-none hidden md:block z-0 opacity-90">
 
                             <div class="flex justify-center mb-6 relative z-10 mt-4 w-full">
-                                <div class="relative flex items-center justify-center font-bold text-sm sm:text-xl text-teal-900 bg-yellow-400 pl-16 sm:pl-20 pr-6 py-2 rounded-full shadow-[0_5px_15px_rgba(255,215,0,0.4)] uppercase border-2 border-white">
-                                    <div class="absolute -left-4 sm:-left-6 top-1/2 -translate-y-1/2 w-14 h-14 sm:w-20 sm:h-20 bg-teal-900 rounded-full border-2 sm:border-4 border-yellow-400 flex items-center justify-center shadow-lg z-20">
-                                        <img src="/image/icon_mcpr.png" class="w-10 h-10 sm:w-12 sm:h-12 drop-shadow-[0_0_10px_rgba(255,215,0,0.5)] object-contain" alt="mCPR">
-                                    </div>
+                                <div class="inline-flex items-center">
+                                <div class="relative w-14 h-14 sm:w-20 sm:h-20 bg-teal-900 rounded-full border-2 sm:border-4 border-yellow-400 flex items-center justify-center shadow-lg z-20 overflow-hidden flex-shrink-0 -mr-6 sm:-mr-10">
+                                    <img src="{{ asset('public/image/mcpr_3d.png') }}?v={{ time() }}" class="w-full h-full object-cover" alt="mCPR">
+                                </div>
+                                <div class="text-center font-bold text-sm sm:text-xl text-teal-900 bg-yellow-400 pl-10 sm:pl-14 pr-6 py-2 rounded-full shadow-[0_5px_15px_rgba(255,215,0,0.4)] uppercase border-2 border-white relative z-10">
                                     <span class="pill-text inline-block relative z-10" style="top: 0px;">mCPR DAN UNMET NEED</span>
                                 </div>
+                            </div>
                             </div>
                             <div class="flex flex-wrap justify-center gap-12 px-2 relative z-10">
                                 
@@ -552,7 +571,7 @@
                             <!-- CHART CATIN -->
                             <div class="relative mt-4">
                                 <div class="absolute -top-[25px] -left-[20px] w-20 h-20 rounded-full border-4 border-yellow-400 flex items-center justify-center z-20 overflow-hidden" style="background: radial-gradient(circle at center, #064e3b, #022c22); box-shadow: 0 5px 15px rgba(0,0,0,0.6), inset 0 0 10px rgba(250, 204, 21, 0.4);">
-                                    <img src="{{ asset('image/catin_icon_3d.png') }}?v={{ time() }}" alt="Catin" class="w-full h-full object-cover">
+                                    <img src="{{ asset('public/image/catin_icon_3d.png') }}?v={{ time() }}" alt="Catin" class="w-full h-full object-cover">
                                 </div>
                                 <div class="absolute -top-[15px] left-[50px] border-2 border-yellow-400 rounded-lg px-4 py-1 z-10 flex flex-col justify-center" style="background: linear-gradient(to bottom, #022c22, #064e3b); box-shadow: 0 5px 10px rgba(0,0,0,0.5); min-height: 48px;">
                                     <div class="text-yellow-300 text-xs font-semibold leading-none mb-1">Trend</div>
@@ -570,7 +589,7 @@
                             <!-- CHART BUMIL -->
                             <div class="relative mt-4">
                                 <div class="absolute -top-[25px] -left-[20px] w-20 h-20 rounded-full border-4 border-yellow-400 flex items-center justify-center z-20 overflow-hidden" style="background: radial-gradient(circle at center, #064e3b, #022c22); box-shadow: 0 5px 15px rgba(0,0,0,0.6), inset 0 0 10px rgba(250, 204, 21, 0.4);">
-                                    <img src="{{ asset('image/bumil_icon_3d.png') }}?v={{ time() }}" alt="Bumil" class="w-full h-full object-cover">
+                                    <img src="{{ asset('public/image/bumil_icon_3d.png') }}?v={{ time() }}" alt="Bumil" class="w-full h-full object-cover">
                                 </div>
                                 <div class="absolute -top-[15px] left-[50px] border-2 border-yellow-400 rounded-lg px-4 py-1 z-10 flex flex-col justify-center" style="background: linear-gradient(to bottom, #022c22, #064e3b); box-shadow: 0 5px 10px rgba(0,0,0,0.5); min-height: 48px;">
                                     <div class="text-yellow-300 text-xs font-semibold leading-none mb-1">Trend</div>

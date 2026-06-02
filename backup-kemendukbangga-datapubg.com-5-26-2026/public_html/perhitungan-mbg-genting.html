@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Dashboard SIGA MBG Genting v2</title>
+  <script src="https://cdn.sheetjs.com/xlsx-latest/package/dist/xlsx.full.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
+  <style>
+    :root{--bg:#f8fafc;--card:#fff;--text:#0f172a;--muted:#64748b;--line:#e2e8f0;--blue:#2563eb;--green:#16a34a;--orange:#ea580c;--amber:#d97706;--slate:#475569}
+    *{box-sizing:border-box} body{margin:0;background:var(--bg);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif}
+    .wrap{max-width:1520px;margin:0 auto;padding:20px}.card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:18px;margin-bottom:16px;box-shadow:0 1px 2px rgba(0,0,0,.04)}
+    h1{font-size:28px;margin:0 0 8px}.muted{color:var(--muted)} .small{font-size:12px;color:var(--muted)}
+    .upload{border:2px dashed #cbd5e1;border-radius:14px;padding:28px;text-align:center;background:#fafafa;cursor:pointer}.upload.drag{background:#eff6ff;border-color:var(--blue)}
+    input[type=file]{display:none}.btn{border:none;border-radius:10px;padding:10px 14px;font-weight:600;cursor:pointer}.btn.primary{background:var(--blue);color:#fff}.btn.green{background:var(--green);color:#fff}.btn.orange{background:var(--amber);color:#fff}
+    .toolbar{display:flex;gap:10px;flex-wrap:wrap;align-items:center}.toolbar input,.toolbar select{padding:10px 12px;border:1px solid #cbd5e1;border-radius:10px;background:#fff}
+    .stats{display:grid;grid-template-columns:repeat(4,minmax(180px,1fr));gap:12px}.stat{padding:16px;border:1px solid var(--line);border-radius:14px;background:#fff}.stat .label{font-size:13px;color:var(--muted)}.stat .value{font-size:30px;font-weight:800;margin-top:6px}
+    .s1 .value{color:var(--orange)} .s2 .value{color:var(--blue)} .s3 .value{color:var(--green)} .s4 .value{color:var(--slate)}
+    .grid{display:grid;grid-template-columns:1.15fr .85fr;gap:16px}
+    .table-wrap{overflow:auto;border:1px solid var(--line);border-radius:14px;max-height:70vh}.table-wrap table{width:100%;border-collapse:collapse;min-width:1200px;font-size:13px}
+    th,td{padding:10px 12px;border-bottom:1px solid #eef2f7;text-align:left;white-space:nowrap} thead th{position:sticky;top:0;background:#f8fafc;z-index:1} tr:hover td{background:#fafafa}
+    .files{max-height:180px;overflow:auto;margin-top:12px}.file{display:flex;justify-content:space-between;align-items:center;padding:8px 10px;border:1px solid var(--line);border-radius:10px;background:#f8fafc;margin-bottom:8px}
+    .chip{display:inline-flex;align-items:center;padding:4px 10px;border-radius:999px;font-size:12px;font-weight:700}.genting{background:#fff7ed;color:#c2410c}.mbg{background:#eff6ff;color:#1d4ed8}.both{background:#ecfdf5;color:#166534}.lain{background:#f1f5f9;color:#475569}
+    .msg{display:none;padding:10px 12px;border-radius:12px;margin:12px 0}.msg.show{display:block}.info{background:#eff6ff;color:#1d4ed8;border:1px solid #bfdbfe}.error{background:#fef2f2;color:#b91c1c;border:1px solid #fecaca}
+    .section-title{font-size:16px;font-weight:700;margin-bottom:12px}
+    @media (max-width: 980px){.grid,.stats{grid-template-columns:1fr} .table-wrap table{min-width:900px}}
+  </style>
+</head>
+<body>
+<div class="wrap">
+  <div class="card">
+    <h1>Dashboard SIGA MBG & Genting v2</h1>
+    <p class="muted">Versi ini dibuat khusus untuk file SIGA dengan header bertingkat. Sistem mencoba menggabungkan beberapa baris header agar kolom seperti NO. HP, NIK, dan NAMA bisa terdeteksi dengan benar.</p>
+    <div id="msg" class="msg info"></div>
+    <div id="drop" class="upload">
+      <input id="fileInput" type="file" multiple accept=".xlsx,.xls,.csv" />
+      <input id="folderInput" type="file" webkitdirectory directory multiple accept=".xlsx,.xls,.csv" />
+      <div><b>Pilih file atau folder dengan tombol di bawah</b></div>
+      <div class="small" style="margin-top:6px">Contoh: APRIL / 11 - BIREUEN / file.xlsx atau file dengan nama 1111-April-2026-BIREUEN-....xlsx</div>
+      <div class="toolbar" style="justify-content:center;margin-top:14px">
+        <button class="btn primary" onclick="event.stopPropagation();document.getElementById('fileInput').click()">Pilih File</button>
+        <button class="btn primary" onclick="event.stopPropagation();document.getElementById('folderInput').click()">Pilih Folder</button>
+      </div>
+    </div>
+    <div id="fileList" class="files"></div>
+  </div>
+
+  <div id="dashboard" style="display:none">
+    <div class="card">
+      <div class="toolbar">
+        <select id="bulanFilter" onchange="refreshDashboard()"></select>
+        <select id="tahunFilter" onchange="refreshDashboard()"></select>
+        <select id="kabFilter" onchange="refreshDashboard()"></select>
+        <select id="kategoriFilter" onchange="refreshDashboard()">
+          <option value="">Semua kategori</option>
+          <option value="Genting">Genting</option>
+          <option value="MBG">MBG</option>
+          <option value="Genting dan MBG">Genting dan MBG</option>
+          <option value="Lainnya">Lainnya</option>
+        </select>
+        <input id="searchInput" type="text" placeholder="Cari nama / NIK / HP / kecamatan..." oninput="refreshDashboard()" />
+        <label class="small" style="display:flex;align-items:center;gap:6px"><input id="dedupeToggle" type="checkbox" checked onchange="refreshDashboard()" /> Hitung orang unik</label>
+        <button class="btn green" onclick="downloadDetail()">Download detail</button>
+        <button class="btn orange" onclick="resetAll()">Reset</button>
+      </div>
+    </div>
+
+    <div class="card">
+      <div id="headline" class="muted" style="margin-bottom:12px"></div>
+      <div class="stats">
+        <div class="stat s1"><div class="label">Genting</div><div class="value" id="countGenting">0</div></div>
+        <div class="stat s2"><div class="label">MBG</div><div class="value" id="countMbg">0</div></div>
+        <div class="stat s3"><div class="label">Genting dan MBG</div><div class="value" id="countBoth">0</div></div>
+        <div class="stat s4"><div class="label">Total orang</div><div class="value" id="countTotal">0</div></div>
+      </div>
+    </div>
+
+    <div class="grid">
+      <div class="card">
+        <div class="section-title">Grafik kategori</div>
+        <canvas id="mainChart" height="110"></canvas>
+      </div>
+      <div class="card">
+        <div class="section-title">Ringkasan wilayah</div>
+        <div class="table-wrap" style="max-height:330px">
+          <table>
+            <thead><tr><th>Bulan</th><th>Tahun</th><th>Kabupaten</th><th>Genting</th><th>MBG</th><th>Genting+MBG</th><th>Total</th></tr></thead>
+            <tbody id="summaryBody"></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="section-title">Detail orang</div>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Nama</th><th>NIK</th><th>No HP</th><th>Kategori</th><th>Bulan</th><th>Tahun</th><th>Kabupaten</th><th>Kecamatan</th><th>Kelurahan/Desa</th><th>Dusun/RW</th><th>File Sumber</th></tr></thead>
+          <tbody id="detailBody"></tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+<script>
+let files=[], rawRows=[], filteredRows=[], chart;
+const monthMap={JANUARY:'Januari',JANUARI:'Januari',FEBRUARY:'Februari',FEBRUARI:'Februari',MARCH:'Maret',MARET:'Maret',APRIL:'April',MAY:'Mei',MEI:'Mei',JUNE:'Juni',JUNI:'Juni',JULY:'Juli',JULI:'Juli',AUGUST:'Agustus',AGUSTUS:'Agustus',SEPTEMBER:'September',OCTOBER:'Oktober',OKTOBER:'Oktober',NOVEMBER:'November',DECEMBER:'Desember',DESEMBER:'Desember'};
+function showMsg(text,type='info'){const el=document.getElementById('msg');el.textContent=text;el.className='msg show '+type;}
+function escapeHtml(v){const d=document.createElement('div');d.textContent=v??'';return d.innerHTML;}
+function norm(v){return String(v??'').replace(/\s+/g,' ').trim().toUpperCase();}
+function digitsOnly(v){return String(v??'').replace(/\D/g,'');}
+function chip(v){if(v==='Genting') return '<span class="chip genting">Genting</span>'; if(v==='MBG') return '<span class="chip mbg">MBG</span>'; if(v==='Genting dan MBG') return '<span class="chip both">Genting dan MBG</span>'; return '<span class="chip lain">Lainnya</span>';}
+function kategoriDariHp(v){const d=digitsOnly(v);const x=d.slice(0,2);if(x==='88') return 'Genting'; if(x==='98') return 'MBG'; if(x==='99') return 'Genting dan MBG'; return 'Lainnya';}
+function keyOfPerson(r, i){const nik=digitsOnly(r.nik);const hp=digitsOnly(r.hp);const nama=norm(r.nama); if(nik) return nik; if(hp && nama) return hp+'|'+nama; if(hp) return hp; if(nama && r.kecamatan) return nama+'|'+norm(r.kecamatan)+'|'+norm(r.kabupaten); return 'ROW|'+i+'|'+r.fileSumber;}
+function parseMetadata(file){const path=(file.webkitRelativePath||file.name||'').replaceAll('\\\\','/');const upper=path.toUpperCase();let bulan='';for(const k of Object.keys(monthMap)){if(upper.includes(k)){bulan=monthMap[k];break;}}let tahun='';const y=upper.match(/20\d{2}/);if(y) tahun=y[0];let kab='';const segs=path.split('/').filter(Boolean);for(const seg of segs){const m=seg.match(/^\s*\d+\s*-\s*(.+)$/i);if(m) kab=m[1].replaceAll('_',' ').trim();}
+ if(!kab){const clean=file.name.replace(/\.xlsx?$|\.csv$/i,'');const parts=clean.split('-');const yIdx=parts.findIndex(p=>/20\d{2}/.test(p));if(yIdx>=0 && parts[yIdx+1]) kab=parts[yIdx+1].replaceAll('_',' ').trim();}
+ return {bulan,tahun,kabupaten:kab.toUpperCase(),path};}
+function rowNonEmptyCount(row){return row.filter(v=>String(v??'').trim()!=='').length;}
+function findHeaderStart(rows){const cands=['NO.','PROVINSI','KABUPATEN / KOTA','KABUPATEN KOTA','KECAMATAN'];let best=-1,score=-1;for(let i=0;i<Math.min(rows.length,20);i++){const rr=rows[i].map(norm);let s=0;for(const c of cands){if(rr.includes(c)) s++;}if(s>score){score=s;best=i;}}if(score>=3) return best;for(let i=0;i<Math.min(rows.length,20);i++) if(rowNonEmptyCount(rows[i])>=8) return i;return 0;}
+function isNumericHeaderRow(row){const vals=row.map(v=>String(v??'').trim()).filter(Boolean);return vals.length>0 && vals.every(v=>/^\d+$/.test(v));}
+function combineHeaderRows(rows, start){const block=[];for(let i=start;i<Math.min(rows.length,start+6);i++){const row=rows[i]||[];if(isNumericHeaderRow(row)) continue;block.push(row);}const width=Math.max(...block.map(r=>r.length),0);const out=[];for(let c=0;c<width;c++){const parts=[];for(const r of block){let v=String((r[c]??'')).replace(/\s+/g,' ').trim();if(!v) continue;if(/^\d+$/.test(v)) continue;if(/^TITLE\b/i.test(v)) continue;if(!parts.includes(v)) parts.push(v);}let joined=parts.join(' | ');
+ joined=joined.replace(/KABUPATEN\s+KOTA/i,'KABUPATEN / KOTA').replace(/KELURAHAN\s+DESA/i,'KELURAHAN / DESA').replace(/DUSUN\s+RW/i,'DUSUN / RW').replace(/NO\.\s*HP/i,'NO. HP');
+ if(!joined) joined='Kolom_'+(c+1); out.push(joined);}return out;}
+function normalizeLen(row,len){const out=row.slice(0,len);while(out.length<len) out.push('');return out;}
+function shouldSkip(row){const vals=row.map(v=>String(v??'').trim());const non=vals.filter(Boolean);if(non.length===0) return true;const joined=non.join(' ').toUpperCase();if(joined.includes('TITLE Page'.toUpperCase())) return true;if(/^TABEL\s+/i.test(non[0]||'')) return true;if(/APR\s*-\s*20\d{2}/i.test(joined) && non.length<5) return true;if(joined.includes('PROVINSI') && joined.includes('KECAMATAN')) return true;return false;}
+function findColByHeader(headers, patterns){const ups=headers.map(norm);for(let i=0;i<ups.length;i++){for(const p of patterns){if(ups[i]===norm(p) || ups[i].includes(norm(p))) return i;}}return -1;}
+function scoreColumnByData(rows, validator){let best=-1, bestScore=-1;const width=Math.max(...rows.map(r=>r.length),0);for(let c=0;c<width;c++){let hit=0,total=0;for(const r of rows.slice(0,60)){const v=String(r[c]??'').trim();if(!v) continue;total++;if(validator(v)) hit++;}const score=total?hit/total:0;if(score>bestScore){bestScore=score;best=c;}}return bestScore>=0.35?best:-1;}
+function detectColumns(headers, dataRows){let idxNama=findColByHeader(headers,['NAMA']);let idxNik=findColByHeader(headers,['NIK']);let idxHp=findColByHeader(headers,['NO. HP','NO HP',' HP ']);let idxKab=findColByHeader(headers,['KABUPATEN / KOTA','KABUPATEN']);let idxKec=findColByHeader(headers,['KECAMATAN']);let idxKel=findColByHeader(headers,['KELURAHAN / DESA','KELURAHAN','DESA']);let idxDus=findColByHeader(headers,['DUSUN / RW','DUSUN']);let idxProv=findColByHeader(headers,['PROVINSI']);
+ if(idxHp<0) idxHp=scoreColumnByData(dataRows, v=>{const d=digitsOnly(v);return d.length>=10 && d.length<=15;});
+ if(idxNik<0) idxNik=scoreColumnByData(dataRows, v=>{const d=digitsOnly(v);return d.length>=14 && d.length<=20;});
+ if(idxNama<0) idxNama=scoreColumnByData(dataRows, v=>/[A-Za-z]/.test(v) && !/^\d+$/.test(v) && String(v).trim().length>=3 && digitsOnly(v).length < 8); 
+ return {idxNama,idxNik,idxHp,idxKab,idxKec,idxKel,idxDus,idxProv};}
+function isValidDataRow(row, idx){const hp=idx.idxHp>=0 ? digitsOnly(row[idx.idxHp]) : '';const nik=idx.idxNik>=0 ? digitsOnly(row[idx.idxNik]) : '';const nama=idx.idxNama>=0 ? String(row[idx.idxNama]??'').trim() : '';const noCol=String(row[0]??'').trim();
+ const identityCount=[hp.length>=10, nik.length>=14, nama.length>=3].filter(Boolean).length;
+ if(identityCount>=1) return true;
+ if(/^\d+$/.test(noCol) && rowNonEmptyCount(row)>=8) return true;
+ return false;}
+function uniqueValues(arr){return [...new Set(arr.filter(Boolean))].sort((a,b)=>String(a).localeCompare(String(b),'id'));}
+function addFiles(newFiles){for(const f of newFiles){if(/\.(xlsx|xls|csv)$/i.test(f.name) && !files.some(x=>x.name===f.name && x.size===f.size && (x.webkitRelativePath||'')===(f.webkitRelativePath||''))) files.push(f);}renderFiles();processFiles();}
+function renderFiles(){document.getElementById('fileList').innerHTML=files.map((f,i)=>`<div class="file"><span>${escapeHtml(f.webkitRelativePath||f.name)}</span><span style="cursor:pointer;color:#dc2626;font-weight:700" onclick="removeFile(${i})">✕</span></div>`).join('');}
+function removeFile(i){files.splice(i,1);renderFiles();if(files.length) processFiles(); else resetAll();}
+const drop=document.getElementById('drop');drop.addEventListener('dragover',e=>{e.preventDefault();drop.classList.add('drag');});drop.addEventListener('dragleave',()=>drop.classList.remove('drag'));drop.addEventListener('drop',e=>{e.preventDefault();drop.classList.remove('drag');addFiles([...e.dataTransfer.files]);});document.getElementById('fileInput').addEventListener('change',e=>{addFiles([...e.target.files]);e.target.value='';});document.getElementById('folderInput').addEventListener('change',e=>{addFiles([...e.target.files]);e.target.value='';});
+async function processFiles(){if(!files.length) return;rawRows=[];showMsg('Memproses file...');for(const file of files){try{const meta=parseMetadata(file);const buf=await file.arrayBuffer();const wb=XLSX.read(buf,{type:'array'});const ws=wb.Sheets[wb.SheetNames[0]];const rows=XLSX.utils.sheet_to_json(ws,{header:1,defval:'',raw:false});if(!rows.length) continue;const headerStart=findHeaderStart(rows);const headers=combineHeaderRows(rows,headerStart);const probeRows=rows.slice(headerStart+1).map(r=>normalizeLen(r,headers.length)).filter(r=>!shouldSkip(r));const idx=detectColumns(headers, probeRows);
+ for(const rr of rows.slice(headerStart+1)){const row=normalizeLen(rr,headers.length);if(shouldSkip(row)) continue;if(!isValidDataRow(row,idx)) continue;const hp=idx.idxHp>=0 ? row[idx.idxHp] : ''; rawRows.push({nama:idx.idxNama>=0?row[idx.idxNama]:'',nik:idx.idxNik>=0?row[idx.idxNik]:'',hp:hp,kategori:kategoriDariHp(hp),provinsi:idx.idxProv>=0?row[idx.idxProv]:'',kabupaten:idx.idxKab>=0?row[idx.idxKab]:meta.kabupaten,kecamatan:idx.idxKec>=0?row[idx.idxKec]:'',kelurahan:idx.idxKel>=0?row[idx.idxKel]:'',dusun:idx.idxDus>=0?row[idx.idxDus]:'',bulan:meta.bulan||'',tahun:meta.tahun||'',fileSumber:file.name,pathSumber:meta.path});}
+ }catch(err){console.error(err);}}
+ buildFilters();document.getElementById('dashboard').style.display='block';refreshDashboard();showMsg(`Selesai. ${files.length} file dibaca, ${rawRows.length} baris data valid terdeteksi.`);}
+function buildFilters(){const bulan=uniqueValues(rawRows.map(r=>r.bulan));const tahun=uniqueValues(rawRows.map(r=>r.tahun));const kab=uniqueValues(rawRows.map(r=>norm(r.kabupaten)));document.getElementById('bulanFilter').innerHTML='<option value="">Semua bulan</option>'+bulan.map(v=>`<option value="${escapeHtml(v)}">${escapeHtml(v)}</option>`).join('');document.getElementById('tahunFilter').innerHTML='<option value="">Semua tahun</option>'+tahun.map(v=>`<option value="${escapeHtml(v)}">${escapeHtml(v)}</option>`).join('');document.getElementById('kabFilter').innerHTML='<option value="">Semua kabupaten</option>'+kab.map(v=>`<option value="${escapeHtml(v)}">${escapeHtml(v)}</option>`).join('');}
+function getWorkingRows(){const bulan=document.getElementById('bulanFilter').value;const tahun=document.getElementById('tahunFilter').value;const kab=document.getElementById('kabFilter').value;const kategori=document.getElementById('kategoriFilter').value;const q=document.getElementById('searchInput').value.toLowerCase().trim();const dedupe=document.getElementById('dedupeToggle').checked;let rows=rawRows.filter(r=>(!bulan||r.bulan===bulan)&&(!tahun||r.tahun===tahun)&&(!kab||norm(r.kabupaten)===kab)&&(!kategori||r.kategori===kategori));if(q){rows=rows.filter(r=>[r.nama,r.nik,r.hp,r.kecamatan,r.kelurahan,r.kabupaten,r.fileSumber].join(' ').toLowerCase().includes(q));}if(dedupe){const map=new Map();rows.forEach((r,i)=>{const key=keyOfPerson(r,i);if(!map.has(key)) map.set(key,r);});rows=[...map.values()];}return rows;}
+function countKategori(rows){return {Genting:rows.filter(r=>r.kategori==='Genting').length,MBG:rows.filter(r=>r.kategori==='MBG').length,Both:rows.filter(r=>r.kategori==='Genting dan MBG').length,Total:rows.length};}
+function refreshDashboard(){filteredRows=getWorkingRows();const c=countKategori(filteredRows);document.getElementById('countGenting').textContent=c.Genting;document.getElementById('countMbg').textContent=c.MBG;document.getElementById('countBoth').textContent=c.Both;document.getElementById('countTotal').textContent=c.Total;const bulan=document.getElementById('bulanFilter').value||'semua bulan';const tahun=document.getElementById('tahunFilter').value||'semua tahun';const kab=document.getElementById('kabFilter').value||'semua kabupaten';document.getElementById('headline').textContent=`Ringkasan untuk ${bulan}, ${tahun}, ${kab}: Genting ${c.Genting}, MBG ${c.MBG}, Genting dan MBG ${c.Both}, total ${c.Total}.`;renderChart(c);renderSummaryTable();renderDetailTable();}
+function renderChart(c){const ctx=document.getElementById('mainChart');if(chart) chart.destroy();chart=new Chart(ctx,{type:'bar',data:{labels:['Genting','MBG','Genting dan MBG'],datasets:[{data:[c.Genting,c.MBG,c.Both],backgroundColor:['#ea580c','#2563eb','#16a34a'],borderRadius:8}]},options:{plugins:{legend:{display:false}},scales:{y:{beginAtZero:true,ticks:{precision:0}}}}});}
+function renderSummaryTable(){const dedupe=document.getElementById('dedupeToggle').checked;let base=rawRows.filter(r=>{const bulan=document.getElementById('bulanFilter').value;const tahun=document.getElementById('tahunFilter').value;const kab=document.getElementById('kabFilter').value;return (!bulan||r.bulan===bulan)&&(!tahun||r.tahun===tahun)&&(!kab||norm(r.kabupaten)===kab);});if(dedupe){const mapU=new Map();base.forEach((r,i)=>{const k=keyOfPerson(r,i)+'|'+r.bulan+'|'+r.tahun+'|'+norm(r.kabupaten); if(!mapU.has(k)) mapU.set(k,r);});base=[...mapU.values()];}
+ const map=new Map();for(const r of base){const key=[r.bulan,r.tahun,norm(r.kabupaten)].join('|');if(!map.has(key)) map.set(key,{bulan:r.bulan,tahun:r.tahun,kab:norm(r.kabupaten),g:0,m:0,b:0,t:0});const x=map.get(key);x.t++;if(r.kategori==='Genting') x.g++; else if(r.kategori==='MBG') x.m++; else if(r.kategori==='Genting dan MBG') x.b++;}
+ const rows=[...map.values()].sort((a,b)=>(a.tahun+a.bulan+a.kab).localeCompare(b.tahun+b.bulan+b.kab,'id'));document.getElementById('summaryBody').innerHTML=rows.map(r=>`<tr onclick="selectSummary('${String(r.bulan).replace(/'/g,'&#39;')}','${String(r.tahun).replace(/'/g,'&#39;')}','${String(r.kab).replace(/'/g,'&#39;')}')" style="cursor:pointer"><td>${escapeHtml(r.bulan)}</td><td>${escapeHtml(r.tahun)}</td><td>${escapeHtml(r.kab)}</td><td>${r.g}</td><td>${r.m}</td><td>${r.b}</td><td>${r.t}</td></tr>`).join('');}
+function selectSummary(bulan,tahun,kab){document.getElementById('bulanFilter').value=bulan;document.getElementById('tahunFilter').value=tahun;document.getElementById('kabFilter').value=kab;refreshDashboard();}
+function renderDetailTable(){const preview=filteredRows.slice(0,800);document.getElementById('detailBody').innerHTML=preview.map(r=>`<tr><td>${escapeHtml(r.nama)}</td><td>${escapeHtml(r.nik)}</td><td>${escapeHtml(r.hp)}</td><td>${chip(r.kategori)}</td><td>${escapeHtml(r.bulan)}</td><td>${escapeHtml(r.tahun)}</td><td>${escapeHtml(norm(r.kabupaten))}</td><td>${escapeHtml(r.kecamatan)}</td><td>${escapeHtml(r.kelurahan)}</td><td>${escapeHtml(r.dusun)}</td><td>${escapeHtml(r.fileSumber)}</td></tr>`).join('');}
+function downloadDetail(){const data=filteredRows.map(r=>({nama:r.nama,nik:r.nik,no_hp:r.hp,kategori:r.kategori,bulan:r.bulan,tahun:r.tahun,kabupaten:norm(r.kabupaten),kecamatan:r.kecamatan,kelurahan_desa:r.kelurahan,dusun_rw:r.dusun,file_sumber:r.fileSumber}));const ws=XLSX.utils.json_to_sheet(data);const wb=XLSX.utils.book_new();XLSX.utils.book_append_sheet(wb,ws,'Detail');const out=XLSX.write(wb,{bookType:'xlsx',type:'array'});saveAs(new Blob([out],{type:'application/octet-stream'}),'detail_dashboard_siga_v2.xlsx');}
+function resetAll(){files=[];rawRows=[];filteredRows=[];renderFiles();document.getElementById('dashboard').style.display='none';if(chart) chart.destroy();showMsg('Reset selesai.');}
+</script>
+</body>
+</html>

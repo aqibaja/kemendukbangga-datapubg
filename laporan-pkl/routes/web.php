@@ -39,8 +39,11 @@ Route::get('/', function (Request $request) {
         ->take(3)
         ->get();
 
+    $driver = DB::connection()->getDriverName();
+    $monthSelect = $driver === 'sqlite' ? "strftime('%m', created_at)" : "MONTH(created_at)";
+
     $viewsPerMonth = DB::table('dashboard_views')
-        ->selectRaw("strftime('%m', created_at) as month, COUNT(*) as total")
+        ->selectRaw("{$monthSelect} as month, COUNT(*) as total")
         ->whereYear('created_at', $selectedYear)
         ->groupBy('month')
         ->orderBy('month')
