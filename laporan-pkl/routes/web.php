@@ -4,6 +4,10 @@ Route::get('/zoomdesk', function () {
     return view('zoomdesk', ['title' => 'Zoomdesk Jadwal Zoom Meeting']);
 });
 
+Route::get('/update-k0-sppg', function () {
+    return view('update-k0-sppg', ['title' => 'Update K0 SPPG']);
+});
+
 use App\Models\User;
 use Illuminate\Http\Request;
 use App\Models\DashboardPage;

@@ -17,28 +17,46 @@
     @endphp
 
     {{-- NAV ICON TENGAH (DESKTOP) --}}
-    <div class="hidden lg:flex flex-none justify-center items-center gap-2 xl:gap-4">
-        <x-nav-link href="/" :active="request()->is('/')">
-            <i class="fa-solid fa-house text-2xl"></i>
+    <div class="hidden lg:flex flex-none justify-center items-center gap-1 xl:gap-2">
+        <x-nav-link href="/" :active="request()->is('/')" class="group !w-auto !px-3 flex items-center overflow-hidden transition-all duration-300 ease-in-out">
+            <i class="fa-solid fa-house text-2xl shrink-0"></i>
+            <span class="max-w-0 overflow-hidden opacity-0 group-hover:max-w-[150px] group-hover:opacity-100 group-hover:ml-2 transition-all duration-300 ease-in-out font-medium text-sm whitespace-nowrap">Beranda</span>
         </x-nav-link>
-        <x-nav-link href="/about" :active="request()->is('about')">
-            <i class="fa-solid fa-circle-info text-2xl"></i>
+
+        <x-nav-link href="/about" :active="request()->is('about')" class="group !w-auto !px-3 flex items-center overflow-hidden transition-all duration-300 ease-in-out">
+            <i class="fa-solid fa-circle-info text-2xl shrink-0"></i>
+            <span class="max-w-0 overflow-hidden opacity-0 group-hover:max-w-[150px] group-hover:opacity-100 group-hover:ml-2 transition-all duration-300 ease-in-out font-medium text-sm whitespace-nowrap">Informasi</span>
         </x-nav-link>
-        <x-nav-link href="/contact" :active="request()->is('contact')">
-            <i class="fa-solid fa-envelope text-2xl"></i>
+
+        <x-nav-link href="/contact" :active="request()->is('contact')" class="group !w-auto !px-3 flex items-center overflow-hidden transition-all duration-300 ease-in-out">
+            <i class="fa-solid fa-envelope text-2xl shrink-0"></i>
+            <span class="max-w-0 overflow-hidden opacity-0 group-hover:max-w-[150px] group-hover:opacity-100 group-hover:ml-2 transition-all duration-300 ease-in-out font-medium text-sm whitespace-nowrap">Kontak</span>
         </x-nav-link>
-        <x-nav-link href="/datas" :active="request()->is('datas')">
-            <i class="fa-solid fa-database text-2xl"></i>
+
+        <x-nav-link href="/datas" :active="request()->is('datas')" class="group !w-auto !px-3 flex items-center overflow-hidden transition-all duration-300 ease-in-out">
+            <i class="fa-solid fa-database text-2xl shrink-0"></i>
+            <span class="max-w-0 overflow-hidden opacity-0 group-hover:max-w-[150px] group-hover:opacity-100 group-hover:ml-2 transition-all duration-300 ease-in-out font-medium text-sm whitespace-nowrap">Data</span>
         </x-nav-link>
-        <x-nav-link href="/zoomdesk" class="flex items-center px-3 py-2 rounded-md hover:bg-black/10 transition">
-            <i class="fa-solid fa-desktop text-2xl"></i>
+
+        <x-nav-link href="/zoomdesk" :active="request()->is('zoomdesk')" class="group !w-auto !px-3 flex items-center overflow-hidden transition-all duration-300 ease-in-out">
+            <i class="fa-solid fa-desktop text-2xl shrink-0"></i>
+            <span class="max-w-0 overflow-hidden opacity-0 group-hover:max-w-[150px] group-hover:opacity-100 group-hover:ml-2 transition-all duration-300 ease-in-out font-medium text-sm whitespace-nowrap">Zoom Desk</span>
         </x-nav-link>
-        <x-nav-link href="/laporan-capaian" :active="request()->is('laporan-capaian')" class="flex items-center px-3 py-2 rounded-md hover:bg-black/10 transition" title="Laporan Capaian">
-            <i class="fa-solid fa-chart-line text-2xl"></i>
+
+        <x-nav-link href="/laporan-capaian" :active="request()->is('laporan-capaian')" class="group !w-auto !px-3 flex items-center overflow-hidden transition-all duration-300 ease-in-out">
+            <i class="fa-solid fa-chart-line text-2xl shrink-0"></i>
+            <span class="max-w-0 overflow-hidden opacity-0 group-hover:max-w-[200px] group-hover:opacity-100 group-hover:ml-2 transition-all duration-300 ease-in-out font-medium text-sm whitespace-nowrap">Laporan Capaian</span>
         </x-nav-link>
+
+        <x-nav-link href="/update-k0-sppg" :active="request()->is('update-k0-sppg')" class="group !w-auto !px-3 flex items-center overflow-hidden transition-all duration-300 ease-in-out">
+            <i class="fa-solid fa-file-pen text-2xl shrink-0"></i>
+            <span class="max-w-0 overflow-hidden opacity-0 group-hover:max-w-[200px] group-hover:opacity-100 group-hover:ml-2 transition-all duration-300 ease-in-out font-medium text-sm whitespace-nowrap">Update K0 SPPG</span>
+        </x-nav-link>
+
         @auth
-            <x-nav-link href="/user" :active="request()->is('user')">
-                <i class="fa-solid fa-gear text-2xl"></i>
+            <x-nav-link href="/user" :active="request()->is('user')" class="group !w-auto !px-3 flex items-center overflow-hidden transition-all duration-300 ease-in-out">
+                <i class="fa-solid fa-gear text-2xl shrink-0"></i>
+                <span class="max-w-0 overflow-hidden opacity-0 group-hover:max-w-[150px] group-hover:opacity-100 group-hover:ml-2 transition-all duration-300 ease-in-out font-medium text-sm whitespace-nowrap">Pengaturan</span>
             </x-nav-link>
         @endauth
     </div>
@@ -154,19 +172,48 @@
     <div x-show="openMenu" x-transition @click.outside="openMenu = false"
         class="absolute top-full right-4 mt-2
                 bg-white rounded-2xl shadow-xl
-                p-3 flex flex-col gap-2 lg:hidden z-50">
-        <x-nav-link href="/"><i class="fa-solid fa-house text-2xl"></i></x-nav-link>
-        <x-nav-link href="/about"><i class="fa-solid fa-circle-info text-2xl"></i></x-nav-link>
-        <x-nav-link href="/contact"><i class="fa-solid fa-envelope text-2xl"></i></x-nav-link>
-        <x-nav-link href="/datas"><i class="fa-solid fa-database text-2xl"></i></x-nav-link>
-        <x-nav-link href="/zoomdesk" :active="request()->is('zoomdesk')">
-            <i class="fa-solid fa-desktop text-2xl"></i>
+                p-3 flex flex-col gap-2 lg:hidden z-50 min-w-[200px]">
+        
+        <x-nav-link href="/" :active="request()->is('/')" class="!w-full !justify-start px-4 gap-3">
+            <i class="fa-solid fa-house text-xl w-6 text-center"></i>
+            <span class="font-medium text-sm">Beranda</span>
         </x-nav-link>
-        <x-nav-link href="/laporan-capaian" :active="request()->is('laporan-capaian')">
-            <i class="fa-solid fa-chart-line text-2xl"></i>
+        
+        <x-nav-link href="/about" :active="request()->is('about')" class="!w-full !justify-start px-4 gap-3">
+            <i class="fa-solid fa-circle-info text-xl w-6 text-center"></i>
+            <span class="font-medium text-sm">Informasi</span>
         </x-nav-link>
+        
+        <x-nav-link href="/contact" :active="request()->is('contact')" class="!w-full !justify-start px-4 gap-3">
+            <i class="fa-solid fa-envelope text-xl w-6 text-center"></i>
+            <span class="font-medium text-sm">Kontak</span>
+        </x-nav-link>
+        
+        <x-nav-link href="/datas" :active="request()->is('datas')" class="!w-full !justify-start px-4 gap-3">
+            <i class="fa-solid fa-database text-xl w-6 text-center"></i>
+            <span class="font-medium text-sm">Data</span>
+        </x-nav-link>
+        
+        <x-nav-link href="/zoomdesk" :active="request()->is('zoomdesk')" class="!w-full !justify-start px-4 gap-3">
+            <i class="fa-solid fa-desktop text-xl w-6 text-center"></i>
+            <span class="font-medium text-sm">Zoom Desk</span>
+        </x-nav-link>
+        
+        <x-nav-link href="/laporan-capaian" :active="request()->is('laporan-capaian')" class="!w-full !justify-start px-4 gap-3">
+            <i class="fa-solid fa-chart-line text-xl w-6 text-center"></i>
+            <span class="font-medium text-sm">Laporan Capaian</span>
+        </x-nav-link>
+        
+        <x-nav-link href="/update-k0-sppg" :active="request()->is('update-k0-sppg')" class="!w-full !justify-start px-4 gap-3">
+            <i class="fa-solid fa-file-pen text-xl w-6 text-center"></i>
+            <span class="font-medium text-sm">Update K0 SPPG</span>
+        </x-nav-link>
+        
         @auth
-            <x-nav-link href="/user"><i class="fa-solid fa-gear text-2xl"></i></x-nav-link>
+            <x-nav-link href="/user" :active="request()->is('user')" class="!w-full !justify-start px-4 gap-3">
+                <i class="fa-solid fa-gear text-xl w-6 text-center"></i>
+                <span class="font-medium text-sm">Pengaturan</span>
+            </x-nav-link>
         @endauth
     </div>
 </div>

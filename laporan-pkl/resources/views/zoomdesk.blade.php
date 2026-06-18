@@ -126,17 +126,32 @@
 <script>
 const SHEET_URL = 'https://script.google.com/macros/s/AKfycbx_JqXKxsNanPlK_M-IbQk-883hGKpm483PpMBlixWcEwhbhe5XJfxQAiLmJ4mvzsU8/exec';
 let allData = [];
+function toWIB(d) {
+    // Untuk date epoch 1899 (time-only dari Google Sheets), timezone historis Jakarta
+    // adalah +07:07:12 (bukan +07:00), sehingga getHours() ikut +7 menit.
+    // Solusi: baca UTC lalu tambah 7 jam manual untuk WIB.
+    if (d.getUTCFullYear() <= 1900) {
+        const h = (d.getUTCHours() + 7) % 24;
+        const m = d.getUTCMinutes();
+        return { hours: h.toString().padStart(2, '0'), minutes: m.toString().padStart(2, '0') };
+    }
+    // Tanggal modern: getHours() sudah dalam WIB (lokal browser)
+    return {
+        hours: d.getHours().toString().padStart(2, '0'),
+        minutes: d.getMinutes().toString().padStart(2, '0')
+    };
+}
 function normalizeDateTime(rawInput) {
     if (!rawInput) return { date: '', time: '' };
     if (/\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}/.test(rawInput)) {
         const d = new Date(rawInput);
         if (isNaN(d)) return { date: '', time: '' };
+        const wib = toWIB(d);
+        // Untuk tanggal, selalu pakai local (getFullYear/Month/Date sudah WIB)
         const year = d.getFullYear();
         const month = (d.getMonth() + 1).toString().padStart(2, '0');
         const day = d.getDate().toString().padStart(2, '0');
-        const hours = d.getHours().toString().padStart(2, '0');
-        const minutes = d.getMinutes().toString().padStart(2, '0');
-        return { date: `${year}-${month}-${day}`, time: `${hours}:${minutes}` };
+        return { date: `${year}-${month}-${day}`, time: `${wib.hours}:${wib.minutes}` };
     }
     const parts = rawInput.split(' ');
     if (!parts[0]) return { date: '', time: '' };
@@ -154,15 +169,13 @@ function normalizeTimeOnly(timeStr) {
     if (/\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}/.test(timeStr)) {
         const d = new Date(timeStr);
         if (isNaN(d)) return '';
-        const hours = d.getHours().toString().padStart(2, '0');
-        const minutes = d.getMinutes().toString().padStart(2, '0');
-        return `${hours}:${minutes}`;
+        const wib = toWIB(d);
+        return `${wib.hours}:${wib.minutes}`;
     }
-    const date = new Date(`1970-01-01 ${timeStr}`);
-    if (isNaN(date)) return '';
-    const hours = date.getHours().toString().padStart(2, '0');
-    const minutes = date.getMinutes().toString().padStart(2, '0');
-    return `${hours}:${minutes}`;
+    // Fallback: jika sudah format HH:MM, pakai langsung
+    const match = timeStr.match(/^(\d{1,2}):(\d{2})/);
+    if (match) return `${match[1].padStart(2, '0')}:${match[2]}`;
+    return '';
 }
 async function loadData() {
     document.getElementById('loading').style.display = 'flex';
