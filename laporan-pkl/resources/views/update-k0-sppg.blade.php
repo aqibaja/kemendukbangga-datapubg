@@ -433,7 +433,7 @@
     .fade-in { animation: fadeIn 0.4s ease; }
     @keyframes fadeIn { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: translateY(0); } }
 
-    .hidden { display: none !important; }
+    #sppg-app .hidden, #loadingOverlay.hidden { display: none !important; }
 
     /* ---- RESPONSIVE ---- */
     @media (max-width: 640px) {
