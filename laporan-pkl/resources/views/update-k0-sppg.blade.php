@@ -610,7 +610,7 @@
 // ============================================================
 // KONFIGURASI — Ganti dengan URL Apps Script Anda setelah deploy
 // ============================================================
-const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxo3-JsaJFSgIDVgZ7qroiJjwTTUC7BU_U45KiUOwJuou2OHQ94cQU52eCfB2r0dzi8/exec';
+const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwh1pQegoQHBQfhJSqVZkt7ZYuTw-56sWN8VT086Cmk93MfRf2-rVNFWYeZU2wOBmls/exec';
 
 
 // ============================================================
@@ -1579,6 +1579,15 @@ async function saveCurrentRow() {
             Object.assign(state.originalData[rowIndex], dataToSend);
             Object.assign(state.rows[state.currentRowIdx], dataToSend);
             state.dirtyMap[rowIndex] = {};
+
+            // Sinkronkan Timestamp dengan nilai baru dari server
+            if (result.updatedTimestamp) {
+                const tsKey = state.headers.find(h => h && h.toUpperCase() === 'TIMESTAMP');
+                if (tsKey) {
+                    state.originalData[rowIndex][tsKey] = result.updatedTimestamp;
+                    state.rows[state.currentRowIdx][tsKey] = result.updatedTimestamp;
+                }
+            }
             
             // Render ulang form agar input yang di-clear otomatis hilang juga dari layar
             renderEditForms();

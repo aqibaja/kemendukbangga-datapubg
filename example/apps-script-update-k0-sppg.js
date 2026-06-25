@@ -392,6 +392,9 @@ function updateRow(sheetId, rowIndex, data, nama, password) {
     }
   });
 
+  // Update Timestamp (kolom A) dengan waktu submit terbaru (sebagai string agar format jam ikut tersimpan)
+  sheet.getRange(rowIndex + 1, COL_TIMESTAMP + 1).setValue(Utilities.formatDate(new Date(), 'Asia/Jakarta', 'M/d/yyyy HH:mm:ss'));
+
   // Log perubahan ke sheet "Update Log" (buat jika belum ada)
   try {
     let logSheet = ss.getSheetByName('Update Log');
@@ -409,7 +412,7 @@ function updateRow(sheetId, rowIndex, data, nama, password) {
     // Log error tidak menghentikan proses utama
   }
 
-  return { success: true, message: 'Data berhasil disimpan (VERSI BARU).' };
+  return { success: true, message: 'Data berhasil disimpan (VERSI BARU).', updatedTimestamp: Utilities.formatDate(new Date(), 'Asia/Jakarta', 'M/d/yyyy HH:mm:ss') };
 }
 
 // ============================================================
