@@ -113,11 +113,11 @@
             </a>
         </div>
             <a href="/login"
-                class="flex items-center gap-2 px-3 xl:px-4 py-2 rounded-md
+                title="Login"
+                class="w-10 h-10 flex items-center justify-center rounded-full
                         bg-[#b0f5fd97]/90 text-black border
-                        hover:bg-[#91bec3d4] transition text-xs xl:text-sm font-medium whitespace-nowrap">
+                        hover:bg-[#91bec3d4] transition text-base">
                 <i class="fa-solid fa-right-to-bracket"></i>
-                Login
             </a>
         @endauth
     </div>
