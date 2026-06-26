@@ -1,33 +1,4 @@
-<script>
-    // Deteksi ukuran layar dan redirect dengan parameter per_page
-    function setPerPageByScreenSize() {
-        const width = window.innerWidth;
-        let perPage;
 
-        if (width < 640) {
-            // Mobile
-            perPage = 6;
-        } else if (width < 1024) {
-            // Tablet
-            perPage = 8;
-        } else {
-            // Desktop
-            perPage = 5;
-        }
-
-        // Cek apakah per_page sudah sesuai
-        const urlParams = new URLSearchParams(window.location.search);
-        const currentPerPage = parseInt(urlParams.get('per_page'), 10);
-
-        if (isNaN(currentPerPage) || currentPerPage !== perPage) {
-            urlParams.set('per_page', perPage);
-            urlParams.delete('page'); // Reset ke halaman 1
-            window.location.search = urlParams.toString();
-        }
-    }
-
-    window.addEventListener('load', setPerPageByScreenSize);
-</script>
 
 <x-layout>
     <x-slot:title>{{ $title }}</x-slot:title>
@@ -62,8 +33,16 @@
             </form>
         </div>
 
-        {{-- Empty State - Tampilkan jika tidak ada data --}}
-        @if ($datas->isEmpty())
+        @php
+            $showNative = false;
+            $search = request('search');
+            if (!$search || stripos('Dashboard Presensi Zoom', $search) !== false || stripos('absensi', $search) !== false || stripos('zoom', $search) !== false) {
+                $showNative = true;
+            }
+        @endphp
+
+        {{-- Empty State - Tampilkan jika tidak ada data DAN native dashboard tidak muncul --}}
+        @if ($datas->isEmpty() && !$showNative)
             <div class="flex flex-col items-center justify-center py-12 sm:py-16">
                 <svg class="w-16 h-16 sm:w-20 sm:h-20 text-gray-300 mb-4" fill="none" stroke="currentColor"
                     viewBox="0 0 24 24">
@@ -95,6 +74,9 @@
             {{-- Grid Cards --}}
             <article class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-3 sm:gap-4">
                 
+
+
+                @if($showNative)
                 {{-- NATIVE DASHBOARD: ABSENSI ZOOM --}}
                 <div class="bg-white shadow-md rounded-lg overflow-hidden hover:shadow-xl transition-shadow duration-300 relative">
                     
@@ -131,6 +113,8 @@
                         </div>
                     </div>
                 </div>
+                @endif
+
 
                 @foreach ($datas as $data)
                     <div
@@ -176,99 +160,7 @@
                 @endforeach
             </article>
 
-            {{-- Pagination --}}
-            @if ($datas->hasPages())
-                <div class="mt-6 sm:mt-8">
-                    <nav class="flex items-center justify-center gap-1 sm:gap-2 flex-wrap">
 
-                        {{-- Previous Button --}}
-                        @if ($datas->onFirstPage())
-                            <span
-                                class="px-2 sm:px-3 py-1.5 sm:py-2 text-gray-400 bg-gray-100 rounded-md sm:rounded-lg cursor-not-allowed">
-                                <svg class="w-4 h-4 sm:w-5 sm:h-5" fill="none" stroke="currentColor"
-                                    viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                        d="M15 19l-7-7 7-7" />
-                                </svg>
-                            </span>
-                        @else
-                            <a href="{{ $datas->appends(request()->query())->previousPageUrl() }}"
-                                class="px-2 sm:px-3 py-1.5 sm:py-2 text-blue-600 bg-white border border-gray-300 rounded-md sm:rounded-lg hover:bg-blue-50 transition-colors">
-                                <svg class="w-4 h-4 sm:w-5 sm:h-5" fill="none" stroke="currentColor"
-                                    viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                        d="M15 19l-7-7 7-7" />
-                                </svg>
-                            </a>
-                        @endif
-
-                        {{-- Page Numbers --}}
-                        @php
-                            $currentPage = $datas->currentPage();
-                            $lastPage = $datas->lastPage();
-
-                            // Logic untuk menampilkan halaman yang relevan di mobile
-                            if ($lastPage <= 5) {
-                                $start = 1;
-                                $end = $lastPage;
-                            } else {
-                                $start = max(1, $currentPage - 1);
-                                $end = min($lastPage, $currentPage + 1);
-
-                                // Pastikan selalu ada 3 halaman yang ditampilkan jika memungkinkan
-                                if ($end - $start < 2) {
-                                    if ($start == 1) {
-                                        $end = min($lastPage, 3);
-                                    } else {
-                                        $start = max(1, $lastPage - 2);
-                                    }
-                                }
-                            }
-                        @endphp
-
-                        @for ($page = $start; $page <= $end; $page++)
-                            @if ($page == $currentPage)
-                                <span
-                                    class="px-2.5 sm:px-4 py-1.5 sm:py-2 text-xs sm:text-sm text-white bg-blue-600 rounded-md sm:rounded-lg font-semibold">
-                                    {{ $page }}
-                                </span>
-                            @else
-                                <a href="{{ $datas->appends(request()->query())->url($page) }}"
-                                    class="px-2.5 sm:px-4 py-1.5 sm:py-2 text-xs sm:text-sm text-gray-700 bg-white border border-gray-300 rounded-md sm:rounded-lg hover:bg-gray-50 transition-colors">
-                                    {{ $page }}
-                                </a>
-                            @endif
-                        @endfor
-
-                        {{-- Next Button --}}
-                        @if ($datas->hasMorePages())
-                            <a href="{{ $datas->appends(request()->query())->nextPageUrl() }}"
-                                class="px-2 sm:px-3 py-1.5 sm:py-2 text-blue-600 bg-white border border-gray-300 rounded-md sm:rounded-lg hover:bg-blue-50 transition-colors">
-                                <svg class="w-4 h-4 sm:w-5 sm:h-5" fill="none" stroke="currentColor"
-                                    viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                        d="M9 5l7 7-7 7" />
-                                </svg>
-                            </a>
-                        @else
-                            <span
-                                class="px-2 sm:px-3 py-1.5 sm:py-2 text-gray-400 bg-gray-100 rounded-md sm:rounded-lg cursor-not-allowed">
-                                <svg class="w-4 h-4 sm:w-5 sm:h-5" fill="none" stroke="currentColor"
-                                    viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                        d="M9 5l7 7-7 7" />
-                                </svg>
-                            </span>
-                        @endif
-                    </nav>
-
-                    {{-- Page Info --}}
-                    <div class="text-center mt-3 sm:mt-4 text-xs sm:text-sm text-gray-600">
-                        Menampilkan {{ $datas->firstItem() ?? 0 }} - {{ $datas->lastItem() ?? 0 }} dari
-                        {{ $datas->total() }} data
-                    </div>
-                </div>
-            @endif
         @endif
 
     </div>

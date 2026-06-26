@@ -101,15 +101,9 @@ Route::get('/datas', function (Request $request) {
         $query->where('nama_dashboard', 'like', '%' . $request->search . '%');
     }
 
-    // Ambil perPage dari query parameter, default 10
-    $perPage = $request->input('per_page', 8);
-
-    // Validasi agar hanya nilai yang diizinkan
-    $perPage = in_array($perPage, [6, 8, 5]) ? $perPage : 8;
-
     return view('datas', [
         'title' => 'Datas',
-        'datas' => $query->latest()->paginate($perPage)->appends($request->query())
+        'datas' => $query->latest()->get()
     ]);
 });
 
