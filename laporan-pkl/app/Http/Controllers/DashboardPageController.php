@@ -37,8 +37,11 @@ class DashboardPageController extends Controller
                 ->store('thumbnails', 'public');
         }
 
+        $platform = str_contains(strtolower($request->embed_link), 'tableau') ? 'tableau' : 'looker';
+
         DashboardPage::create([
             'nama_dashboard' => $request->nama_dashboard,
+            'platform' => $platform,
             'slug' => $slug,
             'embed_link' => $request->embed_link,
             'thumbnail' => $thumbnailPath, // null jika tidak upload
@@ -80,6 +83,7 @@ class DashboardPageController extends Controller
 
         $page->nama_dashboard = $request->nama_dashboard;
         $page->embed_link = $request->embed_link;
+        $page->platform = str_contains(strtolower($request->embed_link), 'tableau') ? 'tableau' : 'looker';
 
         // Jika upload thumbnail baru
         if ($request->hasFile('thumbnail')) {

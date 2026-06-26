@@ -94,6 +94,44 @@
         @else
             {{-- Grid Cards --}}
             <article class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-3 sm:gap-4">
+                
+                {{-- NATIVE DASHBOARD: ABSENSI ZOOM --}}
+                <div class="bg-white shadow-md rounded-lg overflow-hidden hover:shadow-xl transition-shadow duration-300 relative">
+                    
+                    {{-- Thumbnail dengan aspect ratio 1:1 --}}
+                    <div class="relative w-full pt-[100%] overflow-hidden bg-gray-200">
+                        <img 
+                            src="{{ asset('public/image/presensi-zoom.png') }}"
+                            alt="Dashboard Presensi Zoom"
+                            class="absolute top-0 left-0 w-full h-full object-cover transition duration-300 hover:scale-105">
+                    </div>
+
+                    {{-- Content --}}
+                    <div class="p-2 sm:p-3">
+                        <a href="{{ route('absensi-zoom') }}" class="block">
+                            <h3 class="text-xs sm:text-sm font-semibold text-gray-800 hover:text-blue-600 transition-colors line-clamp-2 min-h-8 sm:min-h-10">
+                                Dashboard Presensi Zoom
+                            </h3>
+                        </a>
+                        <div class="flex items-center justify-end mt-1.5 sm:mt-2">
+                            
+                            {{-- Native Views Counter --}}
+                            <div class="flex items-center gap-1 text-gray-500">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-3 w-3 sm:h-4 sm:w-4" fill="none"
+                                    viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+                                </svg>
+                                <span class="text-[10px] sm:text-xs">
+                                    {{ number_format(\Illuminate\Support\Facades\Cache::get('native_dashboard_zoom_views', 0)) }}
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
                 @foreach ($datas as $data)
                     <div
                         class="bg-white shadow-md rounded-lg overflow-hidden hover:shadow-xl transition-shadow duration-300">

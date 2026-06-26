@@ -86,17 +86,22 @@
         <!-- Grid selalu 3 kolom di semua ukuran layar -->
         <div class="grid grid-cols-3 gap-2 sm:gap-4 md:gap-6">
             @foreach ($dashboards as $d)
-                <a href="{{ url('/data/' . $d->slug) }}" class="flex">
+                <a href="{{ isset($d->is_native) && $d->is_native ? route('absensi-zoom') : url('/data/' . $d->slug) }}" class="flex">
                     <div
-                        class="bg-white rounded-lg sm:rounded-2xl p-2 sm:p-4 md:p-6 shadow-md hover:shadow-lg transition-shadow flex flex-col w-full">
+                        class="bg-white rounded-lg sm:rounded-2xl p-2 sm:p-4 md:p-6 shadow-md hover:shadow-lg transition-shadow flex flex-col w-full relative">
                         <h3
                             class="font-semibold text-[8px] sm:text-xs md:text-sm lg:text-base mb-1 line-clamp-2 h-6 sm:h-8 md:h-10">
                             {{ $d->nama_dashboard }}</h3>
                         <p class="text-[5px] sm:text-[10px] lg:text-sm md:text-xs text-slate-400 mb-2 sm:mb-4">
                             {{ $d->views_count }} Kali</p>
-                        <div class="h-24 sm:h-32 md:h-40 lg:h-48 mb-2 sm:mb-5 bg-slate-100 rounded flex items-center justify-center">
-                            <img src="{{ $d->thumbnail ? asset('laporan-pkl/storage/app/public/' . $d->thumbnail) : asset('public/thumbnails/default.jpg') }}"
-                                alt="Thumbnail {{ $d->nama_dashboard }}"  class="max-h-full max-w-full object-contain">
+                        <div class="h-24 sm:h-32 md:h-40 lg:h-48 mb-2 sm:mb-5 bg-slate-100 rounded flex items-center justify-center overflow-hidden">
+                            @if(isset($d->is_native) && $d->is_native)
+                                <img src="{{ asset('public/image/presensi-zoom.png') }}"
+                                    alt="Thumbnail {{ $d->nama_dashboard }}" class="w-full h-full object-cover transition duration-300 hover:scale-105">
+                            @else
+                                <img src="{{ $d->thumbnail ? asset('laporan-pkl/storage/app/public/' . $d->thumbnail) : asset('thumbnails/default.jpg') }}"
+                                    alt="Thumbnail {{ $d->nama_dashboard }}" class="max-h-full max-w-full object-contain">
+                            @endif
                         </div>
                     </div>
                 </a>

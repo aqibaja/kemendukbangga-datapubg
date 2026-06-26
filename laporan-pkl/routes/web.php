@@ -22,9 +22,19 @@ use App\Http\Controllers\ContactController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\DashboardPageController;
 use App\Http\Controllers\LaporanCapaianController;
-
+use App\Http\Controllers\AbsensiZoomController;
 Route::get('/', function (Request $request) {
-    $dashboardPages = DashboardPage::withCount('views')->orderByDesc('views_count')->take(3)->get();
+    $dashboardPages = DashboardPage::withCount('views')->get();
+    
+    $nativeDashboard = new DashboardPage([
+        'nama_dashboard' => 'Dashboard Presensi Zoom',
+        'slug' => 'absensi-zoom',
+    ]);
+    $nativeDashboard->views_count = \Illuminate\Support\Facades\Cache::get('native_dashboard_zoom_views', 0);
+    $nativeDashboard->is_native = true;
+    
+    $dashboardPages->push($nativeDashboard);
+    $dashboardPages = $dashboardPages->sortByDesc('views_count')->take(3);
     $selectedYear = $request->get('year', now()->year); // Default to the current year
 
     $startYear = DashboardView::orderBy('created_at')
@@ -144,6 +154,10 @@ Route::post('/user/profile', [ProfileController::class, 'update'])
 Route::post('/user/store', [UserController::class, 'store'])
     ->middleware('auth')
     ->name('user.store');
+
+Route::get('/data/absensi-zoom', [AbsensiZoomController::class, 'index'])->name('absensi-zoom');
+Route::get('/data/absensi-zoom/person/{name}', [AbsensiZoomController::class, 'personDetail'])->name('absensi-zoom.person');
+Route::get('/data/absensi-zoom/city/{city}', [AbsensiZoomController::class, 'cityDetail'])->name('absensi-zoom.city');
 
 Route::get('/data/{dashboardPage:slug}', function (DashboardPage $dashboardPage) {
     // Load relasi creator
