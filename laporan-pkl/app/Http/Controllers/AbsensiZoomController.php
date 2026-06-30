@@ -46,18 +46,7 @@ class AbsensiZoomController extends Controller
         } else {
             $allRankings = $service->getOverallRankings();
             
-            if ($searchPerson) {
-                $rankings = array_filter($allRankings, function($person) use ($searchPerson) {
-                    return stripos($person['name'], $searchPerson) !== false;
-                });
-            } else {
-                $rankings = $allRankings;
-            }
-            
-            // Limit to top 200 for performance if no search
-            if (empty($searchPerson)) {
-                $rankings = array_slice($rankings, 0, 200);
-            }
+            $rankings = $allRankings;
         }
 
         return view('absensi-zoom', [

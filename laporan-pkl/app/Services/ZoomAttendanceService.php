@@ -28,9 +28,12 @@ class ZoomAttendanceService
         
         // Increase memory limit to handle potentially huge JSON payload with empty rows
         ini_set('memory_limit', '512M');
+        // Increase execution time to avoid PHP terminating the process while waiting for Google Apps Script
+        ini_set('max_execution_time', 120);
+        set_time_limit(120);
         
         try {
-            $response = Http::timeout(30)->get($apiUrl);
+            $response = Http::timeout(120)->get($apiUrl);
             
             if ($response->successful()) {
                 $data = $response->json();

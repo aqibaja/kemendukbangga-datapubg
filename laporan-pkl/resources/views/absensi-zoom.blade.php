@@ -279,108 +279,224 @@
             </script>
         @else
             <!-- TAB PESERTA -->
-            <div class="bg-white/90 backdrop-blur-xl rounded-3xl shadow-xl border border-gray-100 overflow-hidden">
+            <div class="bg-white/90 backdrop-blur-xl rounded-3xl shadow-xl border border-gray-100 overflow-hidden" x-data="participantTable()">
                 <div class="p-6 md:p-8 bg-gradient-to-r from-sky-50 to-amber-50/30 border-b border-gray-100 flex flex-col sm:flex-row justify-between items-center gap-6">
                     <div>
                         <h3 class="text-2xl font-extrabold text-gray-900"><i class="fas fa-medal text-amber-500 mr-2"></i> Peringkat & Konsistensi</h3>
                         <p class="text-sm text-gray-500 font-medium mt-1">Siapa yang paling rajin hadir di setiap kegiatan?</p>
                     </div>
                     
-                    <form action="{{ route('absensi-zoom') }}" method="GET" class="w-full sm:w-80" @submit="$dispatch('data-loading')">
-                        <input type="hidden" name="tab" value="peserta">
-                        <div class="relative group">
-                            <input type="text" name="search_person" value="{{ request('search_person') }}" placeholder="Cari nama peserta..." class="w-full bg-white border-2 border-gray-200 text-gray-800 text-sm font-medium rounded-2xl focus:ring-4 focus:ring-blue-100 focus:border-blue-500 block p-3.5 pl-12 transition-all shadow-sm group-hover:border-blue-300">
-                            <div class="absolute inset-y-0 left-0 flex items-center pl-4 text-gray-400 group-focus-within:text-blue-500 transition-colors">
-                                <i class="fas fa-search text-lg"></i>
-                            </div>
+                    <div class="w-full sm:w-80 relative group">
+                        <input type="text" x-model="search" placeholder="Cari nama peserta atau kota..." class="w-full bg-white border-2 border-gray-200 text-gray-800 text-sm font-medium rounded-2xl focus:ring-4 focus:ring-blue-100 focus:border-blue-500 block p-3.5 pl-12 transition-all shadow-sm group-hover:border-blue-300">
+                        <div class="absolute inset-y-0 left-0 flex items-center pl-4 text-gray-400 group-focus-within:text-blue-500 transition-colors">
+                            <i class="fas fa-search text-lg"></i>
                         </div>
-                    </form>
+                    </div>
                 </div>
                 
-                <div class="overflow-x-auto">
+                <div class="overflow-x-auto max-h-[800px] overflow-y-auto relative">
                     <table class="w-full text-left text-sm text-gray-600">
-                        <thead class="bg-white text-gray-800 uppercase font-extrabold text-xs border-b-2 border-gray-100">
+                        <thead class="bg-white text-gray-800 uppercase font-extrabold text-xs border-b-2 border-gray-100 sticky top-0 z-20 shadow-sm">
                             <tr>
-                                <th class="px-6 py-5">Peringkat</th>
-                                <th class="px-6 py-5">Nama Peserta</th>
-                                <th class="px-6 py-5">Asal Kabupaten/Kota</th>
-                                <th class="px-6 py-5 text-center">Total Event</th>
-                                <th class="px-6 py-5 text-center">Tingkat Konsistensi</th>
+                                <th class="px-6 py-5 cursor-pointer hover:bg-gray-50 transition-colors" @click="sort('attended_count')">
+                                    <div class="flex items-center justify-between">
+                                        Peringkat
+                                    </div>
+                                </th>
+                                <th class="px-6 py-5 cursor-pointer hover:bg-gray-50 transition-colors" @click="sort('name')">
+                                    <div class="flex items-center justify-between">
+                                        Nama Peserta
+                                        <i class="fas" :class="sortBy === 'name' ? (sortDesc ? 'fa-sort-down text-blue-500' : 'fa-sort-up text-blue-500') : 'fa-sort text-gray-300'"></i>
+                                    </div>
+                                </th>
+                                <th class="px-6 py-5 cursor-pointer hover:bg-gray-50 transition-colors" @click="sort('city')">
+                                    <div class="flex items-center justify-between">
+                                        Asal Kabupaten/Kota
+                                        <i class="fas" :class="sortBy === 'city' ? (sortDesc ? 'fa-sort-down text-blue-500' : 'fa-sort-up text-blue-500') : 'fa-sort text-gray-300'"></i>
+                                    </div>
+                                </th>
+                                <th class="px-6 py-5 text-center cursor-pointer hover:bg-gray-50 transition-colors" @click="sort('attended_count')">
+                                    <div class="flex items-center justify-center gap-2">
+                                        Total Event
+                                        <i class="fas" :class="sortBy === 'attended_count' ? (sortDesc ? 'fa-sort-down text-blue-500' : 'fa-sort-up text-blue-500') : 'fa-sort text-gray-300'"></i>
+                                    </div>
+                                </th>
+                                <th class="px-6 py-5 text-center cursor-pointer hover:bg-gray-50 transition-colors" @click="sort('percentage')">
+                                    <div class="flex items-center justify-center gap-2">
+                                        Tingkat Konsistensi
+                                        <i class="fas" :class="sortBy === 'percentage' ? (sortDesc ? 'fa-sort-down text-blue-500' : 'fa-sort-up text-blue-500') : 'fa-sort text-gray-300'"></i>
+                                    </div>
+                                </th>
                                 <th class="px-6 py-5 text-right">Aksi</th>
                             </tr>
                         </thead>
                         <tbody class="divide-y divide-gray-100 bg-white">
-                            @forelse($rankings as $index => $person)
+                            <template x-for="(person, index) in paginatedRankings" :key="person.name">
                                 <tr class="hover:bg-blue-50/50 transition-colors group">
                                     <td class="px-6 py-5 font-black text-gray-400">
-                                        @if($index === 0 && empty(request('search_person')))
-                                            <div class="w-10 h-10 rounded-full bg-yellow-100 text-yellow-600 flex items-center justify-center text-lg shadow-sm">
-                                                <i class="fas fa-crown"></i>
-                                            </div>
-                                        @elseif($index === 1 && empty(request('search_person')))
-                                            <div class="w-10 h-10 rounded-full bg-gray-100 text-gray-500 flex items-center justify-center text-lg shadow-sm">
-                                                <i class="fas fa-medal"></i>
-                                            </div>
-                                        @elseif($index === 2 && empty(request('search_person')))
-                                            <div class="w-10 h-10 rounded-full bg-amber-50 text-amber-700 flex items-center justify-center text-lg shadow-sm">
-                                                <i class="fas fa-award"></i>
-                                            </div>
-                                        @else
-                                            <div class="w-10 h-10 rounded-full bg-gray-50 flex items-center justify-center">
-                                                #{{ $index + 1 }}
-                                            </div>
-                                        @endif
+                                        <div x-data="{ globalIndex: (currentPage - 1) * perPage + index }">
+                                            <template x-if="globalIndex === 0 && search === '' && sortBy === 'attended_count' && sortDesc === true">
+                                                <div class="w-10 h-10 rounded-full bg-yellow-100 text-yellow-600 flex items-center justify-center text-lg shadow-sm">
+                                                    <i class="fas fa-crown"></i>
+                                                </div>
+                                            </template>
+                                            <template x-if="globalIndex === 1 && search === '' && sortBy === 'attended_count' && sortDesc === true">
+                                                <div class="w-10 h-10 rounded-full bg-gray-100 text-gray-500 flex items-center justify-center text-lg shadow-sm">
+                                                    <i class="fas fa-medal"></i>
+                                                </div>
+                                            </template>
+                                            <template x-if="globalIndex === 2 && search === '' && sortBy === 'attended_count' && sortDesc === true">
+                                                <div class="w-10 h-10 rounded-full bg-amber-50 text-amber-700 flex items-center justify-center text-lg shadow-sm">
+                                                    <i class="fas fa-award"></i>
+                                                </div>
+                                            </template>
+                                            <template x-if="!(globalIndex <= 2 && search === '' && sortBy === 'attended_count' && sortDesc === true)">
+                                                <div class="w-10 h-10 rounded-full bg-gray-50 flex items-center justify-center" x-text="'#' + (globalIndex + 1)">
+                                                </div>
+                                            </template>
+                                        </div>
                                     </td>
                                     <td class="px-6 py-5">
-                                        <div class="font-extrabold text-gray-900 text-base group-hover:text-blue-700 transition-colors">{{ $person['name'] }}</div>
+                                        <div class="font-extrabold text-gray-900 text-base group-hover:text-blue-700 transition-colors" x-text="person.name"></div>
                                     </td>
                                     <td class="px-6 py-5">
                                         <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-bold bg-indigo-50 text-indigo-700 border border-indigo-100">
-                                            <i class="fas fa-map-marker-alt mr-1.5"></i> {{ $person['city'] }}
+                                            <i class="fas fa-map-marker-alt mr-1.5"></i> <span x-text="person.city"></span>
                                         </span>
                                     </td>
                                     <td class="px-6 py-5 text-center">
-                                        <div class="inline-flex items-center justify-center w-8 h-8 rounded-lg bg-blue-50 text-blue-700 font-bold border border-blue-100">
-                                            {{ $person['attended_count'] }}
+                                        <div class="inline-flex items-center justify-center w-8 h-8 rounded-lg bg-blue-50 text-blue-700 font-bold border border-blue-100" x-text="person.attended_count">
                                         </div>
                                     </td>
                                     <td class="px-6 py-5">
                                         <div class="flex items-center justify-center gap-3">
                                             <div class="w-full bg-gray-100 rounded-full h-3 max-w-[120px] overflow-hidden shadow-inner">
-                                                <div class="bg-gradient-to-r from-green-400 to-emerald-500 h-full rounded-full relative" style="width: {{ min(100, $person['percentage']) }}%">
+                                                <div class="bg-gradient-to-r from-green-400 to-emerald-500 h-full rounded-full relative" :style="`width: ${Math.min(100, person.percentage)}%`">
                                                     <div class="absolute inset-0 bg-white/20 w-full animate-[shimmer_2s_infinite]"></div>
                                                 </div>
                                             </div>
-                                            <span class="text-sm font-black text-gray-700 w-10 text-right">{{ $person['percentage'] }}%</span>
+                                            <span class="text-sm font-black text-gray-700 w-10 text-right" x-text="person.percentage + '%'"></span>
                                         </div>
                                     </td>
                                     <td class="px-6 py-5 text-right">
-                                        <a href="{{ route('absensi-zoom.person', ['name' => $person['name']]) }}" @click="$dispatch('data-loading')" class="text-blue-600 hover:text-white font-bold text-sm inline-flex items-center gap-2 bg-blue-50 hover:bg-blue-600 px-4 py-2 rounded-xl transition-all shadow-sm hover:shadow-md">
+                                        <a :href="`{{ route('absensi-zoom') }}/person/${encodeURIComponent(person.name)}`" @click="$dispatch('data-loading')" class="text-blue-600 hover:text-white font-bold text-sm inline-flex items-center gap-2 bg-blue-50 hover:bg-blue-600 px-4 py-2 rounded-xl transition-all shadow-sm hover:shadow-md whitespace-nowrap">
                                             Detail <i class="fas fa-arrow-right text-xs"></i>
                                         </a>
                                     </td>
                                 </tr>
-                            @empty
+                            </template>
+                            
+                            <template x-if="filteredRankings.length === 0">
                                 <tr>
                                     <td colspan="6" class="px-6 py-20 text-center">
                                         <div class="w-20 h-20 bg-gray-50 rounded-full flex items-center justify-center mx-auto mb-4 text-gray-300">
                                             <i class="fas fa-search text-3xl"></i>
                                         </div>
                                         <h3 class="text-lg font-bold text-gray-600 mb-1">Pencarian Tidak Ditemukan</h3>
-                                        <p class="text-gray-400 text-sm">Coba gunakan kata kunci nama yang berbeda.</p>
+                                        <p class="text-gray-400 text-sm">Coba gunakan kata kunci pencarian yang berbeda.</p>
                                     </td>
                                 </tr>
-                            @endforelse
+                            </template>
                         </tbody>
                     </table>
                 </div>
                 
-                @if(empty($searchPerson) && count($rankings) == 200)
-                    <div class="p-6 text-center text-sm font-semibold text-gray-500 border-t border-gray-100 bg-gray-50">
-                        <i class="fas fa-info-circle text-blue-500 mr-1"></i> Menampilkan top 200 peserta. Gunakan fitur pencarian untuk menemukan peserta spesifik lainnya.
+                <div class="p-6 border-t border-gray-100 bg-gray-50 flex flex-col md:flex-row justify-between items-center gap-4">
+                    <div class="text-sm font-semibold text-gray-500 flex items-center gap-2">
+                        <span>Tampilkan:</span>
+                        <select x-model.number="perPage" class="bg-white border border-gray-200 text-gray-700 py-1 px-2 rounded-lg text-sm focus:ring-blue-500 focus:border-blue-500 shadow-sm" @change="currentPage = 1">
+                            <option value="50">50</option>
+                            <option value="100">100</option>
+                            <option value="200">200</option>
+                            <option value="500">500</option>
+                            <option value="10000">Semua</option>
+                        </select>
+                        <span class="ml-2"><i class="fas fa-users text-blue-500 mr-1"></i> Menampilkan <span x-text="Math.min(perPage, filteredRankings.length)"></span> dari <span x-text="filteredRankings.length"></span> (Total: <span x-text="rankings.length"></span>)</span>
                     </div>
-                @endif
+                    
+                    <div class="flex items-center gap-2" x-show="totalPages > 1">
+                        <button @click="prevPage()" :disabled="currentPage === 1" class="px-3 py-1.5 rounded-lg bg-white border border-gray-200 text-gray-600 font-medium hover:bg-gray-50 hover:text-blue-600 disabled:opacity-50 disabled:cursor-not-allowed transition-colors shadow-sm text-sm flex items-center gap-1">
+                            <i class="fas fa-chevron-left text-xs"></i> Prev
+                        </button>
+                        <span class="text-sm font-bold text-gray-700 mx-2">
+                            Halaman <span x-text="currentPage"></span> / <span x-text="totalPages"></span>
+                        </span>
+                        <button @click="nextPage()" :disabled="currentPage === totalPages" class="px-3 py-1.5 rounded-lg bg-white border border-gray-200 text-gray-600 font-medium hover:bg-gray-50 hover:text-blue-600 disabled:opacity-50 disabled:cursor-not-allowed transition-colors shadow-sm text-sm flex items-center gap-1">
+                            Next <i class="fas fa-chevron-right text-xs"></i>
+                        </button>
+                    </div>
+                </div>
             </div>
+
+            <script>
+            document.addEventListener('alpine:init', () => {
+                Alpine.data('participantTable', () => ({
+                    search: '{{ request('search_person') ?? '' }}',
+                    sortBy: 'attended_count', 
+                    sortDesc: true,
+                    rankings: {!! json_encode(array_values($rankings)) !!},
+                    currentPage: 1,
+                    perPage: 50,
+                    
+                    get filteredRankings() {
+                        let result = this.rankings;
+                        if (this.search !== '') {
+                            const s = this.search.toLowerCase();
+                            result = result.filter(p => 
+                                p.name.toLowerCase().includes(s) || 
+                                p.city.toLowerCase().includes(s)
+                            );
+                        }
+                        
+                        result = result.sort((a, b) => {
+                            let valA = a[this.sortBy];
+                            let valB = b[this.sortBy];
+                            
+                            if (typeof valA === 'string') valA = valA.toLowerCase();
+                            if (typeof valB === 'string') valB = valB.toLowerCase();
+                            
+                            if (valA < valB) return this.sortDesc ? 1 : -1;
+                            if (valA > valB) return this.sortDesc ? -1 : 1;
+                            return 0;
+                        });
+                        
+                        return result;
+                    },
+
+                    get paginatedRankings() {
+                        const start = (this.currentPage - 1) * this.perPage;
+                        const end = start + this.perPage;
+                        return this.filteredRankings.slice(start, end);
+                    },
+
+                    get totalPages() {
+                        return Math.max(1, Math.ceil(this.filteredRankings.length / this.perPage));
+                    },
+
+                    nextPage() {
+                        if (this.currentPage < this.totalPages) this.currentPage++;
+                    },
+
+                    prevPage() {
+                        if (this.currentPage > 1) this.currentPage--;
+                    },
+                    
+                    sort(column) {
+                        if (this.sortBy === column) {
+                            this.sortDesc = !this.sortDesc;
+                        } else {
+                            this.sortBy = column;
+                            if (column === 'attended_count' || column === 'percentage') {
+                                this.sortDesc = true;
+                            } else {
+                                this.sortDesc = false;
+                            }
+                        }
+                        this.currentPage = 1;
+                    }
+                }));
+            });
+            </script>
         @endif
     </div>
 
