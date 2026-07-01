@@ -32,6 +32,17 @@ class ZoomAttendanceService
         ini_set('max_execution_time', 120);
         set_time_limit(120);
         
+        $cityMap = [
+            'Aceh Selatan' => '01', 'Aceh Tenggara' => '02', 'Aceh Timur' => '03',
+            'Aceh Tengah' => '04', 'Aceh Barat' => '05', 'Aceh Besar' => '06',
+            'Pidie' => '07', 'Aceh Utara' => '08', 'Simeulue' => '09',
+            'Aceh Singkil' => '10', 'Bireuen' => '11', 'Aceh Barat Daya' => '12',
+            'Gayo Lues' => '13', 'Aceh Jaya' => '14', 'Nagan Raya' => '15',
+            'Aceh Tamiang' => '16', 'Bener Meriah' => '17', 'Pidie Jaya' => '18',
+            'Banda Aceh' => '71', 'Sabang' => '72', 'Lhokseumawe' => '73',
+            'Langsa' => '74', 'Subulussalam' => '75'
+        ];
+
         try {
             $response = Http::timeout(120)->get($apiUrl);
             
@@ -43,20 +54,50 @@ class ZoomAttendanceService
                         $event = trim($row['JUDUL KEGIATAN ZOOM'] ?? '');
                         $city = trim($row['Kabupaten / Kota'] ?? 'Tidak Diketahui');
                         if ($city === '') $city = 'Tidak Diketahui';
+        $unsur = 'Tidak Diketahui';
                         
                         if (!$event) continue;
 
-                        foreach ($row as $key => $value) {
-                            if (strpos(strtoupper($key), 'NAMA PESERTA ZOOM') !== false || strtoupper($key) === 'NAMA') {
-                                $name = trim($value);
-                                if ($name !== '') {
-                                    $attendees[] = [
-                                        'name' => $name,
-                                        'event' => $event,
-                                        'city' => $city
-                                    ];
+                        $name = '';
+                        $unsur = '';
+                        $cityCode = $cityMap[$city] ?? null;
+
+                        if ($cityCode) {
+                            foreach ($row as $key => $value) {
+                                $keyUpper = strtoupper($key);
+                                if (strpos($keyUpper, $cityCode . ' ') === 0) {
+                                    if (strpos($keyUpper, 'PESERT') !== false || strpos($keyUpper, 'NAMA') !== false) {
+                                        if (strpos($keyUpper, 'UNSUR') === false && strpos($keyUpper, 'WHATAPPS') === false && strpos($keyUpper, 'KECAMATAN') === false) {
+                                            $val = trim($value);
+                                            if ($val !== '') {
+                                                $name = $val;
+                                            }
+                                        }
+                                    }
+                                    if (strpos($keyUpper, 'UNSUR') !== false) {
+                                        $val = trim($value);
+                                        if ($val !== '') {
+                                            $unsur = $val;
+                                        }
+                                    }
                                 }
                             }
+                        }
+                        
+                        if ($name === '' && isset($row['NAMA'])) {
+                            $name = trim($row['NAMA']);
+                        }
+                        if ($unsur === '' && isset($row['UNSUR'])) {
+                            $unsur = trim($row['UNSUR']);
+                        }
+
+                        if ($name !== '') {
+                            $attendees[] = [
+                                'name' => $name,
+                                'event' => $event,
+                                'city' => $city,
+                                'unsur' => $unsur !== '' ? $unsur : 'Tidak Diketahui'
+                            ];
                         }
                     }
                 } else {
@@ -105,6 +146,30 @@ class ZoomAttendanceService
         return $citiesCount;
     }
 
+    
+    public function getUnsurStatsByEvent($selectedEvent)
+    {
+        $data = $this->getAllData();
+        $unsurCount = [];
+
+        foreach ($data as $item) {
+            if ($item['event'] === $selectedEvent) {
+                $unsur = trim($item['unsur'] ?? 'Tidak Diketahui');
+                // Normalize case
+                $unsur = strtoupper($unsur);
+                if ($unsur === '') $unsur = 'TIDAK DIKETAHUI';
+                
+                if (!isset($unsurCount[$unsur])) {
+                    $unsurCount[$unsur] = 0;
+                }
+                $unsurCount[$unsur]++;
+            }
+        }
+
+        arsort($unsurCount);
+        return $unsurCount;
+    }
+
     public function getOverallRankings()
     {
         $data = $this->getAllData();
@@ -119,6 +184,7 @@ class ZoomAttendanceService
                 $persons[$name] = [
                     'name' => $name,
                     'city' => $item['city'],
+                    'unsur' => strtoupper(trim($item['unsur'] ?? 'Tidak Diketahui')),
                     'events_attended' => [],
                 ];
             }
@@ -133,6 +199,7 @@ class ZoomAttendanceService
             $rankings[] = [
                 'name' => $name,
                 'city' => $personData['city'],
+                'unsur' => $personData['unsur'],
                 'attended_count' => $attendedCount,
                 'percentage' => $percentage
             ];
@@ -151,11 +218,13 @@ class ZoomAttendanceService
         $data = $this->getAllData();
         $eventsAttended = [];
         $city = 'Tidak Diketahui';
+        $unsur = 'Tidak Diketahui';
 
         foreach ($data as $item) {
             if (strtolower($item['name']) === strtolower($name)) {
                 $eventsAttended[$item['event']] = true;
-                $city = $item['city']; // Assign last known city
+                $city = $item['city'];
+                $unsur = strtoupper(trim($item['unsur'] ?? 'Tidak Diketahui'));
             }
         }
         
@@ -166,6 +235,7 @@ class ZoomAttendanceService
         return [
             'name' => $name,
             'city' => $city,
+            'unsur' => $unsur,
             'attended_count' => $attendedCount,
             'total_events' => $totalEvents,
             'percentage' => $percentage,
@@ -180,13 +250,20 @@ class ZoomAttendanceService
         
         foreach ($data as $item) {
             if ($item['event'] === $eventName && $item['city'] === $city) {
-                $attendees[] = $item['name'];
+                $attendees[] = ['name' => $item['name'], 'unsur' => strtoupper(trim($item['unsur'] ?? 'Tidak Diketahui'))];
             }
         }
         
         // Remove duplicates if any
-        $attendees = array_unique($attendees);
-        sort($attendees);
+        // Remove duplicates manually since it's multidimensional
+        $temp = [];
+        foreach ($attendees as $a) {
+            $temp[$a['name']] = $a;
+        }
+        $attendees = array_values($temp);
+        usort($attendees, function($a, $b) {
+            return strcmp($a['name'], $b['name']);
+        });
         
         return $attendees;
     }

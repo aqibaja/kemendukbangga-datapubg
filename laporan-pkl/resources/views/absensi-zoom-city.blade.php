@@ -60,15 +60,21 @@
             <div class="p-6 sm:p-8">
                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                     @forelse($attendees as $index => $attendee)
-                        <div class="group bg-white p-4 rounded-2xl shadow-sm hover:shadow-md border border-gray-100 flex items-center gap-4 transition-all hover:-translate-y-1 hover:border-blue-200 cursor-default">
-                            <div class="w-12 h-12 rounded-full bg-gradient-to-br from-blue-100 to-indigo-100 text-blue-600 flex items-center justify-center flex-shrink-0 font-bold text-sm shadow-inner">
+                        <div class="group bg-white p-4 rounded-2xl shadow-sm hover:shadow-md border border-gray-100 flex items-center gap-4 transition-all hover:-translate-y-1 hover:border-blue-200 cursor-default relative overflow-hidden">
+                            <div class="absolute inset-y-0 left-0 w-1 bg-gradient-to-b from-blue-400 to-indigo-600 rounded-l-2xl opacity-0 group-hover:opacity-100 transition-opacity"></div>
+                            <div class="w-12 h-12 rounded-full bg-gradient-to-br from-blue-100 to-indigo-100 text-blue-600 flex items-center justify-center flex-shrink-0 font-bold text-sm shadow-inner relative z-10">
                                 {{ $index + 1 }}
                             </div>
                             <div class="flex-1 overflow-hidden">
-                                <h4 class="font-bold text-gray-800 text-sm truncate group-hover:text-blue-700 transition-colors" title="{{ $attendee }}">{{ $attendee }}</h4>
-                                <p class="text-xs text-gray-400 mt-0.5">Hadir di event ini</p>
+                                <div class="flex items-center gap-2 mb-1">
+                                    <h4 class="font-bold text-gray-800 text-sm truncate group-hover:text-blue-700 transition-colors" title="{{ $attendee['name'] }}">{{ $attendee['name'] }}</h4>
+                                    <span class="inline-flex items-center px-2 py-0.5 rounded text-[10px] font-medium bg-gray-100 text-gray-800 border border-gray-200 uppercase tracking-wider group-hover:bg-blue-50 group-hover:text-blue-600 group-hover:border-blue-100 transition-colors">
+                                        {{ $attendee['unsur'] }}
+                                    </span>
+                                </div>
+                                <p class="text-xs text-gray-400 mt-0.5 flex items-center"><i class="fas fa-check-circle text-green-500 mr-1.5 opacity-70"></i> Hadir di event ini</p>
                             </div>
-                            <a href="{{ route('absensi-zoom.person', ['name' => $attendee]) }}" class="w-8 h-8 rounded-full bg-gray-50 text-gray-400 flex items-center justify-center hover:bg-blue-600 hover:text-white transition-colors flex-shrink-0" title="Lihat Profil">
+                            <a href="{{ route('absensi-zoom.person', ['name' => $attendee['name']]) }}" class="w-8 h-8 rounded-full bg-gray-50 text-gray-400 flex items-center justify-center hover:bg-blue-600 hover:text-white transition-colors flex-shrink-0 relative z-10 shadow-sm border border-gray-100" title="Lihat Profil">
                                 <i class="fas fa-chevron-right text-xs"></i>
                             </a>
                         </div>

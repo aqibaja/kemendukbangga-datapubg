@@ -36,6 +36,7 @@ class AbsensiZoomController extends Controller
         }
 
         $citiesCount = [];
+        $unsurCount = [];
         $rankings = [];
         $searchPerson = $request->get('search_person', '');
         
@@ -43,6 +44,7 @@ class AbsensiZoomController extends Controller
 
         if ($tab === 'kegiatan') {
             $citiesCount = $service->getStatsByEvent($selectedEvent);
+            $unsurCount = $service->getUnsurStatsByEvent($selectedEvent);
         } else {
             $allRankings = $service->getOverallRankings();
             
@@ -54,6 +56,7 @@ class AbsensiZoomController extends Controller
             'events' => $events,
             'selectedEvent' => $selectedEvent,
             'citiesCount' => $citiesCount,
+            'unsurCount' => $unsurCount,
             'tab' => $tab,
             'rankings' => $rankings,
             'searchPerson' => $searchPerson,

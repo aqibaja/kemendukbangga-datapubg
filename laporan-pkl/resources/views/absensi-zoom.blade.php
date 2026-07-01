@@ -4,6 +4,7 @@
     <!-- Full Page Loading Overlay -->
     <div x-data="{ loading: false }" 
          @data-loading.window="loading = true"
+         @pageshow.window="if ($event.persisted) loading = false"
          x-show="loading" 
          x-transition.opacity.duration.300ms
          style="display: none;"
@@ -164,6 +165,20 @@
                             };
                             requestAnimationFrame(animate);
                         " x-text="count">0</div>
+
+                        <!-- Unsur Breakdown -->
+                        @if(!empty($unsurCount))
+                        <div class="mt-6 w-full px-2 max-h-32 overflow-y-auto custom-scrollbar">
+                            <div class="flex flex-wrap justify-center gap-2">
+                                @foreach($unsurCount as $unsurName => $count)
+                                    <div class="bg-white/10 border border-white/20 px-3 py-1.5 rounded-lg flex items-center gap-2 backdrop-blur-sm shadow-sm transition-transform hover:scale-105 cursor-default">
+                                        <span class="text-[10px] font-bold text-sky-200 uppercase tracking-wider">{{ $unsurName }}</span>
+                                        <span class="text-sm font-black text-white bg-white/20 px-2 py-0.5 rounded-md">{{ $count }}</span>
+                                    </div>
+                                @endforeach
+                            </div>
+                        </div>
+                        @endif
                     </div>
                 </div>
             </div>
@@ -189,7 +204,7 @@
                                     if (!file_exists(public_path('image/logo-kab-kota/' . $logoFileName))) {
                                         $logoUrl = 'https://ui-avatars.com/api/?name=' . urlencode($city) . '&background=0D8ABC&color=fff&rounded=true&bold=true&size=80';
                                     } else {
-                                        $logoUrl = asset('image/logo-kab-kota/' . rawurlencode($logoFileName));
+                                        $logoUrl = asset('public/image/logo-kab-kota/' . rawurlencode($logoFileName));
                                     }
                                 @endphp
                                 
@@ -286,10 +301,24 @@
                         <p class="text-sm text-gray-500 font-medium mt-1">Siapa yang paling rajin hadir di setiap kegiatan?</p>
                     </div>
                     
-                    <div class="w-full sm:w-80 relative group">
-                        <input type="text" x-model="search" placeholder="Cari nama peserta atau kota..." class="w-full bg-white border-2 border-gray-200 text-gray-800 text-sm font-medium rounded-2xl focus:ring-4 focus:ring-blue-100 focus:border-blue-500 block p-3.5 pl-12 transition-all shadow-sm group-hover:border-blue-300">
-                        <div class="absolute inset-y-0 left-0 flex items-center pl-4 text-gray-400 group-focus-within:text-blue-500 transition-colors">
-                            <i class="fas fa-search text-lg"></i>
+                    <div class="w-full sm:w-auto flex flex-col sm:flex-row gap-3">
+                        <div class="relative group min-w-[180px]">
+                            <select x-model="selectedUnsur" class="w-full bg-white border-2 border-gray-200 text-gray-700 text-sm font-medium rounded-2xl focus:ring-4 focus:ring-blue-100 focus:border-blue-500 block p-3.5 pl-4 pr-10 appearance-none transition-all shadow-sm cursor-pointer group-hover:border-blue-300">
+                                <option value="">Semua Unsur</option>
+                                <template x-for="uns in uniqueUnsurs" :key="uns">
+                                    <option :value="uns" x-text="uns"></option>
+                                </template>
+                            </select>
+                            <div class="absolute inset-y-0 right-0 flex items-center pr-4 text-gray-400 pointer-events-none">
+                                <i class="fas fa-chevron-down text-sm"></i>
+                            </div>
+                        </div>
+                        
+                        <div class="w-full sm:w-80 relative group">
+                            <input type="text" x-model="search" placeholder="Cari nama peserta atau kota..." class="w-full bg-white border-2 border-gray-200 text-gray-800 text-sm font-medium rounded-2xl focus:ring-4 focus:ring-blue-100 focus:border-blue-500 block p-3.5 pl-12 transition-all shadow-sm group-hover:border-blue-300">
+                            <div class="absolute inset-y-0 left-0 flex items-center pl-4 text-gray-400 group-focus-within:text-blue-500 transition-colors">
+                                <i class="fas fa-search text-lg"></i>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -334,30 +363,31 @@
                             <template x-for="(person, index) in paginatedRankings" :key="person.name">
                                 <tr class="hover:bg-blue-50/50 transition-colors group">
                                     <td class="px-6 py-5 font-black text-gray-400">
-                                        <div x-data="{ globalIndex: (currentPage - 1) * perPage + index }">
-                                            <template x-if="globalIndex === 0 && search === '' && sortBy === 'attended_count' && sortDesc === true">
-                                                <div class="w-10 h-10 rounded-full bg-yellow-100 text-yellow-600 flex items-center justify-center text-lg shadow-sm">
-                                                    <i class="fas fa-crown"></i>
-                                                </div>
-                                            </template>
-                                            <template x-if="globalIndex === 1 && search === '' && sortBy === 'attended_count' && sortDesc === true">
-                                                <div class="w-10 h-10 rounded-full bg-gray-100 text-gray-500 flex items-center justify-center text-lg shadow-sm">
-                                                    <i class="fas fa-medal"></i>
-                                                </div>
-                                            </template>
-                                            <template x-if="globalIndex === 2 && search === '' && sortBy === 'attended_count' && sortDesc === true">
-                                                <div class="w-10 h-10 rounded-full bg-amber-50 text-amber-700 flex items-center justify-center text-lg shadow-sm">
-                                                    <i class="fas fa-award"></i>
-                                                </div>
-                                            </template>
-                                            <template x-if="!(globalIndex <= 2 && search === '' && sortBy === 'attended_count' && sortDesc === true)">
-                                                <div class="w-10 h-10 rounded-full bg-gray-50 flex items-center justify-center" x-text="'#' + (globalIndex + 1)">
-                                                </div>
-                                            </template>
-                                        </div>
+                                        <template x-if="((currentPage - 1) * perPage + index) === 0 && search === '' && sortBy === 'attended_count' && sortDesc === true">
+                                            <div class="w-10 h-10 rounded-full bg-yellow-100 text-yellow-600 flex items-center justify-center text-lg shadow-sm">
+                                                <i class="fas fa-crown"></i>
+                                            </div>
+                                        </template>
+                                        <template x-if="((currentPage - 1) * perPage + index) === 1 && search === '' && sortBy === 'attended_count' && sortDesc === true">
+                                            <div class="w-10 h-10 rounded-full bg-gray-100 text-gray-500 flex items-center justify-center text-lg shadow-sm">
+                                                <i class="fas fa-medal"></i>
+                                            </div>
+                                        </template>
+                                        <template x-if="((currentPage - 1) * perPage + index) === 2 && search === '' && sortBy === 'attended_count' && sortDesc === true">
+                                            <div class="w-10 h-10 rounded-full bg-amber-50 text-amber-700 flex items-center justify-center text-lg shadow-sm">
+                                                <i class="fas fa-award"></i>
+                                            </div>
+                                        </template>
+                                        <template x-if="!(((currentPage - 1) * perPage + index) <= 2 && search === '' && sortBy === 'attended_count' && sortDesc === true)">
+                                            <div class="w-10 h-10 rounded-full bg-gray-50 flex items-center justify-center" x-text="'#' + (((currentPage - 1) * perPage + index) + 1)">
+                                            </div>
+                                        </template>
                                     </td>
                                     <td class="px-6 py-5">
                                         <div class="font-extrabold text-gray-900 text-base group-hover:text-blue-700 transition-colors" x-text="person.name"></div>
+                                        <div class="mt-1">
+                                            <span class="inline-flex items-center px-2 py-0.5 rounded text-[10px] font-medium bg-gray-100 text-gray-800 border border-gray-200 uppercase tracking-wider" x-text="person.unsur"></span>
+                                        </div>
                                     </td>
                                     <td class="px-6 py-5">
                                         <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-bold bg-indigo-50 text-indigo-700 border border-indigo-100">
@@ -432,19 +462,35 @@
             document.addEventListener('alpine:init', () => {
                 Alpine.data('participantTable', () => ({
                     search: '{{ request('search_person') ?? '' }}',
+                    selectedUnsur: '',
                     sortBy: 'attended_count', 
                     sortDesc: true,
                     rankings: {!! json_encode(array_values($rankings)) !!},
                     currentPage: 1,
                     perPage: 50,
                     
+                    get uniqueUnsurs() {
+                        const unsurs = new Set();
+                        this.rankings.forEach(p => {
+                            if (p.unsur && p.unsur !== 'TIDAK DIKETAHUI') {
+                                unsurs.add(p.unsur);
+                            }
+                        });
+                        return Array.from(unsurs).sort();
+                    },
+                    
                     get filteredRankings() {
                         let result = this.rankings;
+                        if (this.selectedUnsur !== '') {
+                            result = result.filter(p => p.unsur === this.selectedUnsur);
+                        }
+
                         if (this.search !== '') {
                             const s = this.search.toLowerCase();
                             result = result.filter(p => 
                                 p.name.toLowerCase().includes(s) || 
-                                p.city.toLowerCase().includes(s)
+                                p.city.toLowerCase().includes(s) ||
+                                (p.unsur && p.unsur.toLowerCase().includes(s))
                             );
                         }
                         
@@ -520,6 +566,22 @@
         @keyframes shimmer {
             0% { transform: translateX(-100%); }
             100% { transform: translateX(100%); }
+        }
+        
+        /* Custom thin scrollbar for dark backgrounds */
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 4px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: rgba(255, 255, 255, 0.05); 
+            border-radius: 4px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: rgba(255, 255, 255, 0.25); 
+            border-radius: 4px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+            background: rgba(255, 255, 255, 0.4); 
         }
     </style>
 </x-layout>

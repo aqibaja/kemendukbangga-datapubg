@@ -19,8 +19,15 @@
             
             <div class="flex-1 text-center md:text-left relative z-10 w-full">
                 <h1 class="text-3xl font-extrabold text-gray-900 mb-2">{{ $details['name'] }}</h1>
-                <div class="inline-flex items-center px-3 py-1 rounded-full text-sm font-semibold bg-blue-100 text-blue-800 mb-6">
-                    <i class="fas fa-map-marker-alt mr-2 text-blue-600"></i> {{ $details['city'] }}
+                <div class="flex flex-wrap gap-2 mb-6 justify-center md:justify-start">
+                    <div class="inline-flex items-center px-3 py-1 rounded-full text-sm font-semibold bg-blue-100 text-blue-800">
+                        <i class="fas fa-map-marker-alt mr-2 text-blue-600"></i> {{ $details['city'] }}
+                    </div>
+                    @if(!empty($details['unsur']))
+                    <div class="inline-flex items-center px-3 py-1 rounded-full text-sm font-bold bg-purple-100 text-purple-800 uppercase tracking-wider">
+                        <i class="fas fa-id-badge mr-2 text-purple-600"></i> {{ $details['unsur'] }}
+                    </div>
+                    @endif
                 </div>
                 
                 <div class="grid grid-cols-2 gap-4">
