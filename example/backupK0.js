@@ -53,7 +53,7 @@ function uploadBase64File(base64DataUrl, filename, formName, columnName) {
       } else {
         folder2 = folder1.createFolder(folder2Name);
       }
-      
+
       targetFolder = folder2;
     }
 
@@ -239,9 +239,6 @@ function validateAndGetData(sheetId, nama, password) {
     return { valid: false, error: 'Password salah. Silakan coba lagi.' };
   }
 
-  // Ambil unique headers untuk dikirim ke frontend agar tidak render double di UI
-  const uniqueHeaders = Array.from(new Set(headers));
-
   // Format data untuk dikirim ke frontend
   const rows = userRows.map(({ rowIndex, row }) => {
     const obj = {};
@@ -251,18 +248,7 @@ function validateAndGetData(sheetId, nama, password) {
       if (val instanceof Date) {
         val = Utilities.formatDate(val, 'Asia/Jakarta', 'M/d/yyyy HH:mm:ss');
       }
-      
-      let strVal = val !== undefined ? String(val) : '';
-      
-      // Jika header ini duplikat (sudah ada di obj)
-      if (obj.hasOwnProperty(header)) {
-          // Jika nilai baru tidak kosong, timpa nilai lama (berguna jika di branching, kolom kedua yang terisi)
-          if (strVal.trim() !== '') {
-              obj[header] = strVal;
-          }
-      } else {
-          obj[header] = strVal;
-      }
+      obj[header] = val !== undefined ? String(val) : '';
     });
     obj.__rowIndex = rowIndex; // simpan index row untuk update nanti
     return obj;
@@ -357,7 +343,7 @@ function validateAndGetData(sheetId, nama, password) {
 
   return {
     valid: true,
-    headers: uniqueHeaders, // Kirim yang unik agar UI cuma render 1 input per pertanyaan!
+    headers: headers,
     rows: rows,
     formStructure: formStructure,
     _formDebug: formDebugMsg,   // kirim ke frontend untuk debug (bisa dihapus setelah ok)
