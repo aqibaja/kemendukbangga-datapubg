@@ -159,7 +159,7 @@ Route::get('/data/absensi-zoom/city/{city}', [AbsensiZoomController::class, 'cit
 
 // === APEL SENIN DASHBOARD ===
 Route::get('/data/apel-senin', [ApelSeninController::class, 'index'])->name('apel-senin');
-Route::get('/data/apel-senin/team/{team}', [ApelSeninController::class, 'teamDetail'])->name('apel-senin.team');
+Route::get('/data/apel-senin/team/{team}', [ApelSeninController::class, 'teamDetail'])->where('team', '.*')->name('apel-senin.team');
 
 Route::get('/data/{dashboardPage:slug}', function (DashboardPage $dashboardPage) {
     // Load relasi creator

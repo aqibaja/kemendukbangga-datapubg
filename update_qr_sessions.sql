@@ -1,0 +1,1 @@
+ALTER TABLE `qr_sessions` ADD `refresh_time_seconds` INT NOT NULL DEFAULT 15, ADD `end_time` DATETIME NULL;

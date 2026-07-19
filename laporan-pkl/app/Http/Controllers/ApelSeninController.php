@@ -45,8 +45,33 @@ class ApelSeninController extends Controller
         $teamsCount      = [];
         $overallRankings = [];
 
+        $teamsStats = [];
         if ($tab === 'tim') {
-            $teamsCount = $service->getStatsByTeam($queryDate);
+            $rawCounts = $service->getStatsByTeam($queryDate);
+            $totalApels = $queryDate === null ? count($apelDates) : 1;
+            
+            foreach ($rawCounts as $team => $count) {
+                $members = \App\Services\ApelSeninService::getMembersFromCsv($team);
+                $totalMembers = count($members);
+                $denominator = $totalMembers * $totalApels;
+                
+                $percentage = $denominator > 0 ? ($count / $denominator) * 100 : 0;
+                if ($percentage > 100) $percentage = 100;
+                
+                $teamsStats[$team] = [
+                    'count' => $count,
+                    'total' => $totalMembers,
+                    'denominator' => $denominator,
+                    'percentage' => $percentage
+                ];
+            }
+            
+            uasort($teamsStats, function($a, $b) {
+                if ($a['percentage'] == $b['percentage']) {
+                    return $b['count'] <=> $a['count'];
+                }
+                return $b['percentage'] <=> $a['percentage'];
+            });
         }
 
         // Akumulasi total (selalu dihitung untuk stats bar)
@@ -58,10 +83,11 @@ class ApelSeninController extends Controller
             'title'         => 'Dashboard Apel Senin',
             'apelDates'     => $apelDates,
             'selectedDate'  => $selectedDate,
-            'teamsCount'    => $teamsCount,
+            'tab'           => $tab,
+            'teamsStats'    => $teamsStats,
+            'overallRank'   => $overallRankings,
             'totalSum'      => $totalSum,
             'totalToday'    => $totalToday,
-            'tab'           => $tab,
             'timKerjaInfo'  => ApelSeninService::$timKerja,
         ]);
     }

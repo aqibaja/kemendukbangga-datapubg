@@ -87,6 +87,7 @@
                 qrSvg: '',
                 loading: true,
                 error: false,
+                errorMsg: '',
                 isEnded: false,
                 endTimeStamp: {{ $session->end_time ? $session->end_time->timestamp * 1000 : 'null' }},
                 refreshTime: {{ $session->refresh_time_seconds }},
@@ -99,15 +100,25 @@
                     this.checkEndTime();
                     if (!this.isEnded) {
                         this.fetchQr();
-                        this.endCheckInterval = setInterval(() => this.checkEndTime(), 1000);
+                        this.startEndCheckInterval();
                     }
                 },
 
                 checkEndTime() {
                     if (this.endTimeStamp && Date.now() >= this.endTimeStamp) {
                         this.isEnded = true;
+                        this.error = true;
+                        this.errorMsg = 'Sesi telah berakhir secara otomatis.';
                         clearInterval(this.interval);
                         clearInterval(this.endCheckInterval);
+                    }
+                },
+
+                startEndCheckInterval() {
+                    if (this.endTimeStamp) {
+                        this.endCheckInterval = setInterval(() => {
+                            this.checkEndTime();
+                        }, 5000);
                     }
                 },
 
@@ -118,20 +129,24 @@
                     
                     fetch(`/admin/qr-sessions/${this.sessionId}/generate`)
                         .then(response => {
-                            if (!response.ok) {
-                                if (response.status === 403) {
-                                    return response.json().then(data => {
-                                        if (data.is_ended) {
-                                            this.isEnded = true;
-                                            clearInterval(this.interval);
-                                            throw new Error('Sesi telah berakhir.');
-                                        }
-                                        throw new Error(data.error || 'Gagal memuat QR Code.');
-                                    });
+                            return response.text().then(text => {
+                                let data;
+                                try {
+                                    data = JSON.parse(text);
+                                } catch (e) {
+                                    throw new Error('Terjadi kesalahan tidak terduga pada server.');
                                 }
-                                throw new Error('Gagal memuat QR Code. Pastikan sesi masih aktif.');
-                            }
-                            return response.json();
+                                
+                                if (!response.ok) {
+                                    if (data.is_ended) {
+                                        this.isEnded = true;
+                                        clearInterval(this.interval);
+                                        throw new Error('Sesi telah berakhir.');
+                                    }
+                                    throw new Error(data.error || 'Gagal memuat QR Code. Pastikan sesi masih aktif.');
+                                }
+                                return data;
+                            });
                         })
                         .then(data => {
                             this.qrSvg = data.svg;

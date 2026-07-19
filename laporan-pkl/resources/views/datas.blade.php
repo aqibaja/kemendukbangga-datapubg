@@ -125,11 +125,11 @@
                 <div class="bg-white shadow-md rounded-lg overflow-hidden hover:shadow-xl transition-shadow duration-300 relative">
                     
                     {{-- Thumbnail dengan aspect ratio 1:1 --}}
-                    <div class="relative w-full pt-[100%] overflow-hidden bg-gradient-to-br from-emerald-500 to-teal-700">
-                        <div class="absolute inset-0 flex flex-col items-center justify-center text-white transition duration-300 hover:scale-105">
-                            <i class="fa-solid fa-flag text-5xl mb-2 drop-shadow-md"></i>
-                            <span class="font-black tracking-widest text-emerald-100 text-sm drop-shadow-md opacity-90">APEL SENIN</span>
-                        </div>
+                    <div class="relative w-full pt-[100%] overflow-hidden bg-gray-200">
+                        <img 
+                            src="{{ asset('public/image/presensi_senin.png') }}"
+                            alt="DASHBOARD APEL SENIN"
+                            class="absolute top-0 left-0 w-full h-full object-cover transition duration-300 hover:scale-105">
                     </div>
 
                     {{-- Content --}}

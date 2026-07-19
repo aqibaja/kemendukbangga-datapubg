@@ -6,7 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\QrSession;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use SimpleSoftwareIO\QrCode\Facades\QrCode;
+use SimpleSoftwareIO\QrCode\Generator;
 
 class QrSessionController extends Controller
 {
@@ -59,37 +59,44 @@ class QrSessionController extends Controller
         ]);
     }
 
-    // Endpoint for AJAX to fetch the new QR code SVG and URL
     public function generateQr(QrSession $qr_session)
     {
-        if (!$qr_session->is_active) {
-            return response()->json(['error' => 'Session is inactive'], 403);
-        }
+        try {
+            if (!$qr_session->is_active) {
+                return response()->json(['error' => 'Session is inactive'], 403);
+            }
 
-        if ($qr_session->end_time && now()->greaterThanOrEqualTo($qr_session->end_time)) {
-            // Sesi sudah mencapai batas waktu berakhir
-            return response()->json(['error' => 'Sesi telah berakhir', 'is_ended' => true], 403);
-        }
+            if ($qr_session->end_time && now()->greaterThanOrEqualTo($qr_session->end_time)) {
+                // Sesi sudah mencapai batas waktu berakhir
+                return response()->json(['error' => 'Sesi telah berakhir', 'is_ended' => true], 403);
+            }
 
-        // Generate a token that expires in refresh_time_seconds.
-        // It includes the session ID and the expiry timestamp.
-        $expiresAt = now()->addSeconds($qr_session->refresh_time_seconds)->timestamp;
-        $data = $qr_session->id . '|' . $expiresAt;
-        
-        // Simple hash to prevent tampering (HMAC)
-        $signature = hash_hmac('sha256', $data, config('app.key'));
-        
-        $token = base64_encode($data . '|' . $signature);
-        
-        $url = route('qr_attendance.scan', ['token' => $token]);
-        
-        $qrCodeSvg = QrCode::size(400)->generate($url)->toHtml();
-        
-        return response()->json([
-            'svg' => $qrCodeSvg,
-            'url' => $url,
-            'expires_at' => $expiresAt
-        ]);
+            // Generate a token that expires in refresh_time_seconds.
+            // It includes the session ID and the expiry timestamp.
+            $expiresAt = now()->addSeconds((int) $qr_session->refresh_time_seconds)->timestamp;
+            $data = $qr_session->id . '|' . $expiresAt;
+            
+            // Simple hash to prevent tampering (HMAC)
+            $signature = hash_hmac('sha256', $data, config('app.key'));
+            
+            $token = base64_encode($data . '|' . $signature);
+            
+            $url = route('qr_attendance.scan', ['token' => $token]);
+            
+            $qrCodeSvg = (new Generator)->size(400)->generate($url)->toHtml();
+            
+            return response()->json([
+                'svg' => $qrCodeSvg,
+                'url' => $url,
+                'expires_at' => $expiresAt
+            ]);
+        } catch (\Throwable $e) {
+            return response()->json([
+                'error' => 'Server Error: ' . $e->getMessage(),
+                'file' => $e->getFile(),
+                'line' => $e->getLine()
+            ], 500);
+        }
     }
 
     public function toggleActive(QrSession $qr_session)

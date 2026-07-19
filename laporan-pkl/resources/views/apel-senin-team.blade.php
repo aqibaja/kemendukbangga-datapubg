@@ -239,14 +239,22 @@
             @if(count($tambahanHadir) > 0)
             <div class="mt-4">
                 <div class="text-xs font-bold uppercase tracking-wider text-gray-400 mb-2">
-                    <i class="fas fa-user-plus mr-1"></i> Hadir (di luar daftar anggota)
+                    @if($totalAnggota > 0)
+                        <i class="fas fa-user-plus mr-1"></i> Hadir (di luar daftar anggota)
+                    @else
+                        <i class="fas fa-users mr-1"></i> Daftar Kehadiran
+                    @endif
                 </div>
                 <div class="space-y-1.5">
                     @foreach($tambahanHadir as $a)
                     <div class="flex items-center gap-3 px-4 py-2.5 bg-amber-50 rounded-xl border border-amber-100">
                         <i class="fas fa-user text-amber-400 text-xs"></i>
                         <span class="text-sm font-semibold text-gray-700">{{ $a['nama'] }}</span>
-                        <span class="ml-auto text-[10px] text-amber-600 font-bold uppercase tracking-wider">Tamu / Baru</span>
+                        @if($totalAnggota > 0)
+                            <span class="ml-auto text-[10px] text-amber-600 font-bold uppercase tracking-wider">Tamu / Baru</span>
+                        @else
+                            <span class="ml-auto text-[10px] text-emerald-600 font-bold uppercase tracking-wider"><i class="fas fa-check"></i> Hadir</span>
+                        @endif
                     </div>
                     @endforeach
                 </div>

@@ -149,7 +149,7 @@
                         @endif
                     </h3>
                     <div class="bg-emerald-50 text-emerald-700 px-3 py-1 rounded-full text-xs font-bold">
-                        {{ count($teamsCount) }} Tim Kerja
+                        {{ count($teamsStats ?? []) }} Tim Kerja
                     </div>
                 </div>
                 <div class="relative h-80 w-full">
@@ -193,16 +193,32 @@
                          "
                          x-text="count">0</div>
 
-                    {{-- Tim dengan kehadiran terbanyak --}}
+                    {{-- Tim dengan persentase kehadiran tertinggi --}}
                     @php
-                        $topTeam = array_key_first($teamsCount ?? []);
-                        $topCount = $teamsCount[$topTeam] ?? 0;
+                        $topTeam = null;
+                        $topPercentage = null;
+                        $topCount = 0;
+                        $topTotal = 0;
+                        
+                        if (!empty($teamsStats)) {
+                            $topTeam = array_key_first($teamsStats);
+                            $topData = $teamsStats[$topTeam];
+                            $topCount = $topData['count'];
+                            $topTotal = $topData['total'];
+                            $topPercentage = $topData['percentage'];
+                        }
                     @endphp
                     @if($topTeam)
                     <div class="mt-5 w-full bg-white/10 border border-white/20 rounded-xl px-3 py-2.5 text-xs">
-                        <div class="text-emerald-200 uppercase tracking-wider mb-1">🏆 Tim Terbanyak</div>
+                        <div class="text-emerald-200 uppercase tracking-wider mb-1">🏆 Tim Paling Aktif</div>
                         <div class="font-bold text-white text-sm leading-tight">{{ $topTeam }}</div>
-                        <div class="text-amber-300 font-extrabold text-lg">{{ $topCount }} hadir</div>
+                        <div class="text-amber-300 font-extrabold text-base mt-0.5">
+                            @if($topPercentage !== null)
+                                {{ number_format($topPercentage, 1, ',', '') }}% <span class="text-xs text-white/70 font-normal">({{ $topCount }} dari {{ $topData['denominator'] ?? $topTotal }})</span>
+                            @else
+                                {{ $topCount }} hadir
+                            @endif
+                        </div>
                     </div>
                     @endif
                 </div>
@@ -226,8 +242,11 @@
             @endif
 
             <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-4 gap-6 md:gap-8">
-                @forelse($teamsCount as $team => $count)
+                @forelse($teamsStats ?? [] as $team => $data)
                     @php
+                        $count = $data['count'];
+                        $percentage = $data['percentage'];
+                        $totalMembers = $data['total'];
                         $teamSlug = $timKerjaInfo[$team]['slug'] ?? Str::slug($team);
                         $teamKetua = $timKerjaInfo[$team]['ketua'] ?? 'Ketua Tim';
                         $photoUrl  = \App\Services\ApelSeninService::getPhotoUrl($team);
@@ -254,21 +273,21 @@
                                          onerror="this.src='https://ui-avatars.com/api/?name={{ urlencode(substr($team, 0, 2)) }}&background=10b981&color=fff&bold=true&size=160'">
                                 </div>
                                 {{-- Badge jumlah --}}
-                                <div class="absolute -top-2 -right-2 bg-emerald-500 text-white text-xs font-black rounded-full w-7 h-7 flex items-center justify-center shadow-lg border-2 border-white">
-                                    {{ $count }}
+                                <div class="absolute -top-2 -right-3 bg-emerald-500 text-white text-[10px] font-black rounded-full px-2 py-1 flex items-center justify-center shadow-lg border-2 border-white">
+                                    {{ number_format($percentage, 0) }}%
                                 </div>
                             </div>
 
                             {{-- Nama Tim --}}
-                            <h3 class="text-sm font-black text-slate-800 mb-1 line-clamp-2 h-10 flex items-center justify-center group-hover:text-emerald-700 transition-colors tracking-tight leading-tight">
+                            <h3 class="text-xs font-black text-slate-800 mb-3 line-clamp-3 min-h-[3.5rem] flex items-center justify-center group-hover:text-emerald-700 transition-colors tracking-tight leading-snug">
                                 {{ $team }}
                             </h3>
 
 
                             {{-- Count Bar --}}
-                            <div class="mt-auto bg-slate-100 text-slate-600 px-5 py-2.5 rounded-xl text-xs font-bold tracking-wide group-hover:bg-gradient-to-r group-hover:from-emerald-500 group-hover:to-teal-600 group-hover:text-white group-hover:shadow-lg transition-all duration-300 w-full">
-                                <span class="text-xl mr-1">{{ $count }}</span>
-                                <span class="uppercase tracking-widest text-[10px]">Hadir</span>
+                            <div class="mt-auto bg-slate-100 text-slate-600 px-3 py-2.5 rounded-xl text-xs font-bold tracking-wide group-hover:bg-gradient-to-r group-hover:from-emerald-500 group-hover:to-teal-600 group-hover:text-white group-hover:shadow-lg transition-all duration-300 w-full flex flex-col items-center justify-center leading-tight">
+                                <div><span class="text-lg mr-1">{{ number_format($percentage, 1) }}%</span> <span class="uppercase tracking-widest text-[9px]">Kehadiran</span></div>
+                                <div class="text-[9px] font-normal mt-0.5 opacity-80">({{ $count }} dari {{ $data['denominator'] }})</div>
                             </div>
                         </div>
                     </a>
@@ -287,14 +306,14 @@
     {{-- Chart Script --}}
     <script>
     document.addEventListener('DOMContentLoaded', function () {
-        const teamData = @json($teamsCount);
+        const teamData = @json($teamsStats ?? []);
         const labels   = Object.keys(teamData).map(k => {
             // Singkat nama tim agar muat di label
             const words = k.split(' ');
             if (words.length > 4) return words.slice(0, 3).join(' ') + '...';
             return k;
         });
-        const values   = Object.values(teamData);
+        const values   = Object.values(teamData).map(d => Number(d.percentage).toFixed(1));
 
         const colors = [
             '#10b981', '#14b8a6', '#06b6d4', '#3b82f6',
@@ -327,7 +346,7 @@
                     tooltip: {
                         callbacks: {
                             title: (items) => Object.keys(teamData)[items[0].dataIndex],
-                            label: (item) => `  ${item.formattedValue} hadir`
+                            label: (item) => `  ${item.raw}% Kehadiran (${Object.values(teamData)[item.dataIndex].count} hadir)`
                         },
                         backgroundColor: '#1e293b',
                         titleFont: { weight: 'bold', size: 13 },
@@ -343,8 +362,9 @@
                     },
                     y: {
                         beginAtZero: true,
+                        max: 100,
                         grid: { color: 'rgba(0,0,0,0.05)' },
-                        ticks: { font: { size: 11 }, stepSize: 1 }
+                        ticks: { font: { size: 11 }, callback: function(value) { return value + '%'; } }
                     }
                 }
             }

@@ -70,7 +70,7 @@ class ApelSeninService
             'csv_key' => 'DATIN',
             'ketua'   => 'Ketua Tim Pelaporan & TIK',
         ],
-        'PERWAKILAN BKKBN PROVINSI ACEH' => [
+        'ATASAN PERWAKILAN KEMENDUKBANGGA / BKKBN PROVINSI ACEH' => [
             'slug'    => null,       // belum ada foto, gunakan avatar
             'csv_key' => null,
             'ketua'   => 'Kepala Perwakilan BKKBN Aceh',
@@ -201,20 +201,22 @@ class ApelSeninService
         $seenKeys = [];
 
         foreach ($data as $item) {
-            if ($date !== null) {
-                // Filter per tanggal
-                if (empty($item['timestamp'])) continue;
-                try {
-                    $itemDate = Carbon::parse($item['timestamp'])->format('Y-m-d');
-                } catch (\Exception $e) {
-                    continue;
-                }
-                if ($itemDate !== $date) continue;
+            if (empty($item['timestamp'])) continue;
+            try {
+                $itemDate = Carbon::parse($item['timestamp'])->format('Y-m-d');
+            } catch (\Exception $e) {
+                continue;
+            }
+            
+            if ($date !== null && $itemDate !== $date) {
+                continue;
             }
 
             $tim  = $this->normalizeTeamName($item['tim_kerja']);
             $nama = $item['nama'];
-            $key  = $date . '|' . $tim . '|' . $nama;
+            
+            // Deduplikasi harus menggunakan $itemDate agar satu orang bisa dihitung lebih dari 1x di hari yang berbeda
+            $key  = $itemDate . '|' . $tim . '|' . $nama;
 
             if (isset($seenKeys[$key])) continue;
             $seenKeys[$key] = true;
@@ -378,7 +380,7 @@ class ApelSeninService
         
         // Gabungkan variasi nama Perwakilan Aceh menjadi satu
         if (str_contains($normalized, 'PERWAKILAN BKKBN PROVINSI ACEH')) {
-            return 'PERWAKILAN BKKBN PROVINSI ACEH';
+            return 'ATASAN PERWAKILAN KEMENDUKBANGGA / BKKBN PROVINSI ACEH';
         }
         
         return $normalized;
@@ -424,6 +426,11 @@ class ApelSeninService
      */
     public static function getMembersFromCsv(string $tim): array
     {
+        // Tim khusus yang tidak punya CSV tetapi punya anggota tetap
+        if ($tim === 'ATASAN PERWAKILAN KEMENDUKBANGGA / BKKBN PROVINSI ACEH') {
+            return ['SAFRINA SALIM', 'IHYA, S.E., M.M.'];
+        }
+
         $csvKey = self::$timKerja[$tim]['csv_key'] ?? null;
         if (!$csvKey) return [];
 
