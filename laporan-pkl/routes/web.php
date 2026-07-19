@@ -23,6 +23,10 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\DashboardPageController;
 use App\Http\Controllers\LaporanCapaianController;
 use App\Http\Controllers\AbsensiZoomController;
+use App\Http\Controllers\ApelSeninController;
+use App\Http\Controllers\Admin\EmployeeController;
+use App\Http\Controllers\Admin\QrSessionController;
+use App\Http\Controllers\QrAttendanceController;
 Route::get('/', function (Request $request) {
     $dashboardPages = DashboardPage::withCount('views')->get();
     
@@ -153,6 +157,10 @@ Route::get('/data/absensi-zoom', [AbsensiZoomController::class, 'index'])->name(
 Route::get('/data/absensi-zoom/person/{name}', [AbsensiZoomController::class, 'personDetail'])->name('absensi-zoom.person');
 Route::get('/data/absensi-zoom/city/{city}', [AbsensiZoomController::class, 'cityDetail'])->name('absensi-zoom.city');
 
+// === APEL SENIN DASHBOARD ===
+Route::get('/data/apel-senin', [ApelSeninController::class, 'index'])->name('apel-senin');
+Route::get('/data/apel-senin/team/{team}', [ApelSeninController::class, 'teamDetail'])->name('apel-senin.team');
+
 Route::get('/data/{dashboardPage:slug}', function (DashboardPage $dashboardPage) {
     // Load relasi creator
     $dashboardPage->load('creator');
@@ -178,8 +186,26 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/user/update', [UserController::class, 'update'])->name('user.update');
     Route::delete('/user/{id}', [UserController::class, 'destroy'])->name('user.destroy');
     Route::post('/presentation-link/{id}', [UserController::class, 'updatePresentationLink'])->name('presentation-link.update');
+    
+    // Master Pegawai
+    Route::get('/admin/employees', [EmployeeController::class, 'index'])->name('admin.employees.index');
+    Route::post('/admin/employees', [EmployeeController::class, 'store'])->name('admin.employees.store');
+    Route::put('/admin/employees/{employee}', [EmployeeController::class, 'update'])->name('admin.employees.update');
+    Route::delete('/admin/employees/{employee}', [EmployeeController::class, 'destroy'])->name('admin.employees.destroy');
+    
+    // Sesi Presensi QR
+    Route::get('/admin/qr-sessions', [QrSessionController::class, 'index'])->name('admin.qr_sessions.index');
+    Route::get('/admin/qr-sessions/create', [QrSessionController::class, 'create'])->name('admin.qr_sessions.create');
+    Route::post('/admin/qr-sessions', [QrSessionController::class, 'store'])->name('admin.qr_sessions.store');
+    Route::get('/admin/qr-sessions/{qr_session}', [QrSessionController::class, 'show'])->name('admin.qr_sessions.show');
+    Route::get('/admin/qr-sessions/{qr_session}/generate', [QrSessionController::class, 'generateQr'])->name('admin.qr_sessions.generate');
+    Route::post('/admin/qr-sessions/{qr_session}/toggle', [QrSessionController::class, 'toggleActive'])->name('admin.qr_sessions.toggle');
+    Route::delete('/admin/qr-sessions/{qr_session}', [QrSessionController::class, 'destroy'])->name('admin.qr_sessions.destroy');
 });
 
+// Presensi Publik (Scan QR)
+Route::get('/qr-absen', [QrAttendanceController::class, 'scan'])->name('qr_attendance.scan');
+Route::post('/qr-absen/submit', [QrAttendanceController::class, 'submit'])->name('qr_attendance.submit');
 
 Route::get('/login', function () {
     return view('login', ['title' => 'Login']);
@@ -244,3 +270,47 @@ Route::middleware(['auth'])->group(function () {
     Route::delete('/laporan-capaian/{id}', [LaporanCapaianController::class, 'destroy'])->name('laporan-capaian.destroy');
 });
 
+Route::get('/jalankan-migrasi', function() {
+    try {
+        $messages = [];
+        
+        $newMigrations = [
+            'database/migrations/2026_05_20_000000_create_presentation_links_table.php',
+            'database/migrations/2026_05_20_150000_create_laporan_capaian_table.php',
+            'database/migrations/2026_07_06_091305_create_employees_table.php',
+            'database/migrations/2026_07_06_091306_create_qr_sessions_table.php',
+            'database/migrations/2026_07_06_091307_create_qr_attendances_table.php',
+            'database/migrations/2026_07_07_020931_add_refresh_time_to_qr_sessions_table.php',
+            'database/migrations/2026_07_07_045226_add_end_time_to_qr_sessions_table.php'
+        ];
+        
+        foreach ($newMigrations as $path) {
+            try {
+                \Illuminate\Support\Facades\Artisan::call('migrate', [
+                    '--path' => $path,
+                    '--force' => true
+                ]);
+                $messages[] = "✅ Migrasi " . basename($path) . " sukses.";
+            } catch (\Throwable $e) {
+                if (str_contains($e->getMessage(), 'already exists')) {
+                    $messages[] = "⏭️ Migrasi " . basename($path) . " dilewati (tabel sudah ada).";
+                } else {
+                    $messages[] = "❌ Error pada " . basename($path) . ": " . $e->getMessage();
+                }
+            }
+        }
+        
+        return '<b>Status Migrasi:</b><br><br>' . implode('<br>', $messages);
+    } catch (\Throwable $e) {
+        return 'Terjadi Error: ' . $e->getMessage();
+    }
+});
+
+Route::get('/bersihkan-cache', function() {
+    try {
+        \Illuminate\Support\Facades\Artisan::call('optimize:clear');
+        return 'Cache berhasil dibersihkan!';
+    } catch (\Throwable $e) {
+        return 'Terjadi Error: ' . $e->getMessage();
+    }
+});

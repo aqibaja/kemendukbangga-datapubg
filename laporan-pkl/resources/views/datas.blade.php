@@ -34,11 +34,16 @@
         </div>
 
         @php
-            $showNative = false;
+            $showNativeZoom = false;
+            $showNativeApel = false;
             $search = request('search');
             if (!$search || stripos('Dashboard Presensi Zoom', $search) !== false || stripos('absensi', $search) !== false || stripos('zoom', $search) !== false) {
-                $showNative = true;
+                $showNativeZoom = true;
             }
+            if (!$search || stripos('Dashboard Apel Senin', $search) !== false || stripos('apel', $search) !== false || stripos('senin', $search) !== false) {
+                $showNativeApel = true;
+            }
+            $showNative = $showNativeZoom || $showNativeApel;
         @endphp
 
         {{-- Empty State - Tampilkan jika tidak ada data DAN native dashboard tidak muncul --}}
@@ -76,7 +81,7 @@
                 
 
 
-                @if($showNative)
+                @if($showNativeZoom)
                 {{-- NATIVE DASHBOARD: ABSENSI ZOOM --}}
                 <div class="bg-white shadow-md rounded-lg overflow-hidden hover:shadow-xl transition-shadow duration-300 relative">
                     
@@ -108,6 +113,48 @@
                                 </svg>
                                 <span class="text-[10px] sm:text-xs">
                                     {{ number_format(\Illuminate\Support\Facades\Cache::get('native_dashboard_zoom_views', 0)) }}
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                @endif
+
+                @if($showNativeApel)
+                {{-- NATIVE DASHBOARD: APEL SENIN --}}
+                <div class="bg-white shadow-md rounded-lg overflow-hidden hover:shadow-xl transition-shadow duration-300 relative">
+                    
+                    {{-- Thumbnail dengan aspect ratio 1:1 --}}
+                    <div class="relative w-full pt-[100%] overflow-hidden bg-gradient-to-br from-emerald-500 to-teal-700">
+                        <div class="absolute inset-0 flex flex-col items-center justify-center text-white transition duration-300 hover:scale-105">
+                            <i class="fa-solid fa-flag text-5xl mb-2 drop-shadow-md"></i>
+                            <span class="font-black tracking-widest text-emerald-100 text-sm drop-shadow-md opacity-90">APEL SENIN</span>
+                        </div>
+                    </div>
+
+                    {{-- Content --}}
+                    <div class="p-2 sm:p-3">
+                        <a href="{{ url('/data/apel-senin') }}" class="block">
+                            <h3 class="text-xs sm:text-sm font-semibold text-gray-800 hover:text-emerald-600 transition-colors line-clamp-2 min-h-8 sm:min-h-10">
+                                Dashboard Apel Senin
+                            </h3>
+                        </a>
+                        <div class="flex items-center justify-between mt-1.5 sm:mt-2">
+                            <span class="text-[10px] sm:text-xs text-emerald-600 font-semibold bg-emerald-50 px-2 py-0.5 rounded-full">
+                                Tim Kerja
+                            </span>
+                            
+                            {{-- Native Views Counter --}}
+                            <div class="flex items-center gap-1 text-gray-500">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-3 w-3 sm:h-4 sm:w-4" fill="none"
+                                    viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+                                </svg>
+                                <span class="text-[10px] sm:text-xs">
+                                    {{ number_format(\Illuminate\Support\Facades\Cache::get('native_dashboard_apel_views', 0)) }}
                                 </span>
                             </div>
                         </div>

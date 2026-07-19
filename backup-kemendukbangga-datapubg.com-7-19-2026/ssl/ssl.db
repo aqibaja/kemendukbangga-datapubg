@@ -1,0 +1,266 @@
+---
+files:
+  certificate:
+    cpcalendars_kemendukbangga_datapubg_com_ca07a_48b79_1791168387_81a85e6030a38fd2bfc3d0be512e13f2:
+      created: '1783395899'
+      domains:
+        - cpanel.kemendukbangga-datapubg.com
+        - cpcalendars.kemendukbangga-datapubg.com
+        - cpcontacts.kemendukbangga-datapubg.com
+        - kemendukbangga-datapubg.com
+        - mail.kemendukbangga-datapubg.com
+        - webdisk.kemendukbangga-datapubg.com
+        - webmail.kemendukbangga-datapubg.com
+        - www.kemendukbangga-datapubg.com
+      ecdsa_curve_name: ~
+      ecdsa_public: ~
+      friendly_name: Cert for “kemendukbangga-datapubg.com” 1783395899.0
+      id: cpcalendars_kemendukbangga_datapubg_com_ca07a_48b79_1791168387_81a85e6030a38fd2bfc3d0be512e13f2
+      is_self_signed: 0
+      issuer.commonName: YR2
+      issuer.organizationName: Let's Encrypt
+      key_algorithm: rsaEncryption
+      modulus: ca07a362216efc7dced61fe24164f6145d2f5448d108379c4625ddd0c2b447c8fcdb5a95f7ba5a94de75c1049eff887aba86cf4de5e9b585b9f7c5ca52358dd195efa78121a274f0e6929698ebd1a25f11ad05f74b8c4af742076651891014c8fb9944526acb1013cbfead2fb1988940ea19614d127f6bf36638fef2e30b3188f5efe687f831493422c2390bf469697a6044c2bd357837077fe2cb714d0b88f61db2edb4e1db4d373771e749f1ec7cac83f77851445fe1ddc29e8b8a48a0882524c1a4c4ff5fe084a32cca9d04c99e8b13cd4f96ee6a67f0699b4d998fea654d80ebb8339b84adc71c9fdf229789593c68937a35846be8a5a0a3753b52948b79
+      modulus_length: 2048
+      not_after: '1791168387'
+      not_before: '1783392388'
+      serial: 05be3aa5f6a7b68c58f87dc45a87443e99dc
+      signature_algorithm: sha256WithRSAEncryption
+      subject.commonName: cpcalendars.kemendukbangga-datapubg.com
+      validation_type: dv
+    cpcontacts_kemendukbangga_datapubg_com_d1c5e_3f105_1785898275_15ba5622b0994296bec2a33ceb546e6e:
+      created: '1778125788'
+      domains:
+        - cpanel.kemendukbangga-datapubg.com
+        - cpcalendars.kemendukbangga-datapubg.com
+        - cpcontacts.kemendukbangga-datapubg.com
+        - kemendukbangga-datapubg.com
+        - mail.kemendukbangga-datapubg.com
+        - webdisk.kemendukbangga-datapubg.com
+        - webmail.kemendukbangga-datapubg.com
+        - www.kemendukbangga-datapubg.com
+      ecdsa_curve_name: ~
+      ecdsa_public: ~
+      friendly_name: Cert for “kemendukbangga-datapubg.com” 1778125788.0
+      id: cpcontacts_kemendukbangga_datapubg_com_d1c5e_3f105_1785898275_15ba5622b0994296bec2a33ceb546e6e
+      is_self_signed: 0
+      issuer.commonName: R12
+      issuer.organizationName: Let's Encrypt
+      key_algorithm: rsaEncryption
+      modulus: d1c5eff9650863d31c83c101c712cad1e2358046a1a8257d2a9efbb893d32e0f209b9f2823d973a95ae0121b38f2bc47edcf215fae8a607e4933285c453adf810b294e3fab9f44342b6459364d8f5473b74d5eda373a9e51d42937af3ff033ccb7b5c13e95c05b5ca5098de2bc9e23bddefdb55f807b77149d9f4f30434e158ad2ef20db0064764d84d800b50931951e97fd585cf82db2d0a5ec4734f72ab13931199e37241f92b62ff97074fa9076a4715e36c404eac9d2d8891d8e205b8e871d25ab16de300649282d2b3d13596954f7885ecbf2f1cd84d8705e61c2e31d26f0e2dac5764107013514eb6c36b23e6931a111ffe39934f2822e353fa5e3f105
+      modulus_length: 2048
+      not_after: '1785898275'
+      not_before: '1778122276'
+      serial: 06448c366e9512a3c23716122918925d5640
+      signature_algorithm: sha256WithRSAEncryption
+      subject.commonName: cpcontacts.kemendukbangga-datapubg.com
+      validation_type: dv
+    kemendukbangga_datapubg_com_bb245_4e347_1799117520_857d69ddd2a648c90ab870c200b4cc97:
+      created: '1767581520'
+      domains:
+        - kemendukbangga-datapubg.com
+        - www.kemendukbangga-datapubg.com
+        - mail.kemendukbangga-datapubg.com
+        - cpanel.kemendukbangga-datapubg.com
+        - webmail.kemendukbangga-datapubg.com
+        - webdisk.kemendukbangga-datapubg.com
+        - cpcontacts.kemendukbangga-datapubg.com
+        - cpcalendars.kemendukbangga-datapubg.com
+      ecdsa_curve_name: ~
+      ecdsa_public: ~
+      friendly_name: Cert for “kemendukbangga-datapubg.com”
+      id: kemendukbangga_datapubg_com_bb245_4e347_1799117520_857d69ddd2a648c90ab870c200b4cc97
+      is_self_signed: 1
+      issuer.commonName: kemendukbangga-datapubg.com
+      issuer.organizationName: ~
+      key_algorithm: rsaEncryption
+      modulus: bb245fa3383cba7a264969ac697f87a9a3cfda7eab42c144c8c0d3f1a1ce346aea02ad4e5fdddb8b85c4a66ec0c1c555a0716bfdec639f1ee59947405e8521a74c3c3339f18ce9d76b374cdfdc650b0e0362a5897509eb5373fa363903fa481fa96b7990cfcd65c4625d258fb283a823ed6ec559486bef83f0e21d9d7ad9f5c0046218b52498075786e7c5537dee85f15f38dabbff70ae603f652a33b35661e488d7b1649180fb4eb7051695a635455ea3924b6f62ae0e25171bcb0dac0ee6f2cdd9f537b6539beb7872c2276127fbd85666f960a0cd5794757da4baac7af92f187777b46f53936215f8ac2bb2358edb386611868044747441de63532db4e347
+      modulus_length: 2048
+      not_after: '1799117520'
+      not_before: '1767581520'
+      serial: 0177adf3d0
+      signature_algorithm: sha256WithRSAEncryption
+      subject.commonName: kemendukbangga-datapubg.com
+      validation_type: ~
+    kemendukbangga_datapubg_com_bd3fb_04965_1780628785_a5a9678d100e30b379e879c9bedc65f8:
+      created: '1772856297'
+      domains:
+        - cpanel.kemendukbangga-datapubg.com
+        - cpcalendars.kemendukbangga-datapubg.com
+        - cpcontacts.kemendukbangga-datapubg.com
+        - kemendukbangga-datapubg.com
+        - mail.kemendukbangga-datapubg.com
+        - webdisk.kemendukbangga-datapubg.com
+        - webmail.kemendukbangga-datapubg.com
+        - www.kemendukbangga-datapubg.com
+      ecdsa_curve_name: ~
+      ecdsa_public: ~
+      friendly_name: Cert for “kemendukbangga-datapubg.com” 1772856297.0
+      id: kemendukbangga_datapubg_com_bd3fb_04965_1780628785_a5a9678d100e30b379e879c9bedc65f8
+      is_self_signed: 0
+      issuer.commonName: R12
+      issuer.organizationName: Let's Encrypt
+      key_algorithm: rsaEncryption
+      modulus: bd3fb2197f690c27db170c3a68e92591570e444d67317537aa858f5388f6ce39998b19d0d40ecfdc27f956b1f4bbe24153b17d4d8d4de1505cc6d201eaae513b4c04a51d0b0830e0f3081fb3f825454fc18fd5af5fadcbe31f7d7326e3f00957e308bbbb423a03f1e126c6cc0ea453b658c3ec9189882c0216f32a86264ec1be867eacd77427e6faca2732492bdc97ab889c3e7b48ddf520f7d99af62925e29313316a31d2a0cd57c72e4e59f0a04bbd07740d4279cc69afeabd2c0c066d65dd63740a9e2e174cc8cd19ab92516ffef4fae90b21e8fb62043fef5df6885b9b959bda3a5da1d82ac8e7cc87e068786f7da80405ac644e59ac2639e32071504965
+      modulus_length: 2048
+      not_after: '1780628785'
+      not_before: '1772852786'
+      serial: 053a894f68b4c86ffe008a12f6de3b4945c8
+      signature_algorithm: sha256WithRSAEncryption
+      subject.commonName: kemendukbangga-datapubg.com
+      validation_type: dv
+    mail_kemendukbangga_datapubg_com_ad47b_2659b_1775354073_ec2fc280e02d703d3f3c0a357976560e:
+      created: '1767581584'
+      domains:
+        - kemendukbangga-datapubg.com
+        - mail.kemendukbangga-datapubg.com
+        - www.kemendukbangga-datapubg.com
+      ecdsa_curve_name: ~
+      ecdsa_public: ~
+      friendly_name: Cert for “kemendukbangga-datapubg.com” 1767581584.0
+      id: mail_kemendukbangga_datapubg_com_ad47b_2659b_1775354073_ec2fc280e02d703d3f3c0a357976560e
+      is_self_signed: 0
+      issuer.commonName: R13
+      issuer.organizationName: Let's Encrypt
+      key_algorithm: rsaEncryption
+      modulus: ad47bcfbcca08227aaf609e8a4ccfc106521873c68dd49d6377d03b39bb0cd7788ac475c265be65ffb5dd58718ae34ab6f14a3ef0a5385f4879d7811a4b93e4db301efb3c3198a6906e22c94bf0ac58f1f463f0b0fc745ae0210aa09b4e3ec41684b6c2f973458492c80c5f325566e847776ffaf49cf7f568370d17ad079b42b3dfe6aa6abb8f677e14d04e3b19480643f54d91b700a81a8a9f172f3c3a27cfa9e746064d205ed92c5bac11202ebc84b6ea44215e93dfe2dc9045b89febae0d99336fe993002ce412c3553ff75838958bd487dc22d370da0f312d401b73be81a0053755dec0999c7461d9bcaf4da12fe2fde3ae92b219663af83ab8cbe62659b
+      modulus_length: 2048
+      not_after: '1775354073'
+      not_before: '1767578074'
+      serial: 05856c3f1fe78f9c0c4a21313b1a6f145822
+      signature_algorithm: sha256WithRSAEncryption
+      subject.commonName: mail.kemendukbangga-datapubg.com
+      validation_type: dv
+    webmail_kemendukbangga_datapubg_com_ba7ef_b27eb_1775357453_b99fad1d8275d8df40ebb875de77cb24:
+      created: '1767584965'
+      domains:
+        - cpanel.kemendukbangga-datapubg.com
+        - cpcalendars.kemendukbangga-datapubg.com
+        - cpcontacts.kemendukbangga-datapubg.com
+        - kemendukbangga-datapubg.com
+        - mail.kemendukbangga-datapubg.com
+        - webdisk.kemendukbangga-datapubg.com
+        - webmail.kemendukbangga-datapubg.com
+        - www.kemendukbangga-datapubg.com
+      ecdsa_curve_name: ~
+      ecdsa_public: ~
+      friendly_name: Cert for “kemendukbangga-datapubg.com” 1767584965.0
+      id: webmail_kemendukbangga_datapubg_com_ba7ef_b27eb_1775357453_b99fad1d8275d8df40ebb875de77cb24
+      is_self_signed: 0
+      issuer.commonName: R12
+      issuer.organizationName: Let's Encrypt
+      key_algorithm: rsaEncryption
+      modulus: ba7efc8d92674c5838e4e266106af92b2ff9a74711e8575f3d814cb52967db6cef12abc8cf040ae89fa1797a8a98c4a1b78f1e4b793c44d2d70d8b9251d245f2859e28e3131b075c558c83edf313043421bf9ceec657e2865b7837f791a736726bc8bf0c31444c0c7c15c7d01d9f78913addd9b08c4c44f92e05369f4a9bdf070a9336b8ce9fa5b0a71b6ffe1d03cf5f151a2bfd9fd6a12a2400f8ceb0c2f8722e2dc927c2043ef7a9cdd7f997d8eb733b81b3eab1b327ea83d3e7fb9e195217be89b92308b8b1f2f2a7be6e2f4ebcf46e4c1776fcc1d3df3ddf2f02c46f482aa3522ad1e97b64a7f1a322ae596ab6a0b9357f4017adc878e530cdb74ebb27eb
+      modulus_length: 2048
+      not_after: '1775357453'
+      not_before: '1767581454'
+      serial: 0602c039be7078b908c8d4f681af97be3041
+      signature_algorithm: sha256WithRSAEncryption
+      subject.commonName: webmail.kemendukbangga-datapubg.com
+      validation_type: dv
+  key:
+    ad47b_2659b_6aa87ea6bdd4fccf559c3c11752e916c:
+      created: '1767581584'
+      ecdsa_curve_name: ~
+      ecdsa_public: ~
+      friendly_name: Key for “kemendukbangga-datapubg.com” 1767581584.0
+      id: ad47b_2659b_6aa87ea6bdd4fccf559c3c11752e916c
+      key_algorithm: rsaEncryption
+      modulus: ad47bcfbcca08227aaf609e8a4ccfc106521873c68dd49d6377d03b39bb0cd7788ac475c265be65ffb5dd58718ae34ab6f14a3ef0a5385f4879d7811a4b93e4db301efb3c3198a6906e22c94bf0ac58f1f463f0b0fc745ae0210aa09b4e3ec41684b6c2f973458492c80c5f325566e847776ffaf49cf7f568370d17ad079b42b3dfe6aa6abb8f677e14d04e3b19480643f54d91b700a81a8a9f172f3c3a27cfa9e746064d205ed92c5bac11202ebc84b6ea44215e93dfe2dc9045b89febae0d99336fe993002ce412c3553ff75838958bd487dc22d370da0f312d401b73be81a0053755dec0999c7461d9bcaf4da12fe2fde3ae92b219663af83ab8cbe62659b
+      modulus_length: 2048
+    ba7ef_b27eb_d4f7ca16a67eedaa41cc92ae70162d29:
+      created: '1767584965'
+      ecdsa_curve_name: ~
+      ecdsa_public: ~
+      friendly_name: Key for “kemendukbangga-datapubg.com” 1767584965.0
+      id: ba7ef_b27eb_d4f7ca16a67eedaa41cc92ae70162d29
+      key_algorithm: rsaEncryption
+      modulus: ba7efc8d92674c5838e4e266106af92b2ff9a74711e8575f3d814cb52967db6cef12abc8cf040ae89fa1797a8a98c4a1b78f1e4b793c44d2d70d8b9251d245f2859e28e3131b075c558c83edf313043421bf9ceec657e2865b7837f791a736726bc8bf0c31444c0c7c15c7d01d9f78913addd9b08c4c44f92e05369f4a9bdf070a9336b8ce9fa5b0a71b6ffe1d03cf5f151a2bfd9fd6a12a2400f8ceb0c2f8722e2dc927c2043ef7a9cdd7f997d8eb733b81b3eab1b327ea83d3e7fb9e195217be89b92308b8b1f2f2a7be6e2f4ebcf46e4c1776fcc1d3df3ddf2f02c46f482aa3522ad1e97b64a7f1a322ae596ab6a0b9357f4017adc878e530cdb74ebb27eb
+      modulus_length: 2048
+    bb245_4e347_8cf5ce40025b4e28b499a7aefa5a113f:
+      created: '1767581520'
+      ecdsa_curve_name: ~
+      ecdsa_public: ~
+      friendly_name: Key for “kemendukbangga-datapubg.com”
+      id: bb245_4e347_8cf5ce40025b4e28b499a7aefa5a113f
+      key_algorithm: rsaEncryption
+      modulus: bb245fa3383cba7a264969ac697f87a9a3cfda7eab42c144c8c0d3f1a1ce346aea02ad4e5fdddb8b85c4a66ec0c1c555a0716bfdec639f1ee59947405e8521a74c3c3339f18ce9d76b374cdfdc650b0e0362a5897509eb5373fa363903fa481fa96b7990cfcd65c4625d258fb283a823ed6ec559486bef83f0e21d9d7ad9f5c0046218b52498075786e7c5537dee85f15f38dabbff70ae603f652a33b35661e488d7b1649180fb4eb7051695a635455ea3924b6f62ae0e25171bcb0dac0ee6f2cdd9f537b6539beb7872c2276127fbd85666f960a0cd5794757da4baac7af92f187777b46f53936215f8ac2bb2358edb386611868044747441de63532db4e347
+      modulus_length: 2048
+    bd3fb_04965_5152ac190ab2c71552b2917885d19f3d:
+      created: '1772856297'
+      ecdsa_curve_name: ~
+      ecdsa_public: ~
+      friendly_name: Key for “kemendukbangga-datapubg.com” 1772856297.0
+      id: bd3fb_04965_5152ac190ab2c71552b2917885d19f3d
+      key_algorithm: rsaEncryption
+      modulus: bd3fb2197f690c27db170c3a68e92591570e444d67317537aa858f5388f6ce39998b19d0d40ecfdc27f956b1f4bbe24153b17d4d8d4de1505cc6d201eaae513b4c04a51d0b0830e0f3081fb3f825454fc18fd5af5fadcbe31f7d7326e3f00957e308bbbb423a03f1e126c6cc0ea453b658c3ec9189882c0216f32a86264ec1be867eacd77427e6faca2732492bdc97ab889c3e7b48ddf520f7d99af62925e29313316a31d2a0cd57c72e4e59f0a04bbd07740d4279cc69afeabd2c0c066d65dd63740a9e2e174cc8cd19ab92516ffef4fae90b21e8fb62043fef5df6885b9b959bda3a5da1d82ac8e7cc87e068786f7da80405ac644e59ac2639e32071504965
+      modulus_length: 2048
+    ca07a_48b79_d19a60a55bed967dabf13adad2c12758:
+      created: '1783395899'
+      ecdsa_curve_name: ~
+      ecdsa_public: ~
+      friendly_name: Key for “kemendukbangga-datapubg.com” 1783395899.0
+      id: ca07a_48b79_d19a60a55bed967dabf13adad2c12758
+      key_algorithm: rsaEncryption
+      modulus: ca07a362216efc7dced61fe24164f6145d2f5448d108379c4625ddd0c2b447c8fcdb5a95f7ba5a94de75c1049eff887aba86cf4de5e9b585b9f7c5ca52358dd195efa78121a274f0e6929698ebd1a25f11ad05f74b8c4af742076651891014c8fb9944526acb1013cbfead2fb1988940ea19614d127f6bf36638fef2e30b3188f5efe687f831493422c2390bf469697a6044c2bd357837077fe2cb714d0b88f61db2edb4e1db4d373771e749f1ec7cac83f77851445fe1ddc29e8b8a48a0882524c1a4c4ff5fe084a32cca9d04c99e8b13cd4f96ee6a67f0699b4d998fea654d80ebb8339b84adc71c9fdf229789593c68937a35846be8a5a0a3753b52948b79
+      modulus_length: 2048
+    d1c5e_3f105_22e5216e2916a318f5f730bf2cfecc04:
+      created: '1778125788'
+      ecdsa_curve_name: ~
+      ecdsa_public: ~
+      friendly_name: Key for “kemendukbangga-datapubg.com” 1778125788.0
+      id: d1c5e_3f105_22e5216e2916a318f5f730bf2cfecc04
+      key_algorithm: rsaEncryption
+      modulus: d1c5eff9650863d31c83c101c712cad1e2358046a1a8257d2a9efbb893d32e0f209b9f2823d973a95ae0121b38f2bc47edcf215fae8a607e4933285c453adf810b294e3fab9f44342b6459364d8f5473b74d5eda373a9e51d42937af3ff033ccb7b5c13e95c05b5ca5098de2bc9e23bddefdb55f807b77149d9f4f30434e158ad2ef20db0064764d84d800b50931951e97fd585cf82db2d0a5ec4734f72ab13931199e37241f92b62ff97074fa9076a4715e36c404eac9d2d8891d8e205b8e871d25ab16de300649282d2b3d13596954f7885ecbf2f1cd84d8705e61c2e31d26f0e2dac5764107013514eb6c36b23e6931a111ffe39934f2822e353fa5e3f105
+      modulus_length: 2048
+indexes:
+  certificate:
+    modulus:
+      ad47bcfbcca08227aaf609e8a4ccfc106521873c68dd49d6377d03b39bb0cd7788ac475c265be65ffb5dd58718ae34ab6f14a3ef0a5385f4879d7811a4b93e4db301efb3c3198a6906e22c94bf0ac58f1f463f0b0fc745ae0210aa09b4e3ec41684b6c2f973458492c80c5f325566e847776ffaf49cf7f568370d17ad079b42b3dfe6aa6abb8f677e14d04e3b19480643f54d91b700a81a8a9f172f3c3a27cfa9e746064d205ed92c5bac11202ebc84b6ea44215e93dfe2dc9045b89febae0d99336fe993002ce412c3553ff75838958bd487dc22d370da0f312d401b73be81a0053755dec0999c7461d9bcaf4da12fe2fde3ae92b219663af83ab8cbe62659b:
+        mail_kemendukbangga_datapubg_com_ad47b_2659b_1775354073_ec2fc280e02d703d3f3c0a357976560e: ~
+      ba7efc8d92674c5838e4e266106af92b2ff9a74711e8575f3d814cb52967db6cef12abc8cf040ae89fa1797a8a98c4a1b78f1e4b793c44d2d70d8b9251d245f2859e28e3131b075c558c83edf313043421bf9ceec657e2865b7837f791a736726bc8bf0c31444c0c7c15c7d01d9f78913addd9b08c4c44f92e05369f4a9bdf070a9336b8ce9fa5b0a71b6ffe1d03cf5f151a2bfd9fd6a12a2400f8ceb0c2f8722e2dc927c2043ef7a9cdd7f997d8eb733b81b3eab1b327ea83d3e7fb9e195217be89b92308b8b1f2f2a7be6e2f4ebcf46e4c1776fcc1d3df3ddf2f02c46f482aa3522ad1e97b64a7f1a322ae596ab6a0b9357f4017adc878e530cdb74ebb27eb:
+        webmail_kemendukbangga_datapubg_com_ba7ef_b27eb_1775357453_b99fad1d8275d8df40ebb875de77cb24: ~
+      bb245fa3383cba7a264969ac697f87a9a3cfda7eab42c144c8c0d3f1a1ce346aea02ad4e5fdddb8b85c4a66ec0c1c555a0716bfdec639f1ee59947405e8521a74c3c3339f18ce9d76b374cdfdc650b0e0362a5897509eb5373fa363903fa481fa96b7990cfcd65c4625d258fb283a823ed6ec559486bef83f0e21d9d7ad9f5c0046218b52498075786e7c5537dee85f15f38dabbff70ae603f652a33b35661e488d7b1649180fb4eb7051695a635455ea3924b6f62ae0e25171bcb0dac0ee6f2cdd9f537b6539beb7872c2276127fbd85666f960a0cd5794757da4baac7af92f187777b46f53936215f8ac2bb2358edb386611868044747441de63532db4e347:
+        kemendukbangga_datapubg_com_bb245_4e347_1799117520_857d69ddd2a648c90ab870c200b4cc97: ~
+      bd3fb2197f690c27db170c3a68e92591570e444d67317537aa858f5388f6ce39998b19d0d40ecfdc27f956b1f4bbe24153b17d4d8d4de1505cc6d201eaae513b4c04a51d0b0830e0f3081fb3f825454fc18fd5af5fadcbe31f7d7326e3f00957e308bbbb423a03f1e126c6cc0ea453b658c3ec9189882c0216f32a86264ec1be867eacd77427e6faca2732492bdc97ab889c3e7b48ddf520f7d99af62925e29313316a31d2a0cd57c72e4e59f0a04bbd07740d4279cc69afeabd2c0c066d65dd63740a9e2e174cc8cd19ab92516ffef4fae90b21e8fb62043fef5df6885b9b959bda3a5da1d82ac8e7cc87e068786f7da80405ac644e59ac2639e32071504965:
+        kemendukbangga_datapubg_com_bd3fb_04965_1780628785_a5a9678d100e30b379e879c9bedc65f8: ~
+      ca07a362216efc7dced61fe24164f6145d2f5448d108379c4625ddd0c2b447c8fcdb5a95f7ba5a94de75c1049eff887aba86cf4de5e9b585b9f7c5ca52358dd195efa78121a274f0e6929698ebd1a25f11ad05f74b8c4af742076651891014c8fb9944526acb1013cbfead2fb1988940ea19614d127f6bf36638fef2e30b3188f5efe687f831493422c2390bf469697a6044c2bd357837077fe2cb714d0b88f61db2edb4e1db4d373771e749f1ec7cac83f77851445fe1ddc29e8b8a48a0882524c1a4c4ff5fe084a32cca9d04c99e8b13cd4f96ee6a67f0699b4d998fea654d80ebb8339b84adc71c9fdf229789593c68937a35846be8a5a0a3753b52948b79:
+        cpcalendars_kemendukbangga_datapubg_com_ca07a_48b79_1791168387_81a85e6030a38fd2bfc3d0be512e13f2: ~
+      d1c5eff9650863d31c83c101c712cad1e2358046a1a8257d2a9efbb893d32e0f209b9f2823d973a95ae0121b38f2bc47edcf215fae8a607e4933285c453adf810b294e3fab9f44342b6459364d8f5473b74d5eda373a9e51d42937af3ff033ccb7b5c13e95c05b5ca5098de2bc9e23bddefdb55f807b77149d9f4f30434e158ad2ef20db0064764d84d800b50931951e97fd585cf82db2d0a5ec4734f72ab13931199e37241f92b62ff97074fa9076a4715e36c404eac9d2d8891d8e205b8e871d25ab16de300649282d2b3d13596954f7885ecbf2f1cd84d8705e61c2e31d26f0e2dac5764107013514eb6c36b23e6931a111ffe39934f2822e353fa5e3f105:
+        cpcontacts_kemendukbangga_datapubg_com_d1c5e_3f105_1785898275_15ba5622b0994296bec2a33ceb546e6e: ~
+    subject.commonName:
+      cpcalendars.kemendukbangga-datapubg.com:
+        cpcalendars_kemendukbangga_datapubg_com_ca07a_48b79_1791168387_81a85e6030a38fd2bfc3d0be512e13f2: ~
+      cpcontacts.kemendukbangga-datapubg.com:
+        cpcontacts_kemendukbangga_datapubg_com_d1c5e_3f105_1785898275_15ba5622b0994296bec2a33ceb546e6e: ~
+      kemendukbangga-datapubg.com:
+        kemendukbangga_datapubg_com_bb245_4e347_1799117520_857d69ddd2a648c90ab870c200b4cc97: ~
+        kemendukbangga_datapubg_com_bd3fb_04965_1780628785_a5a9678d100e30b379e879c9bedc65f8: ~
+      mail.kemendukbangga-datapubg.com:
+        mail_kemendukbangga_datapubg_com_ad47b_2659b_1775354073_ec2fc280e02d703d3f3c0a357976560e: ~
+      webmail.kemendukbangga-datapubg.com:
+        webmail_kemendukbangga_datapubg_com_ba7ef_b27eb_1775357453_b99fad1d8275d8df40ebb875de77cb24: ~
+uniques:
+  certificate:
+    friendly_name:
+      Cert for “kemendukbangga-datapubg.com”: kemendukbangga_datapubg_com_bb245_4e347_1799117520_857d69ddd2a648c90ab870c200b4cc97
+      Cert for “kemendukbangga-datapubg.com” 1767581584.0: mail_kemendukbangga_datapubg_com_ad47b_2659b_1775354073_ec2fc280e02d703d3f3c0a357976560e
+      Cert for “kemendukbangga-datapubg.com” 1767584965.0: webmail_kemendukbangga_datapubg_com_ba7ef_b27eb_1775357453_b99fad1d8275d8df40ebb875de77cb24
+      Cert for “kemendukbangga-datapubg.com” 1772856297.0: kemendukbangga_datapubg_com_bd3fb_04965_1780628785_a5a9678d100e30b379e879c9bedc65f8
+      Cert for “kemendukbangga-datapubg.com” 1778125788.0: cpcontacts_kemendukbangga_datapubg_com_d1c5e_3f105_1785898275_15ba5622b0994296bec2a33ceb546e6e
+      Cert for “kemendukbangga-datapubg.com” 1783395899.0: cpcalendars_kemendukbangga_datapubg_com_ca07a_48b79_1791168387_81a85e6030a38fd2bfc3d0be512e13f2
+  key:
+    friendly_name:
+      Key for “kemendukbangga-datapubg.com”: bb245_4e347_8cf5ce40025b4e28b499a7aefa5a113f
+      Key for “kemendukbangga-datapubg.com” 1767581584.0: ad47b_2659b_6aa87ea6bdd4fccf559c3c11752e916c
+      Key for “kemendukbangga-datapubg.com” 1767584965.0: ba7ef_b27eb_d4f7ca16a67eedaa41cc92ae70162d29
+      Key for “kemendukbangga-datapubg.com” 1772856297.0: bd3fb_04965_5152ac190ab2c71552b2917885d19f3d
+      Key for “kemendukbangga-datapubg.com” 1778125788.0: d1c5e_3f105_22e5216e2916a318f5f730bf2cfecc04
+      Key for “kemendukbangga-datapubg.com” 1783395899.0: ca07a_48b79_d19a60a55bed967dabf13adad2c12758
+    modulus:ecdsa_curve_name:ecdsa_public:
+      ad47bcfbcca08227aaf609e8a4ccfc106521873c68dd49d6377d03b39bb0cd7788ac475c265be65ffb5dd58718ae34ab6f14a3ef0a5385f4879d7811a4b93e4db301efb3c3198a6906e22c94bf0ac58f1f463f0b0fc745ae0210aa09b4e3ec41684b6c2f973458492c80c5f325566e847776ffaf49cf7f568370d17ad079b42b3dfe6aa6abb8f677e14d04e3b19480643f54d91b700a81a8a9f172f3c3a27cfa9e746064d205ed92c5bac11202ebc84b6ea44215e93dfe2dc9045b89febae0d99336fe993002ce412c3553ff75838958bd487dc22d370da0f312d401b73be81a0053755dec0999c7461d9bcaf4da12fe2fde3ae92b219663af83ab8cbe62659b: ad47b_2659b_6aa87ea6bdd4fccf559c3c11752e916c
+      ba7efc8d92674c5838e4e266106af92b2ff9a74711e8575f3d814cb52967db6cef12abc8cf040ae89fa1797a8a98c4a1b78f1e4b793c44d2d70d8b9251d245f2859e28e3131b075c558c83edf313043421bf9ceec657e2865b7837f791a736726bc8bf0c31444c0c7c15c7d01d9f78913addd9b08c4c44f92e05369f4a9bdf070a9336b8ce9fa5b0a71b6ffe1d03cf5f151a2bfd9fd6a12a2400f8ceb0c2f8722e2dc927c2043ef7a9cdd7f997d8eb733b81b3eab1b327ea83d3e7fb9e195217be89b92308b8b1f2f2a7be6e2f4ebcf46e4c1776fcc1d3df3ddf2f02c46f482aa3522ad1e97b64a7f1a322ae596ab6a0b9357f4017adc878e530cdb74ebb27eb: ba7ef_b27eb_d4f7ca16a67eedaa41cc92ae70162d29
+      bb245fa3383cba7a264969ac697f87a9a3cfda7eab42c144c8c0d3f1a1ce346aea02ad4e5fdddb8b85c4a66ec0c1c555a0716bfdec639f1ee59947405e8521a74c3c3339f18ce9d76b374cdfdc650b0e0362a5897509eb5373fa363903fa481fa96b7990cfcd65c4625d258fb283a823ed6ec559486bef83f0e21d9d7ad9f5c0046218b52498075786e7c5537dee85f15f38dabbff70ae603f652a33b35661e488d7b1649180fb4eb7051695a635455ea3924b6f62ae0e25171bcb0dac0ee6f2cdd9f537b6539beb7872c2276127fbd85666f960a0cd5794757da4baac7af92f187777b46f53936215f8ac2bb2358edb386611868044747441de63532db4e347: bb245_4e347_8cf5ce40025b4e28b499a7aefa5a113f
+      bd3fb2197f690c27db170c3a68e92591570e444d67317537aa858f5388f6ce39998b19d0d40ecfdc27f956b1f4bbe24153b17d4d8d4de1505cc6d201eaae513b4c04a51d0b0830e0f3081fb3f825454fc18fd5af5fadcbe31f7d7326e3f00957e308bbbb423a03f1e126c6cc0ea453b658c3ec9189882c0216f32a86264ec1be867eacd77427e6faca2732492bdc97ab889c3e7b48ddf520f7d99af62925e29313316a31d2a0cd57c72e4e59f0a04bbd07740d4279cc69afeabd2c0c066d65dd63740a9e2e174cc8cd19ab92516ffef4fae90b21e8fb62043fef5df6885b9b959bda3a5da1d82ac8e7cc87e068786f7da80405ac644e59ac2639e32071504965: bd3fb_04965_5152ac190ab2c71552b2917885d19f3d
+      ca07a362216efc7dced61fe24164f6145d2f5448d108379c4625ddd0c2b447c8fcdb5a95f7ba5a94de75c1049eff887aba86cf4de5e9b585b9f7c5ca52358dd195efa78121a274f0e6929698ebd1a25f11ad05f74b8c4af742076651891014c8fb9944526acb1013cbfead2fb1988940ea19614d127f6bf36638fef2e30b3188f5efe687f831493422c2390bf469697a6044c2bd357837077fe2cb714d0b88f61db2edb4e1db4d373771e749f1ec7cac83f77851445fe1ddc29e8b8a48a0882524c1a4c4ff5fe084a32cca9d04c99e8b13cd4f96ee6a67f0699b4d998fea654d80ebb8339b84adc71c9fdf229789593c68937a35846be8a5a0a3753b52948b79: ca07a_48b79_d19a60a55bed967dabf13adad2c12758
+      d1c5eff9650863d31c83c101c712cad1e2358046a1a8257d2a9efbb893d32e0f209b9f2823d973a95ae0121b38f2bc47edcf215fae8a607e4933285c453adf810b294e3fab9f44342b6459364d8f5473b74d5eda373a9e51d42937af3ff033ccb7b5c13e95c05b5ca5098de2bc9e23bddefdb55f807b77149d9f4f30434e158ad2ef20db0064764d84d800b50931951e97fd585cf82db2d0a5ec4734f72ab13931199e37241f92b62ff97074fa9076a4715e36c404eac9d2d8891d8e205b8e871d25ab16de300649282d2b3d13596954f7885ecbf2f1cd84d8705e61c2e31d26f0e2dac5764107013514eb6c36b23e6931a111ffe39934f2822e353fa5e3f105: d1c5e_3f105_22e5216e2916a318f5f730bf2cfecc04

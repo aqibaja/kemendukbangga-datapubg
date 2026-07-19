@@ -1,0 +1,909 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Absensi Apel Pagi (GPS + Session)</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #5BC0F8 0%, #1D7FBF 45%, #C9A227 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .container {
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            padding: 40px;
+            max-width: 600px;
+            width: 100%;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .header h1 {
+            font-size: 28px;
+            color: #333;
+            margin-bottom: 10px;
+        }
+
+        .header p {
+            color: #666;
+            font-size: 14px;
+        }
+
+        .header .badge {
+            display: inline-block;
+            background: #e8f5e9;
+            color: #2e7d32;
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+            margin-top: 10px;
+        }
+
+        .alert {
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            display: none;
+            animation: slideIn 0.3s ease;
+        }
+
+        .alert.success {
+            background: #d4edda;
+            color: #155724;
+            border-left: 4px solid #28a745;
+            display: block;
+        }
+
+        .alert.error {
+            background: #f8d7da;
+            color: #721c24;
+            border-left: 4px solid #f5c6cb;
+            display: block;
+        }
+
+        .alert.warning {
+            background: #fff3cd;
+            color: #856404;
+            border-left: 4px solid #ffc107;
+            display: block;
+        }
+
+        .alert.info {
+            background: #d1ecf1;
+            color: #0c5460;
+            border-left: 4px solid #17a2b8;
+            display: block;
+        }
+
+        .form-section {
+            margin-bottom: 30px;
+        }
+
+        .form-section h3 {
+            font-size: 16px;
+            color: #333;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .step-number {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 30px;
+            height: 30px;
+            background: #1D7FBF;
+            color: white;
+            border-radius: 50%;
+            font-size: 14px;
+            font-weight: bold;
+        }
+
+        .scanner-box {
+            border: 2px dashed #1D7FBF;
+            border-radius: 15px;
+            padding: 30px;
+            text-align: center;
+            background: #f8f9ff;
+            margin-bottom: 15px;
+            min-height: 150px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .scanner-icon {
+            font-size: 50px;
+            margin-bottom: 15px;
+        }
+
+        video {
+            width: 100%;
+            border-radius: 10px;
+            display: none;
+            max-height: 300px;
+        }
+
+        .qr-result {
+            background: #f0f8ff;
+            padding: 15px;
+            border-radius: 10px;
+            border-left: 4px solid #1D7FBF;
+            margin-bottom: 15px;
+            display: none;
+        }
+
+        .qr-result.show {
+            display: block;
+        }
+
+        .qr-result p {
+            font-size: 12px;
+            color: #666;
+            margin-bottom: 5px;
+        }
+
+        .qr-code-display {
+            font-size: 18px;
+            font-weight: bold;
+            color: #333;
+            font-family: monospace;
+            word-break: break-all;
+        }
+
+        .gps-status {
+            background: #fff3e0;
+            padding: 12px;
+            border-radius: 8px;
+            margin-bottom: 15px;
+            display: none;
+            border-left: 4px solid #ff9800;
+            font-size: 13px;
+        }
+
+        .gps-status.show {
+            display: block;
+        }
+
+        .gps-status.verified {
+            background: #e8f5e9;
+            border-left-color: #4caf50;
+            color: #2e7d32;
+        }
+
+        .gps-status.warning {
+            background: #fff3e0;
+            border-left-color: #ff9800;
+            color: #e65100;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        .form-label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            font-size: 14px;
+            color: #333;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-size: 14px;
+            font-family: inherit;
+            transition: border-color 0.3s ease;
+        }
+
+        .form-control:focus {
+            outline: none;
+            border-color: #1D7FBF;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+
+        .employee-list {
+            max-height: 300px;
+            overflow-y: auto;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            background: white;
+        }
+
+        .employee-item {
+            padding: 12px;
+            border-bottom: 1px solid #eee;
+            cursor: pointer;
+            transition: background 0.2s ease;
+            display: none;
+        }
+
+        .employee-item.show {
+            display: block;
+        }
+
+        .employee-item:last-child {
+            border-bottom: none;
+        }
+
+        .employee-item:hover {
+            background: #f8f9ff;
+        }
+
+        .employee-item.selected {
+            background: #e8ecff;
+            border-left: 4px solid #1D7FBF;
+        }
+
+        .employee-name {
+            font-weight: 500;
+            color: #333;
+        }
+
+        .employee-dept {
+            font-size: 12px;
+            color: #999;
+        }
+
+        .button-group {
+            display: flex;
+            gap: 10px;
+            margin-top: 20px;
+        }
+
+        .btn {
+            flex: 1;
+            padding: 12px;
+            border: none;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .btn-primary{
+          background: linear-gradient(135deg, #1D7FBF 0%, #5BC0F8 100%);
+          color: #fff;
+        }
+
+        .btn-primary:hover:not(:disabled){
+          box-shadow: 0 10px 25px rgba(29,127,191,0.35);
+        }
+
+        .btn-secondary {
+            background: #e8e8e8;
+            color: #333;
+        }
+
+        .btn-secondary:hover:not(:disabled) {
+            background: #d8d8d8;
+        }
+
+        .btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .status-display {
+            display: none;
+            text-align: center;
+            padding: 20px;
+        }
+
+        .status-display.show {
+            display: block;
+        }
+
+        .status-badge {
+            display: inline-block;
+            padding: 10px 20px;
+            border-radius: 20px;
+            font-weight: 600;
+            margin-bottom: 15px;
+        }
+
+        .status-badge.hadir {
+            background: #d4edda;
+            color: #155724;
+        }
+
+        .status-badge.terlambat {
+            background: #fff3cd;
+            color: #856404;
+        }
+
+        .time-display {
+            font-size: 20px;
+            color: #333;
+            margin-bottom: 10px;
+        }
+
+        .detail-box {
+            background: #f5f5f5;
+            padding: 12px;
+            border-radius: 8px;
+            margin: 10px 0;
+            text-align: left;
+            font-size: 13px;
+            color: #666;
+        }
+
+        .detail-box p {
+            margin: 5px 0;
+        }
+
+        .suspicious-warning {
+            background: #ffebee;
+            border-left: 4px solid #f44336;
+            padding: 12px;
+            border-radius: 8px;
+            margin: 10px 0;
+            color: #c62828;
+            font-size: 13px;
+        }
+
+        .loading {
+            display: none;
+            text-align: center;
+        }
+
+        .loading.show {
+            display: block;
+        }
+
+        .spinner {
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid #1D7FBF;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 15px;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .stats {
+            background: #f9f9f9;
+            padding: 15px;
+            border-radius: 10px;
+            text-align: center;
+            font-size: 13px;
+            color: #666;
+            margin-top: 20px;
+        }
+
+        @media (max-width: 500px) {
+            .container {
+                padding: 20px;
+            }
+
+            .header h1 {
+                font-size: 24px;
+            }
+
+            .button-group {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>📱 Absensi Apel Pagi</h1>
+            <p>GPS + Session Tracking</p>
+            <span class="badge">✓ Secure</span>
+        </div>
+
+        <div id="alertMessage" class="alert"></div>
+
+        <!-- Step 1: Scan QR -->
+        <div class="form-section">
+            <h3>
+                <span class="step-number">1</span>
+                Scan QR Code
+            </h3>
+            <div class="scanner-box">
+                <div id="qr-reader" style="width:100%;"></div>
+                <video id="scanner" playsinline></video>
+                <div class="scanner-icon" id="scannerIcon">📷</div>
+                <p id="scannerText">Tekan tombol di bawah untuk scan QR Code</p>
+            </div>
+
+            <div class="qr-result" id="qrResult">
+                <!--<p>✅ QR Code Terdeteksi<p>-->
+                <div class="qr-code-display" id="qrCodeDisplay"></div>
+            </div>
+
+            <button class="btn btn-primary" id="scanBtn" onclick="startScanner()">
+                📷 SCAN QR CODE
+            </button>
+            <button class="btn btn-secondary" id="stopBtn" onclick="stopScanner()" style="display:none;">
+                ⏹️ STOP SCANNING
+            </button>
+        </div>
+
+        <!-- Step 2: GPS Status -->
+        <div class="form-section">
+            <h3>
+                <span class="step-number">2</span>
+                GPS Location
+            </h3>
+
+            <div class="gps-status" id="gpsStatus">
+                <p>🔄 Mengambil lokasi GPS...</p>
+            </div>
+
+            <button class="btn btn-secondary" onclick="captureGPSManual()" id="gpsBtn">
+                📍 AMBIL LOKASI GPS
+            </button>
+        </div>
+
+        <!-- Step 3: Input Nama -->
+        <div class="form-section">
+            <h3>
+                <span class="step-number">3</span>
+                Pilih Nama Pegawai
+            </h3>
+
+            <div class="form-group">
+                <label class="form-label">Cari Nama:</label>
+                <input 
+                    type="search" 
+                    id="nameSearch" 
+                    class="form-control" 
+                    placeholder="Ketik nama Anda..."
+                    onkeyup="filterEmployees()"
+                    disabled
+                >
+            </div>
+
+            <div class="employee-list" id="employeeList" style="display:none;">
+                <!-- Auto populate dari Apps Script -->
+            </div>
+
+            <div id="selectedEmployee" style="display:none; margin-top: 15px; padding: 15px; background: #e8ecff; border-radius: 8px; border-left: 4px solid #1D7FBF;">
+                <p style="font-size: 12px; color: #666; margin-bottom: 5px;">✓ Nama Terpilih:</p>
+                <p id="selectedName" style="font-size: 18px; font-weight: bold; color: #333;"></p>
+            </div>
+        </div>
+
+        <!-- Step 4: Submit -->
+        <div class="form-section">
+            <h3>
+                <span class="step-number">4</span>
+                Submit Absensi
+            </h3>
+
+            <div class="loading" id="loading">
+                <div class="spinner"></div>
+                <p>Memproses absensi...</p>
+            </div>
+
+            <div class="status-display" id="statusDisplay">
+                <div id="statusBadge" class="status-badge"></div>
+                <div class="time-display" id="timeDisplay"></div>
+                <p id="statusMessage" style="color: #666; font-size: 14px; margin-bottom: 15px;"></p>
+                
+                <div class="detail-box">
+                    <p><strong>📍 Verifikasi Lokasi:</strong></p>
+                    <p id="distanceDetail"></p>
+                    <p id="locationDetail"></p>
+                </div>
+
+                <div id="suspiciousAlert" class="suspicious-warning" style="display:none;">
+                    <p><strong>⚠️ Aktivitas Tidak Biasa Terdeteksi:</strong></p>
+                    <p id="suspiciousReason"></p>
+                    <p style="margin-top: 10px; font-size: 12px;">Admin akan melakukan verifikasi manual.</p>
+                </div>
+            </div>
+            <div id="submitAlert" class="alert" style="display:none; margin-top: 15px;"></div>
+
+            <button class="btn btn-primary" id="submitBtn" onclick="submitAttendance()" disabled>
+                ✓ SUBMIT ABSENSI
+            </button>
+
+            <button class="btn btn-secondary" onclick="resetForm()">
+                🔄 SCAN ULANG
+            </button>
+        </div>
+
+        <div class="stats">
+            <p>Tanggal Hari Ini:</p>
+            <p id="dateDisplay"></p>
+            <p style="margin-top: 10px; font-size: 12px; color: #999;">Device ID: <span id="deviceId" style="font-family: monospace;"></span></p>
+        </div>
+    </div>
+
+    <script src="https://unpkg.com/html5-qrcode"></script>
+
+    <script>
+        // ⚠️ PENTING: Ubah config ini sesuai setup Anda
+        const CONFIG = {
+            GOOGLE_APPS_SCRIPT_URL: "https://script.google.com/macros/s/AKfycbwsku71C1HGIupmzJfgSgSlhUGtE_A0XL5opCvGHAAGzzTgG9YqJeD61W6jDh2dCk7n/exec", // Deploy Google Apps Script
+        };
+
+        let currentQRCode = null;
+        let selectedEmployeeName = null;
+        let currentGPSLocation = null;
+        let allEmployees = [];
+        let isScanning = false;
+        let deviceId = null;
+        let qrScanner = null;
+
+        // Generate device ID
+        function generateDeviceID() {
+            if (deviceId) return deviceId;
+            
+            let id = localStorage.getItem("device_id");
+            if (!id) {
+                id = 'DEV_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9);
+                localStorage.setItem("device_id", id);
+            }
+            deviceId = id;
+            document.getElementById('deviceId').textContent = id;
+            return id;
+        }
+
+        // Update tanggal
+        function updateDate() {
+            const now = new Date();
+            const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+            const dateStr = now.toLocaleDateString('id-ID', options);
+            document.getElementById('dateDisplay').textContent = dateStr;
+        }
+
+        // Load employee list
+        async function loadEmployees() {
+            try {
+                const response = await fetch(CONFIG.GOOGLE_APPS_SCRIPT_URL);
+                allEmployees = await response.json();
+                renderEmployeeList();
+            } catch (error) {
+                showAlert("Gagal memuat daftar pegawai. Cek konfigurasi URL Apps Script.", "error");
+                console.error("Error:", error);
+            }
+        }
+
+        // Render employee list
+        function renderEmployeeList() {
+            const list = document.getElementById('employeeList');
+            list.innerHTML = '';
+
+            allEmployees.forEach(emp => {
+                const div = document.createElement('div');
+                div.className = 'employee-item show';
+                div.innerHTML = `
+                    <div class="employee-name">${emp.name}</div>
+                    <div class="employee-dept">${emp.email}</div>
+                `;
+                div.onclick = () => selectEmployee(emp.name);
+                list.appendChild(div);
+            });
+
+            list.style.display = 'block';
+        }
+
+        // Filter employees
+        function filterEmployees() {
+            const searchText = document.getElementById('nameSearch').value.toLowerCase();
+            const items = document.querySelectorAll('.employee-item');
+
+            items.forEach(item => {
+                const name = item.querySelector('.employee-name').textContent.toLowerCase();
+                if (name.includes(searchText)) {
+                    item.classList.add('show');
+                } else {
+                    item.classList.remove('show');
+                }
+            });
+        }
+
+        // Select employee
+        function selectEmployee(name) {
+            selectedEmployeeName = name;
+            document.getElementById('selectedName').textContent = name;
+            document.getElementById('selectedEmployee').style.display = 'block';
+            updateSubmitButtonState();
+        }
+
+        // Start scanner
+        function startScanner() {
+          if (qrScanner) return;
+        
+          document.getElementById('scanBtn').style.display = 'none';
+          document.getElementById('stopBtn').style.display = 'block';
+          document.getElementById('scannerText').textContent = 'Arahkan kamera ke QR Code...';
+        
+          qrScanner = new Html5Qrcode("qr-reader");
+        
+          const config = { fps: 10, qrbox: { width: 250, height: 250 } };
+        
+          qrScanner.start(
+            { facingMode: "environment" },
+            config,
+            (decodedText) => {
+              stopScanner();
+              processQRCode(decodedText);
+            },
+            (errorMessage) => {
+              // boleh diabaikan (noise saat scanning)
+            }
+          ).catch((err) => {
+            showAlert("Tidak bisa akses kamera. Pastikan izin kamera aktif dan halaman HTTPS.", "error");
+            console.error(err);
+            stopScanner();
+          });
+        }
+        
+        function stopScanner() {
+          document.getElementById('scanBtn').style.display = 'block';
+          document.getElementById('stopBtn').style.display = 'none';
+          document.getElementById('scannerText').textContent = 'Tekan tombol di bawah untuk scan QR Code';
+        
+          if (qrScanner) {
+            qrScanner.stop().then(() => {
+              qrScanner.clear();
+              qrScanner = null;
+            }).catch(() => {
+              qrScanner = null;
+            });
+          }
+        }
+
+        // Process QR Code
+        function processQRCode(qrCode) {
+            currentQRCode = qrCode;
+            document.getElementById('qrCodeDisplay').textContent = "✅ QR Code Terdeteksi"
+            document.getElementById('qrResult').classList.add('show');
+            document.getElementById('nameSearch').disabled = false;
+            document.getElementById('employeeList').style.display = 'block';
+            document.getElementById('gpsBtn').style.display = 'block';
+            
+            showAlert(`✅ QR Code "${qrCode}" terdeteksi. Sekarang ambil lokasi GPS dan pilih nama Anda.`, "info");
+        }
+
+        // Capture GPS manually
+        function captureGPSManual() {
+            if (!currentQRCode) {
+                showAlert("❌ Scan QR code terlebih dahulu", "error");
+                return;
+            }
+
+            document.getElementById('gpsStatus').classList.add('show');
+            getGPSLocation();
+        }
+
+        // Get GPS Location
+        function getGPSLocation() {
+            if (!navigator.geolocation) {
+                showAlert("❌ Browser Anda tidak support GPS. Gunakan browser modern (Chrome, Firefox, Safari)", "error");
+                document.getElementById('gpsStatus').innerHTML = '<p>❌ GPS tidak tersedia</p>';
+                return;
+            }
+
+            const statusDiv = document.getElementById('gpsStatus');
+            statusDiv.classList.add('show');
+            statusDiv.innerHTML = '<p>🔄 Mengambil lokasi GPS... (Tunggu beberapa detik)</p>';
+
+            navigator.geolocation.getCurrentPosition(
+                position => {
+                    const lat = position.coords.latitude;
+                    const lon = position.coords.longitude;
+                    const accuracy = position.coords.accuracy;
+
+                    currentGPSLocation = { latitude: lat, longitude: lon, accuracy: accuracy };
+
+                    statusDiv.classList.remove('warning');
+                    statusDiv.classList.add('verified');
+                    statusDiv.innerHTML = `
+                      <p><strong>✅ Lokasi GPS berhasil diambil</strong></p>
+                      <p>Lat: ${lat.toFixed(6)}, Lon: ${lon.toFixed(6)}</p>
+                      <p style="font-size: 11px; margin-top: 5px; opacity: 0.8;">Akurasi: ±${Math.round(accuracy)}m</p>
+                      <p style="font-size: 11px; margin-top: 5px; opacity: 0.8;">Validasi jarak akan dicek saat submit.</p>
+                    `;
+                    
+                    updateSubmitButtonState();
+
+                },
+                error => {
+                    statusDiv.classList.remove('verified');
+                    statusDiv.classList.add('warning');
+                    statusDiv.innerHTML = `<p>❌ Tidak bisa akses GPS. Pastikan izin lokasi diberikan ke browser.</p>`;
+                    console.error("GPS Error:", error);
+                },
+                {
+                    enableHighAccuracy: true,
+                    timeout: 15000,
+                    maximumAge: 0
+                }
+            );
+        }
+
+        // Update submit button state
+        function updateSubmitButtonState() {
+            const hasQR = currentQRCode !== null;
+            const hasName = selectedEmployeeName !== null;
+            const hasGPS = currentGPSLocation !== null;
+
+            document.getElementById('submitBtn').disabled = !(hasQR && hasName && hasGPS);
+        }
+
+        // Submit attendance
+        async function submitAttendance() {
+            if (!currentQRCode || !selectedEmployeeName || !currentGPSLocation) {
+                showAlert("❌ Pastikan sudah scan QR, ambil GPS, dan pilih nama", "error");
+                return;
+            }
+
+            document.getElementById('loading').classList.add('show');
+            document.getElementById('submitBtn').disabled = true;
+
+            try {
+               const payload = {
+                  employeeName: selectedEmployeeName,
+                  qrCode: currentQRCode,
+                  latitude: currentGPSLocation.latitude,
+                  longitude: currentGPSLocation.longitude,
+                  deviceId: generateDeviceID()
+                };
+                
+                const response = await fetch(CONFIG.GOOGLE_APPS_SCRIPT_URL, {
+                  method: "POST",
+                  redirect: "follow",
+                  headers: {
+                    "Content-Type": "text/plain;charset=utf-8"
+                  },
+                  body: JSON.stringify(payload)
+                });
+
+                const result = await response.json();
+                document.getElementById('loading').classList.remove('show');
+
+                if (result.success) {
+                    // Display status
+                    const statusBadge = document.getElementById('statusBadge');
+                    
+                    if (result.status === "Hadir") {
+                        statusBadge.className = 'status-badge hadir';
+                        statusBadge.textContent = '✓ HADIR';
+                    } else {
+                        statusBadge.className = 'status-badge terlambat';
+                        statusBadge.textContent = '⚠️ TERLAMBAT';
+                    }
+                    if (result.locationName) {
+                      document.getElementById('locationDetail').textContent = `📌 Lokasi apel: ${result.locationName}`;
+                    } else {
+                      document.getElementById('locationDetail').textContent = 'Tidak ditemukan loasi';
+                    }
+                    
+                    document.getElementById('timeDisplay').textContent = `Pukul: ${result.time}`;
+                    document.getElementById('statusMessage').textContent = result.message;
+                    document.getElementById('distanceDetail').textContent = `✅ Terverifikasi pada jarak ${result.distance}m dari ${result.locationName}`;
+                    
+                    if (result.suspicious) {
+                        document.getElementById('suspiciousAlert').style.display = 'block';
+                        document.getElementById('suspiciousReason').textContent = result.suspiciousReason || "Aktivitas tidak biasa terdeteksi. Admin akan melakukan verifikasi.";
+                    }
+                    
+                    document.getElementById('statusDisplay').classList.add('show');
+                    showAlert(`✅ ${result.message}`, "success");
+
+                   
+                } else if (result.code === "ALREADY_ATTENDED" || result.code === "DEVICE_ALREADY_USED"){
+                     //alert(result.message); // popup native
+                     showAlertFix(result.message, "error", "bottom");
+                }
+                else {
+
+                    showAlert(`❌ ${result.message}`, "error");
+                    if (result.distance) {
+                      const radiusText = result.locationRadius ? ` (Limit: ${result.locationRadius}m)` : '';
+                      showAlert(`📍 Jarak dari lokasi apel: ${result.distance}m${radiusText}`, "warning", "bottom");
+                    }
+                    document.getElementById('submitBtn').disabled = false;
+                }
+
+            } catch (error) {
+                document.getElementById('loading').classList.remove('show');
+                showAlert(`❌ Gagal: ${error.message}. Cek URL Apps Script.`, "error");
+                document.getElementById('submitBtn').disabled = false;
+            }
+        }
+
+        // Show alert
+        function showAlert(message, type, target = "bottom") {
+          const id = (target === "bottom") ? "submitAlert" : "alertMessage";
+          const alert = document.getElementById(id);
+        
+          alert.textContent = message;
+          alert.className = `alert ${type}`;
+          alert.style.display = 'block';
+        
+          setTimeout(() => {
+            alert.className = 'alert';
+            alert.style.display = 'none';
+          }, 5000);
+        }
+        
+        // Show alert
+        function showAlertFix(message, type, target = "bottom") {
+          const id = (target === "bottom") ? "submitAlert" : "alertMessage";
+          const alert = document.getElementById(id);
+        
+          alert.textContent = message;
+          alert.className = `alert ${type}`;
+          alert.style.display = 'block';
+        }
+
+        // Reset form
+        function resetForm() {
+            currentQRCode = null;
+            selectedEmployeeName = null;
+            currentGPSLocation = null;
+            document.getElementById('nameSearch').value = '';
+            document.getElementById('nameSearch').disabled = true;
+            document.getElementById('qrResult').classList.remove('show');
+            document.getElementById('gpsStatus').classList.remove('show');
+            document.getElementById('gpsStatus').classList.remove('verified');
+            document.getElementById('selectedEmployee').style.display = 'none';
+            document.getElementById('statusDisplay').classList.remove('show');
+            document.getElementById('suspiciousAlert').style.display = 'none';
+            document.getElementById('submitBtn').disabled = true;
+            document.getElementById('gpsBtn').style.display = 'block';
+            document.getElementById('scanBtn').style.display = 'block';
+            filterEmployees();
+            showAlert("Form direset. Siap untuk scan baru.", "info");
+        }
+
+        // Initialize
+        window.addEventListener('load', function () {
+            generateDeviceID();
+            updateDate();
+            loadEmployees();
+            setInterval(updateDate, 60000);
+        });
+    </script>
+</body>
+</html>

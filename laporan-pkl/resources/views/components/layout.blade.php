@@ -6,6 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>{{ $title }}</title>
+    <link rel="icon" type="image/png" href="{{ asset('public/image/logoBKKBN.png') }}">
+    <link rel="shortcut icon" type="image/png" href="{{ asset('public/image/logoBKKBN.png') }}">
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://rsms.me/inter/inter.css" />
     <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
@@ -48,8 +50,6 @@
 
         <!-- NAVBAR (ICON ADA DI SINI) -->
         <x-navbar>{{ $title }}</x-navbar>
-        <link rel="icon" type="image/x-icon" href="/favicon.ico?v=20260126">
-        <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=20260126">
 
         <!-- CONTENT -->
         <main class="flex-1 overflow-auto p-4 sm:p-8 bg-gradient-to-br">

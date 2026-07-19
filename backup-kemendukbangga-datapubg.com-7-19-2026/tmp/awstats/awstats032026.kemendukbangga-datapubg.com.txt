@@ -1,0 +1,1833 @@
+AWSTATS DATA FILE 8.0 (build 20240604)
+# If you remove this file, all statistics for date 202603 will be lost/reset.
+# Last config file used to build this data file was /home/kemw8233/tmp/awstats/awstats.kemendukbangga-datapubg.com.conf.
+
+# Position (offset in bytes) in this file for beginning of each section for
+# direct I/O access. If you made changes somewhere in this file, you should
+# also remove completely the MAP section (AWStats will rewrite it at next
+# update).
+BEGIN_MAP 28
+POS_GENERAL 2095                
+POS_TIME 2774                
+POS_VISITOR 52269               
+POS_DAY 71484               
+POS_DOMAIN 3607                
+POS_LOGIN 4171                
+POS_ROBOT 4326                
+POS_WORMS 5115                
+POS_EMAILSENDER 5246                
+POS_EMAILRECEIVER 5389                
+POS_SESSION 72330               
+POS_FILESIZE 74186               
+POS_REQUESTTIME 74331               
+POS_SIDER 72521               
+POS_FILETYPES 5524                
+POS_DOWNLOADS 5694                
+POS_OS 5742                
+POS_BROWSER 6158                
+POS_SCREENSIZE 7891                
+POS_UNKNOWNREFERER 7965                
+POS_UNKNOWNREFERERBROWSER 8847                
+POS_ORIGIN 9257                
+POS_SEREFERRALS 9394                
+POS_PAGEREFS 9538                
+POS_SEARCHWORDS 9715                
+POS_KEYWORDS 9867                
+POS_MISC 2437                
+POS_ERRORS 9926                
+POS_CLUSTER 4027                
+POS_SIDER_404 10108               
+END_MAP
+
+# LastLine    = Date of last record processed - Last record line number in last log - Last record offset in last log - Last record signature value
+# FirstTime   = Date of first visit for history file
+# LastTime    = Date of last visit for history file
+# LastUpdate  = Date of last update - Nb of parsed records - Nb of parsed old records - Nb of parsed new records - Nb of parsed corrupted - Nb of parsed dropped
+# TotalVisits = Number of visits
+# TotalUnique = Number of unique visitors
+# MonthHostsKnown   = Number of hosts known
+# MonthHostsUnKnown = Number of hosts unknown
+BEGIN_GENERAL 8
+LastLine 20260401001327 14 1907 10453732682385
+FirstTime 20260301020713
+LastTime 20260331210944
+LastUpdate 20260401191037 14 0 13 0 0
+TotalVisits 697                 
+TotalUnique 487                 
+MonthHostsKnown 0                   
+MonthHostsUnknown 490                 
+END_GENERAL
+
+# Misc ID - Pages - Hits - Bandwidth
+BEGIN_MISC 10
+JavaEnabled 0 0 0
+DirectorSupport 0 0 0
+TotalMisc 0 0 0
+WindowsMediaPlayerSupport 0 0 0
+RealPlayerSupport 0 0 0
+PDFSupport 0 0 0
+AddToFavourites 0 86 0
+QuickTimeSupport 0 0 0
+FlashSupport 0 0 0
+JavascriptDisabled 0 0 0
+END_MISC
+
+# Hour - Pages - Hits - Bandwidth - Not viewed Pages - Not viewed Hits - Not viewed Bandwidth
+BEGIN_TIME 24
+0 36 43 2222465 73 84 3787645
+1 35 35 526239 39 56 332695
+2 55 55 837962 30 47 540050
+3 31 31 483593 13 27 204193
+4 32 32 443159 49 59 1035443
+5 41 41 588727 17 24 2015296
+6 38 38 554924 36 44 599872
+7 30 30 521300 319 450 3942204
+8 35 42 2286350 421 435 2908125
+9 27 27 460149 9 19 198127
+10 42 75 8642450 13 24 666560
+11 74 88 3977268 23 31 173008
+12 44 69 6559294 32 55 2209903
+13 26 26 414602 5 15 160161
+14 26 26 419524 67 78 522396
+15 20 27 1998634 13 22 1619450
+16 32 32 507559 42 51 335379
+17 32 32 497201 31 35 2380158
+18 26 37 4960496 31 36 242687
+19 43 43 611880 38 55 345826
+20 23 23 388496 41 54 2216090
+21 30 30 446165 14 27 547715
+22 44 72 7463236 32 36 351420
+23 29 29 422537 54 63 2359044
+END_TIME
+
+# Domain - Pages - Hits - Bandwidth
+# The 25 first Pages must be first (order not required for others)
+BEGIN_DOMAIN 24
+jp 277 284 6222559
+us 185 241 16269161
+cn 157 176 7447299
+in 77 77 398308
+se 57 57 677429
+rs 15 15 214588
+il 13 24 4731626
+gb 11 15 1043960
+ca 10 10 176980
+ru 9 9 141528
+de 7 7 119633
+nl 6 6 92083
+id 5 33 6773780
+sg 3 3 7612
+dk 3 10 1741846
+zz 3 3 261
+eu 2 2 35380
+es 2 2 0
+ua 2 2 31283
+sc 2 2 20414
+be 2 2 35430
+bg 1 1 17670
+ro 1 1 17710
+am 1 1 17670
+END_DOMAIN
+
+# Cluster ID - Pages - Hits - Bandwidth
+BEGIN_CLUSTER 0
+END_CLUSTER
+
+# Login - Pages - Hits - Bandwidth - Last visit
+# The 10 first Pages must be first (order not required for others)
+BEGIN_LOGIN 0
+END_LOGIN
+
+# Robot ID - Hits - Bandwidth - Last visit - Hits on robots.txt
+# The 25 first Hits must be first (order not required for others)
+BEGIN_ROBOT 18
+AhrefsBot/ 72 2329656 20260330052411 0
+no_user_agent 39 689174 20260331064138 0
+checker 31 548610 20260324233534 0
+Googlebot/ 26 83935 20260330020626 0
+360Spider 19 336087 20260329163337 0
+bingbot/ 18 4875679 20260328160219 0
+Applebot/ 8 568140 20260327043450 0
+Baiduspider- 6 1606750 20260326000120 0
+spider 5 88351 20260330084042 0
+Go\-http\-client/ 5 88349 20260329093351 0
+nutch 4 70681 20260331200521 0
+curl 3 53006 20260328215418 0
+bot[\s_+:,\.\;\/\\-] 3 53010 20260328003237 0
+CheckMarkNetwork/ 2 17670 20260329231921 0
+crawl 1 17670 20260318222013 0
+survey 1 17710 20260307075749 0
+hunter 1 0 20260314004148 0
+Baiduspider/ 1 17670 20260326000112 0
+END_ROBOT
+
+# Worm ID - Hits - Bandwidth - Last visit
+# The 5 first Hits must be first (order not required for others)
+BEGIN_WORMS 0
+END_WORMS
+
+# EMail - Hits - Bandwidth - Last visit
+# The 20 first Hits must be first (order not required for others)
+BEGIN_EMAILSENDER 0
+END_EMAILSENDER
+
+# EMail - Hits - Bandwidth - Last visit
+# The 20 first hits must be first (order not required for others)
+BEGIN_EMAILRECEIVER 0
+END_EMAILRECEIVER
+
+# Files type - Hits - Bandwidth - Bandwidth without compression - Bandwidth after compression
+BEGIN_FILETYPES 5
+jpeg 54 14201550 0 0
+jpg 38 6059049 0 0
+html 595 10272266 0 0
+Unknown 256 2121185 0 0
+png 40 13580160 0 0
+END_FILETYPES
+
+# Downloads - Hits - Bandwidth
+BEGIN_DOWNLOADS 0
+END_DOWNLOADS
+
+# OS ID - Hits
+BEGIN_OS ID - Hits - Pages 27
+win8.1 6 5
+macosx13 8 1
+macosx 2 2
+ios_iphone 517 475
+ios_ipad 1 1
+macosx15 8 8
+winxp 1 1
+macosx7 1 1
+linuxubuntu 18 17
+macosx5 1 1
+android13 4 4
+androidoreo 1 1
+macosx9 4 4
+macosx10 1 1
+macosx11 1 1
+winlong 2 2
+android 4 4
+android12 9 9
+macos12 5 5
+android10 11 11
+unix 5 5
+win7 42 33
+android11 7 2
+linux 56 42
+win10 164 118
+win8 1 1
+Unknown 103 96
+END_OS
+
+# Browser ID - Hits - Pages
+BEGIN_BROWSER 85
+msie6.0 1 1
+chrome41.0.2227.0 1 0
+firefox115.0 10 3
+firefox123 1 1
+chrome31.0.1650.63 3 2
+chrome92.0.4515.107 8 1
+chrome130.0.0.0 6 6
+firefox114.0 6 6
+chrome12.0.742.91 1 1
+firefox92.0 1 1
+chrome144.0.0.0 1 1
+chrome105.0.0.0 2 2
+safari4.0.3 1 1
+chrome131.0.0.0 3 3
+netscape5.0 4 4
+chrome74.0.3729.169 1 1
+mozilla 75 68
+chrome135.0.0.0 1 1
+msie10.0 3 0
+chrome39.0.2171.95 1 1
+firefox47.0 8 8
+safari17.6 8 1
+chrome124.0.0.0 10 10
+chrome91.0.4472.114 3 3
+chrome137.0.0.0 1 1
+safari 1 1
+firefox50.0 1 1
+chrome87.0.4280.141 1 1
+chrome46.0.2490.80 1 1
+chrome79.0.3945.79 16 2
+Unknown 26 26
+firefox126.0 1 1
+opera80.4.4244.7786 1 1
+chrome129.0.2792.12 1 1
+safari17.1.2 1 1
+chrome93.0.4577.82 1 1
+firefox25.0 1 1
+firefox126.0.0 1 1
+chrome114.0.0.0 15 15
+chrome78.0.3904.108 12 12
+chrome112.0.5615.136 1 1
+chrome143.0.0.0 2 2
+firefox26.0 3 1
+chrome122.0.0.0 12 12
+safari26.0 1 1
+chrome30.0.1599.17 1 1
+chrome145.0.0.0 10 3
+safari17.3.1 8 8
+chrome121.0.0.0 14 14
+chrome120.0.0.0 5 5
+chrome85.0.4183.121 2 2
+chrome44.0.2403.157 1 1
+chrome142.0.0.0 18 18
+safari15.4 16 2
+chrome83.0.4103.61 2 2
+chrome125.0.0.0 10 3
+chrome47.0.2526.106 1 1
+firefox29.0 1 0
+chrome126.0.0.0 3 3
+chrome138.0.0.0 6 6
+chrome120.0.6099.105 1 1
+chrome104.0.5112.102 20 9
+safari15.0 2 2
+msie11.0 4 2
+chrome91.0.4472.124 17 17
+opera99.0.0.0 1 1
+chrome108.0.5359.207 1 1
+firefox134.0 15 15
+opera12.16 1 1
+firefox148.0 8 1
+firefox142.0 11 11
+chrome79.0.3945.130 11 11
+msie11 1 1
+safari13.0.3 472 458
+chrome117.0.5938.132 8 1
+safari18.0.1 9 2
+chrome115.0.0.0 9 9
+chrome91.0.4472.101 6 1
+chrome111.0 1 1
+firefox24.0 3 2
+chrome80.0.3987.162 1 1
+chrome50.0.2661.102 7 7
+chrome31.0.1650.57 2 2
+firefox117.0 3 3
+firefox115 12 12
+END_BROWSER
+
+# Screen size - Hits
+BEGIN_SCREENSIZE 0
+END_SCREENSIZE
+
+# Unknown referer OS - Last visit date
+BEGIN_UNKNOWNREFERER 13
+okhttp/3.14.9 20260301074857
+Mozilla/5.0_(compatible;_Let's_Encrypt_validation_server;__https://www.letsencrypt.org) 20260307110452
+Mozilla/5.0_(compatible;_CensysInspect/1.1;__https://about.censys.io/) 20260327092702
+Mozilla/5.0_(compatible;_InternetMeasurement/1.0;__https://internet-measurement.com/) 20260328070538
+panscient.com 20260309072208
+Hello_from_Palo_Alto_Networks,_find_out_more_about_our_scans_in_https://docs-cortex.paloaltonetworks.com/r/1/Cortex-Xpanse/Scanning-activity 20260330061914
+Mozilla/5.0 20260314145053
+python-requests/2.24.0 20260301051948
+python-requests/2.25.1 20260306020229
+Mozilla/6.0_(compatible) 20260320175612
+Mozilla/5.0_(compatible;_Dataprovider.com) 20260325120046
+Cpanel-HTTP-Client/1.0 20260307103807
+Mozilla/5.0_(compatible;_ips-agent) 20260327062656
+END_UNKNOWNREFERER
+
+# Unknown referer Browser - Last visit date
+BEGIN_UNKNOWNREFERERBROWSER 6
+Cpanel-HTTP-Client/1.0 20260307103807
+okhttp/3.14.9 20260301074857
+Hello_from_Palo_Alto_Networks,_find_out_more_about_our_scans_in_https://docs-cortex.paloaltonetworks.com/r/1/Cortex-Xpanse/Scanning-activity 20260330061914
+python-requests/2.24.0 20260301051948
+python-requests/2.25.1 20260306020229
+panscient.com 20260309072208
+END_UNKNOWNREFERERBROWSER
+
+# Origin - Pages - Hits 
+BEGIN_ORIGIN 6
+From0 798 809
+From1 0 0
+From2 0 0
+From3 1 1
+From4 52 173
+From5 0 0
+END_ORIGIN
+
+# Search engine referers ID - Pages - Hits
+BEGIN_SEREFERRALS 0
+END_SEREFERRALS
+
+# External page referers - Pages - Hits
+# The 25 first Pages must be first (order not required for others)
+BEGIN_PAGEREFS 1
+http://kemenagdeiyai.org 1 1
+END_PAGEREFS
+
+# Search keyphrases - Number of search
+# The 10 first number of search must be first (order not required for others)
+BEGIN_SEARCHWORDS 0
+END_SEARCHWORDS
+
+# Search keywords - Number of search
+# The 25 first number of search must be first (order not required for others)
+BEGIN_KEYWORDS 0
+END_KEYWORDS
+
+# Errors - Hits - Bandwidth
+BEGIN_ERRORS 8
+405 3 3611065
+507 15 7785
+403 28 327590
+301 70 17602
+404 1359 9431653
+401 12 276
+302 5 2035
+500 2 3535089
+END_ERRORS
+
+# URL with 404 errors - Hits - Last URL referrer
+BEGIN_SIDER_404 858
+/h1//kf.html 1 http://kemendukbangga-datapubg.com/h1//kf.html
+/360.html 1 http://kemendukbangga-datapubg.com/360.html
+/wp-includes/css/buttons.css 5 -
+/member/js/lang_zh_CN.js 1 http://kemendukbangga-datapubg.com/member/js/lang_zh_CN.js
+/wp-admin/css 1 binance.com
+/test.php 1 -
+/masterControl/getSystemSetting 1 http://kemendukbangga-datapubg.com/masterControl/getSystemSetting
+/x.php 1 -
+/wp-conflg.php 1 -
+/wp-includes/pomo/about.php 1 -
+/wp-content/themes/twentytwentytwo/index.php 1 -
+/slideLeft%28%29 1 -
+/wp-includes/ID3/about.php 1 -
+/mobile/lists.html 1 http://kemendukbangga-datapubg.com/mobile/lists.html
+/O-Simple.php 1 -
+/zqwertyujjh/img/nyyh/game.css 1 http://kemendukbangga-datapubg.com/zqwertyujjh/img/nyyh/game.css
+/api/users/login 1 http://kemendukbangga-datapubg.com/api/users/login
+/service/business/api/customer/list 1 http://kemendukbangga-datapubg.com/service/business/api/customer/list
+/wp-includes/js/jquery/bypass.php 1 -
+/kdata/product 1 http://kemendukbangga-datapubg.com/kdata/product
+/install.php 1 -
+/schallfuns.php 4 -
+/mms-api/coins/hot/tickers 1 http://kemendukbangga-datapubg.com/mms-api/coins/hot/tickers
+/cgi-bin/index.php 1 -
+/js/wp-login.php 1 -
+/modules/mod_simplefileuploadv1.3/elements/udd.php 1 -
+/im 1 http://kemendukbangga-datapubg.com/im/
+/api/home 1 http://kemendukbangga-datapubg.com/api/home
+/media/wp-includes/wlwmanifest.xml 4 -
+/wp-admin/css/colors/blue/index.php 1 -
+/ajax/allcoin_a/id/0 1 http://kemendukbangga-datapubg.com/ajax/allcoin_a/id/0%3Ft%3D0.3782499195965951
+/jym-wn 1 http://kemendukbangga-datapubg.com/jym-wn/
+/1.php 1 -
+/m/allticker/1 1 http://kemendukbangga-datapubg.com/m/allticker/1
+/wp-content/plugins/pwnd-1/admin.php 1 -
+/static/cpjy.png 1 http://kemendukbangga-datapubg.com/static/cpjy.png
+/Public/Wchat/js/cvphp.js 1 http://kemendukbangga-datapubg.com/Public/Wchat/js/cvphp.js
+/wp-content/themes/about.php 1 -
+/admin/function.php 1 -
+/wp-content/uploads/about.php 1 -
+/api/account/price_rate 1 http://kemendukbangga-datapubg.com/api/account/price_rate
+/postnews.php 4 -
+/pc 1 http://kemendukbangga-datapubg.com/pc/
+/static/picture/pc-ios.png 1 http://kemendukbangga-datapubg.com/static/picture/pc-ios.png
+/news/wp-includes/wlwmanifest.xml 4 -
+/images/DJP9.php 1 -
+/wp-content/plugins/view-more/ioxi.php 1 -
+/file-manager/initialize 1 -
+/melody/api/v1/base/heartbeat 1 http://kemendukbangga-datapubg.com/melody/api/v1/base/heartbeat
+/h5/img/icon/rj.png 1 http://kemendukbangga-datapubg.com/h5/img/icon/rj.png
+/index/Common/getArticleList 1 http://kemendukbangga-datapubg.com/index/Common/getArticleList
+/admin/config/list 1 http://kemendukbangga-datapubg.com/admin/config/list
+/api/Home/videoNew 1 http://kemendukbangga-datapubg.com/api/Home/videoNew
+/wp-includes/pomo/autoload_classmap.php 1 -
+/saconfig/secure/yunwei.js 1 http://kemendukbangga-datapubg.com/saconfig/secure/yunwei.js
+/natural.php 1 -
+/fai.php 1 -
+/shell.php 4 -
+/wp-includes/certificates/index.php 1 -
+/blog/wp-admin/setup-config.php 3 -
+/images/upload.php 1 -
+/mobile/film/css/index.css 1 http://kemendukbangga-datapubg.com/mobile/film/css/index.css
+/apis/globals 1 http://kemendukbangga-datapubg.com/apis/globals
+/wp-content/plugins/dummyyummy/wp-signup.php 1 -
+/AppInfo.aspx 1 http://kemendukbangga-datapubg.com/AppInfo.aspx
+/fm.php 1 -
+/js/bas.php 1 -
+/.well-known/acme-challenge/atomlib.php 1 -
+/static/home/imgs/pico.png 1 http://kemendukbangga-datapubg.com/static/home/imgs/pico.png
+/shouye.html 1 http://kemendukbangga-datapubg.com/shouye.html
+/shell 3 -
+/Public/mobile/css/base.css 1 http://kemendukbangga-datapubg.com/Public/mobile/css/base.css
+/portal/index/protocol.html 1 http://kemendukbangga-datapubg.com/portal/index/protocol.html
+/zwso.php 1 -
+/api/public 1 http://kemendukbangga-datapubg.com/api/public/%3Fservice%3DHome.getConfig
+/wp-includes/css/dist/edit-widgets/index.php 1 -
+/static/admincp/js/common.js 1 http://kemendukbangga-datapubg.com/static/admincp/js/common.js
+/static/wap/css/trade-history.css 1 http://kemendukbangga-datapubg.com/static/wap/css/trade-history.css
+/api/system/config 1 http://kemendukbangga-datapubg.com/api/system/config
+/wp-includes/ID3/index.php 1 -
+/sitemap.xml.gz 2 -
+/static/css/style.css 1 http://kemendukbangga-datapubg.com/static/css/style.css
+/wp-includes/rest-api/endpoints/index.php 1 -
+/062/index.html 1 http://kemendukbangga-datapubg.com/062/index.html
+/home/index/getcode 1 http://kemendukbangga-datapubg.com/home/index/getcode
+/wp-includes/js/jquery/jquery.js 2 -
+/wp-admin/images/index.php 1 -
+/register 6 -
+/templates/beez3/bypass.php 1 -
+/autoload_classmap/function.php 1 -
+/wp-good.php 1 -
+/backend/.git/config 1 -
+/mobile/v3/appSuperDownload.do 1 http://kemendukbangga-datapubg.com/mobile/v3/appSuperDownload.do
+/wp-includes/click.php 1 -
+/wp2/wp-includes/wlwmanifest.xml 4 -
+/wp-includes/wp-class.php 1 -
+/templates/beez/index.php 1 -
+/wp-includes/Requests/src/Exception/Http/about.php 1 -
+/robots.txt 124 http://www.kemendukbangga-datapubg.com/robots.txt
+/app/static/picture/star.png 1 http://kemendukbangga-datapubg.com/app/static/picture/star.png
+/static/index/js/lk/order.js 1 http://kemendukbangga-datapubg.com/static/index/js/lk/order.js
+/static/guide/ab.css 1 http://kemendukbangga-datapubg.com/static/guide/ab.css
+/api/site/getInfo.do 1 http://kemendukbangga-datapubg.com/api/site/getInfo.do
+/Public/css/errorCss.css 1 http://kemendukbangga-datapubg.com/Public/css/errorCss.css
+/api/getWebSiteConfig 1 http://kemendukbangga-datapubg.com/api/getWebSiteConfig
+/api/link-submit 1 http://kemendukbangga-datapubg.com/api/link-submit
+/sitemap_index.xml 4 -
+/static/wap/css/tipmask.css 1 http://kemendukbangga-datapubg.com/static/wap/css/tipmask.css
+/wp-includes/PHPMailer/wp-conflg.php 1 -
+/wp-includes/edit.php 1 -
+/js/i18n/language_cn.js 1 http://kemendukbangga-datapubg.com/js/i18n/language_cn.js
+/autoload_classmap/bypass.php 1 -
+/Public/home/common/js/index.js 1 http://kemendukbangga-datapubg.com/Public/home/common/js/index.js
+/wp-admin/file.php 1 -
+/wp-includes/fonts/themes.php 1 -
+/config 1 http://kemendukbangga-datapubg.com/config
+/wp-header.php 1 -
+/wp-content/uploads/wpr-addons/forms/e.php 1 -
+/app_cn 1 http://kemendukbangga-datapubg.com/app_cn/
+/api/c/a 1 http://kemendukbangga-datapubg.com/api/c/a
+/wp-content/plugins/ccx/index.php 1 -
+/wp-includes/postnews.php 4 -
+/old/wp-admin/install.php 3 -
+/as.php 1 -
+/class.php 1 -
+/api/ping 1 http://kemendukbangga-datapubg.com/api/ping
+/api/vue/common/config 1 http://kemendukbangga-datapubg.com/api/vue/common/config
+/wp-admin/js/widgets/cloud.php 1 -
+/wp-content/themes/index.php 1 -
+/wp_wlx.php 1 -
+/static/index/css/index.css 1 http://kemendukbangga-datapubg.com/static/index/css/index.css
+/wp-content/edit-wolf.php 1 -
+/api/currency/quotation_new 1 http://kemendukbangga-datapubg.com/api/currency/quotation_new
+/ff2.php 1 -
+/wp-admin/css/colors/light/profile.php 1 -
+/.alf.php 1 -
+/about/function.php 1 -
+/wp-admin/css/colors/ocean/index.php 1 -
+/api/v1/setting/main 1 http://kemendukbangga-datapubg.com/api/v1/setting/main
+/.well-known/wp-conflg.php 1 -
+/kefu/css/style.css 1 http://kemendukbangga-datapubg.com/kefu/css/style.css
+/test/wp-includes/wlwmanifest.xml 4 -
+/website/wp-includes/wlwmanifest.xml 4 -
+/wp-includes/index.php 1 -
+/wp-setup.php 1 -
+/.git/HEAD 1 -
+/wp-includes/rest-api/autoload_classmap.php 1 -
+/index/newapi/api 1 http://kemendukbangga-datapubg.com/index/newapi/api
+/wp-includes/js/jquery/jquery.php 1 -
+/api/Interface/mobile_ajax.asmx/GetWebConfig 1 http://kemendukbangga-datapubg.com/api/Interface/mobile_ajax.asmx/GetWebConfig
+/wp-content/uploads/file.php 1 -
+/wap-api/banner/list 1 http://kemendukbangga-datapubg.com/wap-api/banner/list
+/wp-includes/class.api.php 1 -
+/wp-content/bypass.php 1 -
+/blog/wp-includes/wlwmanifest.xml 4 -
+/assets/images/doc.php 1 -
+/images/images/about.php 1 -
+/uploads 1 binance.com
+/api/system/systemConfigs/getCustomerServiceLink 1 http://kemendukbangga-datapubg.com/api/system/systemConfigs/getCustomerServiceLink
+/wp-includes/customize/dedi1.php 1 -
+/auth/register 4 -
+/api/Index/getHome 1 http://kemendukbangga-datapubg.com/api/Index/getHome%3Fid%3D1
+/public/js/global.js 1 http://kemendukbangga-datapubg.com/public/js/global.js
+/api/shop/getKF 1 http://kemendukbangga-datapubg.com/api/shop/getKF
+/.tmb/bypass.php 1 -
+/.well-known/pki-validation/moon.php 1 -
+/v2 1 http://kemendukbangga-datapubg.com/v2
+/.well-known/acme-challenge/plugins.php 1 -
+/mobile 2 http://kemendukbangga-datapubg.com/mobile/
+/wp-includes/blocks/table/int/tmpl/index.php 1 -
+/.well-known/pki-validation/mariju.php 1 -
+/wp-admin/maint/themes.php 1 -
+/wp-content/plugins/profile-builder/readme.txt 4 -
+/public/h5static/js/main.js 1 http://kemendukbangga-datapubg.com/public/h5static/js/main.js
+/test/wp-admin/install.php 3 -
+/mobile/login.html 1 http://kemendukbangga-datapubg.com/mobile/login.html
+/static/diff_worker.js 1 http://kemendukbangga-datapubg.com/static/diff_worker.js
+/public/assets/img/index/pay1.png 1 http://kemendukbangga-datapubg.com/public/assets/img/index/pay1.png
+/api/lottery/list 1 http://kemendukbangga-datapubg.com/api/lottery/list
+/auth/signup 4 -
+/shop/wp-admin/install.php 3 -
+/music163/music163.html 1 http://kemendukbangga-datapubg.com/music163/music163.html
+/bless.php 1 -
+/backend/register 4 -
+/wp-admin/css/colors/midnight/install.php 1 -
+/wap/api/syspara!getSyspara.action 1 http://kemendukbangga-datapubg.com/wap/api/syspara%21getSyspara.action%3Fcode%3Dcustomer_service_url
+/getLocale 1 http://kemendukbangga-datapubg.com/getLocale
+/relayApi/api/notice/site_setting 1 http://kemendukbangga-datapubg.com/relayApi/api/notice/site_setting
+/api/common/init 1 http://kemendukbangga-datapubg.com/api/common/init
+/wp-includes/fonts/about.php 1 -
+/txets.php 7 www.google.com
+/067/index.html 1 http://kemendukbangga-datapubg.com/067/index.html
+/s_api/basic/download/info 1 http://kemendukbangga-datapubg.com/s_api/basic/download/info
+/cgi-bin/bypass.php 1 -
+/wp-content/themes/astra/inc/ki1k.php 1 -
+/static/img/yqm.png 1 http://kemendukbangga-datapubg.com/static/img/yqm.png
+/api/init 1 http://kemendukbangga-datapubg.com/api/init
+/wp-includes/IXR/fix.php7 1 -
+/wp-includes/css/dist/edit-widgets/about.php 1 -
+/edit.php 1 -
+/tinyfilemanager.php 1 -
+/api/.git/config 2 -
+/img/pc-ios.png 1 http://kemendukbangga-datapubg.com/img/pc-ios.png
+/wp-includes/certificates/admin.php 1 -
+/js/mage/cookies.js 1 -
+/api/product/getAll 1 http://kemendukbangga-datapubg.com/api/product/getAll
+/Public/home/js/fukuang.js 1 http://kemendukbangga-datapubg.com/Public/home/js/fukuang.js
+/index/login 1 http://kemendukbangga-datapubg.com/index/login
+/data/json/config.json 1 http://kemendukbangga-datapubg.com/data/json/config.json
+/Marvins.php 1 -
+/wp-content/about.php 1 -
+/moon.php 1 -
+/chat/1 1 http://kemendukbangga-datapubg.com/chat/1
+/wp-includes/images/media/wp-login.php 1 -
+/index/police/index.html 1 http://kemendukbangga-datapubg.com/index/police/index.html%3Fagent%3D1000
+/static/common/js/common.js 1 http://kemendukbangga-datapubg.com/static/common/js/common.js
+/customize.php 1 -
+/wp-admin/shell20211028.php 1 -
+/platform 1 http://kemendukbangga-datapubg.com/platform
+/cx_platform/conf.json 1 http://kemendukbangga-datapubg.com/cx_platform/conf.json
+/.well-known/acme-challenge/install.php 1 -
+/wp-includes/block-patterns/autoload_classmap.php 1 -
+/m 3 http://kemendukbangga-datapubg.com/m/
+/wp-includes/js/tinymce/skins/lightgray/img/index.php 1 -
+/wp-admin/css/colors/coffee/cloud.php 1 -
+/css/admin.php 1 -
+/template/mb/lang/text-zh.json 1 http://kemendukbangga-datapubg.com/template/mb/lang/text-zh.json
+/wp-includes/sitemaps/providers/index.php 1 -
+/wp-content/plugins/core-plugin/include.php 1 -
+/style.css 1 http://kemendukbangga-datapubg.com/style.css
+/default.php 1 -
+/wp-includes/PHPMailer/admin.php 1 -
+/api/Event/basic 1 http://kemendukbangga-datapubg.com/api/Event/basic
+/cgi-bin/autoload_classmap.php 1 -
+/wp-admin/css/colors/midnight/admin.php 1 -
+/api/order/lists 1 http://kemendukbangga-datapubg.com/api/order/lists
+/dist/.git/config 2 -
+/wp-content/themes/twentytwentyfour/about.php 1 -
+/license.php 1 -
+/xp.php 1 -
+/sito/wp-includes/wlwmanifest.xml 4 -
+/filemanager.php 1 -
+/wp-admin/css/colors/midnight/wp-login.php 1 -
+/wp-admin/install.php 3 -
+/images/step-3.webp 1 http://kemendukbangga-datapubg.com/images/step-3.webp
+/res/duan/tm.png 1 http://kemendukbangga-datapubg.com/res/duan/tm.png
+/frontend/.git/config 2 -
+/bypass.php 1 -
+/pendaftaran 4 -
+/getConfig/getArticle.do 1 http://kemendukbangga-datapubg.com/getConfig/getArticle.do%3Fcode%3D1
+/lang.js 1 http://kemendukbangga-datapubg.com/lang.js
+/assets/sandi-amir.php 1 -
+/wp-admin/chosen.php 1 -
+/404.php 1 -
+/script.js 1 http://kemendukbangga-datapubg.com/script.js
+/iexchange/webtrader 1 http://kemendukbangga-datapubg.com/iexchange/webtrader/
+/api/user/language_list 1 http://kemendukbangga-datapubg.com/api/user/language_list
+/wp-content/languages/404.php 1 -
+/template/920ka/css/lsy.css 1 http://kemendukbangga-datapubg.com/template/920ka/css/lsy.css
+/035/index.html 1 http://kemendukbangga-datapubg.com/035/index.html
+/API/Web/chat.ashx 1 http://kemendukbangga-datapubg.com/API/Web/chat.ashx
+/wp-l0gin.php 1 -
+/common/member/js/user.util.js 1 http://kemendukbangga-datapubg.com/common/member/js/user.util.js
+/code1.html 1 http://kemendukbangga-datapubg.com/code1.html
+/ini.php 1 -
+/public/static/index/picture/img_33.png 1 http://kemendukbangga-datapubg.com/public/static/index/picture/img_33.png
+/index/index/getchatLog 1 http://kemendukbangga-datapubg.com/index/index/getchatLog
+/uploads/94056-upload.phtml 1 -
+/.bod/.ll/ss.php 1 -
+/2018/wp-includes/wlwmanifest.xml 4 -
+/getConfig/listPopFrame.do 1 http://kemendukbangga-datapubg.com/getConfig/listPopFrame.do%3Fcode%3D1%26position%3Dindex%26_%3D1601489645097
+/wp-includes/style-engine/autoload_classmap.php 1 -
+/api/chat/visitor/channelInfo 1 http://kemendukbangga-datapubg.com/api/chat/visitor/channelInfo
+/adminfuns.php 1 -
+/doc.php 1 -
+/addons/ltwl_paibao_dx/core/web 1 http://kemendukbangga-datapubg.com/addons/ltwl_paibao_dx/core/web/
+/wp-includes/admin.php 1 -
+/common/init 1 http://kemendukbangga-datapubg.com/common/init
+/file5.php 1 -
+/api/new-version/daily/rooms/1 1 http://kemendukbangga-datapubg.com/api/new-version/daily/rooms/1
+/infe/rest/fig/advertise/common.json 1 http://kemendukbangga-datapubg.com/infe/rest/fig/advertise/common.json%3Fmobile_open%3D1
+/wp-includes/IXR/security.php 1 -
+/static/wap/js/order.js 1 http://kemendukbangga-datapubg.com/static/wap/js/order.js
+/wp-admin/css/index.php 1 -
+/mobile/preference 1 http://kemendukbangga-datapubg.com/mobile/preference
+/class.api.php 1 -
+/slideRight%28%29 1 -
+/prod-api/home/zixun/info 1 http://kemendukbangga-datapubg.com/prod-api/home/zixun/info/
+/wp-includes/ID3/about.php/wp-content/x/index.php 1 -
+/static/js/user.js 1 http://kemendukbangga-datapubg.com/static/js/user.js
+/autoload_classmap.php 1 -
+/system_log.php 1 -
+/wp-admin/index.php 1 -
+/.well-known/acme-challenge/license.php 1 -
+/images 1 binance.com
+/wp-includes/txets.php 4 -
+/im/App/config 1 http://kemendukbangga-datapubg.com/im/App/config
+/wordpress/wp-includes/wlwmanifest.xml 4 -
+/yongxing 1 http://kemendukbangga-datapubg.com/yongxing/
+/mah.php 1 -
+/wp-admin/css/colors/ectoplasm/mKSJUaFdm.php 1 -
+/cgi-bin/class.api.php 1 -
+/themes/zMousse/otuz1.php 1 -
+/views/commData/commonSite.js 1 http://kemendukbangga-datapubg.com/views/commData/commonSite.js
+/wp-includes/atomlib.php 1 -
+/h5 6 http://kemendukbangga-datapubg.com/h5/
+/static/css/reset.css 1 http://kemendukbangga-datapubg.com/static/css/reset.css
+/homes 1 http://kemendukbangga-datapubg.com/homes/
+/sitemap.txt 4 -
+/wp-admin/user/network.php 1 -
+/static/new/css/style.css 1 http://kemendukbangga-datapubg.com/static/new/css/style.css
+/wordpress/.git/config 1 -
+/wp-includes/IXR/admin.php 1 -
+/wp-includes/style-engine/wp-conflg.php 1 -
+/wp/wp-admin/install.php 3 -
+/static/pz.json 1 http://kemendukbangga-datapubg.com/static/pz.json
+/wp-content/txets.php 4 -
+/wp-admin/js/wp-login.php 1 -
+/public/image/poster 12 -
+/wp-content/themes/tflow/up.php 1 -
+/special.php 1 -
+/wp-signup.php 1 -
+/public/css/style.css 1 http://kemendukbangga-datapubg.com/public/css/style.css
+/qiantaizhuanyon_chaxun/chaxunkaiguan 1 http://kemendukbangga-datapubg.com/qiantaizhuanyon_chaxun/chaxunkaiguan
+/mytio/config/base 1 http://kemendukbangga-datapubg.com/mytio/config/base
+/js/home.js 1 http://kemendukbangga-datapubg.com/js/home.js
+/libs/.git/config 1 -
+/skin/main/onload.js 1 http://kemendukbangga-datapubg.com/skin/main/onload.js
+/webadmin.php 1 -
+/blog/wp-admin/install.php 3 -
+/wp-content/plugins/up/main.php 1 -
+/atomlib.php 1 -
+/js/yanzheng_yhk.js 1 http://kemendukbangga-datapubg.com/js/yanzheng_yhk.js
+/wp-content/uploads/bypass.php 1 -
+/index/index/home 1 http://kemendukbangga-datapubg.com/index/index/home%3Fbusiness_id%3D1
+/files/index.php 1 -
+/security.txt 1 -
+/imei 1 http://kemendukbangga-datapubg.com/imei/
+/S1/js/app.js 1 http://kemendukbangga-datapubg.com/S1/js/app.js
+/wp-includes/PHPMailer/about.php 1 -
+/up.php 1 -
+/wordpress/wp-includes/IXR/allez.php 1 -
+/join_room 2 http://kemendukbangga-datapubg.com/join_room
+/wp-includes/assets/index.php 1 -
+/syn 1 http://kemendukbangga-datapubg.com/syn/
+/api 2 http://kemendukbangga-datapubg.com/api%3Fcode%3D1
+/api/message/webInfo 1 http://kemendukbangga-datapubg.com/api/message/webInfo
+/wp-admin/css/colors/index.php 1 -
+/procoin/config/all.do 1 http://kemendukbangga-datapubg.com/procoin/config/all.do
+/js/app.js 1 http://kemendukbangga-datapubg.com/js/app.js
+/robots.php 1 -
+/api/products 1 http://kemendukbangga-datapubg.com/api/products
+/api/v2/appinit 1 http://kemendukbangga-datapubg.com/api/v2/appinit
+//cdn.js 1 -
+/humans.txt 1 -
+/css/main.css 1 http://kemendukbangga-datapubg.com/css/main.css
+/dist/cdn.min.js 3 -
+/vendor/phpunit/phpunit/src/Util/PHP/kill.php 1 -
+/Templates/user/js/global.js 1 http://kemendukbangga-datapubg.com/Templates/user/js/global.js
+/wp-content/uploads/wp-conflg.php 1 -
+/db.php 1 -
+/wp-includes/style-engine/index.php 1 -
+/mfzbs/config/base 1 http://kemendukbangga-datapubg.com/mfzbs/config/base
+/wp-admin/images/about.php 1 -
+/inputs.php 1 -
+/file.php 1 -
+/wp-admin/maint/bootstrap.php 1 -
+/admin/upload/css.php 1 -
+/wp-admin/js/instaall.php 1 -
+/wp-includes/pomo/index.php 1 -
+/new/wp-admin/install.php 3 -
+/wp-includes/random_compat/chosen.php 1 -
+/api/common/getAllSetting 1 http://kemendukbangga-datapubg.com/api/common/getAllSetting
+/wp-content/upgrade/item.php 1 -
+/files 1 binance.com
+/ms-themes.php 1 -
+/wp-admin/network/index.php 1 -
+/webdb.php 1 -
+/zz.php 1 http://kemendukbangga-datapubg.com/zz.php
+/images/class.php 1 -
+/wp-content/plugins/seoplugins/index.php 1 -
+/wp-admin/admin.php 1 -
+/site/api/v1/site/vipExclusiveDomain/getGuestDomain 1 http://kemendukbangga-datapubg.com/site/api/v1/site/vipExclusiveDomain/getGuestDomain
+/js/app.user.js 1 http://kemendukbangga-datapubg.com/js/app.user.js
+/.well-known/wincust.php 1 -
+/fonts/fontawesome-webfont.php 1 -
+/admin/uploads/bn_1_1754420677.phtml 1 -
+/Public/H5/js/h5.js 1 http://kemendukbangga-datapubg.com/Public/H5/js/h5.js
+/wp-admin/wp-conflg.php 1 -
+/wp-includes/certificates/about.php 1 -
+/conf.js 1 http://kemendukbangga-datapubg.com/conf.js
+/api.php 1 http://kemendukbangga-datapubg.com/api.php
+/.well-known/radio.php 1 -
+/apix/tongchengyue/tags 1 http://kemendukbangga-datapubg.com/apix/tongchengyue/tags
+/update/403.php 1 -
+/admin/.git/config 2 -
+/wp-admin/js/widgets/index.php 1 -
+/wp/wp-admin/setup-config.php 3 -
+/vendor/phpunit/phpunit/src/Util/PHP/ask.php 1 -
+/home/index 1 http://kemendukbangga-datapubg.com/home/index
+/classwithtostring.php 1 -
+/buy.php 1 -
+/wp-admin/css/autoload_classmap.php 1 -
+/wp-includes/html-api/chosen.php 1 -
+/modules/.git/config 1 -
+/wp-admin/plugin.php 1 -
+/wp-admin/css/colors/blue/rk2.php 1 -
+/wp-includes/js/index.php 1 -
+/byp.php 1 -
+/administrator 3 http://kemendukbangga-datapubg.com/administrator/
+/Temp/htm13/images/ga.png 1 http://kemendukbangga-datapubg.com/Temp/htm13/images/ga.png
+/auth/registration 4 -
+/index/login/index 1 http://kemendukbangga-datapubg.com/index/login/index
+/www/.git/config 1 -
+/phone/images/icon_01.png 1 http://kemendukbangga-datapubg.com/phone/images/icon_01.png
+/api/user/time 1 http://kemendukbangga-datapubg.com/api/user/time
+/js/base1.js 1 http://kemendukbangga-datapubg.com/js/base1.js
+//.git/HEAD 1 -
+/api/BaseInfo/xnb/24hr 1 http://kemendukbangga-datapubg.com/api/BaseInfo/xnb/24hr
+/config.js 1 http://kemendukbangga-datapubg.com/config.js
+/wp-admin/network/network.php 1 -
+/wp-content/plugins/pwnd/pwnd.php 1 -
+/static/js/chat-config.js 1 http://kemendukbangga-datapubg.com/static/js/chat-config.js
+/wp-admin/css/colors/modern/3eTB38lCsA.php 1 -
+/wp-content/plugins/seoplugins/db.php 1 -
+/wp-admin/css/colors/ectoplasm/about.php 1 -
+/f35.php 1 -
+/chat 2 http://kemendukbangga-datapubg.com/chat/
+/static/js/common.js 1 http://kemendukbangga-datapubg.com/static/js/common.js
+/wp-includes/Requests/about.php 1 -
+/wp-includes/IXR/index.php 1 -
+/api/apicom/index/getkefu 1 http://kemendukbangga-datapubg.com/api/apicom/index/getkefu
+/main/config/getkefuData 1 http://kemendukbangga-datapubg.com/main/config/getkefuData
+/xingkong 1 http://kemendukbangga-datapubg.com/xingkong/
+/wp-admin/css/wp-conflg.php 1 -
+/mindex.html 1 http://kemendukbangga-datapubg.com/mindex.html
+/vendor/phpunit/phpunit/src/Util/PHP/eval-stdin.php 1 -
+/kdata/selectMqUrl 1 http://kemendukbangga-datapubg.com/kdata/selectMqUrl
+/fonts/database.php 1 -
+/css/js1.php 1 -
+/api/app/contract/getMarketList 1 http://kemendukbangga-datapubg.com/api/app/contract/getMarketList
+/wp-content.php 1 -
+/templates/beez3/index.php 1 -
+/k.php 1 -
+/core.php 1 -
+/wp-includes/js/jquery/suggest.php 1 -
+/mini.php 1 -
+/api/index/init 1 http://kemendukbangga-datapubg.com/api/index/init
+/Public/Mobile/ecshe_css/wapmain.css 1 http://kemendukbangga-datapubg.com/Public/Mobile/ecshe_css/wapmain.css%3Fv%3D1545408652
+/wp-content/plugins/seoo/about.php 1 -
+/admin/index.php 1 -
+/wp-includes/customize/index.php 1 -
+/wp-includes/blocks/about.php 1 -
+/api/product/list 1 http://kemendukbangga-datapubg.com/api/product/list
+/wordpress 1 -
+/wp-includes/js/tinymce/skins/lightgray/img/about.php 1 -
+/wordpress/wp-admin/install.php 3 -
+/wp-includes/infi.php 1 -
+/vendor/phpunit/phpunit/src/Util/PHP/as.php 1 -
+/wp-admin/js/widgets/about.php 1 -
+/wp-content/plugins/wp-theme-editor/include.php 1 -
+/wp-content/plugins/WordPressCore/index.php 1 -
+/dist/azzara/css/down.css 1 http://kemendukbangga-datapubg.com/dist/azzara/css/down.css
+/wp-admin/js/wp-conflg.php 1 -
+/wp-content/plugins/envato-css.php 1 -
+/wp-includes/SimplePie/index.php 1 -
+/wp-includes/css/chosen.php 1 -
+/index.php/sign 1 http://kemendukbangga-datapubg.com/index.php/sign
+/wp-content/cache/index.php 1 -
+/inc.php 1 -
+/wp-admin/css/colors/blue/wp-trackback.php 1 -
+/resources/css/headernav.css 1 http://kemendukbangga-datapubg.com/resources/css/headernav.css
+/public/static/home/js/moblie/login.js 1 http://kemendukbangga-datapubg.com/public/static/home/js/moblie/login.js
+/m.html 1 http://kemendukbangga-datapubg.com/m.html
+/wp-includes/defaults.php 1 -
+/wp-content/1.php 1 -
+/wp-class.php 1 -
+/wp-content/product.php 1 -
+/app/js/base.js 1 http://kemendukbangga-datapubg.com/app/js/base.js
+/wp-content/uploads/wp.php 1 -
+/wp-includes/Text/Diff/Renderer/index.php 1 -
+/thriveGame.css 1 http://kemendukbangga-datapubg.com/thriveGame.css
+/sites/default/files 1 binance.com
+/im/h5 1 http://kemendukbangga-datapubg.com/im/h5/
+/wp-includes/pomo/admin.php 1 -
+/cgi-bin/install.php 1 -
+/assets/js/main.js 1 http://kemendukbangga-datapubg.com/assets/js/main.js
+/wp-includes/Requests/index.php 1 -
+/admin 6 http://kemendukbangga-datapubg.com/admin
+/api/user/confinfo 1 http://kemendukbangga-datapubg.com/api/user/confinfo
+/dist_customer/static/images/loading.gif 1 http://kemendukbangga-datapubg.com/dist_customer/static/images/loading.gif
+/new/wp-admin/setup-config.php 3 -
+/flower.php 1 -
+/static/wap/css/common.css 1 http://kemendukbangga-datapubg.com/static/wap/css/common.css
+/wp-content/plugins/bypass.php 1 -
+/api/im/v2/app/config 1 http://kemendukbangga-datapubg.com/api/im/v2/app/config
+/admin.php 2 -
+/wp-content/plugin.php 1 -
+/wp-includes/rest-api/index.php 1 -
+/wp-includes/assets/about.php 1 -
+/ioxi-o.php 1 -
+/.well-known/login.php 1 -
+/files/pub_rem.js 1 http://kemendukbangga-datapubg.com/files/pub_rem.js
+/Public/initJs.php 1 http://kemendukbangga-datapubg.com/Public/initJs.php
+/wp-blog.php 1 -
+/images/index22.php 1 -
+/api/app/getserviceinfo 1 http://kemendukbangga-datapubg.com/api/app/getserviceinfo%3Ftoken%3D1
+/wp-content/languages/about.php 1 -
+/api/siteConfig 1 http://kemendukbangga-datapubg.com/api/siteConfig
+/index.php/api/index/info 1 http://kemendukbangga-datapubg.com/index.php/api/index/info
+/wp-links.php 1 -
+/a 1 http://kemendukbangga-datapubg.com/a/
+/js/xz.js 1 http://kemendukbangga-datapubg.com/js/xz.js
+/server/api/site/getInfo.do 1 http://kemendukbangga-datapubg.com/server/api/site/getInfo.do
+/wp-includes/js/crop/admin.php 1 -
+/wp-includes/widgets/wp-login.php 1 -
+/Public/Qts/Home/js/appAlert.js 1 http://kemendukbangga-datapubg.com/Public/Qts/Home/js/appAlert.js
+/api/user/ismustmobile 3 http://kemendukbangga-datapubg.com/api/user/ismustmobile
+/assets/tz.png 1 http://kemendukbangga-datapubg.com/assets/tz.png
+/wp-content/hello.php 1 -
+/wp-content/plugins/autoload_classmap.php 1 -
+/wp-includes/images/media/dog.php 1 -
+/wp-includes/item.php 1 -
+/Pay_Index.html 1 http://kemendukbangga-datapubg.com/Pay_Index.html
+/install.inc/vipsignInstall.css 1 http://kemendukbangga-datapubg.com/install.inc/vipsignInstall.css
+/api/notice 1 http://kemendukbangga-datapubg.com/api/notice
+/mobile/index/home 1 http://kemendukbangga-datapubg.com/mobile/index/home
+/wp-includes/theme-compat/about.php 1 -
+/sallu.php 1 -
+/wp-content/plugins/ioxi/ioxiworm.php 1 -
+/douyin/douyin.html 1 http://kemendukbangga-datapubg.com/douyin/douyin.html
+/wp-includes/function.php 1 -
+/web/wp-includes/wlwmanifest.xml 4 -
+/admin/register 4 -
+/api/room/join 1 http://kemendukbangga-datapubg.com/api/room/join
+/wp-content/plugins/ubh/up.php 1 -
+/wp-includes/images/smilies/about.php 1 -
+/randkeyword.PhP7 1 -
+/test/wp-admin/setup-config.php 3 -
+/images/admin.php 1 -
+/wp-content/uploads/autoload_classmap.php 1 -
+/xl2023.php 1 -
+/wp-links-opml.php 1 -
+/Public/home/js/check.js 1 http://kemendukbangga-datapubg.com/Public/home/js/check.js
+/wp-content/languages/autoload_classmap.php 1 -
+/alfa.php 1 -
+/mah/function.php 1 -
+/wordpress/wp-admin/setup-config.php 62 -
+/update/f35.php 1 -
+/TikTok/TikTok.html 1 http://kemendukbangga-datapubg.com/TikTok/TikTok.html
+/item.php 1 -
+/wp-admin/xleet.php 1 -
+/css/skin/ymPrompt.css 1 http://kemendukbangga-datapubg.com/css/skin/ymPrompt.css
+/admin/webadmin.php 1 http://kemendukbangga-datapubg.com/admin/webadmin.php%3Fmod%3Ddo%26act%3Dlogin
+/wp-admin/images/wp-conflg.php 1 -
+/.vscode/sftp.json 10 -
+/wp-includes/ID3/wp-work.php 1 -
+/wp-includes/plugins.php 1 -
+/Xiaohongshu/Xiaohongshu.html 1 http://kemendukbangga-datapubg.com/Xiaohongshu/Xiaohongshu.html
+/index/home/login.html 1 http://kemendukbangga-datapubg.com/index/home/login.html
+/wp-user.php 1 -
+/wp-includes/style-engine/worksec.php 1 -
+/api/common/menus 1 http://kemendukbangga-datapubg.com/api/common/menus%3Flang%3Dzh-Hans
+/api/index/get_setting 1 http://kemendukbangga-datapubg.com/api/index/get_setting
+/simple.php 1 -
+/site.js 1 http://kemendukbangga-datapubg.com/site.js
+/wp-includes/images/wp-login.php 1 -
+/chosen.php 1 -
+/ads.txt 2 -
+/wp-includes/Text/Diff/index.php 1 -
+/1.html 1 http://kemendukbangga-datapubg.com/1.html
+/sitemap.xml 3 -
+/wp-trackback.php 1 -
+/wp-admin/css/colors/blue/admin.php 1 -
+/_nuxt/img/icon-deposits.42478e2.svg 1 http://kemendukbangga-datapubg.com/_nuxt/img/icon-deposits.42478e2.svg
+/api/app/banners 1 http://kemendukbangga-datapubg.com/api/app/banners
+/api/getAllConfig 1 http://kemendukbangga-datapubg.com/api/getAllConfig
+/wap/api/exchangerateuserconfig!get.action 1 http://kemendukbangga-datapubg.com/wap/api/exchangerateuserconfig%21get.action
+/ab.php 1 -
+/instatll 1 http://kemendukbangga-datapubg.com/instatll%3Ftag%3Dmatto
+/xmlrpc.php 5 -
+/wp-includes/Requests/autoload_classmap.php 1 -
+/common/template/lottery/lecai/css/style.css 1 http://kemendukbangga-datapubg.com/common/template/lottery/lecai/css/style.css
+/api/chat/fish_init 1 http://kemendukbangga-datapubg.com/api/chat/fish_init
+/wp-admin 2 http://kemendukbangga-datapubg.com/wp-admin/
+/wp-includes/widgets/dyqvcfqv.php 1 -
+/webshell.php 3 -
+/dock/system/config/get 1 http://kemendukbangga-datapubg.com/dock/system/config/get
+/static/customer/js/xiaotian.cli.v2.js 1 http://kemendukbangga-datapubg.com/static/customer/js/xiaotian.cli.v2.js
+/old/wp-admin/setup-config.php 3 -
+/signup 4 -
+/dwcc 1 http://kemendukbangga-datapubg.com/dwcc/
+/home/realtime/data 1 http://kemendukbangga-datapubg.com/home/realtime/data
+/wp-content/plugins/atomlib.php 1 -
+/xy 1 http://kemendukbangga-datapubg.com/xy/
+/api/index/config 1 http://kemendukbangga-datapubg.com/api/index/config
+/market/market-ws/iframe.html 1 http://kemendukbangga-datapubg.com/market/market-ws/iframe.html
+/api/front/index 1 http://kemendukbangga-datapubg.com/api/front/index
+/cms/wp-includes/wlwmanifest.xml 4 -
+/qishui/qishui.html 1 http://kemendukbangga-datapubg.com/qishui/qishui.html
+/wp.php 1 -
+/assets/index.php 1 -
+/static/h5_files/credit.png 1 http://kemendukbangga-datapubg.com/static/h5_files/credit.png
+/Home/Get/getJnd28 1 http://kemendukbangga-datapubg.com/Home/Get/getJnd28
+/wp-includes/fonts/index.php 1 -
+/about.php 2 -
+/wp-content/plugins/index.php 1 -
+/app/static/js/download.js 1 http://kemendukbangga-datapubg.com/app/static/js/download.js
+/assets/script.js.php 1 -
+/site/wp-includes/wlwmanifest.xml 4 -
+/wp-includes/wlwmanifest.xml 4 -
+/home/login.jpg 1 http://kemendukbangga-datapubg.com/home/login.jpg
+/.well-known/admin.php 1 -
+/manager.php 1 -
+/js/fm.php 1 -
+/media/system/js/core.js 3 -
+/static/index/css/trade-history.css 1 http://kemendukbangga-datapubg.com/static/index/css/trade-history.css
+/assets/images/admin.php 1 -
+/wp-content/plugins/phpadmin/as.php 1 -
+/wp-includes/SimplePie/applicationd.php 1 -
+/assets/images/rw.png 1 http://kemendukbangga-datapubg.com/assets/images/rw.png
+/wp-content/wso.php 1 -
+/addons/fastim 1 http://kemendukbangga-datapubg.com/addons/fastim/
+/wp-admin/css/colors/blue/ahax.php 1 -
+/admin/controller/extension/extension 1 binance.com
+/pages/console/js/common.js 1 http://kemendukbangga-datapubg.com/pages/console/js/common.js
+/warm.PhP7 1 -
+/shop/wp-includes/wlwmanifest.xml 4 -
+/wp-includes/images/media/index.php 1 -
+/wp-content/languages/wp-conflg.php 1 -
+/wp-admin/user/wp-login.php 1 -
+/api/seller/index/GetSellerConfigAll 1 http://kemendukbangga-datapubg.com/api/seller/index/GetSellerConfigAll
+/h5/static/tabbar/txl.png 1 http://kemendukbangga-datapubg.com/h5/static/tabbar/txl.png
+/queryVersion.php 1 http://kemendukbangga-datapubg.com/queryVersion.php
+/nyyh/game.css 1 http://kemendukbangga-datapubg.com/nyyh/game.css
+/info.php 1 -
+/dwcc/cnfig/setinf 1 http://kemendukbangga-datapubg.com/dwcc/cnfig/setinf
+/wp-admin/js/index.php 1 -
+/wp-admin/txets.php 4 -
+/thumbs.php 1 -
+/wp-admin/js/autoload_classmap.php 1 -
+/app 2 http://kemendukbangga-datapubg.com/app/
+/wp-admin/css/colors/blue/gold.php 1 -
+/static/wap/js/banner.js 1 http://kemendukbangga-datapubg.com/static/wap/js/banner.js
+/ay-1.html 1 http://kemendukbangga-datapubg.com/ay-1.html
+/api/app/getExecutedRealOrders 1 http://kemendukbangga-datapubg.com/api/app/getExecutedRealOrders
+/banner/lunbo1.png 1 http://kemendukbangga-datapubg.com/banner/lunbo1.png
+/snake 1 http://kemendukbangga-datapubg.com/snake/
+/appxz/index.html 1 http://kemendukbangga-datapubg.com/appxz/index.html
+/css/css.php 1 -
+/wp-content/plugins/pwnd-1/pwnd.php 1 -
+/microservices/.git/config 2 -
+/wp-content/themes/classwithtostring.php 1 -
+/js/bankCheck.js 1 http://kemendukbangga-datapubg.com/js/bankCheck.js
+/wp-includes/xl2023.php 1 -
+/wp-includes/Text/Diff/Renderer/about.php 1 -
+/registration 4 -
+/.wp/wso.php 1 -
+/wp-content/plugins/elementor/wp-wjvngrh.php 1 -
+/mar.php 1 -
+/static/js/download.js 1 http://kemendukbangga-datapubg.com/static/js/download.js
+/api/v1/seller/login 1 http://kemendukbangga-datapubg.com/api/v1/seller/login
+/pc.html 1 http://kemendukbangga-datapubg.com/pc.html
+/shop/wp-admin/setup-config.php 3 -
+/static/images/jymx.png 1 http://kemendukbangga-datapubg.com/static/images/jymx.png
+/.svn/entries 3 -
+/static/css/index.css 1 http://kemendukbangga-datapubg.com/static/css/index.css
+/static/voice/default.wav 1 http://kemendukbangga-datapubg.com/static/voice/default.wav
+/license.txt 1 -
+/wp-includes/Text/Diff/Engine/about.php 1 -
+/js/post.js 1 http://kemendukbangga-datapubg.com/js/post.js/
+/wso.php 1 -
+/wp-content/themes/twentyfive/include.php 1 -
+/.well-known/ 1 binance.com
+/wp-content/themes/twentytwentythree/patterns/index.php 1 -
+/api/dict/getServiceConfig 1 http://kemendukbangga-datapubg.com/api/dict/getServiceConfig
+/api/uploads/apimap 1 http://kemendukbangga-datapubg.com/api/uploads/apimap
+/wp-admin/postnews.php 4 -
+/setup.php 1 -
+/wp-admin/function.php 1 -
+/hehehehe.php 1 -
+/adminfuns.php7 1 -
+/components/com_jea/views/form/tmpl/size.php 1 -
+/categories 1 http://kemendukbangga-datapubg.com/categories
+/css/nsc/reset.css 1 http://kemendukbangga-datapubg.com/css/nsc/reset.css
+/f/user/index 1 http://kemendukbangga-datapubg.com/f/user/index
+/client/api/findConfigByKey 1 http://kemendukbangga-datapubg.com/client/api/findConfigByKey%3FconfigKey%3Dlevel_config
+/web.php 1 -
+/wp-admin/css/colors/ocean/about.php 1 -
+/cc.php 1 -
+/wp-content/index.php 1 -
+/api/currency/getTradeCurrencyList 1 http://kemendukbangga-datapubg.com/api/currency/getTradeCurrencyList
+/wp-admin/js/widgets/bypass.php 1 -
+/wap 2 http://kemendukbangga-datapubg.com/wap/
+/wp-includes/PHPMailer/options.php 1 -
+/blog/wp-admin/about.php 1 -
+/index.html 2 http://kemendukbangga-datapubg.com/index.html
+/getDownloadUrl 1 http://kemendukbangga-datapubg.com/getDownloadUrl%3FappType%3DAndroid
+/wp1/wp-includes/wlwmanifest.xml 4 -
+/wp-atom.php 1 -
+/public/api/index/config 1 http://kemendukbangga-datapubg.com/public/api/index/config
+/index/function.php 1 -
+/wp-admin/images/admin.php 1 -
+/.well-known/index.php 1 -
+/public/assets/js/lib/my-help.js 1 http://kemendukbangga-datapubg.com/public/assets/js/lib/my-help.js
+/wp-content/postnews.php 4 -
+/wp-admin/css/colors/blue/atomlib.php 1 -
+/lock.php 1 -
+/api/latestSdkConfig 1 http://kemendukbangga-datapubg.com/api/latestSdkConfig
+/blog/wp-content/about.php 1 -
+/055/index.html 1 http://kemendukbangga-datapubg.com/055/index.html
+/.well-known/pki-validation/admin.php 1 -
+/appx 1 http://kemendukbangga-datapubg.com/appx/
+/api/product/getPointStore 1 http://kemendukbangga-datapubg.com/api/product/getPointStore
+/Home/Index/api 1 http://kemendukbangga-datapubg.com/Home/Index/api
+/static/common/css/v.css 1 http://kemendukbangga-datapubg.com/static/common/css/v.css
+/api/common/config 1 http://kemendukbangga-datapubg.com/api/common/config
+/wp-content/plugins/admin.php 1 -
+/static/home/css/css.css 1 http://kemendukbangga-datapubg.com/static/home/css/css.css
+/content.php 1 -
+/wp-admin/css/colors/light/alfa-rex.php 1 -
+/registro 4 -
+/style.php 1 -
+/api/index/index 1 http://kemendukbangga-datapubg.com/api/index/index
+/api/heartbeat 1 http://kemendukbangga-datapubg.com/api/heartbeat
+/AnMjSjfe87/policy/getVersion 1 http://kemendukbangga-datapubg.com/AnMjSjfe87/policy/getVersion
+/index/aurl 1 http://kemendukbangga-datapubg.com/index/aurl
+/wp-includes/style-engine/bypass.php 1 -
+/.well-known/about.php 1 -
+/wp-admin/css/colors/blue/file.php 1 -
+/wp-content/themes/astra/inc/fm.php 1 -
+/wp-includes/js/tinymce/skins/lightgray/img/wp-login.php 1 -
+/llms.txt 1 -
+/wp-admin/maint/index.php 1 -
+/radio.php 1 -
+/site/info 1 http://kemendukbangga-datapubg.com/site/info
+/wp-admin/setup-config.php 60 -
+/api/wanlshop/common/init 1 http://kemendukbangga-datapubg.com/api/wanlshop/common/init
+/wp-includes/SimplePie/Exception-wp.php 1 -
+/edit-tags.php 1 -
+/vip 1 http://kemendukbangga-datapubg.com/vip/
+/wp-includes/assets/autoload_classmap.php 1 -
+/wp-content/themes/chosen.php 1 -
+/function/function.php 1 -
+/wp-content/themes/twentytwentytwo/assets/fonts/index.php 1 -
+/7 1 http://kemendukbangga-datapubg.com/7/
+/wp-includes/certificates/wp-login.php 1 -
+/wp-content/themes/pridmag/db.php 1 -
+/api/api/exchangerateuserconfig!get.action 1 http://kemendukbangga-datapubg.com/api/api/exchangerateuserconfig%21get.action
+/other/getTopQuestion 1 http://kemendukbangga-datapubg.com/other/getTopQuestion
+/xx.php 1 -
+/js/nsc/main.js 1 http://kemendukbangga-datapubg.com/js/nsc/main.js
+/biz/server/config 1 http://kemendukbangga-datapubg.com/biz/server/config
+/kuwo/kuwo.html 1 http://kemendukbangga-datapubg.com/kuwo/kuwo.html
+/api/config 1 http://kemendukbangga-datapubg.com/api/config
+/wp-content/uploads/admin.php 1 -
+/images/class-config.php 1 -
+/fePublicInfo 1 http://kemendukbangga-datapubg.com/fePublicInfo/
+/wp-includes/assets/husky301.php 1 -
+/api/app/indexList 1 http://kemendukbangga-datapubg.com/api/app/indexList
+/api/index/getBannerList 1 http://kemendukbangga-datapubg.com/api/index/getBannerList
+/js/index.js 1 http://kemendukbangga-datapubg.com/js/index.js
+/1/1 1 http://kemendukbangga-datapubg.com/1/1
+/sftp-config.json 9 -
+/lottery/common.js 1 http://kemendukbangga-datapubg.com/lottery/common.js
+/wp-includes/block-supports/autoload_classmap.php 1 -
+/wp-includes/blocks/calendar/index.php 1 -
+/selectTempConfig 1 http://kemendukbangga-datapubg.com/selectTempConfig
+/wp-includes/css/about.php 1 -
+/daftar 4 -
+/market/coinList 1 http://kemendukbangga-datapubg.com/market/coinList
+/wp-includes/rest-api/about.php 1 -
+/wp-includes/css/index.php 1 -
+/wp-includes/BDKR28_nfbxj7ov.php 1 -
+/api/v1/config 1 http://kemendukbangga-datapubg.com/api/v1/config
+/registrasi 4 -
+/wp-includes/sitemaps/rz.php 1 -
+/Template/Mobile/js/main.js 1 http://kemendukbangga-datapubg.com/Template/Mobile/js/main.js
+/static/home/js/rooms.js 1 http://kemendukbangga-datapubg.com/static/home/js/rooms.js
+/api/card/config 1 http://kemendukbangga-datapubg.com/api/card/config
+/2019/wp-includes/wlwmanifest.xml 4 -
+/img/xxing.png 1 http://kemendukbangga-datapubg.com/img/xxing.png
+/lock360.php 1 -
+/config.php 1 -
+/wp-content/plugins/hello.php 1 -
+/Public/Home/ecshe_css/main.css 1 http://kemendukbangga-datapubg.com/Public/Home/ecshe_css/main.css%3Fv%3D1543997196
+/images/index.php 1 -
+/app/.git/config 2 -
+/Public/home/wap/css/qdgame.css 1 http://kemendukbangga-datapubg.com/Public/home/wap/css/qdgame.css
+/function.php 1 -
+/.well-known/pki-validation/index.php 1 -
+/api/app/config 1 http://kemendukbangga-datapubg.com/api/app/config
+/public/img/cz1.png 1 http://kemendukbangga-datapubg.com/public/img/cz1.png
+/banner.do 1 http://kemendukbangga-datapubg.com/banner.do%3Fcode%3D1
+/blog/wp-includes/about.php 1 -
+/api/index/gettreaty 1 http://kemendukbangga-datapubg.com/api/index/gettreaty
+/wp-content/file.php 1 -
+/wp-content/blue.php 1 -
+/wp-includes/classwithtostring.php 1 -
+/.well-known/gecko-litespeed.php 1 -
+/data/radalgram 3 -
+/new.php 1 -
+/api/index/webconfig 1 http://kemendukbangga-datapubg.com/api/index/webconfig
+/wp/wp-includes/wlwmanifest.xml 4 -
+/share/init_data 1 http://kemendukbangga-datapubg.com/share/init_data
+/wp-includes/assets/info.php 1 -
+/wp-admin/about.php 1 -
+/js/a.script 1 http://kemendukbangga-datapubg.com/js/a.script
+/resources/main/common.js 1 http://kemendukbangga-datapubg.com/resources/main/common.js
+/xy/image/jiantou.png 1 http://kemendukbangga-datapubg.com/xy/image/jiantou.png
+/wp-includes/assets/file.php 1 -
+/css/scanner.css 1 http://kemendukbangga-datapubg.com/css/scanner.css
+/static/img/18.45305957.jpg 1 http://kemendukbangga-datapubg.com/static/img/18.45305957.jpg
+/wp-admin/user/about.php 1 -
+/api/Config/getShowConfig 1 http://kemendukbangga-datapubg.com/api/Config/getShowConfig
+/wp-admin/includes/about.php 1 -
+/api/index/productshow 1 http://kemendukbangga-datapubg.com/api/index/productshow
+/api/apps/config 1 http://kemendukbangga-datapubg.com/api/apps/config
+/wp-admin/mah.php 1 -
+/dropdown.php 1 -
+/api/events 1 http://kemendukbangga-datapubg.com/api/events
+/wp-content/plugins/linkpreview/db.php 1 -
+/blog/.git/config 1 -
+/webshell 3 -
+/static/js/main.js 1 http://kemendukbangga-datapubg.com/static/js/main.js
+/wp-includes/images/smilies/index.php 1 -
+/file2.php 1 -
+/wp-admin/css/colors/sunrise/colors_95.php 1 -
+/go.php 1 -
+/configuration/info.xml 1 -
+/page 1 http://kemendukbangga-datapubg.com/page/
+/api/banner 1 http://kemendukbangga-datapubg.com/api/banner%3FappKey%3Dbxefdn
+/auth/daftar 4 -
+/system.php 1 http://kemendukbangga-datapubg.com/system.php%3Fact%3Dpayments
+/wp-content/themes/admin.php 1 -
+/Web/js/v1/phone.js 1 http://kemendukbangga-datapubg.com/Web/js/v1/phone.js
+/leftDao.php 1 http://kemendukbangga-datapubg.com/leftDao.php%3Fcallback%3DjQuery183016740860980352856_1604309800583
+/css/index.php 1 -
+/goods.php 1 -
+/jp.php 1 -
+/forerest/user/custSrv/findOne 1 http://kemendukbangga-datapubg.com/forerest/user/custSrv/findOne
+/.git/config 5 -
+/.well-known/security.txt 3 -
+/wp-admin/wp-login.php 1 -
+/apps 1 http://kemendukbangga-datapubg.com/apps/
+/js/mobiletalk.js 1 http://kemendukbangga-datapubg.com/js/mobiletalk.js
+/css/style.css 1 http://kemendukbangga-datapubg.com/css/style.css
+/init.php 1 -
+/wp-content/plugins/fix/up.php 1 -
+/static/home/css/feiqi-ee5401a8e6.css 1 http://kemendukbangga-datapubg.com/static/home/css/feiqi-ee5401a8e6.css
+/wp-includes/Text/Diff/Engine/index.php 1 -
+/wp-content/themes/seotheme/mar.php 1 -
+/sitemaps.xml 4 -
+/wp-admin/css/colors/light/about.php 1 -
+/api/common/findIpAddress 1 http://kemendukbangga-datapubg.com/api/common/findIpAddress
+/friendGroup/list 1 http://kemendukbangga-datapubg.com/friendGroup/list
+/dapp/api/getBanner 1 http://kemendukbangga-datapubg.com/dapp/api/getBanner
+/wp-content/radio.php 1 -
+END_SIDER_404
+
+# Host - Pages - Hits - Bandwidth - Last visit date - [Start date of last visit] - [Last page of last visit]
+# [Start date of last visit] and [Last page of last visit] are saved only if session is not finished
+# The 25 first Hits must be first (order not required for others)
+BEGIN_VISITOR 490
+203.175.9.121 31 31 2513 20260307110452
+45.148.10.62 16 16 218196 20260320021950
+69.160.160.61 12 19 1840359 20260318222026
+82.80.249.203 12 12 147582 20260320175621
+149.56.150.216 10 10 146052 20260325120018
+123.58.219.32 9 9 149776 20260301074949
+106.119.167.146 8 8 141521 20260331150632
+45.148.10.124 8 8 110661 20260313052545
+185.94.192.214 8 12 990861 20260305121856
+46.101.9.216 6 6 92083 20260330111645
+119.28.177.175 5 5 79978 20260329145320
+43.157.150.69 5 5 79923 20260331021257
+43.157.98.187 5 5 71644 20260326195541
+43.156.156.96 5 5 79293 20260330160325
+182.42.111.156 4 4 70798 20260326060308
+43.153.119.119 4 4 70757 20260318041901
+43.163.206.70 4 4 61498 20260331073003
+106.219.161.185 4 4 12436 20260327064921
+43.159.149.56 4 4 62300 20260329093436
+106.219.160.157 4 4 12435 20260310060319
+43.130.57.46 4 4 53776 20260325053526
+170.106.187.106 4 4 70680 20260318093848
+106.219.161.95 4 4 12437 20260324232526
+106.219.165.224 4 4 12439 20260330165956
+36.41.75.167 4 4 70718 20260311120313
+91.231.89.127 1 1 17720 20260311084400
+43.166.1.243 2 2 35380 20260315101231
+192.36.109.114 1 1 9210 20260311183359
+124.115.170.7 2 16 3421126 20260304223652
+167.94.146.61 1 1 17710 20260316142336
+170.106.11.6 1 1 17668 20260301163857
+49.51.183.220 1 1 9202 20260305060448
+192.36.109.102 1 1 17670 20260321052731
+185.13.98.57 1 1 9218 20260304194449
+43.166.242.189 1 1 17711 20260331200757
+43.130.34.74 1 1 17669 20260303204338
+192.71.2.119 1 1 9216 20260326194058
+43.157.170.13 1 1 17708 20260301093836
+4.43.184.113 1 1 17669 20260303153004
+43.157.188.74 1 1 17670 20260312085440
+36.111.67.189 2 2 35380 20260328173109
+182.42.104.32 2 2 35419 20260307143528
+49.51.253.26 3 3 44558 20260325041831
+142.93.188.114 1 1 17720 20260313095720
+43.157.147.3 3 3 53090 20260328123012
+192.71.126.245 1 1 9218 20260302210735
+43.130.67.33 2 2 35380 20260327100024
+192.71.12.112 1 1 9216 20260325190706
+192.71.2.99 1 1 9210 20260307190819
+192.36.109.128 1 1 17670 20260320100531
+170.106.148.137 1 1 17710 20260314110315
+43.134.141.244 2 2 26920 20260323152155
+43.131.36.84 3 3 53090 20260316212016
+43.157.153.236 2 2 35340 20260308144026
+167.94.138.181 1 1 17720 20260312203614
+43.165.67.57 3 3 44596 20260327004522
+192.71.142.232 1 1 17669 20260302210733
+43.153.7.191 3 3 44630 20260325233630
+185.247.137.185 1 1 17670 20260316232628
+43.159.140.236 1 1 17670 20260322194417
+150.109.119.38 3 3 53090 20260329030023
+13.229.121.185 1 1 87 20260307110449
+34.59.112.112 3 3 53010 20260319231946
+93.158.90.73 2 2 18428 20260308000122
+43.130.102.7 1 1 17710 20260304211219
+45.55.248.163 1 1 17720 20260309071454
+43.153.122.30 1 1 17710 20260305090555
+167.172.53.83 1 1 17720 20260311075756
+176.65.132.42 1 1 17670 20260308022126
+43.155.27.244 1 1 17670 20260323211154
+35.192.89.194 1 1 17670 20260326221605
+43.159.144.16 1 1 17669 20260302135727
+182.9.161.120 1 8 1710562 20260303103521
+64.227.100.20 1 1 17670 20260315013744
+192.36.109.127 1 1 9216 20260316061107
+185.213.83.160 3 3 53088 20260301051948
+93.158.90.74 1 1 9216 20260308000124
+144.225.147.15 3 3 48953 20260326034845
+23.178.112.108 1 1 87 20260307110448
+122.51.236.174 2 2 35339 20260314125521
+43.153.102.138 2 2 26920 20260328024704
+43.164.197.224 1 1 17710 20260307233319
+150.109.230.210 3 3 53090 20260330054816
+43.130.174.37 2 2 35380 20260313195536
+43.155.157.239 1 1 17670 20260315051932
+124.156.226.179 1 1 17710 20260326143935
+49.235.136.28 2 2 35380 20260326132207
+162.62.213.187 1 1 17670 20260310192333
+101.33.80.42 3 3 53088 20260320023637
+43.156.228.27 3 3 53091 20260331061550
+147.185.132.198 1 1 17670 20260322023800
+43.167.241.46 3 3 52573 20260327020128
+143.198.14.116 1 1 17670 20260325212321
+43.130.60.195 1 1 17710 20260320214412
+104.248.202.221 1 1 17710 20260313100136
+43.153.192.98 1 1 9376 20260311004144
+170.106.72.93 2 2 26926 20260326233251
+43.152.72.247 1 1 17710 20260318132449
+43.135.138.128 1 1 17709 20260304061601
+194.195.91.45 1 1 17670 20260306220818
+1.15.52.154 1 1 17669 20260304141938
+49.51.243.156 2 2 26880 20260305145038
+43.159.128.237 3 3 53090 20260329193038
+43.130.106.18 1 1 8452 20260310031051
+43.166.244.251 1 1 17670 20260313111451
+43.130.78.203 1 1 17670 20260317085809
+43.156.232.190 1 1 17710 20260305183907
+49.51.166.228 1 1 17709 20260301202803
+43.131.23.154 2 2 35380 20260322183655
+120.71.59.24 1 1 17710 20260326205726
+205.169.39.233 2 9 1714036 20260301151938
+23.178.112.106 1 1 87 20260307110447
+192.71.126.27 1 1 9218 20260326194057
+110.136.186.101 1 8 1710564 20260330101503
+119.28.140.106 2 2 43387 20260318033714
+64.23.231.212 1 1 17670 20260309015802
+43.130.102.223 2 2 35380 20260308085124
+13.51.201.126 1 1 87 20260307110448
+43.154.140.188 2 2 34064 20260310042059
+192.71.142.134 1 1 17670 20260307190816
+111.172.249.49 3 3 53090 20260322050315
+125.94.144.102 1 1 17710 20260329083600
+49.51.252.146 1 1 17711 20260331155216
+49.7.227.204 3 3 53051 20260331085016
+43.157.175.122 2 2 35380 20260318082608
+82.80.249.235 1 1 17710 20260320175558
+43.135.185.59 1 1 17710 20260319102700
+43.130.3.122 1 1 17710 20260312013601
+185.12.151.99 1 1 9216 20260304194450
+91.231.89.97 1 1 17720 20260307113836
+106.46.179.110 1 1 17670 20260322064635
+43.133.69.37 3 3 53089 20260325095844
+170.106.161.78 1 1 17671 20260330121453
+43.133.66.51 1 1 17669 20260303054253
+43.159.152.187 1 1 17669 20260302190034
+182.42.110.255 2 2 35381 20260331024150
+43.135.186.135 1 1 9218 20260319003954
+43.153.71.132 2 2 26884 20260305234400
+66.249.83.103 1 1 2743 20260326121529
+43.130.154.56 1 1 25617 20260312041025
+43.157.20.63 2 2 35380 20260321133234
+162.62.132.25 3 3 44597 20260330211652
+182.69.180.162 1 1 2743 20260319044800
+43.159.143.139 2 2 26163 20260331110817
+98.87.188.21 1 1 17710 20260316031040
+205.210.31.143 1 1 17720 20260329135536
+162.142.125.195 1 1 17710 20260309081338
+144.31.25.220 1 1 17669 20260304045254
+192.36.109.105 1 1 17670 20260316061105
+49.51.141.76 2 2 35340 20260327002002
+34.53.243.251 3 3 53010 20260313192043
+199.244.88.227 1 1 17670 20260309120724
+138.199.43.82 1 1 17670 20260317093007
+5.133.192.193 1 1 17669 20260302184345
+43.130.47.33 1 1 17670 20260306080903
+149.56.150.118 1 8 1710603 20260325120044
+49.51.39.209 1 1 9218 20260312033850
+43.157.180.116 3 3 43789 20260331022332
+95.214.52.207 2 2 0 20260302225059
+162.250.121.214 1 1 3477 20260321013728
+192.36.109.120 1 1 9216 20260317033055
+5.133.192.192 1 1 9210 20260302184347
+43.154.250.181 1 1 9218 20260304010025
+192.36.109.78 2 2 18428 20260317033054
+34.7.241.20 3 3 53010 20260313160543
+182.43.70.143 3 3 53090 20260320170132
+74.125.212.36 1 1 2743 20260317153233
+38.54.124.8 1 8 1710563 20260322085252
+175.6.217.4 1 1 17710 20260315092745
+64.23.215.117 1 1 17670 20260317024124
+49.51.72.76 1 1 17670 20260329203040
+43.153.54.14 1 1 9186 20260311005045
+43.130.53.252 3 3 53089 20260326230901
+167.71.224.143 1 1 17710 20260310135619
+43.157.179.227 1 1 17670 20260326110946
+49.51.233.46 2 2 26886 20260316021909
+141.138.208.43 1 1 17669 20260304101658
+23.178.112.105 1 1 87 20260307110447
+162.62.231.139 1 1 17670 20260321145024
+13.229.140.90 1 1 87 20260307110447
+43.166.7.113 1 1 9186 20260327014228
+34.72.176.129 1 2 116932 20260307110707
+43.130.37.243 1 1 17710 20260306090822
+192.36.109.125 1 1 17670 20260312140158
+43.164.197.209 2 2 35376 20260319050215
+170.106.197.109 2 2 35420 20260311045832
+101.32.52.164 2 2 35419 20260305220833
+91.231.89.37 3 3 36090 20260311085143
+43.157.43.147 1 1 17669 20260303155905
+192.36.109.94 2 2 18434 20260311183400
+182.44.10.67 2 2 35420 20260317145016
+5.133.192.199 1 1 17670 20260318141449
+93.165.249.10 1 8 1710563 20260305122207
+143.110.209.193 1 1 17720 20260328151443
+43.166.134.114 2 2 35419 20260307053909
+91.231.89.125 1 1 9218 20260307115321
+36.250.90.235 1 1 17709 20260302024241
+170.106.181.163 1 1 17670 20260320180336
+103.252.118.198 3 3 7612 20260309133443
+165.232.188.79 1 1 17670 20260329034914
+43.164.197.177 1 1 17670 20260309070339
+43.167.232.38 1 1 17670 20260304222331
+49.51.233.95 1 1 17710 20260316064849
+43.133.220.37 2 2 26912 20260319200532
+43.159.135.203 2 2 35381 20260331121446
+43.153.36.110 1 1 17710 20260327201600
+142.93.65.109 1 1 17670 20260323013349
+43.132.214.228 3 3 53090 20260328110459
+35.196.86.35 3 3 53010 20260313000542
+170.106.65.93 1 1 17710 20260308184659
+43.165.65.180 2 2 35340 20260323113146
+74.125.215.134 2 2 5488 20260330103224
+223.88.95.78 1 1 17710 20260322052038
+49.51.183.84 1 1 17710 20260313042058
+43.166.130.123 1 1 17670 20260306063947
+129.226.213.145 2 2 35380 20260324191826
+43.157.172.39 3 3 61037 20260330201507
+43.166.142.76 2 2 35421 20260330110025
+91.231.89.123 1 1 17720 20260307114620
+43.153.96.79 1 1 17710 20260327045052
+93.158.90.71 1 1 17670 20260308000119
+43.153.123.3 1 1 17670 20260307080933
+43.133.139.6 1 1 17710 20260312073835
+182.42.105.85 2 2 35420 20260329233902
+170.106.143.6 1 1 17710 20260323200918
+163.227.179.31 1 1 13613 20260329152834
+60.188.57.0 3 3 53010 20260325225711
+170.106.15.3 1 1 17709 20260302014245
+43.173.1.57 3 3 53050 20260322143638
+43.131.253.14 2 2 26872 20260319013410
+43.153.35.128 1 1 17670 20260305095601
+119.96.24.54 1 1 17670 20260308104452
+167.94.138.191 1 1 17670 20260317130617
+196.245.186.28 1 1 2744 20260328184809
+192.36.109.84 1 1 9210 20260320100533
+170.106.84.136 2 2 35380 20260316130844
+43.128.149.102 3 3 53090 20260323102358
+192.36.109.91 1 1 9216 20260321052734
+198.235.24.154 1 1 17670 20260328124117
+203.2.64.59 2 2 35340 20260324071038
+147.182.144.196 1 1 17670 20260325034302
+192.71.142.40 1 1 9210 20260325190705
+43.155.140.157 2 2 27046 20260327015110
+104.168.28.15 1 1 17719 20260302191907
+43.153.54.138 2 2 26856 20260319021316
+43.157.156.190 1 1 9186 20260311002918
+151.106.12.250 2 2 31282 20260304174421
+43.166.238.12 3 3 43791 20260320125107
+68.233.37.50 1 1 3478 20260305105721
+34.122.147.229 0 1 495244 
+138.68.98.136 1 1 17710 20260315094539
+43.130.72.40 2 2 35340 20260327111059
+43.153.49.151 2 2 26925 20260320030013
+43.135.145.73 2 2 35339 20260320225343
+192.71.224.103 1 1 9216 20260302210737
+46.228.199.158 2 2 35340 20260316005456
+82.80.249.223 0 11 4566334 
+180.110.203.108 1 1 17709 20260303190437
+170.106.152.218 2 2 26896 20260325051514
+43.166.128.187 2 2 35380 20260316223018
+34.221.221.34 1 1 87 20260307110449
+100.50.235.109 2 2 35390 20260322225437
+43.159.149.216 1 1 17710 20260305134530
+167.71.10.110 1 1 17710 20260324132556
+170.106.163.48 1 1 17670 20260325193648
+43.153.10.13 1 1 17670 20260311061105
+149.102.227.70 1 1 17670 20260305120620
+192.36.109.89 1 1 9218 20260320100532
+43.135.142.37 1 1 9210 20260312091814
+146.190.27.168 1 1 17671 20260331030609
+185.221.160.35 2 2 17670 20260326193031
+93.158.71.185 1 1 17670 20260329023246
+43.166.131.228 2 2 35419 20260311201650
+198.235.24.156 1 1 17710 20260321193314
+148.116.72.171 3 3 34566 20260310204837
+192.71.142.150 1 1 9210 20260302210735
+3.139.242.79 2 2 35340 20260324034529
+178.62.17.74 1 1 17710 20260311093221
+49.51.183.75 3 3 53050 20260331210944
+43.153.71.12 1 1 17710 20260310231017
+134.209.84.84 1 1 17670 20260305013837
+182.40.104.255 1 1 17669 20260303000307
+112.32.242.184 1 1 17669 20260302095043
+43.133.187.11 1 1 17710 20260312222757
+43.166.240.231 1 1 9218 20260326004137
+87.236.176.188 1 1 17710 20260328070538
+43.157.53.115 1 1 17669 20260304073650
+43.157.168.43 2 2 26871 20260325045443
+43.153.104.196 1 1 17710 20260317214849
+170.106.11.141 2 2 35339 20260317182253
+43.157.67.70 3 3 53049 20260326010101
+91.231.89.96 1 1 17670 20260307114540
+124.156.157.91 1 1 9186 20260318044131
+101.32.208.70 2 2 35419 20260306052209
+192.36.109.82 2 2 26880 20260317033054
+44.200.118.102 1 1 17670 20260315171225
+43.131.26.226 1 1 17670 20260321084433
+170.106.35.137 1 1 17670 20260310222856
+192.36.109.83 1 1 9218 20260312140200
+42.228.224.69 1 1 17670 20260323015316
+104.197.69.115 1 4 657560 20260307110630
+138.68.150.197 1 1 17669 20260303022303
+43.166.247.82 2 2 27046 20260315164325
+43.154.127.188 1 1 9186 20260312051446
+117.33.163.216 2 2 35380 20260317213433
+205.210.31.30 1 1 17720 20260330061914
+43.159.145.153 1 1 9376 20260319020416
+192.36.109.99 1 1 9210 20260321052733
+129.226.174.80 1 1 17711 20260331005812
+167.94.138.44 1 1 17709 20260302031642
+49.234.192.248 3 3 53050 20260329160541
+182.44.12.37 2 2 35380 20260309201826
+91.231.89.121 1 1 17670 20260311084909
+192.71.142.176 1 1 9216 20260307190821
+49.51.253.83 2 2 35380 20260326100831
+198.235.24.158 1 1 17670 20260321025337
+165.227.170.132 1 1 17670 20260311120908
+110.89.7.140 1 1 17670 20260329030639
+199.45.154.153 1 1 17720 20260327092702
+37.19.223.235 2 2 31283 20260324004551
+185.213.83.190 3 3 53100 20260306020229
+49.233.45.47 2 2 35339 20260313234827
+167.172.111.83 1 1 17710 20260309073440
+170.106.73.216 1 1 17710 20260322131449
+124.156.225.181 2 2 26880 20260326005042
+43.165.70.220 1 1 17710 20260327154324
+43.135.148.92 3 3 43831 20260331012309
+84.239.37.20 1 1 17710 20260309072208
+16.171.161.153 1 1 87 20260307110448
+66.249.83.104 1 1 2743 20260326121529
+49.51.245.241 1 1 9376 20260305061620
+43.165.190.5 1 1 17669 20260304173725
+170.106.180.153 1 1 17710 20260313100706
+185.12.150.110 1 1 9216 20260302184348
+43.157.191.20 1 1 17670 20260306223041
+43.153.27.244 2 2 26886 20260320012951
+205.169.39.206 2 9 1714040 20260314102047
+155.254.22.54 1 1 17670 20260318162457
+49.51.50.147 1 1 17710 20260315201231
+209.38.32.207 1 1 17670 20260321021040
+129.226.93.214 1 1 17710 20260317171534
+103.62.92.183 1 1 2746 20260314145053
+24.199.126.21 1 1 17720 20260315094814
+205.210.31.99 1 1 17670 20260306135732
+43.138.68.113 2 2 35380 20260324172012
+43.130.141.193 1 1 8448 20260317091226
+43.159.143.190 1 1 17670 20260313162047
+54.186.89.241 1 1 17670 20260321170432
+43.157.142.101 1 1 17670 20260312233543
+221.229.106.25 1 1 17710 20260312143342
+223.15.245.170 1 1 17710 20260320100716
+185.13.96.91 1 1 17670 20260323040635
+192.71.126.207 3 3 36106 20260326194056
+49.51.33.159 1 1 17710 20260322065727
+27.115.124.101 1 6 1388033 20260330100053
+3.141.36.99 1 1 87 20260307110448
+101.33.55.204 2 2 35420 20260324062822
+43.159.138.217 1 1 17710 20260307090802
+192.36.109.123 2 2 18426 20260320100534
+205.169.39.3 1 8 1710563 20260307110732
+162.62.213.165 2 2 35340 20260322083922
+170.106.113.235 1 1 17671 20260331164910
+205.210.31.200 1 1 17710 20260322063516
+43.131.39.179 2 2 35380 20260328163437
+199.45.155.104 1 1 17710 20260325213850
+43.158.91.71 3 3 44635 20260310233315
+43.130.3.120 3 3 53050 20260326155017
+54.151.241.85 1 1 87 20260307110449
+158.101.39.212 3 3 34566 20260312233534
+104.131.116.10 1 1 17670 20260311020638
+192.121.146.24 1 1 17670 20260313215227
+43.165.69.68 1 1 17710 20260320010555
+66.132.153.121 1 1 17710 20260316141441
+167.94.138.127 1 1 17670 20260310074254
+43.135.144.126 2 2 35380 20260319163317
+43.159.128.247 1 1 17670 20260306174300
+144.126.226.237 1 1 17670 20260307014929
+78.138.99.190 2 2 31283 20260313221748
+43.157.22.57 3 3 44566 20260328221050
+16.148.198.133 2 2 174 20260307110450
+170.106.160.90 1 1 9186 20260305062744
+43.157.95.131 2 2 43386 20260315153441
+89.249.196.204 1 1 17670 20260310171110
+36.77.1.106 1 8 1710564 20260330101243
+110.44.175.213 1 1 17670 20260322084616
+49.51.180.2 2 2 35340 20260330011910
+43.159.139.164 3 3 44556 20260329104759
+192.71.126.151 1 1 17670 20260325190703
+170.106.163.84 1 1 17669 20260303000210
+162.142.125.47 1 1 17710 20260323190720
+119.28.89.249 1 1 17670 20260307194702
+43.130.15.147 2 2 35420 20260325183854
+106.54.62.156 2 2 35418 20260304075615
+93.158.90.15 1 1 17670 20260309015945
+35.238.86.178 1 1 17720 20260319104149
+167.94.138.197 1 1 17720 20260312213221
+103.99.197.77 2 2 5483 20260316212148
+43.166.251.233 1 1 17710 20260330000500
+170.106.113.17 1 8 1710563 20260310221439
+43.156.204.134 1 1 9185 20260304021625
+43.157.181.189 1 1 17670 20260329160645
+18.188.208.6 2 2 174 20260307110449
+192.36.109.104 1 1 9216 20260312140203
+43.157.170.126 2 2 35340 20260320072650
+135.148.195.5 1 1 17670 20260328191153
+135.136.1.30 1 1 17670 20260322084615
+114.80.36.40 1 1 17670 20260312211510
+43.166.129.247 1 1 17710 20260310181407
+43.130.16.212 1 1 17670 20260306123054
+43.166.128.86 1 1 17710 20260309113018
+134.209.197.222 1 1 17670 20260327031503
+43.133.91.48 1 1 17710 20260317123851
+192.36.109.118 1 1 9218 20260316061106
+106.219.166.15 2 2 6219 20260331190752
+183.134.59.133 2 2 35428 20260302225432
+34.123.170.104 0 2 449275 
+43.130.150.80 2 2 35340 20260312031510
+43.133.14.237 1 1 17670 20260328173916
+42.83.147.55 1 1 17668 20260301145706
+223.244.35.77 4 4 70721 20260330201512
+43.131.243.61 1 1 9376 20260318043145
+206.189.16.221 1 1 17720 20260314103335
+39.149.242.161 1 1 17710 20260323050918
+43.128.156.124 2 2 43286 20260319010839
+43.166.136.24 1 1 17706 20260301020713
+94.156.174.130 1 1 17670 20260322084615
+43.130.139.136 1 1 17670 20260327211341
+43.153.96.233 1 1 17710 20260318030004
+135.148.195.2 1 1 17670 20260322203425
+13.61.151.7 1 1 87 20260307110450
+182.44.2.148 1 1 17670 20260311184338
+135.148.195.3 2 2 35340 20260324203937
+167.94.138.180 1 1 17720 20260320040334
+114.96.103.33 1 1 17670 20260323022927
+43.130.39.254 2 2 35420 20260310024620
+43.167.239.66 2 2 26896 20260324224133
+192.36.24.172 1 1 9218 20260302184347
+49.51.204.74 1 1 17709 20260303090603
+182.10.225.247 1 8 1624420 20260309121433
+43.156.202.34 2 2 35419 20260324115134
+159.223.2.162 1 1 17670 20260319021240
+43.130.7.137 1 8 1710563 20260326002606
+43.166.136.202 1 1 17710 20260308132616
+43.130.14.245 1 1 17670 20260314175316
+192.178.8.65 1 1 2744 20260317153232
+43.157.62.101 1 1 8448 20260324023855
+43.135.115.233 1 1 17710 20260318230150
+199.244.88.223 1 1 17670 20260320141843
+154.90.48.114 1 1 17670 20260305120616
+182.42.111.213 2 2 35376 20260314061810
+43.157.174.69 1 1 17710 20260320165619
+43.157.50.58 1 1 17670 20260314223215
+91.231.89.103 1 1 17710 20260307113831
+43.166.255.122 2 2 35380 20260323062111
+49.51.183.15 1 1 17670 20260326061608
+91.231.89.34 3 3 36144 20260311085200
+198.235.24.84 1 1 17720 20260322085758
+34.142.159.133 1 1 17670 20260309083554
+101.42.46.71 3 3 53010 20260313095945
+49.51.243.95 1 1 17710 20260307130823
+43.130.71.237 1 1 17710 20260324181834
+43.128.67.187 2 2 43346 20260325050440
+158.173.156.162 2 2 31283 20260318061905
+43.153.135.208 2 2 27046 20260324022330
+135.148.195.9 1 1 17671 20260331180652
+185.12.148.78 1 1 9210 20260304194449
+206.168.34.196 1 1 17720 20260305134559
+164.90.155.186 1 1 17666 20260301032137
+43.135.139.165 1 1 17670 20260314123251
+43.140.247.223 3 3 53130 20260324001417
+182.44.8.254 2 2 35420 20260325010121
+125.75.66.97 1 1 17711 20260330133656
+43.130.110.130 1 1 9202 20260327012200
+43.166.224.244 1 1 17710 20260325085430
+91.231.89.33 1 1 17710 20260311084250
+192.36.109.116 2 2 26888 20260321052733
+182.42.105.144 1 1 17670 20260310160810
+192.71.126.249 1 1 9210 20260326194058
+106.227.49.113 4 4 70760 20260328101034
+62.141.44.236 1 1 17670 20260325084713
+43.153.73.200 1 1 17709 20260302175054
+43.157.158.178 1 1 17666 20260301080718
+43.153.107.22 1 1 17710 20260306110954
+87.236.176.29 1 1 17720 20260323020705
+91.231.89.38 1 1 9216 20260307115421
+72.13.62.4 3 3 48859 20260327062656
+80.248.225.154 1 1 17669 20260304194447
+170.106.165.76 1 1 17709 20260304112946
+43.130.26.3 4 4 62291 20260316115632
+101.33.66.34 1 1 9185 20260305054614
+END_VISITOR
+
+# Date - Pages - Hits - Bandwidth - Visits
+BEGIN_DAY 31
+20260301 31 38 2199862 20
+20260302 29 29 444546 29
+20260303 21 28 2045824 21
+20260304 32 46 3896437 30
+20260305 38 49 3140421 31
+20260306 22 22 380656 20
+20260307 74 88 3824870 41
+20260308 16 16 257594 15
+20260309 25 32 2003512 23
+20260310 27 34 2074688 23
+20260311 30 30 446018 28
+20260312 31 31 453215 29
+20260313 36 36 578311 22
+20260314 14 21 1911406 13
+20260315 15 15 265340 15
+20260316 21 21 331136 21
+20260317 23 23 333031 23
+20260318 34 41 2182647 22
+20260319 25 25 392902 23
+20260320 51 62 5296578 25
+20260321 18 18 278741 18
+20260322 23 30 2099723 22
+20260323 18 18 318390 18
+20260324 27 27 396670 22
+20260325 38 45 2266064 29
+20260326 29 36 2103290 25
+20260327 24 24 327658 20
+20260328 15 15 250414 15
+20260329 16 16 278953 16
+20260330 29 48 5166849 20
+20260331 19 19 288464 18
+END_DAY
+
+# Session range - Number of visits
+BEGIN_SESSION 5
+30s-2mn 3
+0s-30s 686
+15mn-30mn 2
+5mn-15mn 2
+30mn-1h 4
+END_SESSION
+
+# URL - Pages - Bandwidth - Entry - Exit
+# The 25 first Pages must be first (order not required for others)
+BEGIN_SIDER 28
+/ 595 10272266 559 535
+/contact 33 231867 11 24
+/data/pekan-edukasi-genting 29 260250 23 21
+/data/132-dashboard-raport 29 267090 21 25
+/login 29 239483 11 15
+/data/dashboard-radalgram 28 258048 21 23
+/datas 14 359070 8 8
+/data/dashboard-krs 11 103136 8 8
+/data/pemetaan-ota 11 101046 8 8
+/data/131-dashboard-apel-senin 10 92020 7 8
+/data/129-bkkbn-peduli 9 82672 6 7
+/about 7 122685 0 1
+/.well-known/acme-challenge/K_9AF1Nn6ZNPQUbnSbtXiHpm_HZtlHmZapKrS0_p8PI 5 435 5 3
+/.well-known/acme-challenge/Pd1KJTSz9O7jdAjbGELCzjS42fKdWWDhLPYOayxVNv0 5 435 0 1
+/.well-known/acme-challenge/gwPC3UhZ5_BKjYDkVNzcyJKG7SjkSQ4Gn0mvLLWdXPw 5 435 3 5
+/.well-known/acme-challenge/VSM-KPw_vfMkEogqdFlSVgLHs8QSQgrU6dqm8SqIylU 5 435 0 0
+/.well-known/acme-challenge/iiayTJESUF4fAhPh4F-rtdcHXKpoB3_WvMsj8D7c7cA 5 435 0 0
+/.well-known/acme-challenge/NIis4mGTeRSyUlebIPU3moSS3Xkr_eIGVFZT_OIxg4g 5 435 5 5
+/.well-known/acme-challenge/LCoNNnwBUkMP_Y44Y03BVzpiFSSBiGraKv6zMqpw6Nc 4 348 0 0
+/.well-known/acme-challenge/SWQSRd_hpWXuoIEsQrKX2I4NFl9RBmzWjpBemi96K6A 4 348 0 0
+/.well-known/acme-challenge/G3KYP_02QCNLER-DVJ8KXRSSO0PD95CS 1 64 0 0
+/.well-known/acme-challenge/10S0-FTHJ-YDWKSQG9DEY-PFW-L519N- 1 64 0 0
+/.well-known/acme-challenge/V6ZB_NRCM4AYD4UT-HKCW9HTC119H8L0 1 64 0 0
+/.well-known/acme-challenge/AC-HL_4SNBJPC814D744MKMJ250J1NMT 1 64 0 0
+/.well-known/acme-challenge/Y9Y1U5FY8DL2F0-JZNFE8HU5RWF9XTHW 1 64 0 0
+/.well-known/acme-challenge/-2AX_50KNIOTF6_HI14J5Y0K7ZALPVSZ 1 64 0 0
+/.well-known/acme-challenge/29428AKD2DGBQHEKVSQYXL6RMS0JTXYB 1 64 0 0
+/.well-known/acme-challenge/5JKTO44H4_BV7S_RGEGL29VT8MAJAV86 1 64 1 0
+END_SIDER
+
+# Payload Range - Payload Frequency
+BEGIN_FILESIZE 7
+0-44 22
+1K-2K 119
+100-500 75
+500-1K 15
+5K+ 2384
+2K-5K 149
+44-100 46
+END_FILESIZE
+
+# Request Time Range - Request Time Frequency
+BEGIN_REQUESTTIME 0
+END_REQUESTTIME
