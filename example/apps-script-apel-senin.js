@@ -114,7 +114,7 @@ function doPost(e) {
 
     // Format timestamp ke WIB
     const dateObj       = new Date(data.timestamp);
-    const formattedDate = Utilities.formatDate(dateObj, 'Asia/Jakarta', 'dd/MM/yyyy HH:mm:ss');
+    const formattedDate = Utilities.formatDate(dateObj, 'Asia/Jakarta', 'M/d/yyyy H:mm:ss');
 
     // ── Cari baris pegawai yang sudah ada ───────────────────
     if (targetColIdx !== -1) {

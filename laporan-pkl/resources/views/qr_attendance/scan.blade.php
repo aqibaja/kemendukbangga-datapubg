@@ -74,7 +74,9 @@
                     <i class="fa-solid fa-check text-4xl"></i>
                 </div>
                 <h2 class="text-2xl font-bold text-gray-800 mb-2">Berhasil!</h2>
-                <p class="text-gray-600 mb-6">Presensi Anda telah berhasil dicatat ke dalam sistem.</p>
+                <p class="text-gray-600 mb-1">Presensi atas nama:</p>
+                <p class="text-lg font-bold text-blue-700 mb-2" x-text="employeeName"></p>
+                <p class="text-gray-600 mb-6">Telah berhasil dicatat ke dalam sistem.</p>
                 <p class="text-xs text-gray-400">Anda sudah boleh menutup halaman ini.</p>
             </div>
 
@@ -92,6 +94,7 @@
                 errorMsg: '',
                 submitError: '',
                 employeeId: '',
+                employeeName: '',
                 token: '{{ $token }}',
                 tomSelectInstance: null,
 
@@ -101,6 +104,11 @@
                         placeholder: '-- Ketik untuk mencari nama --',
                         onChange: (value) => {
                             this.employeeId = value;
+                            if (value && this.tomSelectInstance.options[value]) {
+                                this.employeeName = this.tomSelectInstance.options[value].text;
+                            } else {
+                                this.employeeName = '';
+                            }
                         }
                     });
                 },

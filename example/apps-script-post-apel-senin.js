@@ -12,7 +12,7 @@ function doPost(e) {
             var targetColumnIndex = headers.findIndex(h => h.toString().trim().toUpperCase() === data.employee_unsur.toString().trim().toUpperCase());
 
             var dateObj = new Date(data.timestamp);
-            var formattedDate = Utilities.formatDate(dateObj, "Asia/Jakarta", "dd/MM/yyyy HH:mm:ss");
+            var formattedDate = Utilities.formatDate(dateObj, "Asia/Jakarta", "M/d/yyyy H:mm:ss");
 
             // Temukan kolom Timestamp (1-based index)
             var timestampIndex = headers.findIndex(h => h.toString().trim().toLowerCase() === "timestamp");
