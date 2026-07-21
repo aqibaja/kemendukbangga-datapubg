@@ -1011,7 +1011,7 @@ function switchTab(idx) {
 // ============================================================
 // HELPER: Buat input element sesuai tipe pertanyaan Google Form
 // ============================================================
-function createInputForHeader(header, currentVal, originalVal, rowIndex) {
+function createInputForHeader(header, currentVal, originalVal, rowIndex, num) {
     const dirty    = state.dirtyMap[rowIndex] || {};
     const isModified = dirty.hasOwnProperty(header);
     const formItem = state.formMap[header]; // bisa undefined jika tidak ada di form
@@ -1193,7 +1193,8 @@ function createInputForHeader(header, currentVal, originalVal, rowIndex) {
 
     // --- Default: <input type="text"> ---
     const input = document.createElement('input');
-    input.type = 'text';
+    const isAngka = (num >= 31 && num <= 34) || num === 39;
+    input.type = isAngka ? 'number' : 'text';
     input.className = 'cell-input' + (isModified ? ' modified' : '');
     input.dataset.header    = header;
     input.dataset.rowIndex  = rowIndex;
@@ -1404,12 +1405,14 @@ function renderEditForms() {
             tdLabel.appendChild(labelSpan);
 
             // Badge tipe input (hanya jika ada formItem)
+            const num = hIdx + 1;
+            const isAngka = (num >= 31 && num <= 34) || num === 39;
             if (formItem) {
                 const typeMap = {
                     'MULTIPLE_CHOICE': { label: 'Pilihan', color: '#818cf8' },
                     'LIST':           { label: 'Dropdown', color: '#818cf8' },
                     'CHECKBOX':       { label: 'Centang', color: '#f472b6' },
-                    'TEXT':           { label: 'Teks', color: '#94a3b8' },
+                    'TEXT':           { label: isAngka ? 'Angka' : 'Teks', color: isAngka ? '#38bdf8' : '#94a3b8' },
                     'PARAGRAPH_TEXT': { label: 'Paragraf', color: '#94a3b8' },
                     'DATE':           { label: 'Tanggal', color: '#fb923c' },
                     'TIME':           { label: 'Waktu', color: '#fb923c' },
@@ -1435,7 +1438,7 @@ function renderEditForms() {
             // Kolom input
             const tdInput = document.createElement('td');
             tdInput.style.verticalAlign = 'top';
-            const inputEl = createInputForHeader(header, currentVal, originalVal, rowIndex);
+            const inputEl = createInputForHeader(header, currentVal, originalVal, rowIndex, num);
             tdInput.appendChild(inputEl);
             tr.appendChild(tdInput);
 
@@ -1486,7 +1489,9 @@ async function saveCurrentRow() {
         let validationError = null;
 
         const trs = activeForm.querySelectorAll('tr[data-header]');
+        let hIdx = 0;
         for (const tr of trs) {
+            hIdx++;
             const header = tr.dataset.header;
             const isHidden = window.getComputedStyle(tr).display === 'none' || tr.style.display === 'none';
             
@@ -1503,6 +1508,22 @@ async function saveCurrentRow() {
                 } else if (isBelum && isGroupBelum && currentVal.toString().trim() === '') {
                     validationError = `Isian "${header}" wajib diisi karena status Distribusi adalah BELUM.`;
                     break;
+                }
+
+                // Custom validation untuk nomor 38-40 wajib diisi
+                if (hIdx >= 38 && hIdx <= 40) {
+                    if (currentVal.toString().trim() === '') {
+                        validationError = `Isian nomor ${hIdx} ("${header}") wajib diisi.`;
+                        break;
+                    }
+                }
+                
+                // Custom validation untuk nomor 39, dan 31-34 hanya boleh angka
+                if ((hIdx >= 31 && hIdx <= 34) || hIdx === 39) {
+                    if (currentVal.toString().trim() !== '' && !/^\d+$/.test(currentVal.toString().trim())) {
+                        validationError = `Isian nomor ${hIdx} ("${header}") hanya boleh berisi angka.`;
+                        break;
+                    }
                 }
             }
         }
