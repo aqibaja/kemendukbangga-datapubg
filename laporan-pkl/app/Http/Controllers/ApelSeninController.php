@@ -51,7 +51,7 @@ class ApelSeninController extends Controller
             $totalApels = $queryDate === null ? count($apelDates) : 1;
             
             foreach ($rawCounts as $team => $count) {
-                $members = \App\Services\ApelSeninService::getMembersFromCsv($team);
+                $members = \App\Services\ApelSeninService::getTeamMembers($team);
                 $totalMembers = count($members);
                 $denominator = $totalMembers * $totalApels;
                 
@@ -94,6 +94,11 @@ class ApelSeninController extends Controller
 
     public function teamDetail(string $team, Request $request, ApelSeninService $service)
     {
+        // Jika user memaksa sinkronisasi, hapus cache terlebih dahulu
+        if ($request->has('_sync')) {
+            $service->clearCache();
+        }
+
         $decodedTeam  = urldecode($team);
         $selectedDate = $request->get('date');
 
@@ -107,7 +112,7 @@ class ApelSeninController extends Controller
         $attendees    = $service->getAttendeesByTeam($decodedTeam, $queryDate);
         $teamInfo     = ApelSeninService::$timKerja[$service->normalizeTeamName($decodedTeam)] ?? null;
         $photoUrl     = ApelSeninService::getPhotoUrl($service->normalizeTeamName($decodedTeam));
-        $csvMembers   = ApelSeninService::getMembersFromCsv($service->normalizeTeamName($decodedTeam));
+        $csvMembers   = ApelSeninService::getTeamMembers($service->normalizeTeamName($decodedTeam));
 
         // Statistik ringkas
         $totalApel     = count($apelDates);

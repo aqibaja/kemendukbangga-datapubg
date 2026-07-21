@@ -58,6 +58,12 @@
             </div>
         </div>
 
+        {{-- ===== TOMBOL SYNC ===== --}}
+        <div class="flex justify-end -mt-4 relative z-40">
+            <a href="{{ route('apel-senin', ['_sync' => 1]) }}" class="px-5 py-2.5 bg-emerald-500 hover:bg-emerald-600 text-white rounded-xl font-bold text-sm shadow-lg hover:shadow-xl transition-all flex items-center group">
+                <i class="fas fa-sync-alt mr-2 group-hover:rotate-180 transition-transform duration-500"></i> Sinkronisasi Data (Hapus Cache)
+            </a>
+        </div>
         {{-- ===== FILTER TANGGAL APEL ===== --}}
         <div class="bg-white/90 backdrop-blur-md rounded-2xl shadow-xl shadow-gray-200/50 p-6 border border-gray-100 relative z-30">
             <form action="{{ route('apel-senin') }}" method="GET" id="dateForm">

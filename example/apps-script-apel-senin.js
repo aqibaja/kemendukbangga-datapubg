@@ -26,29 +26,27 @@ const CONFIG = {
   SHEET_NAMES: ['Form Responses 1', 'Form Responses 2'],
 
   // Sheet aktif yang dituju saat POST (tulis presensi baru)
-  ACTIVE_SHEET_NAME: 'Form Responses 1',
+  ACTIVE_SHEET_NAME: 'Form Responses 2',
 
   COL_TIMESTAMP: 0,
-  COL_EMAIL:     1,
+  COL_EMAIL: 1,
   COL_TIM_KERJA: 2,
 
   // Map: Nama Tim Kerja (uppercase) → index kolom nama peserta (0-indexed)
   TIM_KOLOM_MAP: {
-    'PERENCANAAN DAN KEUANGAN':                            3,
-    'KELUARGA SEJAHTERA DAN PEMBANGUNAN KELUARGA':         4,
-    'UMUM, PELAYANAN PUBLIK DAN PENGELOLAAN BMN':          5,
-    'PENGENDALIAN PENDUDUK DAN JAKSTRA':                   6,
-    'HUBUNGAN MASYARAKAT DAN INFORMASI PUBLIK':            7,
-    'PENGGERAKKAN DAN PERAN SERTA MASYARAKAT':             8,
-    'ZI WBK/WBBM DAN SPIP':                               9,
-    'HUKUM DAN KEPEGAWAIAN':                              10,
-    'PELATIHAN DAN PENGEMBANGAN KOMPETENSI':              11,
-    'BINA KELUARGA BERENCANA DAN KESEHATAN REPRODUKSI':   12,
-    'PELAPORAN STATISTIK DAN PENGELOLAAN TIK':            13,
-    'PERWAKILAN BKKBN PROVINSI ACEH':                     14,
+    'PENGELOLAAN KEPENDUDUKAN': 6,
+    'KELUARGA BERENCANA DAN KESEHATAN REPRODUKSI': 12,
+    'PEMBANGUNAN KELUARGA': 4,
+    'PENGGERAKKAN MASYARAKAT DAN PENGELOLAAN LINI LAPANGAN': 8,
+    'PERENCANAAN DAN KEUANGAN': 3,
+    'PENGELOLAAN SDM, ORGANISASI, DAN HUKUM': 10,
+    'PENGELOLAAN MANAJEMEN KINERJA': 9,
+    'UMUM, HUMAS, DAN PROTOKOL': 5,
+    'DATA DAN INFORMASI': 13,
+    'PERWAKILAN BKKBN PROVINSI ACEH': 14,
   },
 
-  COL_IKUT_APEL:  15,
+  COL_IKUT_APEL: 15,
   COL_KETERANGAN: 16,
 };
 
@@ -91,7 +89,7 @@ function doGet(e) {
  */
 function doPost(e) {
   try {
-    const ss    = SpreadsheetApp.getActiveSpreadsheet();
+    const ss = SpreadsheetApp.getActiveSpreadsheet();
     const sheet = ss.getSheetByName(CONFIG.ACTIVE_SHEET_NAME) || ss.getActiveSheet();
 
     const data = JSON.parse(e.postData.contents);
@@ -105,7 +103,7 @@ function doPost(e) {
 
     // Kolom Timestamp (1-based)
     const timestampIdx = headers.findIndex(h => h.toString().trim().toLowerCase() === 'timestamp');
-    const timeCol      = timestampIdx !== -1 ? (timestampIdx + 1) : 1;
+    const timeCol = timestampIdx !== -1 ? (timestampIdx + 1) : 1;
 
     // Kolom nama peserta berdasarkan Tim Kerja
     const targetColIdx = headers.findIndex(
@@ -113,18 +111,18 @@ function doPost(e) {
     );
 
     // Format timestamp ke WIB
-    const dateObj       = new Date(data.timestamp);
+    const dateObj = new Date(data.timestamp);
     const formattedDate = Utilities.formatDate(dateObj, 'Asia/Jakarta', 'M/d/yyyy H:mm:ss');
 
     // ── Cari baris pegawai yang sudah ada ───────────────────
     if (targetColIdx !== -1) {
-      const nameCol   = targetColIdx + 1;  // 1-based
-      const lastRow   = sheet.getLastRow();
-      const nameVals  = sheet.getRange(1, nameCol, lastRow, 1).getValues();
-      const timeVals  = sheet.getRange(1, timeCol, lastRow, 1).getValues();
+      const nameCol = targetColIdx + 1;  // 1-based
+      const lastRow = sheet.getLastRow();
+      const nameVals = sheet.getRange(1, nameCol, lastRow, 1).getValues();
+      const timeVals = sheet.getRange(1, timeCol, lastRow, 1).getValues();
 
-      let foundRow   = -1;
-      let latestMs   = 0;
+      let foundRow = -1;
+      let latestMs = 0;
 
       for (let i = 1; i < nameVals.length; i++) {   // mulai 1 → lewati header
         if (nameVals[i][0].toString().trim().toUpperCase() !== data.employee_name.toString().trim().toUpperCase()) continue;
@@ -174,7 +172,7 @@ function doPost(e) {
 // BACA SEMUA DATA PRESENSI (untuk doGet / dashboard)
 // =========================================================
 function getAllAttendanceData() {
-  const ss      = SpreadsheetApp.getActiveSpreadsheet();
+  const ss = SpreadsheetApp.getActiveSpreadsheet();
   const allRows = [];
 
   CONFIG.SHEET_NAMES.forEach(sheetName => {
@@ -184,11 +182,11 @@ function getAllAttendanceData() {
     const lastRow = sheet.getLastRow();
     if (lastRow < 2) return;
 
-    const data    = sheet.getRange(1, 1, lastRow, sheet.getLastColumn()).getValues();
+    const data = sheet.getRange(1, 1, lastRow, sheet.getLastColumn()).getValues();
     const headers = data[0];
 
     for (let i = 1; i < data.length; i++) {
-      const row          = data[i];
+      const row = data[i];
       const rawTimestamp = row[CONFIG.COL_TIMESTAMP];
       if (!rawTimestamp) continue;
 
@@ -229,21 +227,21 @@ function getAllAttendanceData() {
         timestampStr = String(rawTimestamp);
       }
 
-      const ikutApel  = (CONFIG.COL_IKUT_APEL  >= 0 && CONFIG.COL_IKUT_APEL  < row.length)
-                        ? String(row[CONFIG.COL_IKUT_APEL]  || 'Ya').trim() || 'Ya'
-                        : 'Ya';
+      const ikutApel = (CONFIG.COL_IKUT_APEL >= 0 && CONFIG.COL_IKUT_APEL < row.length)
+        ? String(row[CONFIG.COL_IKUT_APEL] || 'Ya').trim() || 'Ya'
+        : 'Ya';
       const keterangan = (CONFIG.COL_KETERANGAN >= 0 && CONFIG.COL_KETERANGAN < row.length)
-                        ? String(row[CONFIG.COL_KETERANGAN] || '').trim()
-                        : '';
-      const email      = String(row[CONFIG.COL_EMAIL] || '').trim();
+        ? String(row[CONFIG.COL_KETERANGAN] || '').trim()
+        : '';
+      const email = String(row[CONFIG.COL_EMAIL] || '').trim();
 
       allRows.push({
-        timestamp:    timestampStr,
-        email:        email,
-        tim_kerja:    tim,
-        nama:         nama,
-        ikut_apel:    ikutApel,
-        keterangan:   keterangan,
+        timestamp: timestampStr,
+        email: email,
+        tim_kerja: tim,
+        nama: nama,
+        ikut_apel: ikutApel,
+        keterangan: keterangan,
         source_sheet: sheetName,
       });
     }
@@ -283,10 +281,10 @@ function testPostData() {
   const mockEvent = {
     postData: {
       contents: JSON.stringify({
-        action:          'add_attendance',
-        employee_name:   'WAHYU RIZKI, ST',
-        employee_unsur:  'PELAPORAN STATISTIK DAN PENGELOLAAN TIK',
-        timestamp:       new Date().toISOString(),
+        action: 'add_attendance',
+        employee_name: 'WAHYU RIZKI, ST',
+        employee_unsur: 'PELAPORAN STATISTIK DAN PENGELOLAAN TIK',
+        timestamp: new Date().toISOString(),
       })
     }
   };
