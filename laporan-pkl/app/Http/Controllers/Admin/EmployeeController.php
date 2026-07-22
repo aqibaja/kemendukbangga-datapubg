@@ -46,4 +46,42 @@ class EmployeeController extends Controller
         $employee->delete();
         return redirect()->route('admin.employees.index')->with('success', 'Data pegawai berhasil dihapus.');
     }
+
+    public function sync()
+    {
+        $membersMap = \App\Services\ApelSeninService::$teamMembers;
+        $updated = 0;
+        $created = 0;
+
+        foreach ($membersMap as $team => $members) {
+            foreach ($members as $memberName) {
+                $cleanName = trim($memberName);
+                
+                $emp = Employee::where('nama', $cleanName)->first();
+                if (!$emp) {
+                    $emp = Employee::where('nama', rtrim($cleanName, '.'))->first();
+                }
+                if (!$emp) {
+                    $baseName = trim(str_ireplace(['dr. ', 'DR. ', 'dr '], '', explode(',', $cleanName)[0]));
+                    $emp = Employee::where('nama', 'LIKE', '%' . $baseName . '%')->first();
+                }
+
+                if ($emp) {
+                    $emp->nama = $cleanName;
+                    $emp->unsur = $team;
+                    $emp->save();
+                    $updated++;
+                } else {
+                    Employee::create([
+                        'nama' => $cleanName,
+                        'unsur' => $team,
+                    ]);
+                    $created++;
+                }
+            }
+        }
+
+        return redirect()->route('admin.employees.index')
+            ->with('success', "Sinkronisasi database pegawai berhasil! (Diperbarui: {$updated}, Ditambahkan: {$created})");
+    }
 }

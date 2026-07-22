@@ -174,13 +174,18 @@
             @else
             {{-- Mode filter tanggal: tampilkan seluruh anggota tim + status kehadiran hari itu --}}
             @php
-                // Daftar nama yang hadir pada tanggal ini (untuk lookup cepat)
-                $hadirSet = collect($attendees)->pluck('nama')->map(fn($n) => strtoupper(trim($n)))->flip()->toArray();
+                // Helper normalisasi nama untuk pencocokan presisi (mengabaikan titik, koma, spasi & gelar)
+                $normKey = fn($n) => strtoupper(preg_replace('/[^A-Z0-9]/i', '', explode(',', $n)[0]));
 
-                // Gabungkan: anggota dari CSV + yang hadir tapi tidak di CSV (baru/tamu)
-                $csvSet = collect($csvMembers)->map(fn($n) => strtoupper(trim($n)))->flip()->toArray();
+                // Daftar nama yang hadir pada tanggal ini (lookup key ter-normalisasi)
+                $hadirSet = collect($attendees)->mapWithKeys(fn($a) => [$normKey($a['nama']) => true])->toArray();
+
+                // Set anggota resmi dari CSV/TeamMembers
+                $csvSet = collect($csvMembers)->mapWithKeys(fn($m) => [$normKey($m) => true])->toArray();
+
+                // Anggota hadir yang tidak ada di daftar resmi
                 $tambahanHadir = collect($attendees)
-                    ->filter(fn($a) => !isset($csvSet[strtoupper(trim($a['nama']))]))
+                    ->filter(fn($a) => !isset($csvSet[$normKey($a['nama'])]))
                     ->values();
 
                 $totalHadir    = count($attendees);
@@ -218,7 +223,7 @@
                     </thead>
                     <tbody class="divide-y divide-gray-50">
                         @foreach($csvMembers as $i => $member)
-                            @php $hadir = isset($hadirSet[strtoupper(trim($member))]); @endphp
+                            @php $hadir = isset($hadirSet[$normKey($member)]); @endphp
                             <tr class="hover:bg-slate-50 transition-colors {{ $hadir ? '' : 'opacity-60' }}">
                                 <td class="px-4 py-3 text-gray-400 font-medium">{{ $i + 1 }}</td>
                                 <td class="px-4 py-3 font-semibold {{ $hadir ? 'text-gray-800' : 'text-gray-500' }}">

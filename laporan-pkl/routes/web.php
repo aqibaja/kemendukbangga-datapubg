@@ -190,6 +190,7 @@ Route::middleware(['auth'])->group(function () {
     // Master Pegawai
     Route::get('/admin/employees', [EmployeeController::class, 'index'])->name('admin.employees.index');
     Route::post('/admin/employees', [EmployeeController::class, 'store'])->name('admin.employees.store');
+    Route::post('/admin/employees/sync', [EmployeeController::class, 'sync'])->name('admin.employees.sync');
     Route::put('/admin/employees/{employee}', [EmployeeController::class, 'update'])->name('admin.employees.update');
     Route::delete('/admin/employees/{employee}', [EmployeeController::class, 'destroy'])->name('admin.employees.destroy');
     

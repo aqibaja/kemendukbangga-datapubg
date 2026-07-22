@@ -48,11 +48,13 @@
 <body class="h-full">
     <div class="min-h-screen flex flex-col bg-slate-50 text-slate-900 ">
 
-        <!-- NAVBAR (ICON ADA DI SINI) -->
-        <x-navbar>{{ $title }}</x-navbar>
+        @if(!request()->has('embed'))
+            <!-- NAVBAR (ICON ADA DI SINI) -->
+            <x-navbar>{{ $title }}</x-navbar>
+        @endif
 
         <!-- CONTENT -->
-        <main class="flex-1 overflow-auto p-4 sm:p-8 bg-gradient-to-br">
+        <main class="flex-1 overflow-auto {{ request()->has('embed') ? 'p-0 sm:p-0' : 'p-4 sm:p-8' }} bg-gradient-to-br">
             {{ $slot }}
         </main>
 

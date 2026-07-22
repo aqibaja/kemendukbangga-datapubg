@@ -41,17 +41,21 @@ foreach ($membersMap as $team => $members) {
         }
 
         if ($emp) {
+            $emp->nama = $cleanName;
             $emp->unsur = $team;
             $emp->save();
             $count++;
-            // echo "Updated {$emp->nama} -> $team\n"; // Uncomment untuk melihat log per orang
         } else {
-            $notFound[] = $memberName;
+            Employee::create([
+                'nama' => $cleanName,
+                'unsur' => $team,
+            ]);
+            $count++;
         }
     }
 }
 
-echo "Selesai! Total data pegawai yang berhasil di-update: " . $count . "\n";
+echo "Selesai! Total data pegawai yang berhasil disinkronisasi: " . $count . "\n";
 if (count($notFound) > 0) {
     echo "\nBerikut adalah nama-nama yang gagal ditemukan di database (karena ejaan/singkatan berbeda atau pegawai baru):\n";
     foreach($notFound as $n) {

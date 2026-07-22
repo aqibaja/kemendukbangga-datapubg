@@ -12,21 +12,23 @@ class ApelSeninController extends Controller
     {
         $cacheKey = 'apel_senin_data_gsheet';
 
-        // Jika user memaksa sinkronisasi, hapus cache terlebih dahulu
+        // Jika user memaksa sinkronisasi: hapus cache, fetch data baru, redirect ke URL bersih
         if ($request->has('_sync')) {
             $service->clearCache();
+            $service->getAllData(); // fetch & simpan ke cache (blocking ~5-10s)
+
+            $params = $request->except(['_sync', 't']);
+            return redirect()->route('apel-senin', $params);
         }
 
-        // Jika cache kosong dan tidak ada _sync param → tampilkan loading shell
-        if (!Cache::has($cacheKey) && !$request->has('_sync')) {
+        // Jika cache kosong → tampilkan halaman loading (loading akan auto-redirect ke ?_sync=1)
+        if (!Cache::has($cacheKey)) {
             return view('apel-senin-loading');
         }
 
-        // Increment view counter (hanya jika bukan dari sync redirect)
-        if (!$request->has('_sync')) {
-            $views = Cache::get('native_dashboard_apel_views', 0);
-            Cache::forever('native_dashboard_apel_views', $views + 1);
-        }
+        // Increment view counter
+        $views = Cache::get('native_dashboard_apel_views', 0);
+        Cache::forever('native_dashboard_apel_views', $views + 1);
 
         // Ambil daftar tanggal apel
         $apelDates     = $service->getApelDates();
@@ -114,9 +116,14 @@ class ApelSeninController extends Controller
         $photoUrl     = ApelSeninService::getPhotoUrl($service->normalizeTeamName($decodedTeam));
         $csvMembers   = ApelSeninService::getTeamMembers($service->normalizeTeamName($decodedTeam));
 
+        $tab           = $request->get('tab', 'tim');
+
         // Statistik ringkas
         $totalApel     = count($apelDates);
         $totalAttended = count($rankings) > 0 ? array_sum(array_column($rankings, 'attended_count')) : 0;
+        $totalAllTime  = $service->getStatsByTeam(null);
+        $totalSum      = array_sum($totalAllTime);
+        $totalToday    = array_sum($service->getStatsByTeam($queryDate));
 
         return view('apel-senin-team', [
             'title'         => 'Tim: ' . $decodedTeam,
@@ -125,12 +132,17 @@ class ApelSeninController extends Controller
             'photoUrl'      => $photoUrl,
             'apelDates'     => $apelDates,
             'selectedDate'  => $selectedDate,
+            'tab'           => $tab,
             'rankings'      => $rankings,
             'trend'         => $trend,
             'attendees'     => $attendees,
             'totalApel'     => $totalApel,
             'totalAttended' => $totalAttended,
+            'totalSum'      => $totalSum,
+            'totalToday'    => $totalToday,
+            'timKerjaInfo'  => ApelSeninService::$timKerja,
             'csvMembers'    => $csvMembers,
         ]);
+
     }
 }

@@ -52,41 +52,41 @@ class ApelSeninService
             'ketua'   => 'Ketua Tim Data & Informasi',
         ],
         'ATASAN PERWAKILAN KEMENDUKBANGGA / BKKBN PROVINSI ACEH' => [
-            'slug'    => null,
+            'slug'    => 'atasan',
             'ketua'   => 'Kepala Perwakilan BKKBN Aceh',
         ],
     ];
 
     public static array $teamMembers = [
         'PENGELOLAAN KEPENDUDUKAN' => [
-            'ZULKIFLI, S.E., M.A.P.', 'HILDAN MAWARDI, S.Sos., M.Si.', 'ALFIN KHAIRI, M.Sc.', 'DEDI SASTRADI, S.P., M.EMD.', 'SRIWAHYUNI, S.E.', 'CITRA MULIANI, S.K., Pm.', 'NUR AFFIFAH PASARIBU, S.K.M.', 'KIKY RIZKY ANANDA, S.K.M.', 'AHMAD KHALIDI.'
+            'AHMAD KHALIDI', 'ALFIN KHAIRI, M.Si', 'CITRA MULIANI, S.K.Pm. MM', 'DEDI SASTRADI, SP., M.EMD', 'HILDAN MAWARDI, S.Sos., M.I.Kom.', 'KIKY RIZKY ANANDA, S.K.M.', 'NUR AFIFAH PASARIBU, SKM', 'SRIWAHYUNI, SE', 'ZULKIFLI, S.E., M.A.P.'
         ],
         'KELUARGA BERENCANA DAN KESEHATAN REPRODUKSI' => [
-            'dr. CUT LIZA FEBTYA.', 'ROSLINDAWATI, S.K.M., M.Si.', 'dr. NOLIASARI.', 'KHAIRUL IBAD, S.E., M.Si.', 'ZULHIKMAH SAHPUTRI, S.T.', 'REFA ALAYDRUS, S.Farm., Apt.', 'SURYADI SAPUTRA, A.Md.Ak.', 'MUTIA ANDRIANI, S.Stat.', 'HAYATUL KHOLIFAH PUTRI, S.K.M.', 'NONI YUSVALIANA, S.K.M.', 'NURHABIBAH PRASETYA, S.K.M.', 'KESSA IKHWANDA, S.K.M.', 'ARIUS GUSNANDAR, S.E.', 'HUDIATUL AULI.'
+            'ARIUS GUSNANDAR', 'HAYATUL KHOLIFAH PUTRI, S.K.M.', 'HUDIATUL AULIA', 'KESSA IKHWANDA, SKM, M Kes', 'KHAIRUL IBAD, S.E.,M.Si.', 'MUTIA ANDRIANI, S.Stat.', 'NONI YUSVALIANA, S.K.M', 'NURHABIBAH PRASETYA, S.K.M.', 'REFA ALAYDRUS, S. Farm., Apt.', 'ROSLINDAWATI, SKM, M.Si', 'SURYADI SAPUTRA, A.Md.Ak.', 'ZULHIKMAH SAPUTRI, S.T.', 'dr NOLIASARI', 'dr. CUT LIZA FEBTYA'
         ],
         'PEMBANGUNAN KELUARGA' => [
-            'DINA ASTITA, S.Ag., M.Si.', 'NURISMI, S.E., M.Sc.', 'RIDHA ILHAM, S.T., M.Si.', 'PUSPITA PALUPI, S.Psi.', 'NURHAYATI, S.Pd.', 'WINDA NURI ADINDA, S.Pd.', 'SITI KHAIRIYANI, S.I.Kom.', 'NIHRASYIAH, S.Psi.', 'FITRIA ISMAYANTI, S.Tr.S.Sos.', 'dr. AFRIDA, MAPS.', 'HAYATUR RAHMI, M.Sc.', 'FAISAL.', 'ASTRI, S.Sos.', 'SAIFUDDIN.', 'NURLAILI.', 'WAHYU.', 'MUCHTAR LUBIS.'
+            'ASTRI, S.Sos', 'DINA ASTITA, S.Ag., M.Si', 'FAISAL', 'FITRIA ISMAYANTI, S.Tr.Sos.', 'MUKHTAR LUBIS', 'NIHRASIYAH, S. Psi', 'NURHAYATI, S.Pd.', 'NURISMI, S.E., M.Sc.', 'NURLAILI', 'PUSPITA PALUPI, S.Psi.', 'RIDHA ILHAM, ST, M.Si', 'SAIFUDDIN', 'SITI KHAIRIYANI, S.I.Kom', 'WAHYU', 'WINDA NURI ADINDA, M.Pd', 'dr AFRIDA, MAPS'
         ],
         'PENGGERAKKAN MASYARAKAT DAN PENGELOLAAN LINI LAPANGAN' => [
-            'EFIYANTI, S.H., M.A.P.', 'ERIENA SARTIKA AYU, S.Psi., MAPS.', 'AL KINDI HARLEY, S.Sos., M.A.', 'FARIDAH, S.E., M.M.', 'IRMA DIMYATI, S.E., M.Si.', 'dr. MUHAMMAD JABARI, M.A.P.', 'ELA ISWARI, S.E.', 'HADIANA QANITA, S.Stat.', 'RINA KHAIRUNA NASUTION, S.K.M.', 'SANIAH.', 'MURTADA.', 'IRWANSYAH.'
+            'AL KINDI HARLEY, S.Sos., M.A.', 'EFIYANTI, S.H., M.A.P.', 'ELA ISWARI, S.E.', 'ERIENA SARTIKA AYU, S.Psi., MAPS.', 'HADIANA QANITA, S.Stat', 'IRWANSYAH', 'ISHANI YUNITA, S.Sos.I.', 'MURTADHA', 'RINA KHAIRUNA NASUTION, S.K.M', 'RUHUL BAWADI, SE', 'SANIAH'
         ],
         'PERENCANAAN DAN KEUANGAN' => [
-            'HUSNI THAMRIN, S.E., M.M.', 'DINI RAMADINI.', 'NITA AFRIDA, S.E.', 'TAMLIKHA, S.E., M.A.P.', 'ABDI DZIL IKRAM, S.E.', 'NOVIA PUCHA AUDYA, S.Stat.', 'MITA ARLINI, S.E., M.Si.', 'NASRUDDIN, S.E.', 'ISWANI, S.ST.', 'AGUS MUNANDAR, S.E.', 'SUCI WULANDARI T., S.K.M.', 'RINA MAGHFIRAH, A.Md.', 'RIKA ANGGRAINI, S.E.', 'MUTTAQIN, A.Md.', 'NOVI YANTI.', 'FARIDAH IHSAN.', 'KUSUMA.', 'MAHLIA.', 'FARDIANTO.'
+            'ABDI DZIL IKRAM, S.E.', 'AGUS MUNANDAR, A.md', 'DINI RAMADINI, S.Sos.', 'HUSNI THAMRIN, S.E.,M.M.', 'IHSAN KUSUMA', 'ISWANI, S.ST', 'MAHLIA FARDIANTO', 'MAYA ZATIL AQMAR, S.E.', 'MITA ARLINI, S.E.,M.Si.', 'MUTTAQIN', 'NASRUDDIN, S.E', 'NITA AFRIDA, S.E.', 'NOVIA PUCHA AUDYA, S.Stat.', 'NOVIYANTI FARIDA', 'RIKA ANGGRAINI, S.E', 'RINA MAGHFIRAH, A.Md.', 'SUCI WULANDARI T, S.K.M.', 'TAMLIKHA, S.E., M.A.P.', 'ZARRA SILVIA BALQIS, S.Sos.'
         ],
         'PENGELOLAAN SDM, ORGANISASI, DAN HUKUM' => [
-            'IRA MEUTYA, S.Psi.', 'MADIAN, S.E.', 'ARI MARDANA, S.Sos.', 'SARI FITRIANI, S.Psi.', 'SRI WAHYUNI, S.K.M.', 'ILHAM SYAHPUTRA, S.Sos., M.Si.', 'CUTTI HAJAR, A.Md.MSDM.', 'MAUKIYUDDIN, A.Md.', 'ZULFIKAR, S.E.', 'MUKHYAR, S.Sos.', 'ROMI FAHRI, S.Kom.', 'MUNA MAULIDA, M.Pd.', 'RUHUL BAWADI, S.E.', 'ISHANI YUNITA, S.Sos.I.', 'TARI INDAH PERTIWI.'
+            'ARI MARDANA, S.Sos', 'ARIFA ZAHRA, S.IP.', 'CUTTI HAJAR, A.Md.MSDM', 'FARIDAH, S.E., M.M.', 'HAYATUR RAHMI', 'ILHAM SYAHPUTRA, S.Sos., M.Si', 'IRA MEUTYA, S.Psi.', 'IRMA DIMYATI, S.E., M.Si.', 'MADIAN, SE', 'MAUKIYUDDIN, A.Md.', 'MUKHYAR, S.Sos.I', 'MUNA MAULIDA, M.PD', 'ROMI FAHRI, S.Kom', 'SARI FITRIANI, S.Psi', 'SRI WAHYUNI, S.K.M.', 'TARI INDAH PRATIWI', 'ZULFIKAR, S.E.', 'dr MUHAMMAD JABARI, M.Si.'
         ],
         'PENGELOLAAN MANAJEMEN KINERJA' => [
-            'FENNY SILFIA PUTRI, S.E., M.Si.', 'JUNI MAHZUR, S.Sos., M.Si.', 'FAHMI, S.E.', 'EARLY PROPHITA, S.Psi., M.M.', 'AMRIZAL, S.H., M.Hum.', 'RIFKI KHAIRUL AMRI, S.E.', 'MAYA ZATIL AQMAR, S.E.', 'FITA RONAYA, S.H.', 'SURYA RIZKY, S.I.Kom.', 'ARIFA ZAHRA, S.IP.', 'M. ZAIN.'
+            'AMRIZAL, S.H., M.H.', 'EARLY PROPHITA, S.Psi, M.M.', 'FENNY SILFIA PUTRI, S.E., M.Si.', 'FITA RONAYA, S.H', 'JUNI MAHZUR, S.Sos.,M.Si.', 'M.ZAIN', 'RIFKI KHAIRUL AMRI, S.E.'
         ],
         'UMUM, HUMAS, DAN PROTOKOL' => [
-            'ZULFADHLI, S.E.', 'RAHMATSYAH, S.E.', 'EDDY MUNAWAR, S.T., M.Si.', 'SRI RAIHAN, S.Pd., M.A.P.', 'NIKMATUL AKBAR, S.Ak., M.A.P.', 'BAHRI ASMAWI, S.E.', 'CUT ROSA MINORA, S.E.', 'HANIFAH, S.E.', 'NURMIATI, S.E.', 'ZULFIKAR, S.E.', 'AZHAR, S.E.', 'IRMAWATI, S.Farm.', 'ZARRA SILVIA BALQIS, S.Sos.', 'FREDY, S.Pd.', 'JOPI DIAN SAPUTRA, S.E., S.Sos.', 'RIZQA ANDRIANI LUBIS, S.I.Kom.', 'FAHRI MARUF, S.A.P.', 'MAULIDI.', 'WIDIA GUSTIASARI, S.K.M.', 'ALISSA SHAFIRA AYUWI, S.IP.', 'NURHAFIZAH, A.Md.', 'NOVI MAULINA, A.Md.', 'AZHARI.', 'MURTAZA.', 'AIDIL FITARSYAH.', 'RONA VITRYA.', 'MUHAMMAD IQBAL.', 'YOVANDI FEBRIANSYAH.', 'RATNA YUSA.', 'DEWI SUNARTI.', 'RIO HUSNADI.', 'MUHAMMAD T.M. NASIR.', 'DENI NURFANDI.', 'KHALIS.', 'ARMIADI.', 'AGUS MIDARLI.', 'RIZAL SYAHPUTRA.'
+            'AGUS MIZARLI', 'AIDIL FITARSYAH', 'ALISSA SHAFIRA AYUWI, S.IP.', 'ARMIADI', 'AZHAR, S.E', 'AZHARI', 'BAHRI ASMAWI, S.E.', 'CUT ROSAMINORA, S.E.', 'DENNY NURFANDI', 'EDDY MUNAWAR, ST, M.Si', 'FAHMI, S.E.', 'FAHRI MA`ARUF, S.A.P.', 'FREDY, S.Pd.', 'HANIFAH, S.E.', 'ICHYA ULUMIDDIN', 'IRMAWATI, S.Farm', 'JOPI DIAN SAPUTRA, SE,S.Sos', 'KHALISH', 'MAULIDI', 'MUHAMMAD', 'Muhammad Iqbal', 'Murtaza', 'NIKMATUL AKBAR, S.Ak., M.AP', 'NOFI MAULINA, A.Md', 'NURHAFIZAH, A.Md', 'NURMIATI, S.E.', 'RAHMADSYAH, S.E', 'RATNA YUSA DEWI', 'RIO HUSNADI', 'RIZAL SAPUTRA', 'RIZQA ANDRIANI MAULINA LUBIS, S.I.Kom', 'RONA VITRYA', 'SRI RAIHAN, S.Pd., M.A.P.', 'SUNARTI', 'SURYA RIZKY, S.I.Kom.', 'TEUKU MUHAMMAD NASIR', 'WIDIA GUSTIASARI, S.K.M.', 'YORA MUNIRAH, S.I.KOM', 'YOVANDI FEBRIANSYAH P', 'ZULFADHLI, S.E.', 'ZULFIKAR, SE'
         ],
         'DATA DAN INFORMASI' => [
-            'BAYU PRAWIRA, S.Kom.', 'NANDA MASITHAH, S.K.M.', 'WAHYU RIZKY, S.T.', 'INAS SALSABILA, S.Stat.', 'M. HUSNUL AQIB, S.T.', 'ROSNA.'
+            'BAYU PRAWIRA, S.Kom', 'INAS SALSABILA, S.Stat.', 'M. HUSNUL AQIB, S.T.', 'NANDA MASITHAH, S.K.M.', 'ROSNA', 'WAHYU RIZKI, ST'
         ],
         'ATASAN PERWAKILAN KEMENDUKBANGGA / BKKBN PROVINSI ACEH' => [
-            'SAFRINA SALIM', 'IHYA, S.E., M.M.'
+            'IHYA, S.E., M.M.', 'SAFRINA SALIM, SKM, M.Kes'
         ],
     ];
 
@@ -95,12 +95,9 @@ class ApelSeninService
      */
     public function getAllData(): array
     {
-        $apiUrl = env('APEL_SENIN_SCRIPT_URL');
-
-        if (empty($apiUrl)) {
-            Log::error('APEL_SENIN_SCRIPT_URL is not set in .env');
-            return [];
-        }
+        ini_set('memory_limit', '512M');
+        ini_set('max_execution_time', 120);
+        set_time_limit(120);
 
         $cacheKey      = 'apel_senin_data_gsheet';
         $cacheDuration = 60 * 60 * 6; // 6 jam (dalam detik)
@@ -109,54 +106,47 @@ class ApelSeninService
             return Cache::get($cacheKey);
         }
 
-        $rows = [];
+        $apiUrl = env('APEL_SENIN_SCRIPT_URL');
+        $rows   = [];
 
-        ini_set('memory_limit', '512M');
-        ini_set('max_execution_time', 120);
-        set_time_limit(120);
+        if (!empty($apiUrl)) {
+            try {
+                $response = Http::withoutVerifying()->timeout(10)->get($apiUrl);
 
-        try {
-            $response = Http::timeout(120)->get($apiUrl);
+                if ($response->successful()) {
+                    $data = json_decode($response->body(), true);
 
-            if ($response->successful()) {
-                $data = $response->json();
+                    if (is_array($data) && count($data) > 0) {
+                        foreach ($data as $row) {
+                            $namaRaw = trim($row['nama'] ?? $row['NAMA'] ?? '');
+                            if (!$namaRaw) continue;
 
-                if (is_array($data)) {
-                    foreach ($data as $row) {
-                        if (empty($row['nama'])) continue;
+                            $timRaw = trim(strtoupper($row['tim_kerja'] ?? $row['TIM_KERJA'] ?? ''));
+                            if (!$timRaw) continue;
 
-                        $tim = trim(strtoupper($row['tim_kerja'] ?? ''));
-                        if (!$tim) continue;
+                            // Normalisasi nama tim agar cocok dengan key di $timKerja
+                            $tim  = $this->normalizeTeamName($timRaw);
+                            $nama = $this->normalizeMemberName($namaRaw);
 
-                        // Normalisasi nama tim agar cocok dengan key di $timKerja
-                        $tim = $this->normalizeTeamName($tim);
-
-                        $nama  = trim($row['nama'] ?? '');
-                        if (!$nama) continue;
-                        $nama = $this->normalizeMemberName($nama);
-
-                        $rows[] = [
-                            'timestamp'    => $row['timestamp'] ?? null,
-                            'email'        => $row['email']     ?? '',
-                            'tim_kerja'    => $tim,
-                            'nama'         => $nama,
-                            'ikut_apel'    => $row['ikut_apel']  ?? 'Ya',
-                            'keterangan'   => $row['keterangan'] ?? '',
-                        ];
+                            $rows[] = [
+                                'timestamp'    => $row['timestamp'] ?? $row['Timestamp'] ?? null,
+                                'email'        => $row['email']     ?? $row['Email Address'] ?? '',
+                                'tim_kerja'    => $tim,
+                                'nama'         => $nama,
+                                'ikut_apel'    => $row['ikut_apel']  ?? 'Ya',
+                                'keterangan'   => $row['keterangan'] ?? '',
+                            ];
+                        }
                     }
-                } else {
-                    Log::error('ApelSenin: Invalid JSON format. Body: ' . substr($response->body(), 0, 500));
                 }
-            } else {
-                Log::error('ApelSenin: Failed to fetch. Status: ' . $response->status());
+            } catch (\Exception $e) {
+                Log::error('ApelSenin Fetch Exception: ' . $e->getMessage());
             }
-        } catch (\Exception $e) {
-            Log::error('ApelSenin Exception: ' . $e->getMessage());
         }
 
-        if (!empty($rows)) {
-            Cache::put($cacheKey, $rows, $cacheDuration);
-        }
+        // Selalu simpan ke cache meskipun hasilnya kosong,
+        // agar halaman loading tidak looping terus-menerus
+        Cache::put($cacheKey, $rows, $cacheDuration);
 
         return $rows;
     }
@@ -461,7 +451,8 @@ class ApelSeninService
     public function normalizeMemberName(string $inputName): string
     {
         $cleanInput = strtoupper(preg_replace('/[^A-Z0-9]/i', '', $inputName));
-        
+        $inputNoTitle = strtoupper(preg_replace('/[^A-Z0-9]/i', '', explode(',', $inputName)[0]));
+
         // 1. Pencarian presisi tinggi (hanya membuang tanda baca dan spasi)
         foreach (self::$teamMembers as $members) {
             foreach ($members as $official) {
@@ -473,7 +464,6 @@ class ApelSeninService
         }
         
         // 2. Pencarian tanpa gelar (mengambil kata sebelum koma)
-        $inputNoTitle = strtoupper(preg_replace('/[^A-Z0-9]/i', '', explode(',', $inputName)[0]));
         if (strlen($inputNoTitle) > 3) {
             foreach (self::$teamMembers as $members) {
                 foreach ($members as $official) {

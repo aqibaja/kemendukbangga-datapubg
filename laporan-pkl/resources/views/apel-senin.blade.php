@@ -376,5 +376,13 @@
             }
         });
     });
+
+    // Auto reload data dari spreadsheet setiap 2 menit — termasuk saat di-embed via iframe
+    setTimeout(function() {
+        let currentUrl = new URL(window.location.href);
+        currentUrl.searchParams.set('_sync', '1');
+        currentUrl.searchParams.set('t', Date.now());
+        window.location.href = currentUrl.toString();
+    }, 120000);
     </script>
 </x-layout>

@@ -1,7 +1,7 @@
 <x-layout>
     <x-slot:title>{{ $title }}</x-slot:title>
 
-    <div class="min-h-[80vh] flex flex-col lg:flex-row gap-8 items-start justify-center p-4 xl:p-8 mx-auto w-full transition-all duration-700 ease-in-out" :class="isEnded ? 'max-w-[100vw] h-screen !p-0' : 'max-w-[1600px]'" x-data="qrProjector({{ $session->id }})">
+    <div class="max-w-[1600px] min-h-[80vh] flex flex-col lg:flex-row gap-8 items-start justify-center p-4 xl:p-8 mx-auto w-full transition-all duration-700 ease-in-out" x-data="qrProjector({{ $session->id }})">
         
         <!-- Kolom Kiri: QR Code -->
         <div class="flex-none w-full lg:w-[400px] flex flex-col items-center transition-all duration-500" x-show="!isEnded" x-transition:leave="transition ease-in duration-500" x-transition:leave-start="opacity-100 scale-100" x-transition:leave-end="opacity-0 scale-95 w-0 overflow-hidden">
@@ -46,25 +46,59 @@
                 </div>
         </div>
 
-        <!-- Kolom Kanan: Dashboard Google Data Studio -->
-        <div class="flex-grow w-full rounded-3xl overflow-hidden shadow-2xl bg-white border border-gray-100 flex flex-col transition-all duration-700" :class="isEnded ? 'h-[100vh] !rounded-none' : 'lg:w-auto h-[70vh] lg:h-[85vh]'">
-            <div class="bg-gray-50 border-b border-gray-100 p-4 flex justify-between items-center">
-                <h2 class="font-bold text-gray-700 flex items-center gap-2">
+        <!-- Kolom Kanan: Dashboard Apel Senin -->
+        <div class="flex-grow w-full rounded-3xl overflow-hidden shadow-2xl bg-white border border-gray-100 flex flex-col transition-all duration-700 h-[70vh] lg:h-[85vh]">
+            <div class="bg-gray-50 border-b border-gray-100 p-3 sm:p-4 flex flex-wrap justify-between items-center gap-3">
+                <h2 class="font-bold text-gray-700 flex items-center gap-2 flex-wrap">
                     <i class="fa-solid fa-chart-pie text-blue-500"></i>
                     <span x-text="isEnded ? 'Sesi Presensi Selesai - Rekap Data' : 'Live Dashboard Presensi'"></span>
+                    <button 
+                        @click="triggerManualReload()" 
+                        type="button" 
+                        class="text-xs font-semibold text-blue-700 bg-blue-50 hover:bg-blue-100 hover:border-blue-300 px-3 py-1.5 rounded-full border border-blue-200 inline-flex items-center gap-1.5 shadow-sm transition active:scale-95 cursor-pointer group" 
+                        title="Klik untuk memuat ulang data dari Google Sheets secara langsung"
+                    >
+                        <i class="fa-solid fa-rotate text-blue-500" :class="isManualReloading ? 'animate-spin' : ''"></i>
+                        <span>Reload data: <strong class="font-mono font-bold text-blue-900" x-text="formattedAutoReloadTime">02:00</strong></span>
+                        <span class="bg-blue-600 group-hover:bg-blue-700 text-white text-[10px] px-1.5 py-0.5 rounded-md font-bold uppercase tracking-wider ml-0.5 shadow-xs">Reload Sekarang</span>
+                    </button>
                 </h2>
-                <a href="https://datastudio.google.com/embed/u/0/reporting/95857558-0c38-4f16-b37a-58df2c8eaba6/page/nqrlF" target="_blank" class="text-xs text-blue-600 hover:underline">
-                    Buka layar penuh <i class="fa-solid fa-arrow-up-right-from-square ml-1"></i>
-                </a>
+
+                <div class="flex items-center gap-3 flex-wrap">
+                    <!-- Zoom In / Zoom Out Controls -->
+                    <div class="inline-flex items-center bg-white border border-gray-200 rounded-xl p-1 shadow-sm text-xs gap-1">
+                        <button @click="zoomOut()" type="button" class="px-2 py-1 hover:bg-gray-100 text-gray-700 rounded-lg font-bold transition flex items-center gap-1" title="Zoom Out (-10%)">
+                            <i class="fa-solid fa-magnifying-glass-minus text-blue-600"></i>
+                        </button>
+                        <button @click="resetZoom()" type="button" class="px-2 py-1 hover:bg-blue-50 text-blue-700 font-mono font-bold transition min-w-[50px] text-center rounded-lg" title="Klik untuk reset zoom (70%)">
+                            <span x-text="zoomLevel + '%'">70%</span>
+                        </button>
+                        <button @click="zoomIn()" type="button" class="px-2 py-1 hover:bg-gray-100 text-gray-700 rounded-lg font-bold transition flex items-center gap-1" title="Zoom In (+10%)">
+                            <i class="fa-solid fa-magnifying-glass-plus text-blue-600"></i>
+                        </button>
+                    </div>
+
+                    <a href="{{ url('/data/apel-senin') }}" target="_blank" class="text-xs text-blue-600 hover:underline flex items-center gap-1">
+                        Buka layar penuh <i class="fa-solid fa-arrow-up-right-from-square"></i>
+                    </a>
+                </div>
             </div>
-            <iframe 
-                class="w-full flex-grow" 
-                src="https://datastudio.google.com/embed/u/0/reporting/95857558-0c38-4f16-b37a-58df2c8eaba6/page/nqrlF" 
-                frameborder="0" 
-                style="border:0" 
-                allowfullscreen 
-                sandbox="allow-storage-access-by-user-activation allow-scripts allow-same-origin allow-popups allow-popups-to-escape-sandbox">
-            </iframe>
+
+            <!-- Wrapper Container with Scale Control -->
+            <div class="w-full flex-grow relative overflow-hidden bg-slate-50">
+                <div 
+                    class="w-full h-full origin-top-left transition-transform duration-300 ease-out"
+                    :style="`width: ${10000 / zoomLevel}%; height: ${10000 / zoomLevel}%; transform: scale(${zoomLevel / 100}); transform-origin: 0 0;`"
+                >
+                    <iframe 
+                        id="dashboard-iframe"
+                        class="w-full h-full border-0" 
+                        src="{{ url('/data/apel-senin?embed=1') }}" 
+                        frameborder="0" 
+                        allowfullscreen>
+                    </iframe>
+                </div>
+            </div>
         </div>
 
         @else
@@ -89,12 +123,47 @@
                 error: false,
                 errorMsg: '',
                 isEnded: false,
+                isManualReloading: false,
                 endTimeStamp: {{ $session->end_time ? $session->end_time->timestamp * 1000 : 'null' }},
                 refreshTime: {{ $session->refresh_time_seconds }},
                 timeLeft: {{ $session->refresh_time_seconds }},
                 progress: 100,
                 interval: null,
                 endCheckInterval: null,
+                autoReloadInterval: null,
+                autoReloadSeconds: 120,
+                zoomLevel: 70,
+
+                get formattedAutoReloadTime() {
+                    const mins = Math.floor(this.autoReloadSeconds / 60);
+                    const secs = this.autoReloadSeconds % 60;
+                    return `${String(mins).padStart(2, '0')}:${String(secs).padStart(2, '0')}`;
+                },
+
+                triggerManualReload() {
+                    this.isManualReloading = true;
+                    this.autoReloadSeconds = 120;
+                    const iframe = document.getElementById('dashboard-iframe');
+                    if (iframe) {
+                        let syncUrl = new URL(iframe.src || '{{ route("apel-senin") }}', window.location.origin);
+                        syncUrl.searchParams.set('_sync', '1');
+                        syncUrl.searchParams.set('t', Date.now());
+                        iframe.src = syncUrl.toString();
+                    }
+                    setTimeout(() => {
+                        this.isManualReloading = false;
+                    }, 1500);
+                },
+
+                zoomIn() {
+                    if (this.zoomLevel < 150) this.zoomLevel += 10;
+                },
+                zoomOut() {
+                    if (this.zoomLevel > 30) this.zoomLevel -= 10;
+                },
+                resetZoom() {
+                    this.zoomLevel = 70;
+                },
 
                 init() {
                     this.checkEndTime();
@@ -102,6 +171,18 @@
                         this.fetchQr();
                         this.startEndCheckInterval();
                     }
+                    this.startAutoReloadTimer();
+                },
+
+                startAutoReloadTimer() {
+                    this.autoReloadSeconds = 120;
+                    clearInterval(this.autoReloadInterval);
+                    this.autoReloadInterval = setInterval(() => {
+                        this.autoReloadSeconds -= 1;
+                        if (this.autoReloadSeconds <= 0) {
+                            this.triggerManualReload();
+                        }
+                    }, 1000);
                 },
 
                 checkEndTime() {

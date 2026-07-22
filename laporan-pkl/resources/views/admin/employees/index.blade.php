@@ -3,11 +3,19 @@
 
     <div class="w-full px-3 sm:px-4 lg:px-6 py-4 sm:py-6" x-data="{ showModal: false, editMode: false, currentId: null, formAction: '{{ route('admin.employees.store') }}' }">
         
-        <div class="flex justify-between items-center mb-6">
+        <div class="flex justify-between items-center mb-6 flex-wrap gap-3">
             <h2 class="text-2xl font-bold text-gray-800">Master Data Pegawai</h2>
-            <button @click="showModal = true; editMode = false; currentId = null; formAction = '{{ route('admin.employees.store') }}'; document.getElementById('employeeForm').reset();" class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg font-medium transition-colors flex items-center gap-2">
-                <i class="fa-solid fa-plus"></i> Tambah Pegawai
-            </button>
+            <div class="flex items-center gap-3">
+                <form action="{{ route('admin.employees.sync') }}" method="POST" class="inline-block" onsubmit="return confirm('Apakah Anda yakin ingin menyinkronkan data pegawai database dengan daftar Tim Kerja Apel Senin?');">
+                    @csrf
+                    <button type="submit" class="bg-emerald-600 hover:bg-emerald-700 text-white px-4 py-2 rounded-lg font-medium transition-colors flex items-center gap-2">
+                        <i class="fa-solid fa-rotate"></i> Sync Data Tim Kerja
+                    </button>
+                </form>
+                <button @click="showModal = true; editMode = false; currentId = null; formAction = '{{ route('admin.employees.store') }}'; document.getElementById('employeeForm').reset();" class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg font-medium transition-colors flex items-center gap-2">
+                    <i class="fa-solid fa-plus"></i> Tambah Pegawai
+                </button>
+            </div>
         </div>
 
         @if(session('success'))
