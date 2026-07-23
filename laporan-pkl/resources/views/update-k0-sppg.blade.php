@@ -1193,7 +1193,13 @@ function createInputForHeader(header, currentVal, originalVal, rowIndex, num) {
 
     // --- Default: <input type="text"> ---
     const input = document.createElement('input');
-    const isAngka = (num >= 31 && num <= 34) || num === 39;
+    const headerUpper = header.toUpperCase();
+    // Validasi angka berdasarkan kata kunci di pertanyaan, bukan nomor urut
+    const isAngka = headerUpper.includes('JUMLAH TITIK DISTRIBUSI') || 
+                    (headerUpper.includes('JUMLAH') && !headerUpper.includes('NAMA')) || 
+                    headerUpper.includes('BIAYA') || 
+                    headerUpper.includes('TARGET') || 
+                    headerUpper.includes('REALISASI');
     input.type = isAngka ? 'number' : 'text';
     input.className = 'cell-input' + (isModified ? ' modified' : '');
     input.dataset.header    = header;
@@ -1406,7 +1412,13 @@ function renderEditForms() {
 
             // Badge tipe input (hanya jika ada formItem)
             const num = hIdx + 1;
-            const isAngka = (num >= 31 && num <= 34) || num === 39;
+            const headerUpper = header.toUpperCase();
+            const isAngka = headerUpper.includes('JUMLAH TITIK DISTRIBUSI') || 
+                            (headerUpper.includes('JUMLAH') && !headerUpper.includes('NAMA')) || 
+                            headerUpper.includes('BIAYA') || 
+                            headerUpper.includes('TARGET') || 
+                            headerUpper.includes('REALISASI');
+            
             if (formItem) {
                 const typeMap = {
                     'MULTIPLE_CHOICE': { label: 'Pilihan', color: '#818cf8' },
@@ -1510,18 +1522,29 @@ async function saveCurrentRow() {
                     break;
                 }
 
-                // Custom validation untuk nomor 38-40 wajib diisi
-                if (hIdx >= 38 && hIdx <= 40) {
+                // Custom validation untuk input yang wajib diisi (sebelumnya 38-40)
+                // Sesuaikan kata kunci di bawah ini dengan pertanyaan yang wajib diisi
+                const isMandatory = headerUpper.includes('JUMLAH TITIK DISTRIBUSI') || 
+                                    headerUpper.includes('TARGET') || 
+                                    headerUpper.includes('REALISASI');
+                
+                if (isMandatory) {
                     if (currentVal.toString().trim() === '') {
-                        validationError = `Isian nomor ${hIdx} ("${header}") wajib diisi.`;
+                        validationError = `Isian "${header}" wajib diisi.`;
                         break;
                     }
                 }
                 
-                // Custom validation untuk nomor 39, dan 31-34 hanya boleh angka
-                if ((hIdx >= 31 && hIdx <= 34) || hIdx === 39) {
+                // Custom validation untuk input yang hanya boleh angka (sebelumnya 31-34, 39)
+                const isNumberOnly = headerUpper.includes('JUMLAH TITIK DISTRIBUSI') || 
+                                     (headerUpper.includes('JUMLAH') && !headerUpper.includes('NAMA')) || 
+                                     headerUpper.includes('BIAYA') || 
+                                     headerUpper.includes('TARGET') || 
+                                     headerUpper.includes('REALISASI');
+                                     
+                if (isNumberOnly) {
                     if (currentVal.toString().trim() !== '' && !/^\d+$/.test(currentVal.toString().trim())) {
-                        validationError = `Isian nomor ${hIdx} ("${header}") hanya boleh berisi angka.`;
+                        validationError = `Isian "${header}" hanya boleh berisi angka.`;
                         break;
                     }
                 }

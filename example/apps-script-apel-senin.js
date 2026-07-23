@@ -43,11 +43,11 @@ const CONFIG = {
     'PENGELOLAAN MANAJEMEN KINERJA': 9,
     'UMUM, HUMAS, DAN PROTOKOL': 5,
     'DATA DAN INFORMASI': 13,
-    'PERWAKILAN BKKBN PROVINSI ACEH': 14,
+    'ATASAN PERWAKILAN KEMENDUKBANGGA / BKKBN PROVINSI ACEH': 14,
   },
 
-  COL_IKUT_APEL: 15,
-  COL_KETERANGAN: 16,
+  COL_IKUT_APEL: -1,
+  COL_KETERANGAN: 15,
 };
 
 // =========================================================
@@ -105,10 +105,22 @@ function doPost(e) {
     const timestampIdx = headers.findIndex(h => h.toString().trim().toLowerCase() === 'timestamp');
     const timeCol = timestampIdx !== -1 ? (timestampIdx + 1) : 1;
 
-    // Kolom nama peserta berdasarkan Tim Kerja
-    const targetColIdx = headers.findIndex(
-      h => h.toString().trim().toUpperCase() === data.employee_unsur.toString().trim().toUpperCase()
-    );
+    // Kolom nama peserta berdasarkan Tim Kerja dari TIM_KOLOM_MAP
+    let targetColIdx = -1;
+    const normUnsur = normalizeTeamName(data.employee_unsur);
+    for (const [timKey, colIdx] of Object.entries(CONFIG.TIM_KOLOM_MAP)) {
+      if (normalizeTeamName(timKey) === normUnsur) {
+        targetColIdx = colIdx;
+        break;
+      }
+    }
+    
+    // Fallback: cari di header
+    if (targetColIdx === -1) {
+      targetColIdx = headers.findIndex(
+        h => normalizeTeamName(h.toString()) === normUnsur
+      );
+    }
 
     // Format timestamp ke WIB
     const dateObj = new Date(data.timestamp);
@@ -146,6 +158,16 @@ function doPost(e) {
       if (foundRow !== -1) {
         // ─ Timpa Timestamp saja, data lain tidak disentuh ─
         sheet.getRange(foundRow, timeCol).setValue(formattedDate);
+        
+        // Timpa juga kolom NAMA SESI / PASSWORD jika ada
+        const sesiIdx = headers.findIndex(h => {
+          const txt = h.toString().trim().toUpperCase();
+          return txt.includes('NAMA SESI') || txt.includes('PASSWORD');
+        });
+        if (sesiIdx !== -1) {
+          sheet.getRange(foundRow, sesiIdx + 1).setValue(data.event_name || "");
+        }
+        
         return jsonResponse({ status: 'success', message: 'Updated existing latest row' });
       }
     }
@@ -159,6 +181,12 @@ function doPost(e) {
     );
     if (timKerjaIdx !== -1) rowData[timKerjaIdx] = data.employee_unsur;
     if (targetColIdx !== -1) rowData[targetColIdx] = data.employee_name;
+
+    const sesiIdx = headers.findIndex(h => {
+      const txt = h.toString().trim().toUpperCase();
+      return txt.includes('NAMA SESI') || txt.includes('PASSWORD');
+    });
+    if (sesiIdx !== -1) rowData[sesiIdx] = data.event_name || "";
 
     sheet.appendRow(rowData);
     return jsonResponse({ status: 'success', message: 'Added new row' });

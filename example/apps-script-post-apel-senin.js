@@ -9,7 +9,16 @@ function doPost(e) {
             // Ambil baris pertama (Header) untuk mengetahui posisi kolom
             var headers = sheet.getRange(1, 1, 1, sheet.getLastColumn()).getValues()[0];
 
-            var targetColumnIndex = headers.findIndex(h => h.toString().trim().toUpperCase() === data.employee_unsur.toString().trim().toUpperCase());
+            var targetColName = data.employee_unsur.toString().trim().toUpperCase();
+            
+            // Handle header mismatch between form options and actual spreadsheet columns
+            if (targetColName === "PENGELOLAAN SDM, ORGANISASI, DAN HUKUM") {
+                targetColName = "PENGELOLAAN SUMBER DAYA MANUSIA, ORGANISASI, DAN HUKUM";
+            } else if (targetColName === "ATASAN PERWAKILAN KEMENDUKBANGGA / BKKBN PROVINSI ACEH") {
+                targetColName = "PERWAKILAN BKKBN PROVINSI ACEH";
+            }
+
+            var targetColumnIndex = headers.findIndex(h => h.toString().trim().toUpperCase() === targetColName);
 
             var dateObj = new Date(data.timestamp);
             var formattedDate = Utilities.formatDate(dateObj, "Asia/Jakarta", "M/d/yyyy H:mm:ss");
@@ -63,6 +72,15 @@ function doPost(e) {
                     // JIKA KETEMU: Timpa Timestamp-nya saja di baris dengan data paling terbaru tersebut!
                     // Data Email dan lainnya di baris itu akan aman tak tersentuh.
                     sheet.getRange(foundRowIndex, timeCol).setValue(formattedDate);
+                    
+                    // Timpa juga kolom Nama Sesi / Password jika ada
+                    var sesiIndex = headers.findIndex(h => {
+                        var txt = h.toString().trim().toUpperCase();
+                        return txt.includes("NAMA SESI") || txt.includes("PASSWORD");
+                    });
+                    if (sesiIndex !== -1) {
+                        sheet.getRange(foundRowIndex, sesiIndex + 1).setValue(data.event_name || "");
+                    }
 
                     return ContentService.createTextOutput(JSON.stringify({ "status": "success", "message": "Updated existing latest row" }))
                         .setMimeType(ContentService.MimeType.JSON);
@@ -77,6 +95,12 @@ function doPost(e) {
             var timKerjaIndex = headers.findIndex(h => h.toString().trim().toUpperCase() === "SILAHKAN PILIH TIM KERJA");
             if (timKerjaIndex !== -1) rowData[timKerjaIndex] = data.employee_unsur;
             if (targetColumnIndex !== -1) rowData[targetColumnIndex] = data.employee_name;
+            
+            var sesiIndex = headers.findIndex(h => {
+                var txt = h.toString().trim().toUpperCase();
+                return txt.includes("NAMA SESI") || txt.includes("PASSWORD");
+            });
+            if (sesiIndex !== -1) rowData[sesiIndex] = data.event_name || "";
 
             sheet.appendRow(rowData);
 
