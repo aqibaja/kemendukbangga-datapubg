@@ -33,7 +33,7 @@ class QrSessionController extends Controller
             'latitude' => 'required|numeric',
             'longitude' => 'required|numeric',
             'radius_meters' => 'required|integer|min:1',
-            'refresh_time_seconds' => 'required|integer|min:5|max:300',
+            'refresh_time_seconds' => 'required|integer|min:5|max:3600',
             'end_time' => 'nullable|date',
         ]);
 

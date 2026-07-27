@@ -63,10 +63,6 @@
                             <div class="text-2xl font-black text-white">{{ $totalApel }}</div>
                             <div class="text-xs text-emerald-100 font-medium uppercase tracking-wider">Total Apel</div>
                         </div>
-                        <div class="bg-white/15 backdrop-blur border border-white/20 rounded-xl px-4 py-2 text-center">
-                            <div class="text-2xl font-black text-white">{{ $totalAttended }}</div>
-                            <div class="text-xs text-emerald-100 font-medium uppercase tracking-wider">Total Hadir</div>
-                        </div>
                         @if($selectedDate && isset($apelDates[$selectedDate]))
                         <div class="bg-amber-400/30 backdrop-blur border border-amber-400/40 rounded-xl px-4 py-2 text-center">
                             <div class="text-xs text-amber-200 font-bold uppercase tracking-wider">Filter Aktif</div>

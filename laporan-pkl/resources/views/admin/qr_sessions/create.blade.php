@@ -48,8 +48,8 @@
                     </div>
                     <div class="flex-1">
                         <label for="refresh_time_seconds" class="block mb-2 text-sm font-medium text-gray-900">Waktu Refresh QR (Detik) <span class="text-red-500">*</span></label>
-                        <input type="number" id="refresh_time_seconds" name="refresh_time_seconds" value="30" required min="10" max="300" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" placeholder="Contoh: 30">
-                        <p class="mt-2 text-xs text-gray-500">Rekomendasi: 30-60 detik.</p>
+                        <input type="number" id="refresh_time_seconds" name="refresh_time_seconds" value="30" required min="10" max="3600" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" placeholder="Contoh: 30">
+                        <p class="mt-2 text-xs text-gray-500">Maksimal: 3600 detik (1 jam).</p>
                     </div>
                     <div class="flex-1">
                         <label for="end_time" class="block mb-2 text-sm font-medium text-gray-900">Waktu Berakhir Sesi</label>

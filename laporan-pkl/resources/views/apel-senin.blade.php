@@ -50,10 +50,6 @@
                         <div class="text-3xl font-black text-amber-300">{{ count($apelDates) }}</div>
                         <div class="text-xs font-bold uppercase tracking-widest text-emerald-100 mt-1">Total Apel</div>
                     </div>
-                    <div class="bg-white/10 backdrop-blur-md border border-white/20 rounded-2xl p-5 text-center min-w-[120px]">
-                        <div class="text-3xl font-black text-white">{{ $totalSum }}</div>
-                        <div class="text-xs font-bold uppercase tracking-widest text-emerald-100 mt-1">Total Hadir</div>
-                    </div>
                 </div>
             </div>
         </div>
