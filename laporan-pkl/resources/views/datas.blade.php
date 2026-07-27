@@ -172,7 +172,7 @@
                             <img 
     src="{{ $data->thumbnail 
         ? asset('laporan-pkl/storage/app/public/' . $data->thumbnail) 
-        : asset('public/thumbnails/default.jpg') 
+        : asset('public/image/logoBKKBN.png') 
     }}"
     alt="{{ $data->nama_dashboard }}"
     class="absolute top-0 left-0 w-full h-full object-cover transition duration-300 hover:scale-105">

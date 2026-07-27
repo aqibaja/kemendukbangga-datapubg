@@ -99,7 +99,7 @@
                                 <img src="{{ asset('public/image/presensi-zoom.png') }}"
                                     alt="Thumbnail {{ $d->nama_dashboard }}" class="w-full h-full object-cover transition duration-300 hover:scale-105">
                             @else
-                                <img src="{{ $d->thumbnail ? asset('laporan-pkl/storage/app/public/' . $d->thumbnail) : asset('thumbnails/default.jpg') }}"
+                                <img src="{{ $d->thumbnail ? asset('laporan-pkl/storage/app/public/' . $d->thumbnail) : asset('public/image/logoBKKBN.png') }}"
                                     alt="Thumbnail {{ $d->nama_dashboard }}" class="max-h-full max-w-full object-contain">
                             @endif
                         </div>
