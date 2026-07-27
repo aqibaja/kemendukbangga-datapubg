@@ -118,6 +118,11 @@ class ApelSeninController extends Controller
 
         $tab           = $request->get('tab', 'tim');
 
+        $leaves = collect();
+        if ($queryDate) {
+            $leaves = \App\Models\EmployeeLeave::where('tanggal', $queryDate)->get()->keyBy('nama');
+        }
+
         // Statistik ringkas
         $totalApel     = count($apelDates);
         $totalAttended = count($rankings) > 0 ? array_sum(array_column($rankings, 'attended_count')) : 0;
@@ -132,6 +137,7 @@ class ApelSeninController extends Controller
             'photoUrl'      => $photoUrl,
             'apelDates'     => $apelDates,
             'selectedDate'  => $selectedDate,
+            'leaves'        => $leaves,
             'tab'           => $tab,
             'rankings'      => $rankings,
             'trend'         => $trend,

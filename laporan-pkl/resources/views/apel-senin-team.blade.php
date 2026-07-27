@@ -186,6 +186,23 @@
 
                 $totalHadir    = count($attendees);
                 $totalAnggota  = count($csvMembers);
+
+                $totalIzin = 0;
+                $totalSakit = 0;
+                $totalCuti = 0;
+                $totalDinasLuar = 0;
+
+                foreach ($csvMembers as $member) {
+                    if (!isset($hadirSet[$normKey($member)]) && isset($leaves[$member])) {
+                        if ($leaves[$member]->keterangan == 'Izin') $totalIzin++;
+                        elseif ($leaves[$member]->keterangan == 'Sakit') $totalSakit++;
+                        elseif ($leaves[$member]->keterangan == 'Cuti') $totalCuti++;
+                        elseif ($leaves[$member]->keterangan == 'Dinas Luar') $totalDinasLuar++;
+                    }
+                }
+
+                $totalTidakHadir = $totalAnggota - $totalHadir - $totalIzin - $totalSakit - $totalCuti - $totalDinasLuar;
+                if ($totalTidakHadir < 0) $totalTidakHadir = 0;
             @endphp
 
             {{-- Summary badge --}}
@@ -194,10 +211,22 @@
                     <i class="fas fa-check-circle text-emerald-500"></i>
                     <span class="font-bold text-emerald-700 text-sm">{{ $totalHadir }} Hadir</span>
                 </div>
+                @if($totalIzin > 0 || $totalDinasLuar > 0 || $totalCuti > 0)
+                <div class="flex items-center gap-2 bg-blue-50 border border-blue-200 rounded-xl px-4 py-2">
+                    <i class="fas fa-envelope-open-text text-blue-500"></i>
+                    <span class="font-bold text-blue-700 text-sm">{{ $totalIzin + $totalDinasLuar + $totalCuti }} Izin/Cuti/DL</span>
+                </div>
+                @endif
+                @if($totalSakit > 0)
+                <div class="flex items-center gap-2 bg-yellow-50 border border-yellow-200 rounded-xl px-4 py-2">
+                    <i class="fas fa-briefcase-medical text-yellow-500"></i>
+                    <span class="font-bold text-yellow-700 text-sm">{{ $totalSakit }} Sakit</span>
+                </div>
+                @endif
                 @if($totalAnggota > 0)
                 <div class="flex items-center gap-2 bg-red-50 border border-red-200 rounded-xl px-4 py-2">
                     <i class="fas fa-times-circle text-red-400"></i>
-                    <span class="font-bold text-red-600 text-sm">{{ $totalAnggota - $totalHadir > 0 ? $totalAnggota - $totalHadir : 0 }} Tidak Hadir</span>
+                    <span class="font-bold text-red-600 text-sm">{{ $totalTidakHadir }} Tidak Hadir</span>
                 </div>
                 <div class="flex items-center gap-2 bg-slate-50 border border-slate-200 rounded-xl px-4 py-2">
                     <i class="fas fa-users text-slate-500"></i>
@@ -219,16 +248,30 @@
                     </thead>
                     <tbody class="divide-y divide-gray-50">
                         @foreach($csvMembers as $i => $member)
-                            @php $hadir = isset($hadirSet[$normKey($member)]); @endphp
-                            <tr class="hover:bg-slate-50 transition-colors {{ $hadir ? '' : 'opacity-60' }}">
+                            @php 
+                                $hadir = isset($hadirSet[$normKey($member)]);
+                                $leaveStatus = null;
+                                if (!$hadir && isset($leaves[$member])) {
+                                    $leaveStatus = $leaves[$member]->keterangan;
+                                }
+                            @endphp
+                            <tr class="hover:bg-slate-50 transition-colors {{ $hadir ? '' : ($leaveStatus ? 'opacity-80' : 'opacity-60') }}">
                                 <td class="px-4 py-3 text-gray-400 font-medium">{{ $i + 1 }}</td>
-                                <td class="px-4 py-3 font-semibold {{ $hadir ? 'text-gray-800' : 'text-gray-500' }}">
+                                <td class="px-4 py-3 font-semibold {{ $hadir ? 'text-gray-800' : ($leaveStatus ? 'text-gray-600' : 'text-gray-500') }}">
                                     {{ $member }}
                                 </td>
                                 <td class="px-4 py-3 text-center">
                                     @if($hadir)
                                         <span class="inline-flex items-center gap-1 bg-emerald-100 text-emerald-700 px-2.5 py-1 rounded-lg text-xs font-bold">
                                             <i class="fas fa-check text-[10px]"></i> Hadir
+                                        </span>
+                                    @elseif($leaveStatus === 'Sakit')
+                                        <span class="inline-flex items-center gap-1 bg-yellow-100 text-yellow-700 px-2.5 py-1 rounded-lg text-xs font-bold">
+                                            <i class="fas fa-briefcase-medical text-[10px]"></i> Sakit
+                                        </span>
+                                    @elseif($leaveStatus)
+                                        <span class="inline-flex items-center gap-1 bg-blue-100 text-blue-700 px-2.5 py-1 rounded-lg text-xs font-bold">
+                                            <i class="fas fa-envelope-open-text text-[10px]"></i> {{ $leaveStatus }}
                                         </span>
                                     @else
                                         <span class="inline-flex items-center gap-1 bg-red-50 text-red-500 px-2.5 py-1 rounded-lg text-xs font-bold">

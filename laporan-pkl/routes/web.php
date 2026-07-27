@@ -202,6 +202,11 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/admin/qr-sessions/{qr_session}/generate', [QrSessionController::class, 'generateQr'])->name('admin.qr_sessions.generate');
     Route::post('/admin/qr-sessions/{qr_session}/toggle', [QrSessionController::class, 'toggleActive'])->name('admin.qr_sessions.toggle');
     Route::delete('/admin/qr-sessions/{qr_session}', [QrSessionController::class, 'destroy'])->name('admin.qr_sessions.destroy');
+
+    // Manajemen Izin & Sakit Apel
+    Route::get('/admin/leaves', [App\Http\Controllers\Admin\LeaveController::class, 'index'])->name('admin.leaves.index');
+    Route::post('/admin/leaves', [App\Http\Controllers\Admin\LeaveController::class, 'store'])->name('admin.leaves.store');
+    Route::delete('/admin/leaves/{leave}', [App\Http\Controllers\Admin\LeaveController::class, 'destroy'])->name('admin.leaves.destroy');
 });
 
 // Presensi Publik (Scan QR)
