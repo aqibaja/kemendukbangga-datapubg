@@ -14,7 +14,7 @@ class LaporanCapaianController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'tipe'  => 'required|in:pengendalian_lapangan,capaian_program,elsimil',
+            'tipe'  => 'required|in:pengendalian_lapangan,capaian_program,elsimil,quick_win',
             'bulan' => 'required|integer|min:1|max:12',
             'tahun' => 'required|integer|min:2020|max:2099',
         ]);
@@ -52,7 +52,7 @@ class LaporanCapaianController extends Controller
         $laporan = LaporanCapaian::findOrFail($id);
 
         $request->validate([
-            'tipe'  => 'required|in:pengendalian_lapangan,capaian_program,elsimil',
+            'tipe'  => 'required|in:pengendalian_lapangan,capaian_program,elsimil,quick_win',
             'bulan' => 'required|integer|min:1|max:12',
             'tahun' => 'required|integer|min:2020|max:2099',
         ]);
@@ -111,6 +111,7 @@ class LaporanCapaianController extends Controller
             'pengendalian_lapangan' => "Capaian Pengendalian Lapangan KemendukBangga BKKBN Prov Aceh Bulan {$namaBulan} Tahun {$tahun}",
             'capaian_program'      => "Laporan Capaian Program Kemendukbangga / BKKBN Prov Aceh {$namaBulan} Tahun {$tahun}",
             'elsimil'              => "Laporan Capaian ELSIMIL Kemendukbangga BKKBN Prov Aceh Hingga {$namaBulan} {$tahun}",
+            'quick_win'            => "Laporan Quick Win Kemendukbangga / BKKBN Provinsi Aceh {$namaBulan} Tahun {$tahun}",
             default                => "Laporan Capaian {$namaBulan} {$tahun}",
         };
     }
@@ -124,6 +125,7 @@ class LaporanCapaianController extends Controller
             'pengendalian_lapangan' => $this->assemblePengendalianLapangan($request),
             'capaian_program'      => $this->assembleCapaianProgram($request),
             'elsimil'              => $this->assembleElsimil($request),
+            'quick_win'            => $this->assembleQuickWin($request),
             default                => [],
         };
     }
@@ -269,6 +271,66 @@ class LaporanCapaianController extends Controller
         return [
             'catin' => $catin,
             'bumil' => $bumil,
+        ];
+    }
+
+    private function assembleQuickWin(Request $request)
+    {
+        return [
+            'sidaya' => [
+                'pemeriksaan_kesehatan' => [
+                    'target' => $this->num($request->qw_sidaya_kesehatan_target),
+                    'capaian' => $this->num($request->qw_sidaya_kesehatan_capaian),
+                    'persentase' => $this->dec($request->qw_sidaya_kesehatan_persen),
+                ],
+                'pelatihan_pjp' => [
+                    'target' => $this->num($request->qw_sidaya_pjp_target),
+                    'capaian' => $this->num($request->qw_sidaya_pjp_capaian),
+                    'persentase' => $this->dec($request->qw_sidaya_pjp_persen),
+                ],
+                'sekolah_lansia' => [
+                    'target' => $this->num($request->qw_sidaya_sekolah_target),
+                    'capaian' => $this->num($request->qw_sidaya_sekolah_capaian),
+                    'persentase' => $this->dec($request->qw_sidaya_sekolah_persen),
+                ],
+            ],
+            'gati' => [
+                'edukasi' => [
+                    'target' => $this->num($request->qw_gati_target),
+                    'kompak_tenan' => $this->num($request->qw_gati_kompak),
+                    'dekat' => $this->num($request->qw_gati_dekat),
+                    'sebaya' => $this->num($request->qw_gati_sebaya),
+                    'total' => $this->num($request->qw_gati_total),
+                    'persentase' => $this->dec($request->qw_gati_persen),
+                ],
+            ],
+            'tamasya' => [
+                'jumlah_tpa' => $this->num($request->qw_tamasya_jumlah),
+                'memenuhi_4_layanan' => [
+                    'memenuhi' => $this->num($request->qw_tamasya_memenuhi),
+                    'tidak_memenuhi' => $this->num($request->qw_tamasya_tidak_memenuhi),
+                ],
+                'status_pelaporan' => [
+                    'dilaporkan' => $this->num($request->qw_tamasya_dilaporkan),
+                    'tidak_dilaporkan' => $this->num($request->qw_tamasya_tidak_dilaporkan),
+                ],
+                'pemutakhiran_data' => [
+                    'sudah' => $this->num($request->qw_tamasya_sudah),
+                    'belum' => $this->num($request->qw_tamasya_belum),
+                ],
+            ],
+            'genting' => [
+                'fasilitasi' => [
+                    'target' => $this->num($request->qw_genting_target),
+                    'nutrisi' => $this->num($request->qw_genting_nutrisi),
+                    'sanitasi' => $this->num($request->qw_genting_sanitasi),
+                    'air_bersih' => $this->num($request->qw_genting_air_bersih),
+                    'rumah_layak' => $this->num($request->qw_genting_rumah_layak),
+                    'edukasi' => $this->num($request->qw_genting_edukasi),
+                    'total' => $this->num($request->qw_genting_total),
+                    'persentase' => $this->dec($request->qw_genting_persen),
+                ],
+            ],
         ];
     }
 

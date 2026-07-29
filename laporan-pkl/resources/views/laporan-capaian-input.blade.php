@@ -47,6 +47,9 @@
                                 <option value="elsimil" {{ ($laporan->tipe ?? '') == 'elsimil' ? 'selected' : '' }}>
                                     Laporan Capaian ELSIMIL
                                 </option>
+                                <option value="quick_win" {{ ($laporan->tipe ?? '') == 'quick_win' ? 'selected' : '' }}>
+                                    Laporan Quick Win
+                                </option>
                             </select>
                         </div>
                         <div>
@@ -300,6 +303,77 @@
                                            value="{{ $d['bumil'][$m] ?? $d['bumil'][(string)$m] ?? '' }}">
                                 </div>
                             @endfor
+                        </div>
+                    </div>
+
+                    {{-- ======================== QUICK WIN ======================== --}}
+                    <div id="section-quick_win" class="form-section hidden">
+                        {{-- SIDAYA --}}
+                        <h3 class="text-lg font-bold text-teal-700 mb-3 border-l-4 border-teal-500 pl-3">1. Lansia Berdaya (SIDAYA)</h3>
+                        <p class="text-xs font-semibold text-gray-500 mb-2 uppercase">A. Jumlah Lansia Mendapatkan Pemeriksaan Kesehatan</p>
+                        <div class="grid grid-cols-3 gap-3 mb-3">
+                            <div><label class="lbl">Target</label><input type="number" name="qw_sidaya_kesehatan_target" class="inp" value="{{ $d['sidaya']['pemeriksaan_kesehatan']['target'] ?? '' }}"></div>
+                            <div><label class="lbl">Capaian</label><input type="number" name="qw_sidaya_kesehatan_capaian" class="inp" value="{{ $d['sidaya']['pemeriksaan_kesehatan']['capaian'] ?? '' }}"></div>
+                            <div><label class="lbl">Persentase (%)</label><input type="text" name="qw_sidaya_kesehatan_persen" class="inp" value="{{ $d['sidaya']['pemeriksaan_kesehatan']['persentase'] ?? '' }}"></div>
+                        </div>
+                        <p class="text-xs font-semibold text-gray-500 mb-2 uppercase">B. Jumlah Kader BKL Yang Mendapat Pelatihan PJP</p>
+                        <div class="grid grid-cols-3 gap-3 mb-3">
+                            <div><label class="lbl">Target</label><input type="number" name="qw_sidaya_pjp_target" class="inp" value="{{ $d['sidaya']['pelatihan_pjp']['target'] ?? '' }}"></div>
+                            <div><label class="lbl">Capaian</label><input type="number" name="qw_sidaya_pjp_capaian" class="inp" value="{{ $d['sidaya']['pelatihan_pjp']['capaian'] ?? '' }}"></div>
+                            <div><label class="lbl">Persentase (%)</label><input type="text" name="qw_sidaya_pjp_persen" class="inp" value="{{ $d['sidaya']['pelatihan_pjp']['persentase'] ?? '' }}"></div>
+                        </div>
+                        <p class="text-xs font-semibold text-gray-500 mb-2 uppercase">C. Jumlah Lansia yang Mengikuti Sekolah Lansia</p>
+                        <div class="grid grid-cols-3 gap-3 mb-6">
+                            <div><label class="lbl">Target</label><input type="number" name="qw_sidaya_sekolah_target" class="inp" value="{{ $d['sidaya']['sekolah_lansia']['target'] ?? '' }}"></div>
+                            <div><label class="lbl">Capaian</label><input type="number" name="qw_sidaya_sekolah_capaian" class="inp" value="{{ $d['sidaya']['sekolah_lansia']['capaian'] ?? '' }}"></div>
+                            <div><label class="lbl">Persentase (%)</label><input type="text" name="qw_sidaya_sekolah_persen" class="inp" value="{{ $d['sidaya']['sekolah_lansia']['persentase'] ?? '' }}"></div>
+                        </div>
+
+                        {{-- GATI --}}
+                        <h3 class="text-lg font-bold text-teal-700 mb-3 border-l-4 border-teal-500 pl-3">2. Gerakan Ayah Teladan Indonesia (GATI)</h3>
+                        <p class="text-xs font-semibold text-gray-500 mb-2 uppercase">A. Fasilitasi Kegiatan Edukasi GATI pada Ayah/Calon Ayah</p>
+                        <div class="grid grid-cols-2 sm:grid-cols-3 gap-3 mb-6">
+                            <div><label class="lbl">Target</label><input type="number" name="qw_gati_target" class="inp" value="{{ $d['gati']['edukasi']['target'] ?? '' }}"></div>
+                            <div><label class="lbl">Capaian Kompak Tenan</label><input type="number" name="qw_gati_kompak" class="inp" value="{{ $d['gati']['edukasi']['kompak_tenan'] ?? '' }}"></div>
+                            <div><label class="lbl">Capaian Dekat</label><input type="number" name="qw_gati_dekat" class="inp" value="{{ $d['gati']['edukasi']['dekat'] ?? '' }}"></div>
+                            <div><label class="lbl">Capaian Sebaya</label><input type="number" name="qw_gati_sebaya" class="inp" value="{{ $d['gati']['edukasi']['sebaya'] ?? '' }}"></div>
+                            <div><label class="lbl">Total Capaian</label><input type="number" name="qw_gati_total" class="inp" value="{{ $d['gati']['edukasi']['total'] ?? '' }}"></div>
+                            <div><label class="lbl">Persentase (%)</label><input type="text" name="qw_gati_persen" class="inp" value="{{ $d['gati']['edukasi']['persentase'] ?? '' }}"></div>
+                        </div>
+
+                        {{-- TAMASYA --}}
+                        <h3 class="text-lg font-bold text-teal-700 mb-3 border-l-4 border-teal-500 pl-3">3. Taman Asuh Sayang Anak (TAMASYA)</h3>
+                        <div class="grid grid-cols-1 gap-3 mb-3">
+                            <div><label class="lbl">A. Jumlah TPA yang ADA</label><input type="number" name="qw_tamasya_jumlah" class="inp" value="{{ $d['tamasya']['jumlah_tpa'] ?? '' }}"></div>
+                        </div>
+                        <p class="text-xs font-semibold text-gray-500 mb-2 uppercase">B. Tamasya yang memenuhi 4 Layanan</p>
+                        <div class="grid grid-cols-2 gap-3 mb-3">
+                            <div><label class="lbl">Memenuhi</label><input type="number" name="qw_tamasya_memenuhi" class="inp" value="{{ $d['tamasya']['memenuhi_4_layanan']['memenuhi'] ?? '' }}"></div>
+                            <div><label class="lbl">Tidak Memenuhi</label><input type="number" name="qw_tamasya_tidak_memenuhi" class="inp" value="{{ $d['tamasya']['memenuhi_4_layanan']['tidak_memenuhi'] ?? '' }}"></div>
+                        </div>
+                        <p class="text-xs font-semibold text-gray-500 mb-2 uppercase">C. Status Pelaporan</p>
+                        <div class="grid grid-cols-2 gap-3 mb-3">
+                            <div><label class="lbl">Dilaporkan</label><input type="number" name="qw_tamasya_dilaporkan" class="inp" value="{{ $d['tamasya']['status_pelaporan']['dilaporkan'] ?? '' }}"></div>
+                            <div><label class="lbl">Tidak Dilaporkan</label><input type="number" name="qw_tamasya_tidak_dilaporkan" class="inp" value="{{ $d['tamasya']['status_pelaporan']['tidak_dilaporkan'] ?? '' }}"></div>
+                        </div>
+                        <p class="text-xs font-semibold text-gray-500 mb-2 uppercase">D. Pemutakhiran Data TPA</p>
+                        <div class="grid grid-cols-2 gap-3 mb-6">
+                            <div><label class="lbl">Sudah</label><input type="number" name="qw_tamasya_sudah" class="inp" value="{{ $d['tamasya']['pemutakhiran_data']['sudah'] ?? '' }}"></div>
+                            <div><label class="lbl">Belum</label><input type="number" name="qw_tamasya_belum" class="inp" value="{{ $d['tamasya']['pemutakhiran_data']['belum'] ?? '' }}"></div>
+                        </div>
+
+                        {{-- GENTING --}}
+                        <h3 class="text-lg font-bold text-teal-700 mb-3 border-l-4 border-teal-500 pl-3">4. Gerakan Orang Tua Asuh Cegah Stunting (GENTING)</h3>
+                        <p class="text-xs font-semibold text-gray-500 mb-2 uppercase">A. Fasilitasi Pelaksanaan Program GENTING</p>
+                        <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 mb-6">
+                            <div><label class="lbl">Target</label><input type="number" name="qw_genting_target" class="inp" value="{{ $d['genting']['fasilitasi']['target'] ?? '' }}"></div>
+                            <div><label class="lbl">Bantuan Nutrisi</label><input type="number" name="qw_genting_nutrisi" class="inp" value="{{ $d['genting']['fasilitasi']['nutrisi'] ?? '' }}"></div>
+                            <div><label class="lbl">Bantuan Sanitasi</label><input type="number" name="qw_genting_sanitasi" class="inp" value="{{ $d['genting']['fasilitasi']['sanitasi'] ?? '' }}"></div>
+                            <div><label class="lbl">Bantuan Air Bersih</label><input type="number" name="qw_genting_air_bersih" class="inp" value="{{ $d['genting']['fasilitasi']['air_bersih'] ?? '' }}"></div>
+                            <div><label class="lbl">Bantuan Rumah Layak</label><input type="number" name="qw_genting_rumah_layak" class="inp" value="{{ $d['genting']['fasilitasi']['rumah_layak'] ?? '' }}"></div>
+                            <div><label class="lbl">Edukasi</label><input type="number" name="qw_genting_edukasi" class="inp" value="{{ $d['genting']['fasilitasi']['edukasi'] ?? '' }}"></div>
+                            <div><label class="lbl">Total Capaian</label><input type="number" name="qw_genting_total" class="inp" value="{{ $d['genting']['fasilitasi']['total'] ?? '' }}"></div>
+                            <div><label class="lbl">Persentase (%)</label><input type="text" name="qw_genting_persen" class="inp" value="{{ $d['genting']['fasilitasi']['persentase'] ?? '' }}"></div>
                         </div>
                     </div>
 
