@@ -14,7 +14,7 @@
                 <div class="bg-white p-6 sm:p-8 rounded-3xl shadow-2xl relative w-full">
                     
                     <!-- Countdown Progress Bar -->
-                    <div class="absolute top-0 left-0 right-0 h-1.5 bg-gray-100 rounded-t-3xl overflow-hidden">
+                    <div class="absolute top-0 left-0 right-0 h-1.5 bg-gray-100 rounded-t-3xl overflow-hidden" x-show="refreshTime > 0">
                         <div class="h-full bg-blue-500 transition-all duration-1000 ease-linear" :style="`width: ${progress}%`"></div>
                     </div>
 
@@ -37,8 +37,11 @@
                 </div>
 
                 <div class="mt-8 text-center w-full">
-                    <p class="text-sm text-gray-500 font-medium bg-blue-50 px-4 py-3 rounded-xl border border-blue-100">
+                    <p class="text-sm text-gray-500 font-medium bg-blue-50 px-4 py-3 rounded-xl border border-blue-100" x-show="refreshTime > 0">
                         <i class="fa-solid fa-shield-halved text-blue-500 mr-1"></i> QR dinamis berganti setiap {{ $session->refresh_time_seconds }} detik untuk mencegah kecurangan.
+                    </p>
+                    <p class="text-sm text-gray-500 font-medium bg-gray-50 px-4 py-3 rounded-xl border border-gray-200" x-show="refreshTime == 0" style="display: none;">
+                        <i class="fa-solid fa-qrcode text-gray-500 mr-1"></i> QR Code statis (tanpa auto-refresh).
                     </p>
                     <div class="mt-4">
                         <a href="{{ route('admin.qr_sessions.index') }}" class="text-gray-400 hover:text-gray-600 underline text-sm transition">Kembali ke Daftar Sesi</a>
@@ -232,7 +235,9 @@
                         .then(data => {
                             this.qrSvg = data.svg;
                             this.loading = false;
-                            this.startTimer();
+                            if (this.refreshTime > 0) {
+                                this.startTimer();
+                            }
                         })
                         .catch(err => {
                             this.error = true;

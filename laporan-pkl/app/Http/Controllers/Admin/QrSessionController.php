@@ -33,7 +33,7 @@ class QrSessionController extends Controller
             'latitude' => 'required|numeric',
             'longitude' => 'required|numeric',
             'radius_meters' => 'required|integer|min:1',
-            'refresh_time_seconds' => 'required|integer|min:5|max:3600',
+            'refresh_time_seconds' => 'required|integer|min:0|max:3600',
             'end_time' => 'nullable|date',
         ]);
 
@@ -71,9 +71,13 @@ class QrSessionController extends Controller
                 return response()->json(['error' => 'Sesi telah berakhir', 'is_ended' => true], 403);
             }
 
-            // Generate a token that expires in refresh_time_seconds.
+            // Generate a token that expires in refresh_time_seconds (if > 0).
             // It includes the session ID and the expiry timestamp.
-            $expiresAt = now()->addSeconds((int) $qr_session->refresh_time_seconds)->timestamp;
+            $refreshTime = (int) $qr_session->refresh_time_seconds;
+            $expiresAt = $refreshTime > 0 
+                ? now()->addSeconds($refreshTime)->timestamp
+                : now()->addYears(10)->timestamp;
+
             $data = $qr_session->id . '|' . $expiresAt;
             
             // Simple hash to prevent tampering (HMAC)
