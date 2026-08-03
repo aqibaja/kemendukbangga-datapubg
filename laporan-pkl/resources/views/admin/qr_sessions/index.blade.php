@@ -36,6 +36,8 @@
                                     @if($session->is_active)
                                         @if($session->end_time && now()->greaterThanOrEqualTo($session->end_time))
                                             <span class="bg-gray-100 text-gray-800 text-xs font-medium px-2.5 py-0.5 rounded border border-gray-400">Waktu Habis</span>
+                                        @elseif($session->start_time && now()->lessThan($session->start_time))
+                                            <span class="bg-yellow-100 text-yellow-800 text-xs font-medium px-2.5 py-0.5 rounded border border-yellow-400">Belum Mulai</span>
                                         @else
                                             <span class="bg-green-100 text-green-800 text-xs font-medium px-2.5 py-0.5 rounded border border-green-400">Aktif</span>
                                         @endif

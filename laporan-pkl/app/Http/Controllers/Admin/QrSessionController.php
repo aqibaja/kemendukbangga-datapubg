@@ -34,7 +34,8 @@ class QrSessionController extends Controller
             'longitude' => 'required|numeric',
             'radius_meters' => 'required|integer|min:1',
             'refresh_time_seconds' => 'required|integer|min:0|max:3600',
-            'end_time' => 'nullable|date',
+            'start_time' => 'nullable|date',
+            'end_time' => 'nullable|date|after_or_equal:start_time',
         ]);
 
         QrSession::create([
@@ -43,6 +44,7 @@ class QrSessionController extends Controller
             'longitude' => $request->longitude,
             'radius_meters' => $request->radius_meters,
             'refresh_time_seconds' => $request->refresh_time_seconds,
+            'start_time' => $request->start_time,
             'end_time' => $request->end_time,
             'is_active' => true,
             'created_by' => Auth::id(),

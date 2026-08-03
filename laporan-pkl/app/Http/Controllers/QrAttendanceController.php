@@ -46,17 +46,21 @@ class QrAttendanceController extends Controller
 
         $session = QrSession::find($sessionId);
         if (!$session || !$session->is_active) {
-            return $this->errorView('Sesi presensi ini tidak ditemukan atau sudah ditutup.');
+            return $this->errorView('Kegiatan presensi ini tidak ditemukan atau sudah ditutup.');
         }
 
         if ($session->end_time && now()->greaterThanOrEqualTo($session->end_time)) {
-            return $this->errorView('Sesi presensi ini sudah berakhir pada waktu yang telah ditentukan.');
+            return $this->errorView('Waktu presensi untuk kegiatan ini sudah berakhir.');
+        }
+
+        if ($session->start_time && now()->lessThan($session->start_time)) {
+            return $this->errorView('Presensi belum bisa dilakukan. Jadwal presensi baru akan dibuka pada ' . $session->start_time->format('d M Y H:i') . ' WIB.');
         }
 
         // Check if device already attended this session
         $cookieName = 'qr_attendance_session_' . $session->id;
         if ($request->hasCookie($cookieName)) {
-            return $this->errorView('Perangkat ini sudah digunakan untuk mengisi presensi pada sesi ini.');
+            return $this->errorView('Perangkat HP Anda sudah digunakan untuk mengisi presensi pada kegiatan ini.');
         }
 
         $employees = Employee::orderBy('nama')->get();
@@ -94,17 +98,21 @@ class QrAttendanceController extends Controller
 
         $session = QrSession::find($sessionId);
         if (!$session || !$session->is_active) {
-            return response()->json(['success' => false, 'message' => 'Sesi presensi ditutup.']);
+            return response()->json(['success' => false, 'message' => 'Kegiatan presensi sudah ditutup.']);
         }
 
         if ($session->end_time && now()->greaterThanOrEqualTo($session->end_time)) {
-            return response()->json(['success' => false, 'message' => 'Sesi presensi sudah berakhir.']);
+            return response()->json(['success' => false, 'message' => 'Waktu presensi sudah berakhir.']);
+        }
+
+        if ($session->start_time && now()->lessThan($session->start_time)) {
+            return response()->json(['success' => false, 'message' => 'Presensi belum bisa dilakukan sebelum ' . $session->start_time->format('d M Y H:i') . ' WIB.']);
         }
 
         // Check Cookie again
         $cookieName = 'qr_attendance_session_' . $session->id;
         if ($request->hasCookie($cookieName)) {
-            return response()->json(['success' => false, 'message' => 'Perangkat ini sudah dipakai untuk absen sesi ini.']);
+            return response()->json(['success' => false, 'message' => 'Perangkat HP Anda sudah dipakai untuk absen pada kegiatan ini.']);
         }
 
         // Calculate Distance

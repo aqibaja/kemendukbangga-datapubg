@@ -13,12 +13,14 @@ class QrSession extends Model
         'radius_meters',
         'refresh_time_seconds',
         'is_active',
+        'start_time',
         'end_time',
         'created_by',
     ];
 
     protected $casts = [
         'is_active' => 'boolean',
+        'start_time' => 'datetime',
         'end_time' => 'datetime',
     ];
 

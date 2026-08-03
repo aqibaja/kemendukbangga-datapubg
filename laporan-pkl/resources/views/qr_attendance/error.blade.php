@@ -15,7 +15,7 @@
             <i class="fa-solid fa-circle-xmark text-4xl"></i>
         </div>
         
-        <h1 class="text-2xl font-bold text-gray-800 mb-3">Tidak Dapat Mengakses Sesi</h1>
+        <h1 class="text-2xl font-bold text-gray-800 mb-3">Mohon Maaf</h1>
         
         <p class="text-gray-600 mb-8">{{ $message }}</p>
         

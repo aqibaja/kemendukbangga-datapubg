@@ -57,15 +57,15 @@
                     <p x-show="errorMsg" x-text="errorMsg" class="mt-2 text-sm text-red-600"></p>
                 </div>
 
-                <div class="flex flex-col sm:flex-row gap-4 mb-5">
-                    <div class="flex-1">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-5">
+                    <div>
                         <div class="h-12 mb-2">
                             <label for="radius_meters" class="block text-sm font-medium text-gray-900 leading-tight">Batas Jarak (Radius)<br>dalam Meter <span class="text-red-500">*</span></label>
                         </div>
                         <input type="number" id="radius_meters" name="radius_meters" x-model="radius" @input="updateMap()" required min="5" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" placeholder="Contoh: 30">
                         <p class="mt-2 text-xs text-gray-500">Rekomendasi: 30-50 meter.</p>
                     </div>
-                    <div class="flex-1">
+                    <div>
                         <div class="flex justify-between items-start h-12 mb-2">
                             <label for="refresh_time_seconds" class="block text-sm font-medium text-gray-900 leading-tight pr-1">Waktu Refresh QR <span class="text-red-500">*</span></label>
                             <div class="flex items-center mt-0.5 shrink-0">
@@ -79,7 +79,14 @@
                         <input type="hidden" name="refresh_time_seconds" x-bind:value="0" x-bind:disabled="enableRefresh">
                         <p class="mt-2 text-xs text-gray-500">Maksimal: 3600 detik (1 jam).</p>
                     </div>
-                    <div class="flex-1">
+                    <div>
+                        <div class="h-12 mb-2">
+                            <label for="start_time" class="block text-sm font-medium text-gray-900 leading-tight">Waktu Mulai Sesi</label>
+                        </div>
+                        <input type="datetime-local" id="start_time" name="start_time" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
+                        <p class="mt-2 text-xs text-gray-500">Opsional. Sesi QR tidak bisa di-scan sebelum waktu ini.</p>
+                    </div>
+                    <div>
                         <div class="h-12 mb-2">
                             <label for="end_time" class="block text-sm font-medium text-gray-900 leading-tight">Waktu Berakhir Sesi</label>
                         </div>
