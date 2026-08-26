@@ -51,6 +51,11 @@ class LaporanCapaianController extends Controller
     {
         $laporan = LaporanCapaian::findOrFail($id);
 
+        // Authorization check
+        if (Auth::user()->id_role != 1 && $laporan->dibuat_oleh != Auth::id()) {
+            abort(403, 'Unauthorized action.');
+        }
+
         $request->validate([
             'tipe'  => 'required|in:pengendalian_lapangan,capaian_program,elsimil,quick_win',
             'bulan' => 'required|integer|min:1|max:12',
@@ -77,6 +82,11 @@ class LaporanCapaianController extends Controller
     public function destroy($id)
     {
         $laporan = LaporanCapaian::findOrFail($id);
+        
+        // Authorization check
+        if (Auth::user()->id_role != 1 && $laporan->dibuat_oleh != Auth::id()) {
+            abort(403, 'Unauthorized action.');
+        }
         $laporan->delete();
 
         return response()->json(['success' => true, 'message' => 'Laporan berhasil dihapus']);

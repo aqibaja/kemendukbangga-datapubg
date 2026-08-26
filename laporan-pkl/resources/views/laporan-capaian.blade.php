@@ -1,14 +1,38 @@
 <x-layout>
     <x-slot:title>{{ $title }}</x-slot:title>
 
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;800&display=swap');
+        
+        :root {
+            --navy: #063B76;
+            --navy-dark: #022A59;
+            --teal: #008B76;
+            --green: #15803D;
+            --orange: #F57C00;
+            --red: #D7193F;
+            --purple: #5B2BBE;
+            --cyan: #078DCB;
+            --surface: #FFFFFF;
+            --canvas: #F1F7FF;
+            --line: #CFDDEC;
+            --text: #152238;
+            --muted: #627086;
+        }
+
         .bg-main { 
-            background: linear-gradient(135deg, #1fa2a8 0%, #0d5f5a 50%, #d48e15 100%); 
+            background-color: var(--canvas);
+            font-family: 'Plus Jakarta Sans', sans-serif;
+        }
+        /* Used only by capaian_program, elsimil, quick_win sections */
+        .bg-main-dark {
+            background: linear-gradient(135deg, #1fa2a8 0%, #0d5f5a 50%, #d48e15 100%);
             font-family: 'Poppins', sans-serif;
         }
         .gold-card { 
@@ -22,7 +46,94 @@
             border: 2px solid #ffd700;
             box-shadow: 0 8px 20px rgba(0,0,0,0.6);
         }
+        /* Infographic card: white bg, thick colored left border */
+        .info-card {
+            background: #fff;
+            border-radius: 16px;
+            box-shadow: 0 4px 18px rgba(0,0,0,0.10);
+            overflow: hidden;
+        }
+        /* Section full-width bar header */
+        .section-bar {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            border-radius: 14px;
+            padding: 12px 20px;
+            margin-bottom: 20px;
+            font-weight: 800;
+            font-size: 1.25rem;
+            letter-spacing: 0.03em;
+            text-transform: uppercase;
+            color: #fff;
+        }
+        .section-bar img {
+            width: 60px;
+            height: 60px;
+            object-fit: cover;
+            border-radius: 50%;
+            border: 3px solid rgba(255,255,255,0.5);
+            background: rgba(255,255,255,0.15);
+            flex-shrink: 0;
+        }
+        /* Big stat label and number */
+        .stat-label { font-size: 1rem; font-weight: 600; color: #64748b; }
+        .stat-value { font-size: 1.875rem; font-weight: 900; line-height: 1; }
+        .stat-pct   { font-size: 2.5rem;  font-weight: 900; line-height: 1; }
+        /* Card header strip */
+        .card-hdr {
+            font-size: 0.95rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: #fff;
+            padding: 10px 16px;
+            text-align: center;
+        }
+        .card-body { padding: 18px 20px; }
+        .stat-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+        .pct-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 12px;
+            padding-top: 12px;
+            border-top: 2px solid #f1f5f9;
+        }
 
+        body.exporting .export-fix-text {
+            margin-top: -3px !important;
+            padding-bottom: 3px !important;
+            display: inline-block;
+        }
+        body.exporting .export-fix-icon {
+            margin-top: -4px !important;
+        }
+        body.exporting .shift-up-export {
+            margin-top: -3px !important;
+        }
+        body.exporting .pill-text {
+            display: inline-block;
+            margin-top: -2px !important;
+        }
+        body.exporting * {
+            text-rendering: auto !important;
+        }
+        /* Fix html2canvas font baseline clipping */
+        body.exporting p, 
+        body.exporting h1, 
+        body.exporting h2, 
+        body.exporting h3, 
+        body.exporting h4, 
+        body.exporting span, 
+        body.exporting div {
+            line-height: normal !important;
+        }
     </style>
 
     <!-- Zoom Controls -->
@@ -51,24 +162,21 @@
     @endphp
 
     <div class="bg-main flex flex-col relative z-0 mt-4 sm:mx-4 rounded-3xl overflow-hidden shadow-2xl" id="posterContent">
-        <!-- Flex container for perfectly centered watermark that html2canvas understands -->
-        <div class="absolute inset-0 pointer-events-none flex items-center justify-center z-0 overflow-hidden">
-            <img src="{{ $logoSrc }}" alt="Watermark BKKBN" style="width: 80vw; max-width: 800px; opacity: 0.05;">
-        </div>
         <div class="flex-grow flex flex-col items-center p-2 sm:p-4">
-            <div class="max-w-7xl w-full text-white relative z-10">
+            <div class="max-w-7xl w-full relative z-10" style="color:#1e293b;">
                 
-                <!-- Header -->
-                <div class="flex flex-col items-center mb-8 sm:mb-12 mt-4 relative">
-                    <div class="flex flex-col sm:flex-row items-center gap-3 mb-2 text-center sm:text-left">
-                        <img src="{{ $logoSrc }}" alt="Logo BKKBN" class="w-14 h-14 sm:w-16 sm:h-16 object-contain  p-1">
-                        <div class="leading-tight">
-                            <div class="text-[9px] sm:text-[10px] font-semibold">Kementerian Kependudukan dan</div>
-                            <div class="text-[9px] sm:text-[10px] font-semibold">Pembangunan Keluarga/BKKBN</div>
-                            <div class="text-[9px] sm:text-[10px] font-bold text-yellow-300">Perwakilan BKKBN Provinsi Aceh</div>
+                <!-- ===== HEADER ===== -->
+                <div class="flex flex-col items-center mb-6 mt-4 relative">
+                    {{-- Logo + nama instansi --}}
+                    <div class="flex flex-col sm:flex-row items-center gap-4 mb-3 text-center sm:text-left">
+                        <img src="{{ $logoSrc }}" alt="Logo BKKBN" class="w-20 h-20 sm:w-24 sm:h-24 object-contain drop-shadow-md">
+                        <div class="leading-snug">
+                            <div class="text-sm sm:text-base font-semibold text-slate-500">Kementerian Kependudukan dan Pembangunan Keluarga/BKKBN</div>
+                            <div class="text-base sm:text-lg font-extrabold text-teal-700">Perwakilan BKKBN Provinsi Aceh</div>
                         </div>
                     </div>
-                    <div class="text-base sm:text-lg md:text-3xl lg:text-4xl font-extrabold drop-shadow-lg text-center leading-tight px-2">
+                    {{-- Judul Laporan --}}
+                    <div class="text-xl sm:text-3xl md:text-4xl font-black text-slate-800 text-center leading-tight px-2 drop-shadow-sm">
                         @if(request('tipe', 'pengendalian_lapangan') == 'pengendalian_lapangan')
                             LAPORAN CAPAIAN PROGRAM PENGENDALIAN LAPANGAN<br>
                         @elseif(request('tipe') == 'capaian_program')
@@ -78,270 +186,41 @@
                         @elseif(request('tipe') == 'quick_win')
                             LAPORAN QUICK WIN<br>
                         @endif
-                        KEMENDUKBANGGA (BKKBN) PROV ACEH<br>
-                        <span class="text-yellow-300 drop-shadow-md uppercase">{{ \App\Models\LaporanCapaian::namaBulan($bulan) }} TAHUN {{ $tahun }}</span>
+                        <span class="text-slate-700">KEMENDUKBANGGA (BKKBN) PROV ACEH</span><br>
+                        <span class="text-teal-600 text-2xl sm:text-4xl uppercase">{{ \App\Models\LaporanCapaian::namaBulan($bulan) }} TAHUN {{ $tahun }}</span>
                     </div>
 
                     <!-- Form Filter -->
-                    <form method="GET" action="/laporan-capaian" class="print:hidden mt-6 bg-teal-900/50 backdrop-blur-md p-3 rounded-2xl flex flex-wrap justify-center items-center gap-2 border border-teal-500 shadow-lg">
-                        <select name="tipe" class="bg-white/10 text-white border border-white/30 rounded-lg px-3 py-1.5 text-sm font-bold focus:outline-none focus:ring-2 focus:ring-yellow-400">
-                            <option value="pengendalian_lapangan" {{ request('tipe', 'pengendalian_lapangan') == 'pengendalian_lapangan' ? 'selected' : '' }} class="bg-teal-800 text-white">Pengendalian Lapangan</option>
-                            <option value="capaian_program" {{ request('tipe') == 'capaian_program' ? 'selected' : '' }} class="bg-teal-800 text-white">Capaian Program</option>
-                            <option value="elsimil" {{ request('tipe') == 'elsimil' ? 'selected' : '' }} class="bg-teal-800 text-white">Capaian Elsimil</option>
-                            <option value="quick_win" {{ request('tipe') == 'quick_win' ? 'selected' : '' }} class="bg-teal-800 text-white">Laporan Quick Win</option>
+                    <form method="GET" action="/laporan-capaian" class="print:hidden mt-6 bg-white/80 backdrop-blur-md p-3 rounded-2xl flex flex-wrap justify-center items-center gap-2 border border-slate-200 shadow-lg">
+                        <select name="tipe" class="bg-white text-slate-800 border border-slate-300 rounded-lg px-3 py-1.5 text-sm font-bold focus:outline-none focus:ring-2 focus:ring-teal-400">
+                            <option value="pengendalian_lapangan" {{ request('tipe', 'pengendalian_lapangan') == 'pengendalian_lapangan' ? 'selected' : '' }}>Pengendalian Lapangan</option>
+                            <option value="capaian_program" {{ request('tipe') == 'capaian_program' ? 'selected' : '' }}>Capaian Program</option>
+                            <option value="elsimil" {{ request('tipe') == 'elsimil' ? 'selected' : '' }}>Capaian Elsimil</option>
+                            <option value="quick_win" {{ request('tipe') == 'quick_win' ? 'selected' : '' }}>Laporan Quick Win</option>
                         </select>
-                        <select name="bulan" class="bg-white/10 text-white border border-white/30 rounded-lg px-3 py-1.5 text-sm font-bold focus:outline-none focus:ring-2 focus:ring-yellow-400">
+                        <select name="bulan" class="bg-white text-slate-800 border border-slate-300 rounded-lg px-3 py-1.5 text-sm font-bold focus:outline-none focus:ring-2 focus:ring-teal-400">
                             @for($m=1;$m<=12;$m++)
-                                <option value="{{$m}}" {{$bulan==$m?'selected':''}} class="bg-teal-800 text-white">{{App\Models\LaporanCapaian::namaBulan($m)}}</option>
+                                <option value="{{$m}}" {{$bulan==$m?'selected':''}}>{{App\Models\LaporanCapaian::namaBulan($m)}}</option>
                             @endfor
                         </select>
-                        <select name="tahun" class="bg-white/10 text-white border border-white/30 rounded-lg px-3 py-1.5 text-sm font-bold focus:outline-none focus:ring-2 focus:ring-yellow-400">
+                        <select name="tahun" class="bg-white text-slate-800 border border-slate-300 rounded-lg px-3 py-1.5 text-sm font-bold focus:outline-none focus:ring-2 focus:ring-teal-400">
                             @for($y=2024;$y<=now()->year+1;$y++)
-                                <option value="{{$y}}" {{$tahun==$y?'selected':''}} class="bg-teal-800 text-white">{{$y}}</option>
+                                <option value="{{$y}}" {{$tahun==$y?'selected':''}}>{{$y}}</option>
                             @endfor
                         </select>
-                        <button type="submit" class="bg-yellow-400 text-teal-900 border-none rounded-lg px-4 py-1.5 text-sm font-bold hover:bg-yellow-300 transition-colors shadow-md">Tampilkan</button>
+                        <button type="submit" class="bg-teal-600 text-white border-none rounded-lg px-5 py-1.5 text-sm font-bold hover:bg-teal-700 transition-colors shadow-md">Tampilkan</button>
                     </form>
                 </div>
 
                 @if(request('tipe', 'pengendalian_lapangan') == 'pengendalian_lapangan')
                     @if(isset($laporans['pengendalian_lapangan']))
                         @php $d = $laporans['pengendalian_lapangan']->data; @endphp
-
-                    <!-- BKB -->
-                    <div class="mt-6">
-                        <div class="flex justify-center mb-6 mt-4">
-                            <div class="inline-flex items-center">
-                                <div class="relative w-14 h-14 sm:w-20 sm:h-20 bg-teal-900 rounded-full border-2 sm:border-4 border-yellow-400 flex items-center justify-center shadow-lg z-20 overflow-hidden flex-shrink-0 -mr-6 sm:-mr-10">
-                                    <img src="{{ asset('public/image/bkb_3d.png') }}?v={{ time() }}" class="w-full h-full object-cover" alt="BKB">
-                                </div>
-                                <div class="text-center font-bold text-sm sm:text-xl text-teal-900 bg-yellow-400 pl-10 sm:pl-14 pr-6 py-2 rounded-full shadow-[0_5px_15px_rgba(255,215,0,0.4)] uppercase border-2 border-white relative z-10">
-                                    <span class="pill-text inline-block relative z-10" style="top: 0px;">BINA KELUARGA BALITA (BKB)</span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4 px-2">
-                            <!-- Cakupan Laporan -->
-                            @php $bkb1 = $d['bkb']['cakupan_laporan'] ?? []; @endphp
-                            <div class="dark-green-card rounded-xl p-4 text-sm relative">
-                                <h3 class="text-white font-bold mb-1 text-center border-b border-teal-700 pb-2">a. Cakupan Laporan</h3>
-                                <div class="text-gray-200">
-                                    <div class="flex justify-between mb-1"><span>Ada</span> <span class="font-bold text-white">{{ number_format($bkb1['ada'] ?? 0, 0, ',', '.') }}</span></div>
-                                    <div class="flex justify-between mb-1"><span>Lapor</span> <span class="font-bold text-white">{{ number_format($bkb1['lapor'] ?? 0, 0, ',', '.') }}</span></div>
-                                    <div class="flex justify-between mt-3 pt-2 border-t border-teal-700 text-white"><span>Persentase</span> <span class="font-bold text-yellow-300 text-lg">{{ number_format($bkb1['persentase'] ?? 0, 2, ',', '.') }}%</span></div>
-                                </div>
-                            </div>
-                            <!-- Persentase Anak Hadir -->
-                            @php $bkb2 = $d['bkb']['anak_hadir_kka'] ?? []; @endphp
-                            <div class="dark-green-card rounded-xl p-4 text-sm relative">
-                                <h3 class="text-white font-bold mb-1 text-center border-b border-teal-700 pb-2">b. Anak Hadir KKA</h3>
-                                <div class="text-gray-200">
-                                    <div class="flex justify-between mb-1"><span>Hadir</span> <span class="font-bold text-white">{{ number_format($bkb2['hadir'] ?? 0, 0, ',', '.') }}</span></div>
-                                    <div class="flex justify-between mb-1"><span>Guna KKA</span> <span class="font-bold text-white">{{ number_format($bkb2['menggunakan_kka'] ?? 0, 0, ',', '.') }}</span></div>
-                                    <div class="flex justify-between mt-3 pt-2 border-t border-teal-700 text-white"><span>Persentase</span> <span class="font-bold text-yellow-300 text-lg">{{ number_format($bkb2['persentase'] ?? 0, 2, ',', '.') }}%</span></div>
-                                </div>
-                            </div>
-                            <!-- Keluarga Ikut BKB -->
-                            @php $bkb3 = $d['bkb']['keluarga_ikut_bkb'] ?? []; @endphp
-                            <div class="dark-green-card rounded-xl p-4 text-sm relative">
-                                <h3 class="text-white font-bold mb-1 text-center border-b border-teal-700 pb-2">c. Keluarga Ikut BKB</h3>
-                                <div class="text-gray-200">
-                                    <div class="flex justify-between mb-1"><span>Target</span> <span class="font-bold text-white">{{ number_format($bkb3['target'] ?? 0, 0, ',', '.') }}</span></div>
-                                    <div class="flex justify-between mb-1"><span>Capaian</span> <span class="font-bold text-white">{{ number_format($bkb3['capaian'] ?? 0, 0, ',', '.') }}</span></div>
-                                    <div class="flex justify-between mt-3 pt-2 border-t border-teal-700 text-white"><span>Persentase</span> <span class="font-bold text-yellow-300 text-lg">{{ number_format($bkb3['persentase'] ?? 0, 2, ',', '.') }}%</span></div>
-                                </div>
-                            </div>
-                            <!-- Pembinaan Baduta -->
-                            @php $bkb4 = $d['bkb']['pembinaan_baduta'] ?? []; @endphp
-                            <div class="dark-green-card rounded-xl p-4 text-sm relative">
-                                <h3 class="text-white font-bold mb-1 text-center border-b border-teal-700 pb-2">d. Pembinaan Baduta</h3>
-                                <div class="text-gray-200">
-                                    <div class="flex justify-between mb-1"><span>Target</span> <span class="font-bold text-white">{{ number_format($bkb4['target'] ?? 0, 0, ',', '.') }}</span></div>
-                                    <div class="flex justify-between mb-1"><span>Capaian</span> <span class="font-bold text-white">{{ number_format($bkb4['capaian'] ?? 0, 0, ',', '.') }}</span></div>
-                                    <div class="flex justify-between mt-3 pt-2 border-t border-teal-700 text-white"><span>Persentase</span> <span class="font-bold text-yellow-300 text-lg">{{ number_format($bkb4['persentase'] ?? 0, 2, ',', '.') }}%</span></div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- BKR & BKL ROW -->
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-10">
-                        <!-- BKR -->
-                        <div>
-                            <div class="flex justify-center mb-6 mt-4">
-                                <div class="inline-flex items-center">
-                                <div class="relative w-14 h-14 sm:w-20 sm:h-20 bg-teal-900 rounded-full border-2 sm:border-4 border-yellow-400 flex items-center justify-center shadow-lg z-20 overflow-hidden flex-shrink-0 -mr-6 sm:-mr-10">
-                                    <img src="{{ asset('public/image/bkr_3d.png') }}?v={{ time() }}" class="w-full h-full object-cover" alt="BKR">
-                                </div>
-                                <div class="text-center font-bold text-sm sm:text-lg text-teal-900 bg-yellow-400 pl-10 sm:pl-14 pr-6 py-2 rounded-full shadow-[0_5px_15px_rgba(255,215,0,0.4)] uppercase border-2 border-white relative z-10">
-                                    <span class="pill-text inline-block relative z-10" style="top: 0px;">BINA KELUARGA REMAJA (BKR)</span>
-                                </div>
-                            </div>
-                            </div>
-                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 px-2">
-                                @php $bkr1 = $d['bkr']['cakupan_laporan'] ?? []; @endphp
-                                <div class="dark-green-card rounded-xl p-4 text-sm relative">
-                                    <h3 class="text-white font-bold mb-1 text-center border-b border-teal-700 pb-2">a. Cakupan Laporan</h3>
-                                    <div class="text-gray-200">
-                                        <div class="flex justify-between mb-1"><span>Ada</span> <span class="font-bold text-white">{{ number_format($bkr1['ada'] ?? 0, 0, ',', '.') }}</span></div>
-                                        <div class="flex justify-between mb-1"><span>Lapor</span> <span class="font-bold text-white">{{ number_format($bkr1['lapor'] ?? 0, 0, ',', '.') }}</span></div>
-                                        <div class="flex justify-between mt-3 pt-2 border-t border-teal-700 text-white"><span>Persentase</span> <span class="font-bold text-yellow-300 text-lg">{{ number_format($bkr1['persentase'] ?? 0, 2, ',', '.') }}%</span></div>
-                                    </div>
-                                </div>
-                                @php $bkr2 = $d['bkr']['anggota_hadir'] ?? []; @endphp
-                                <div class="dark-green-card rounded-xl p-4 text-sm relative">
-                                    <h3 class="text-white font-bold mb-1 text-center border-b border-teal-700 pb-2">b. Anggota Hadir</h3>
-                                    <div class="text-gray-200">
-                                        <div class="flex justify-between mb-1"><span>Jumlah</span> <span class="font-bold text-white">{{ number_format($bkr2['jumlah'] ?? 0, 0, ',', '.') }}</span></div>
-                                        <div class="flex justify-between mb-1"><span>Hadir</span> <span class="font-bold text-white">{{ number_format($bkr2['hadir'] ?? 0, 0, ',', '.') }}</span></div>
-                                        <div class="flex justify-between mt-3 pt-2 border-t border-teal-700 text-white"><span>Persentase</span> <span class="font-bold text-yellow-300 text-lg">{{ number_format($bkr2['persentase'] ?? 0, 2, ',', '.') }}%</span></div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- BKL -->
-                        <div>
-                            <div class="flex justify-center mb-6 mt-4">
-                                <div class="inline-flex items-center">
-                                <div class="relative w-14 h-14 sm:w-20 sm:h-20 bg-teal-900 rounded-full border-2 sm:border-4 border-yellow-400 flex items-center justify-center shadow-lg z-20 overflow-hidden flex-shrink-0 -mr-6 sm:-mr-10">
-                                    <img src="{{ asset('public/image/bkl_3d.png') }}?v={{ time() }}" class="w-full h-full object-cover" alt="BKL">
-                                </div>
-                                <div class="text-center font-bold text-sm sm:text-lg text-teal-900 bg-yellow-400 pl-10 sm:pl-14 pr-6 py-2 rounded-full shadow-[0_5px_15px_rgba(255,215,0,0.4)] uppercase border-2 border-white relative z-10">
-                                    <span class="pill-text inline-block relative z-10" style="top: 0px;">BINA KELUARGA LANSIA (BKL)</span>
-                                </div>
-                            </div>
-                            </div>
-                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 px-2">
-                                @php $bkl1 = $d['bkl']['cakupan_laporan'] ?? []; @endphp
-                                <div class="dark-green-card rounded-xl p-4 text-sm relative">
-                                    <h3 class="text-white font-bold mb-1 text-center border-b border-teal-700 pb-2">a. Cakupan Laporan</h3>
-                                    <div class="text-gray-200">
-                                        <div class="flex justify-between mb-1"><span>Ada</span> <span class="font-bold text-white">{{ number_format($bkl1['ada'] ?? 0, 0, ',', '.') }}</span></div>
-                                        <div class="flex justify-between mb-1"><span>Lapor</span> <span class="font-bold text-white">{{ number_format($bkl1['lapor'] ?? 0, 0, ',', '.') }}</span></div>
-                                        <div class="flex justify-between mt-3 pt-2 border-t border-teal-700 text-white"><span>Persentase</span> <span class="font-bold text-yellow-300 text-lg">{{ number_format($bkl1['persentase'] ?? 0, 2, ',', '.') }}%</span></div>
-                                    </div>
-                                </div>
-                                @php $bkl2 = $d['bkl']['anggota_hadir'] ?? []; @endphp
-                                <div class="dark-green-card rounded-xl p-4 text-sm relative">
-                                    <h3 class="text-white font-bold mb-1 text-center border-b border-teal-700 pb-2">b. Anggota Hadir</h3>
-                                    <div class="text-gray-200">
-                                        <div class="flex justify-between mb-1"><span>Jml Kel.</span> <span class="font-bold text-white">{{ number_format($bkl2['jumlah_keluarga'] ?? 0, 0, ',', '.') }}</span></div>
-                                        <div class="flex justify-between mb-1"><span>Tot Hadir</span> <span class="font-bold text-white">{{ number_format($bkl2['total_hadir'] ?? 0, 0, ',', '.') }}</span></div>
-                                        <div class="flex justify-between mt-3 pt-2 border-t border-teal-700 text-white"><span>Persentase</span> <span class="font-bold text-yellow-300 text-lg">{{ number_format($bkl2['persentase'] ?? 0, 2, ',', '.') }}%</span></div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- PIK-R & UPPKA ROW -->
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-10">
-                        <!-- PIK-R -->
-                        <div>
-                            <div class="flex justify-center mb-6 mt-4">
-                                <div class="inline-flex items-center">
-                                <div class="relative w-14 h-14 sm:w-20 sm:h-20 bg-teal-900 rounded-full border-2 sm:border-4 border-yellow-400 flex items-center justify-center shadow-lg z-20 overflow-hidden flex-shrink-0 -mr-6 sm:-mr-10">
-                                    <img src="{{ asset('public/image/pikr_3d.png') }}?v={{ time() }}" class="w-full h-full object-cover" alt="PIK-R">
-                                </div>
-                                <div class="text-center font-bold text-sm sm:text-lg text-teal-900 bg-yellow-400 pl-10 sm:pl-14 pr-6 py-2 rounded-full shadow-[0_5px_15px_rgba(255,215,0,0.4)] uppercase border-2 border-white relative z-10">
-                                    <span class="pill-text inline-block relative z-10" style="top: 0px;">PIK REMAJA (PIK-R)</span>
-                                </div>
-                            </div>
-                            </div>
-                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 px-2">
-                                @php $pikr1 = $d['pikr']['cakupan_laporan'] ?? []; @endphp
-                                <div class="dark-green-card rounded-xl p-4 text-sm relative">
-                                    <h3 class="text-white font-bold mb-1 text-center border-b border-teal-700 pb-2">a. Cakupan Laporan</h3>
-                                    <div class="text-gray-200">
-                                        <div class="flex justify-between mb-1"><span>Ada</span> <span class="font-bold text-white">{{ number_format($pikr1['ada'] ?? 0, 0, ',', '.') }}</span></div>
-                                        <div class="flex justify-between mb-1"><span>Lapor</span> <span class="font-bold text-white">{{ number_format($pikr1['lapor'] ?? 0, 0, ',', '.') }}</span></div>
-                                        <div class="flex justify-between mt-3 pt-2 border-t border-teal-700 text-white"><span>Persentase</span> <span class="font-bold text-yellow-300 text-lg">{{ number_format($pikr1['persentase'] ?? 0, 2, ',', '.') }}%</span></div>
-                                    </div>
-                                </div>
-                                @php $pikr2 = $d['pikr']['anggota_hadir'] ?? []; @endphp
-                                <div class="dark-green-card rounded-xl p-4 text-sm relative">
-                                    <h3 class="text-white font-bold mb-1 text-center border-b border-teal-700 pb-2">b. Anggota Hadir</h3>
-                                    <div class="text-gray-200">
-                                        <div class="flex justify-between mb-1"><span>Target</span> <span class="font-bold text-white">{{ number_format($pikr2['target'] ?? 0, 0, ',', '.') }}</span></div>
-                                        <div class="flex justify-between mb-1"><span>Hadir</span> <span class="font-bold text-white">{{ number_format($pikr2['hadir'] ?? 0, 0, ',', '.') }}</span></div>
-                                        <div class="flex justify-between mt-3 pt-2 border-t border-teal-700 text-white"><span>Persentase</span> <span class="font-bold text-yellow-300 text-lg">{{ number_format($pikr2['persentase'] ?? 0, 2, ',', '.') }}%</span></div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- UPPKA -->
-                        <div>
-                            <div class="flex justify-center mb-6 mt-4">
-                                <div class="inline-flex items-center">
-                                <div class="relative w-14 h-14 sm:w-20 sm:h-20 bg-teal-900 rounded-full border-2 sm:border-4 border-yellow-400 flex items-center justify-center shadow-lg z-20 overflow-hidden flex-shrink-0 -mr-6 sm:-mr-10">
-                                    <img src="{{ asset('public/image/uppka_3d.png') }}?v={{ time() }}" class="w-full h-full object-cover" alt="UPPKA">
-                                </div>
-                                <div class="text-center font-bold text-sm sm:text-lg text-teal-900 bg-yellow-400 pl-10 sm:pl-14 pr-6 py-2 rounded-full shadow-[0_5px_15px_rgba(255,215,0,0.4)] uppercase border-2 border-white relative z-10">
-                                    <span class="pill-text inline-block relative z-10" style="top: 0px;">UPPKA</span>
-                                </div>
-                            </div>
-                            </div>
-                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 px-2">
-                                @php $uppka1 = $d['uppka']['cakupan_laporan'] ?? []; @endphp
-                                <div class="dark-green-card rounded-xl p-4 text-sm relative">
-                                    <h3 class="text-white font-bold mb-1 text-center border-b border-teal-700 pb-2">a. Cakupan Laporan</h3>
-                                    <div class="text-gray-200">
-                                        <div class="flex justify-between mb-1"><span>Ada</span> <span class="font-bold text-white">{{ number_format($uppka1['ada'] ?? 0, 0, ',', '.') }}</span></div>
-                                        <div class="flex justify-between mb-1"><span>Lapor</span> <span class="font-bold text-white">{{ number_format($uppka1['lapor'] ?? 0, 0, ',', '.') }}</span></div>
-                                        <div class="flex justify-between mt-3 pt-2 border-t border-teal-700 text-white"><span>Persentase</span> <span class="font-bold text-yellow-300 text-lg">{{ number_format($uppka1['persentase'] ?? 0, 2, ',', '.') }}%</span></div>
-                                    </div>
-                                </div>
-                                @php $uppka2 = $d['uppka']['anggota_hadir'] ?? []; @endphp
-                                <div class="dark-green-card rounded-xl p-4 text-sm relative">
-                                    <h3 class="text-white font-bold mb-1 text-center border-b border-teal-700 pb-2">b. Anggota Hadir</h3>
-                                    <div class="text-gray-200">
-                                        <div class="flex justify-between mb-1"><span>Jml Kel.</span> <span class="font-bold text-white">{{ number_format($uppka2['jumlah_keluarga'] ?? 0, 0, ',', '.') }}</span></div>
-                                        <div class="flex justify-between mb-1"><span>Hadir</span> <span class="font-bold text-white">{{ number_format($uppka2['hadir'] ?? 0, 0, ',', '.') }}</span></div>
-                                        <div class="flex justify-between mt-3 pt-2 border-t border-teal-700 text-white"><span>Persentase</span> <span class="font-bold text-yellow-300 text-lg">{{ number_format($uppka2['persentase'] ?? 0, 2, ',', '.') }}%</span></div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- PPKS -->
-                    <div class="mt-8 mb-6 relative">
-                        <div class="flex justify-center mb-6 mt-4 relative z-10">
-                            <div class="inline-flex items-center">
-                                <div class="relative w-14 h-14 sm:w-20 sm:h-20 bg-teal-900 rounded-full border-2 sm:border-4 border-yellow-400 flex items-center justify-center shadow-lg z-20 overflow-hidden flex-shrink-0 -mr-6 sm:-mr-10">
-                                    <img src="{{ asset('public/image/ppks_3d.png') }}?v={{ time() }}" class="w-full h-full object-cover" alt="PPKS">
-                                </div>
-                                <div class="text-center font-bold text-sm sm:text-xl text-teal-900 bg-yellow-400 pl-10 sm:pl-14 pr-6 py-2 rounded-full shadow-[0_5px_15px_rgba(255,215,0,0.4)] uppercase border-2 border-white relative z-10">
-                                    <span class="pill-text inline-block relative z-10" style="top: 0px;">PUSAT PELAYANAN KELUARGA SEJAHTERA (PPKS)</span>
-                                </div>
-                            </div>
-                        </div>
-                        <!-- Card and Images Container -->
-                        <div class="flex justify-center items-center px-2 relative z-10 w-full max-w-5xl mx-auto mt-2 py-4">
-                            <!-- Image 1 (Left) -->
-                            <img src="{{ asset('public/image/rumah_aceh.png') }}" alt="Rumah Adat Aceh" class="absolute left-0 md:left-10 top-1/2 -translate-y-1/2 w-40 md:w-64 drop-shadow-[0_0_15px_rgba(255,215,0,0.3)] pointer-events-none hidden sm:block z-0 opacity-80">
-
-                            @php $ppks1 = $d['ppks']['cakupan_laporan'] ?? []; @endphp
-                            <div class="dark-green-card rounded-xl p-5 text-sm relative w-full sm:w-80 flex-shrink-0 z-10">
-                                <h3 class="text-white font-bold mb-1 text-center border-b border-teal-700 pb-2">a. Cakupan Laporan</h3>
-                                <div class="text-gray-200">
-                                    <div class="flex justify-between mb-2 text-base"><span>Ada</span> <span class="font-bold text-white">{{ number_format($ppks1['ada'] ?? 0, 0, ',', '.') }}</span></div>
-                                    <div class="flex justify-between mb-2 text-base"><span>Lapor</span> <span class="font-bold text-white">{{ number_format($ppks1['lapor'] ?? 0, 0, ',', '.') }}</span></div>
-                                    <div class="flex justify-between mt-4 pt-3 border-t border-teal-700 text-white"><span>Persentase</span> <span class="font-bold text-yellow-300 text-2xl">{{ number_format($ppks1['persentase'] ?? 0, 2, ',', '.') }}%</span></div>
-                                </div>
-                            </div>
-
-                            <!-- Image 2 (Right) -->
-                            <img src="{{ asset('public/image/masjid_emas.png') }}" alt="Masjid Emas" class="absolute right-0 md:right-10 top-1/2 -translate-y-1/2 w-40 md:w-64 drop-shadow-[0_0_15px_rgba(255,215,0,0.3)] pointer-events-none hidden sm:block z-0 opacity-80">
-                        </div>
-                    </div>
+                        @include('laporan-capaian-pengendalian')
 
                     @else
-                        <div class="text-center py-32 text-yellow-300 font-bold text-2xl drop-shadow-md">Data Pengendalian Lapangan tidak tersedia untuk periode ini</div>
+                        <div class="text-center py-10 text-slate-500">Data tidak ditemukan.</div>
                     @endif
-@elseif(request('tipe') == 'capaian_program')
+                    @elseif(request('tipe') == 'capaian_program')
                     @if(isset($laporans['capaian_program']))
                         @php $d = $laporans['capaian_program']->data; @endphp
 
@@ -927,30 +806,7 @@
             </div>
         </div>
 
-        <!-- FOOTER STATIS RESPONSIF -->
-        <div class="w-full flex flex-col items-center mt-8 relative z-20 px-2 sm:px-8 pt-8 pb-8">
-            
-            <!-- Kotak Layanan -->
-            <div class="w-full max-w-4xl bg-teal-900/95 backdrop-blur-md border border-yellow-400 text-white rounded-2xl sm:rounded-full p-4 sm:px-8 sm:py-3 mb-6 relative z-30 shadow-[0_10px_30px_rgba(0,0,0,0.5)] flex flex-col sm:flex-row justify-center items-center gap-3 sm:gap-6 text-xs sm:text-sm">
-                <div class="flex items-center gap-2">
-                    <span class="bg-green-500 rounded-full w-6 h-6 flex items-center justify-center shadow-md">
-                        <span class="shift-up-export inline-block" style="line-height:1;">📞</span>
-                    </span>
-                    <span class="text-center sm:text-left shift-up-export inline-block">Layanan Pengaduan <br class="hidden sm:block"><b class="text-yellow-300">085361209387</b></span>
-                </div>
-                <div class="w-full sm:w-px h-px sm:h-6 bg-teal-500"></div> <!-- Garis Pembatas -->
-                <div class="flex items-center gap-2">
-                    <span class="shift-up-export inline-block" style="line-height:1;">🌐</span> 
-                    <span class="shift-up-export inline-block">aceh.kemendukbangga.go.id</span>
-                </div>
-                <div class="w-full sm:w-px h-px sm:h-6 bg-teal-500"></div> <!-- Garis Pembatas -->
-                <div class="flex items-center gap-2">
-                    <span class="shift-up-export inline-block" style="line-height:1;">📱</span> 
-                    <span class="shift-up-export inline-block">kemendukbangga_bkkbnaceh</span>
-                </div>
-            </div>
-            </div>
-        </div>
+
 
     </div>
 
@@ -970,103 +826,123 @@
         function zoomReset() { zoom = 1; updateZoom(); }
 
         // Download PNG/PDF functions
-        async function d(type) {
-            const btnContainer = document.getElementById('shareBtns');
-            const zoomContainer = document.getElementById('zoomControls');
-            const target = document.getElementById('posterContent');
-            const formFilters = target.querySelector('form');
-            
-            btnContainer.style.display = 'none';
-            zoomContainer.style.display = 'none';
-            if(formFilters) formFilters.style.display = 'none';
-            
-            const origZoom = zoom;
-            zoom = 1; updateZoom();
-            
-            // Allow some time for layout to settle
-            await new Promise(r => setTimeout(r, 200));
-
-            try {
-                // Konfigurasi html2canvas dengan onclone agar live DOM tidak terpengaruh
-                const canvas = await html2canvas(target, { 
-                    scale: 2, 
-                    useCORS: true,
-                    backgroundColor: null,
-                    logging: false,
-                    windowWidth: 1400, // Force a consistent width for export
-                    onclone: function(clonedDoc) {
-                        // 1. Perbaiki text pill (tombol kuning)
-                        const texts = clonedDoc.querySelectorAll('.pill-text');
-                        texts.forEach(t => t.style.top = '-8px');
-
-                        // 2. Perbaiki teks mCPR dan persentase yang turun
-                        const shiftElements = clonedDoc.querySelectorAll('.shift-up-export');
-                        shiftElements.forEach(t => {
-                            t.style.position = 'relative';
-                            t.style.top = '-6px'; // Naikkan
-                        });
-
-                        // 3. Fix Chart.js overflow due to fixed windowWidth cloning
-                        const charts = clonedDoc.querySelectorAll('canvas');
-                        charts.forEach(c => {
-                            c.style.width = '100%';
-                            c.style.height = '100%';
-                        });
-                        
-                        // 3. Hilangkan margin dan border radius agar export rapi
-                        const poster = clonedDoc.getElementById('posterContent');
-                        if (poster) {
-                            poster.classList.remove('min-h-screen', 'sm:mx-4', 'mt-4');
-                            poster.style.width = '1400px';
-                            poster.style.margin = '0';
-                            poster.style.borderRadius = '0';
-                        }
-
-                        // 4. Perbaiki glitch garis ganda pada gold-card akibat bug box-shadow: inset di html2canvas
-                        const goldCards = clonedDoc.querySelectorAll('.gold-card');
-                        goldCards.forEach(card => {
-                            card.style.boxShadow = 'none'; // Matikan shadow yang bikin glitch
-                        });
-
-                        
-                        // 6. Sembunyikan efek blur (glow) karena html2canvas sering merendernya sebagai blok solid
-                        const blurs = clonedDoc.querySelectorAll('.blur-\\[60px\\], .blur-xl, .blur-lg');
-                        blurs.forEach(b => b.style.display = 'none');
-
-                        // 5. Perbaiki glitch sudut terpotong pada footer akibat bug backdrop-blur di html2canvas
-                        const footerBox = clonedDoc.querySelector('.max-w-4xl.bg-teal-900\\/95');
-                        if (footerBox) {
-                            footerBox.classList.remove('backdrop-blur-md');
-                            footerBox.style.boxShadow = 'none';
-                        }
-                    }
-                });
+            async function d(type = 'png') {
+                const btnContainer = document.querySelector('.floating-controls') || document.querySelector('.flex.justify-center.gap-4.mt-8.mb-12');
+                const zoomContainer = document.querySelector('.fixed.bottom-6.left-6');
+                const target = document.getElementById('posterContent');
+                const formFilters = target.querySelector('form');
                 
-                if (type === 'png') {
-                    const link = document.createElement('a');
-                    link.download = 'Laporan_Capaian_BKKBN_{{$bulan}}_{{$tahun}}.png';
-                    link.href = canvas.toDataURL('image/png');
-                    link.click();
-                } else if (type === 'pdf') {
-                    const imgData = canvas.toDataURL('image/png');
-                    const pdf = new window.jspdf.jsPDF({
-                        orientation: canvas.width > canvas.height ? 'landscape' : 'portrait',
-                        unit: 'px',
-                        format: [canvas.width, canvas.height]
-                    });
-                    pdf.addImage(imgData, 'PNG', 0, 0, canvas.width, canvas.height);
-                    pdf.save('Laporan_Capaian_BKKBN_{{$bulan}}_{{$tahun}}.pdf');
-                }
+                if(btnContainer) btnContainer.style.display = 'none';
+                if(zoomContainer) zoomContainer.style.display = 'none';
+                if(formFilters) formFilters.style.display = 'none';
+                
+                const origZoom = zoom;
+                zoom = 1; updateZoom();
 
-            } catch (err) {
-                console.error('Error setting up export', err);
-            } finally {
-                btnContainer.style.display = 'flex';
-                zoomContainer.style.display = 'flex';
-                if(formFilters) formFilters.style.display = 'flex';
-                zoom = origZoom; updateZoom();
+                // Simpan posisi scroll dan style asli
+                const origScrollX = window.scrollX;
+                const origScrollY = window.scrollY;
+                const origWidth = target.style.width;
+                const origMargin = target.style.margin;
+                const origBorderRadius = target.style.borderRadius;
+                const origBg = target.style.backgroundColor;
+                const origPadding = target.style.paddingBottom;
+                const origOverflow = target.style.overflow;
+
+                // KUNCI: Scroll ke atas dulu agar html2canvas tidak salah hitung offset
+                window.scrollTo(0, 0);
+
+                // Set fixed width langsung di elemen (BUKAN via windowWidth option)
+                target.style.width = '1400px';
+                target.style.margin = '0';
+                target.style.borderRadius = '0';
+                target.style.backgroundColor = '#F4F7FB';
+                target.style.paddingBottom = '80px';
+                target.style.overflow = 'visible';
+                target.classList.remove('sm:mx-4', 'mt-4', 'overflow-hidden');
+                
+                // Tunggu font loaded + layout settle
+                await document.fonts.ready;
+                
+                // KUNCI: Tambahkan class exporting agar CSS fix (transform translateY) aktif
+                document.body.classList.add('exporting');
+                await new Promise(r => setTimeout(r, 500)); // beri waktu reflow
+
+                try {
+                    const canvas = await html2canvas(target, { 
+                        scale: 2, 
+                        useCORS: true,
+                        backgroundColor: '#F4F7FB',
+                        logging: false,
+                        scrollX: 0,
+                        scrollY: 0,
+                        x: 0,
+                        y: 0,
+                        width: target.scrollWidth,
+                        height: target.scrollHeight,
+                        onclone: function(clonedDoc) {
+                            clonedDoc.body.classList.add('exporting');
+
+                            // Fix drop-shadows
+                            const drops = clonedDoc.querySelectorAll('[class*="drop-shadow"]');
+                            drops.forEach(d => { d.style.filter = 'none'; });
+
+                            // Fix gold-card glitch
+                            const goldCards = clonedDoc.querySelectorAll('.gold-card');
+                            goldCards.forEach(card => { card.style.boxShadow = 'none'; });
+                            
+                            // Hide blur effects
+                            const blurs = clonedDoc.querySelectorAll('[class*="blur-"]');
+                            blurs.forEach(b => {
+                                if (b.style) b.style.display = 'none';
+                            });
+
+                            // Fix backdrop-blur footer
+                            const footerBox = clonedDoc.querySelector('.max-w-4xl.bg-teal-900\\/95');
+                            if (footerBox) {
+                                footerBox.classList.remove('backdrop-blur-md');
+                                footerBox.style.boxShadow = 'none';
+                            }
+                        }
+                    });
+                    
+                    const dataUrl = canvas.toDataURL('image/png');
+                    
+                    if (type === 'png') {
+                        const link = document.createElement('a');
+                        link.download = `Laporan_Capaian_BKKBN_{{$bulan}}_{{$tahun}}.png`;
+                        link.href = dataUrl;
+                        link.click();
+                    } else if (type === 'pdf') {
+                        const pdf = new window.jspdf.jsPDF({
+                            orientation: canvas.width > canvas.height ? 'landscape' : 'portrait',
+                            unit: 'px',
+                            format: [canvas.width, canvas.height]
+                        });
+                        pdf.addImage(dataUrl, 'PNG', 0, 0, canvas.width, canvas.height);
+                        pdf.save(`Laporan_Capaian_BKKBN_{{$bulan}}_{{$tahun}}.pdf`);
+                    }
+
+                } catch (err) {
+                    console.error('Error setting up export', err);
+                    alert('Gagal mengekspor laporan: ' + (err && err.message ? err.message : String(err)));
+                } finally {
+                    // Kembalikan semua style asli
+                    document.body.classList.remove('exporting');
+                    target.style.width = origWidth;
+                    target.style.margin = origMargin;
+                    target.style.borderRadius = origBorderRadius;
+                    target.style.backgroundColor = origBg;
+                    target.style.paddingBottom = origPadding;
+                    target.style.overflow = origOverflow;
+                    
+                    if(btnContainer) btnContainer.style.display = 'flex';
+                    if(zoomContainer) zoomContainer.style.display = 'flex';
+                    if(formFilters) formFilters.style.display = 'flex';
+                    zoom = origZoom; updateZoom();
+                    window.scrollTo(origScrollX, origScrollY);
+                }
             }
-        }
     </script>
 
     <!-- Elsimil Chart Setup -->

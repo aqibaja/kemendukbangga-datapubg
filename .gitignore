@@ -1,1 +1,5 @@
 *.zip
+
+.DS_Store
+/backups/*
+/node_modules/*

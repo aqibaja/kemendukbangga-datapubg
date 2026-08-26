@@ -6,11 +6,13 @@ use App\Models\User;
 use App\Models\PresentationLink;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
-
+use Illuminate\Support\Facades\Auth;
 class UserController extends Controller
 {
     public function store(Request $request)
     {
+        if (Auth::user()->id_role != 1) abort(403, 'Unauthorized action.');
+
         $request->validate([
             'nama' => 'required|string|max:255',
             'username' => 'required|string|max:255|unique:users,username',
@@ -29,6 +31,8 @@ class UserController extends Controller
 
     public function update(Request $request)
     {
+        if (Auth::user()->id_role != 1) abort(403, 'Unauthorized action.');
+
         $user = User::findOrFail($request->id);
 
         $request->validate([
@@ -50,12 +54,16 @@ class UserController extends Controller
 
     public function destroy($id)
     {
+        if (Auth::user()->id_role != 1) abort(403, 'Unauthorized action.');
+
         User::findOrFail($id)->delete();
         return response()->json(['success' => true]);
     }
 
     public function updatePresentationLink(Request $request, $id)
     {
+        if (Auth::user()->id_role != 1) abort(403, 'Unauthorized action.');
+
         $link = PresentationLink::findOrFail($id);
         
         $request->validate([

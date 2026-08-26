@@ -24,6 +24,7 @@ use App\Http\Controllers\DashboardPageController;
 use App\Http\Controllers\LaporanCapaianController;
 use App\Http\Controllers\AbsensiZoomController;
 use App\Http\Controllers\ApelSeninController;
+use App\Http\Controllers\PublicLeaveController;
 use App\Http\Controllers\Admin\EmployeeController;
 use App\Http\Controllers\Admin\QrSessionController;
 use App\Http\Controllers\QrAttendanceController;
@@ -161,6 +162,10 @@ Route::get('/data/absensi-zoom/city/{city}', [AbsensiZoomController::class, 'cit
 Route::get('/data/apel-senin', [ApelSeninController::class, 'index'])->name('apel-senin');
 Route::get('/data/apel-senin/team/{team}', [ApelSeninController::class, 'teamDetail'])->where('team', '.*')->name('apel-senin.team');
 
+// === FORM IZIN / SAKIT (PUBLIC) ===
+Route::get('/izin-sakit', [PublicLeaveController::class, 'create'])->name('public.leaves.create');
+Route::post('/izin-sakit', [PublicLeaveController::class, 'store'])->name('public.leaves.store');
+
 Route::get('/data/{dashboardPage:slug}', function (DashboardPage $dashboardPage) {
     // Load relasi creator
     $dashboardPage->load('creator');
@@ -223,8 +228,9 @@ Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 
 // ======= LAPORAN CAPAIAN =======
 Route::get('/laporan-capaian', function (Request $request) {
-    $bulan = $request->get('bulan', now()->month);
-    $tahun = $request->get('tahun', now()->year);
+    $defaultDate = now()->subMonth();
+    $bulan = $request->get('bulan', $defaultDate->month);
+    $tahun = $request->get('tahun', $defaultDate->year);
 
     $laporans = LaporanCapaian::where('bulan', $bulan)
         ->where('tahun', $tahun)

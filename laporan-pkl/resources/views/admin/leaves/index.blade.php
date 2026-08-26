@@ -70,12 +70,12 @@
                             
                             <div class="mb-4">
                                 <label for="nama" class="block text-sm font-medium text-gray-700 mb-1">Nama Pegawai</label>
-                                <input list="pegawai-list" id="nama" name="nama" required placeholder="Ketik atau cari nama pegawai..." autocomplete="off" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-emerald-500 focus:border-emerald-500 block w-full p-2.5">
-                                <datalist id="pegawai-list">
+                                <select id="nama" name="nama" required class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-emerald-500 focus:border-emerald-500 block w-full p-2.5" x-data x-init="new TomSelect($el, {create: false, sortField: {field: 'text', direction: 'asc'}, placeholder: 'Ketik atau cari nama pegawai...', plugins: ['clear_button', 'dropdown_input']})">
+                                    <option value="">Ketik atau cari nama pegawai...</option>
                                     @foreach($members as $member)
-                                        <option value="{{ $member }}">
+                                        <option value="{{ $member }}">{{ $member }}</option>
                                     @endforeach
-                                </datalist>
+                                </select>
                             </div>
 
                             <div class="mb-4">

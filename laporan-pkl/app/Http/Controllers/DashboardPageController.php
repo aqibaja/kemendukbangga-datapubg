@@ -57,6 +57,11 @@ class DashboardPageController extends Controller
     public function update(Request $request, $id)
     {
         $page = DashboardPage::findOrFail($id);
+        
+        // Authorization check: only admin or creator can update
+        if (Auth::user()->id_role != 1 && $page->dibuat_oleh != Auth::id()) {
+            abort(403, 'Unauthorized action.');
+        }
 
         $request->validate([
             'nama_dashboard' => 'required|string|max:255',
@@ -108,6 +113,11 @@ class DashboardPageController extends Controller
     public function destroy($id)
     {
         $page = DashboardPage::findOrFail($id);
+
+        // Authorization check: only admin or creator can delete
+        if (Auth::user()->id_role != 1 && $page->dibuat_oleh != Auth::id()) {
+            abort(403, 'Unauthorized action.');
+        }
 
         // Hapus file thumbnail JIKA ADA (UPLOAD USER)
         if ($page->thumbnail && Storage::disk('public')->exists($page->thumbnail)) {
