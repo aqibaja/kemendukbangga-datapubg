@@ -118,27 +118,30 @@
     </div>
 
     <!-- 4. FOOTER RESMI -->
-    <div class="bg-[var(--navy)] text-white rounded-xl mt-6 shadow-sm px-6 py-4 flex flex-wrap items-center justify-center gap-x-12 gap-y-4">
-        <!-- Kiri: Logo + Judul -->
-        <div class="flex items-center gap-4 shrink-0">
-            <img src="/public/image/logo-putih.png" class="h-10 object-contain drop-shadow-sm shrink-0" alt="BKKBN Logo Putih">
-            <div class="border-l-2 border-white/20 pl-4">
-                <div class="font-bold text-sm tracking-wide export-fix-text">LAPORAN PENGENDALIAN LAPANGAN</div>
-                <div class="text-xs text-blue-200 opacity-90 mt-0.5 export-fix-text">Dicetak pada {{ date('d/m/Y H:i') }}</div>
-            </div>
+    <div class="bg-[var(--navy)] text-white rounded-xl mt-8 shadow-sm px-8 py-6 flex items-center justify-between">
+        <!-- KIRI: Logo -->
+        <div class="flex-1 flex justify-start shrink-0">
+            <img src="/public/image/logo-putih.png" class="h-16 lg:h-20 object-contain drop-shadow-sm" alt="BKKBN Logo Putih">
         </div>
-        <!-- Kanan: Info Kontak -->
-        <div class="flex flex-wrap items-center justify-center gap-x-6 gap-y-2 text-xs shrink-0">
+
+        <!-- TENGAH: Judul -->
+        <div class="flex-[1.5] flex flex-col items-center text-center px-6 border-x-2 border-white/20">
+            <div class="font-bold text-base lg:text-lg tracking-wide export-fix-text">LAPORAN PENGENDALIAN LAPANGAN</div>
+            <div class="text-sm text-blue-200 opacity-90 mt-1.5 export-fix-text">Dicetak pada {{ date('d/m/Y H:i') }}</div>
+        </div>
+
+        <!-- KANAN: Info Kontak -->
+        <div class="flex-1 flex flex-col items-end gap-1.5 text-xs lg:text-sm shrink-0">
             <div style="white-space: nowrap;">
-                <i class="fa-solid fa-headset text-blue-400 export-shift-icon" style="vertical-align: middle; margin-right: 4px;"></i>
+                <i class="fa-solid fa-headset text-blue-400 export-shift-icon text-sm lg:text-base" style="vertical-align: middle; margin-right: 6px;"></i>
                 <span style="vertical-align: middle;">Pengaduan <span class="text-yellow-400 font-bold">085361209387</span></span>
             </div>
             <div style="white-space: nowrap;">
-                <i class="fa-solid fa-globe text-blue-400 export-shift-icon" style="vertical-align: middle; margin-right: 4px;"></i>
+                <i class="fa-solid fa-globe text-blue-400 export-shift-icon text-sm lg:text-base" style="vertical-align: middle; margin-right: 6px;"></i>
                 <span class="text-blue-200" style="vertical-align: middle;">aceh.kemendukbangga.go.id</span>
             </div>
             <div style="white-space: nowrap;">
-                <i class="fa-brands fa-instagram text-blue-400 export-shift-icon" style="vertical-align: middle; margin-right: 4px;"></i>
+                <i class="fa-brands fa-instagram text-blue-400 export-shift-icon text-sm lg:text-base" style="vertical-align: middle; margin-right: 6px;"></i>
                 <span class="text-blue-200" style="vertical-align: middle;">kemendukbangga_bkkbnaceh</span>
             </div>
         </div>
