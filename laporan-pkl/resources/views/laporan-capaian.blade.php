@@ -130,9 +130,25 @@
         body.exporting h2, 
         body.exporting h3, 
         body.exporting h4, 
-        body.exporting span, 
-        body.exporting div {
-            line-height: normal !important;
+        body.exporting span,
+        body.exporting .export-fix-text,
+        body.exporting .leading-none {
+            transform: translateY(-3px) !important;
+        }
+        
+        body.exporting .global-header-export {
+            display: none !important;
+        }
+        
+        body.exporting .export-shift-icon {
+            transform: translateY(-3px) !important;
+        }
+
+        
+        body.exporting .pill-text-fix,
+        body.exporting .pill-icon-fix {
+            transform: none !important;
+            vertical-align: middle !important;
         }
     </style>
 
@@ -166,7 +182,7 @@
             <div class="max-w-7xl w-full relative z-10" style="color:#1e293b;">
                 
                 <!-- ===== HEADER ===== -->
-                <div class="flex flex-col items-center mb-6 mt-4 relative">
+                <div class="flex flex-col items-center mb-6 mt-4 relative global-header-export">
                     {{-- Logo + nama instansi --}}
                     <div class="flex flex-col sm:flex-row items-center gap-4 mb-3 text-center sm:text-left">
                         <img src="{{ $logoSrc }}" alt="Logo BKKBN" class="w-20 h-20 sm:w-24 sm:h-24 object-contain drop-shadow-md">
@@ -853,11 +869,13 @@
                 window.scrollTo(0, 0);
 
                 // Set fixed width langsung di elemen (BUKAN via windowWidth option)
-                target.style.width = '1400px';
+                target.style.width = '1280px';
+                target.style.height = 'auto'; // KUNCI: Hindari min-height bawaan yg bikin ruang kosong
+                target.style.minHeight = '0';
                 target.style.margin = '0';
                 target.style.borderRadius = '0';
                 target.style.backgroundColor = '#F4F7FB';
-                target.style.paddingBottom = '80px';
+                target.style.paddingBottom = '40px'; // Secukupnya agar footer tidak mepet
                 target.style.overflow = 'visible';
                 target.classList.remove('sm:mx-4', 'mt-4', 'overflow-hidden');
                 
@@ -878,8 +896,9 @@
                         scrollY: 0,
                         x: 0,
                         y: 0,
-                        width: target.scrollWidth,
-                        height: target.scrollHeight,
+                        width: target.offsetWidth,
+                        height: target.offsetHeight,
+                        windowWidth: 1280,
                         onclone: function(clonedDoc) {
                             clonedDoc.body.classList.add('exporting');
 
