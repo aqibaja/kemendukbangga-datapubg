@@ -228,9 +228,34 @@ Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 
 // ======= LAPORAN CAPAIAN =======
 Route::get('/laporan-capaian', function (Request $request) {
-    $defaultDate = now()->subMonth();
-    $bulan = $request->get('bulan', $defaultDate->month);
-    $tahun = $request->get('tahun', $defaultDate->year);
+    $tipe = $request->get('tipe', 'pengendalian_lapangan');
+
+    // Jika bulan atau tahun tidak diisi di URL, otomatis cari bulan & tahun terbaru yang ADA DATANYA
+    if (!$request->filled('bulan') || !$request->filled('tahun')) {
+        $latestRecord = LaporanCapaian::where('tipe', $tipe)
+            ->orderByDesc('tahun')
+            ->orderByDesc('bulan')
+            ->first();
+
+        // Jika tidak ditemukan untuk tipe ini, cari data terbaru apapun tipenya
+        if (!$latestRecord) {
+            $latestRecord = LaporanCapaian::orderByDesc('tahun')
+                ->orderByDesc('bulan')
+                ->first();
+        }
+
+        if ($latestRecord) {
+            $bulan = $request->get('bulan', $latestRecord->bulan);
+            $tahun = $request->get('tahun', $latestRecord->tahun);
+        } else {
+            $defaultDate = now()->subMonth();
+            $bulan = $request->get('bulan', $defaultDate->month);
+            $tahun = $request->get('tahun', $defaultDate->year);
+        }
+    } else {
+        $bulan = $request->get('bulan');
+        $tahun = $request->get('tahun');
+    }
 
     $laporans = LaporanCapaian::where('bulan', $bulan)
         ->where('tahun', $tahun)

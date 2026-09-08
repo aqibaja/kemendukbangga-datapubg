@@ -146,9 +146,18 @@
 
         
         body.exporting .pill-text-fix,
-        body.exporting .pill-icon-fix {
+        body.exporting .pill-icon-fix,
+        body.exporting .stat-pill-text {
             transform: none !important;
             vertical-align: middle !important;
+            line-height: 1.25 !important;
+        }
+
+        /* Capaian Program Export Enhancements */
+        body.exporting #capaianProgramRoot {
+            width: 100% !important;
+            max-width: 100% !important;
+            padding: 0 !important;
         }
     </style>
 
@@ -240,218 +249,7 @@
                     @if(isset($laporans['capaian_program']))
                         @php $d = $laporans['capaian_program']->data; @endphp
 
-                        <!-- Ambient Glow & Additional Watermarks for "Wah" Effect -->
-                        <div class="absolute top-[15%] left-0 w-[500px] h-[500px] pointer-events-none z-0" style="background: radial-gradient(circle, rgba(253,224,71,0.08) 0%, rgba(253,224,71,0) 70%);"></div>
-                        <div class="absolute top-[45%] right-0 w-[600px] h-[600px] pointer-events-none z-0" style="background: radial-gradient(circle, rgba(45,212,191,0.08) 0%, rgba(45,212,191,0) 70%);"></div>
-                        <div class="absolute top-[80%] left-[20%] w-[500px] h-[500px] pointer-events-none z-0" style="background: radial-gradient(circle, rgba(253,224,71,0.08) 0%, rgba(253,224,71,0) 70%);"></div>
-                        
-                        <!-- Extra Watermarks removed as requested (user wants only 1 big logo) -->
-                        <!-- SECTION 1: 5 BADGE FASKES -->
-                        <div class="flex justify-center mt-6 mb-2 relative z-10 w-full">
-                            <div class="flex items-center justify-center font-bold text-sm sm:text-lg text-teal-900 bg-yellow-400 px-8 py-2 rounded-full shadow-[0_5px_15px_rgba(255,215,0,0.4)] uppercase border-2 border-white">
-                                <span class="pill-text inline-block relative z-10" style="top: 0px;">CAKUPAN TEMPAT PELAYANAN KESEHATAN</span>
-                            </div>
-                        </div>
-                        <div class="grid grid-cols-2 md:grid-cols-5 gap-4 mt-6 px-2 pb-6">
-                            @php
-                                $faskes = [
-                                    ['title' => 'Pemerintah', 'svg' => asset('public/image/pemerintah_3d.png') . '?v=' . time(), 'data' => $d['cakupan_fasyankes']['pemerintah'] ?? []],
-                                    ['title' => 'Jaringan', 'svg' => asset('public/image/jaringan_3d.png') . '?v=' . time(), 'data' => $d['cakupan_fasyankes']['jaringan'] ?? []],
-                                    ['title' => 'Swasta', 'svg' => asset('public/image/swasta_3d.png') . '?v=' . time(), 'data' => $d['cakupan_fasyankes']['swasta'] ?? []],
-                                    ['title' => 'PMB Setara', 'svg' => asset('public/image/pmb_setara_3d.png') . '?v=' . time(), 'data' => $d['cakupan_fasyankes']['pmb_setara'] ?? []],
-                                    ['title' => 'PMB Jejaring', 'svg' => asset('public/image/pmb_jejaring_3d.png') . '?v=' . time(), 'data' => $d['cakupan_fasyankes']['pmb_jejaring'] ?? []]
-                                ];
-                            @endphp
-                            @foreach($faskes as $i => $f)
-                            <div class="dark-green-card rounded-xl p-3 text-sm relative flex flex-col justify-center">
-                                <div class="flex items-center mb-2 border-b border-teal-700 pb-2">
-                                    <div class="w-10 h-10 rounded-full border-2 border-yellow-400 overflow-hidden bg-teal-900 shrink-0 mr-2 flex items-center justify-center">
-                                        <img src="{{ $f['svg'] }}" class="w-full h-full object-cover">
-                                    </div>
-                                    <h4 class="font-bold text-white text-xs md:text-[13px] leading-tight">{{ $f['title'] }}</h4>
-                                </div>
-                                <div class="text-gray-200 text-xs mt-auto">
-                                    <div class="flex justify-between mb-1"><span>Ada</span> <span>= {{ number_format($f['data']['ada'] ?? 0, 0, ',', '.') }}</span></div>
-                                    <div class="flex justify-between mb-1"><span>Lapor</span> <span>= {{ number_format($f['data']['lapor'] ?? 0, 0, ',', '.') }}</span></div>
-                                    <div class="flex justify-between mt-2 pt-2 border-t border-teal-700 text-white font-bold"><span>Persentase</span> <span class="text-yellow-300">{{ number_format($f['data']['persentase'] ?? 0, 2, ',', '.') }}%</span></div>
-                                </div>
-                            </div>
-                            @endforeach
-                        </div>
-
-                        <!-- SECTION 2: STOCK OPNAME SIRIKA -->
-                        <div class="mt-8 relative">
-                            <div class="flex justify-center mb-6 relative z-10 mt-4 text-center">
-                                <div class="inline-flex items-center">
-                                <div class="relative w-14 h-14 sm:w-20 sm:h-20 bg-teal-900 rounded-full border-2 sm:border-4 border-yellow-400 flex items-center justify-center shadow-lg z-20 overflow-hidden flex-shrink-0 -mr-6 sm:-mr-10">
-                                    <img src="{{ asset('public/image/stock_opname_3d.png') }}?v={{ time() }}" class="w-full h-full object-cover" alt="Stock Opname">
-                                </div>
-                                <div class="text-center font-bold text-sm sm:text-xl text-teal-900 bg-yellow-400 pl-10 sm:pl-14 pr-6 py-2 rounded-full shadow-[0_5px_15px_rgba(255,215,0,0.4)] uppercase border-2 border-white relative z-10">
-                                    <span class="pill-text inline-block relative z-10" style="top: 0px;">STOCK OPNAME SIRIKA</span>
-                                </div>
-                            </div>
-                            </div>
-                            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 px-2">
-                                @php
-                                    $stocks = [
-                                        ['title' => 'a. Gudang Provinsi', 'char' => 'a', 'data' => $d['stock_opname']['gudang_provinsi'] ?? []],
-                                        ['title' => 'b. Gudang Kab/Kota', 'char' => 'b', 'data' => $d['stock_opname']['gudang_kabkota'] ?? []],
-                                        ['title' => 'c. Gudang Fasyankes', 'char' => 'c', 'data' => $d['stock_opname']['gudang_fasyankes'] ?? []],
-                                    ];
-                                @endphp
-                                @foreach($stocks as $s)
-                                <div class="dark-green-card rounded-xl p-5 text-sm relative">
-                                    <div class="flex items-center mb-1 border-b border-teal-700 pb-2">
-                                        <div class="w-6 h-6 rounded-full bg-white text-teal-900 font-bold flex items-center justify-center mr-2 text-sm shrink-0"><span class="shift-up-export">{{ $s['char'] }}</span></div>
-                                        <h4 class="font-bold text-yellow-300 text-sm md:text-base whitespace-nowrap">{{ $s['title'] }}</h4>
-                                    </div>
-                                    <div class="text-gray-200 pl-8">
-                                        <div class="flex justify-between mb-2"><span>- ada</span> <span>= {{ number_format($s['data']['ada'] ?? 0, 0, ',', '.') }}</span></div>
-                                        <div class="flex justify-between mb-2"><span>- laporan</span> <span>= {{ number_format($s['data']['laporan'] ?? 0, 0, ',', '.') }}</span></div>
-                                        <div class="flex justify-between mt-3 pt-2 border-t border-teal-700 text-white font-bold"><span>- persentase</span> <span class="text-yellow-300">= {{ number_format($s['data']['persentase'] ?? 0, 2, ',', '.') }}%</span></div>
-                                    </div>
-                                </div>
-                                @endforeach
-                            </div>
-                        </div>
-
-                        <!-- SECTION 3: KB BARU -->
-                        <div class="mt-8 relative">
-                            <div class="flex justify-center mb-6 relative z-10 mt-4 text-center">
-                                <div class="inline-flex items-center">
-                                <div class="relative w-14 h-14 sm:w-20 sm:h-20 bg-teal-900 rounded-full border-2 sm:border-4 border-yellow-400 flex items-center justify-center shadow-lg z-20 overflow-hidden flex-shrink-0 -mr-6 sm:-mr-10">
-                                    <img src="{{ asset('public/image/kb_baru_3d.png') }}?v={{ time() }}" class="w-full h-full object-cover" alt="KB Baru">
-                                </div>
-                                <div class="text-center font-bold text-sm sm:text-xl text-teal-900 bg-yellow-400 pl-10 sm:pl-14 pr-6 py-2 rounded-full shadow-[0_5px_15px_rgba(255,215,0,0.4)] uppercase border-2 border-white relative z-10">
-                                    <span class="pill-text inline-block relative z-10" style="top: 0px;">CAPAIAN PESERTA KB BARU</span>
-                                </div>
-                            </div>
-                            </div>
-                            <div class="grid grid-cols-1 md:grid-cols-4 gap-4 px-2">
-                                @php
-                                    $kbBaru = [
-                                        ['title' => 'Peserta KB Baru (PB)', 'data' => $d['kb_baru']['pb'] ?? []],
-                                        ['title' => 'Peserta KB Pasca Persalinan', 'data' => $d['kb_baru']['pb_pasca_persalinan'] ?? []],
-                                        ['title' => 'PB MKJP', 'data' => $d['kb_baru']['pb_mkjp'] ?? []],
-                                        ['title' => 'PB Non MKJP', 'data' => $d['kb_baru']['pb_non_mkjp'] ?? []],
-                                    ];
-                                @endphp
-                                @foreach($kbBaru as $kb)
-                                <div class="dark-green-card rounded-xl p-4 text-sm relative flex flex-col justify-center">
-                                    <h4 class="font-bold text-center text-yellow-300 text-[13px] mb-2 h-10 flex items-center justify-center">{{ $kb['title'] }}</h4>
-                                    <div class="text-gray-200 text-xs mt-auto">
-                                        <div class="flex justify-between mb-1.5"><span>PPM</span> <span>= {{ number_format($kb['data']['ppm'] ?? 0, 0, ',', '.') }}</span></div>
-                                        <div class="flex justify-between mb-1.5"><span>Capaian</span> <span>= {{ number_format($kb['data']['capaian'] ?? 0, 0, ',', '.') }}</span></div>
-                                        <div class="flex justify-between mt-2 pt-2 border-t border-teal-700 text-white font-bold"><span>Persentase</span> <span class="text-yellow-300">= {{ number_format($kb['data']['persentase'] ?? 0, 2, ',', '.') }}%</span></div>
-                                    </div>
-                                </div>
-                                @endforeach
-                            </div>
-                        </div>
-
-                        <!-- SECTION 4: KB AKTIF -->
-                        <div class="mt-8 relative">
-                            <div class="flex justify-center mb-6 relative z-10 mt-4 text-center">
-                                <div class="inline-flex items-center">
-                                <div class="relative w-14 h-14 sm:w-20 sm:h-20 bg-teal-900 rounded-full border-2 sm:border-4 border-yellow-400 flex items-center justify-center shadow-lg z-20 overflow-hidden flex-shrink-0 -mr-6 sm:-mr-10">
-                                    <img src="{{ asset('public/image/kb_aktif_3d.png') }}?v={{ time() }}" class="w-full h-full object-cover" alt="KB Aktif">
-                                </div>
-                                <div class="text-center font-bold text-sm sm:text-xl text-teal-900 bg-yellow-400 pl-10 sm:pl-14 pr-6 py-2 rounded-full shadow-[0_5px_15px_rgba(255,215,0,0.4)] uppercase border-2 border-white relative z-10">
-                                    <span class="pill-text inline-block relative z-10" style="top: 0px;">CAPAIAN PESERTA KB AKTIF</span>
-                                </div>
-                            </div>
-                            </div>
-                            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 px-2 items-center">
-                                <!-- Aktif MKJP -->
-                                <div class="dark-green-card rounded-xl p-5 h-full flex flex-col justify-center">
-                                    <h4 class="font-bold text-center text-white pb-3 mb-2 uppercase text-sm border-b border-teal-700">PESERTA KB AKTIF<br>MKJP</h4>
-                                    <div class="text-gray-200 text-sm">
-                                        <div class="flex justify-between mb-2"><span>PPM</span> <span>= {{ number_format($d['kb_aktif']['pa_mkjp']['ppm'] ?? 0, 0, ',', '.') }}</span></div>
-                                        <div class="flex justify-between mb-2"><span>Capaian</span> <span>= {{ number_format($d['kb_aktif']['pa_mkjp']['capaian'] ?? 0, 0, ',', '.') }}</span></div>
-                                        <div class="flex justify-between mt-3 pt-2 border-t border-teal-700 text-white font-bold"><span>Persentase</span> <span class="text-yellow-300">= {{ number_format($d['kb_aktif']['pa_mkjp']['persentase'] ?? 0, 2, ',', '.') }}%</span></div>
-                                    </div>
-                                </div>
-                                
-                                <!-- Detail PA -->
-                                <div class="gold-card rounded-xl z-10 p-5 h-full shadow-2xl flex flex-col justify-center border-4 border-yellow-400">
-                                    <h4 class="font-bold text-center text-teal-900 pb-2 mb-2 text-sm uppercase border-b border-teal-700/30">DETAIL PA (MODERN & TRADISIONAL)</h4>
-                                    <div class="font-bold text-teal-800 text-sm mb-1.5">PA Modern:</div>
-                                    <div class="pl-4 text-teal-900 text-sm">
-                                        <div class="flex justify-between mb-1.5"><span>PPM</span> <span>= {{ number_format($d['kb_aktif']['pa_modern']['ppm'] ?? 0, 0, ',', '.') }}</span></div>
-                                        <div class="flex justify-between mb-1.5"><span>Capaian</span> <span>= {{ number_format($d['kb_aktif']['pa_modern']['capaian'] ?? 0, 0, ',', '.') }}</span></div>
-                                        <div class="flex justify-between mt-2 pt-2 border-t border-teal-700/30 font-bold"><span>Persentase</span> <span>= {{ number_format($d['kb_aktif']['pa_modern']['persentase'] ?? 0, 2, ',', '.') }}%</span></div>
-                                    </div>
-                                    <div class="flex justify-between text-sm mt-4 pt-2 border-t border-teal-700/30 text-teal-900 font-bold w-full">
-                                        <span>PA Tradisional</span> <span>= {{ number_format($d['kb_aktif']['pa_tradisional'] ?? 0, 0, ',', '.') }}</span>
-                                    </div>
-                                    <div class="flex justify-between text-base mt-3 pt-3 border-t border-teal-700/50 text-teal-900 font-bold w-full">
-                                        <span>Total PA</span> <span>= {{ number_format($d['kb_aktif']['pa_keseluruhan'] ?? 0, 0, ',', '.') }}</span>
-                                    </div>
-                                </div>
-
-                                <!-- Aktif Non MKJP -->
-                                <div class="dark-green-card rounded-xl p-5 h-full flex flex-col justify-center">
-                                    <h4 class="font-bold text-center text-white pb-3 mb-2 uppercase text-sm border-b border-teal-700">PESERTA KB AKTIF<br>NON MKJP</h4>
-                                    <div class="text-gray-200 text-sm">
-                                        <div class="flex justify-between mb-2"><span>PPM</span> <span>= {{ number_format($d['kb_aktif']['pa_non_mkjp']['ppm'] ?? 0, 0, ',', '.') }}</span></div>
-                                        <div class="flex justify-between mb-2"><span>Capaian</span> <span>= {{ number_format($d['kb_aktif']['pa_non_mkjp']['capaian'] ?? 0, 0, ',', '.') }}</span></div>
-                                        <div class="flex justify-between mt-3 pt-2 border-t border-teal-700 text-white font-bold"><span>Persentase</span> <span class="text-yellow-300">= {{ number_format($d['kb_aktif']['pa_non_mkjp']['persentase'] ?? 0, 2, ',', '.') }}%</span></div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- SECTION 5: mCPR & UNMET NEED -->
-                        <div class="mt-8 mb-6 flex flex-col items-center text-center relative w-full">
-                            
-                            <!-- Ornamen Background (Rumah Aceh & Masjid) -->
-                            <img src="{{ asset('public/image/rumah_aceh.png') }}" alt="Rumah Adat Aceh" class="absolute bottom-0 left-0 w-64 sm:w-80 drop-shadow-[0_0_15px_rgba(255,215,0,0.3)] pointer-events-none hidden md:block z-0 opacity-90">
-                            <img src="{{ asset('public/image/masjid_emas.png') }}" alt="Masjid Emas" class="absolute bottom-0 right-0 w-64 sm:w-80 drop-shadow-[0_0_15px_rgba(255,215,0,0.3)] pointer-events-none hidden md:block z-0 opacity-90">
-
-                            <div class="flex justify-center mb-6 relative z-10 mt-4 w-full">
-                                <div class="inline-flex items-center">
-                                <div class="relative w-14 h-14 sm:w-20 sm:h-20 bg-teal-900 rounded-full border-2 sm:border-4 border-yellow-400 flex items-center justify-center shadow-lg z-20 overflow-hidden flex-shrink-0 -mr-6 sm:-mr-10">
-                                    <img src="{{ asset('public/image/mcpr_3d.png') }}?v={{ time() }}" class="w-full h-full object-cover" alt="mCPR">
-                                </div>
-                                <div class="text-center font-bold text-sm sm:text-xl text-teal-900 bg-yellow-400 pl-10 sm:pl-14 pr-6 py-2 rounded-full shadow-[0_5px_15px_rgba(255,215,0,0.4)] uppercase border-2 border-white relative z-10">
-                                    <span class="pill-text inline-block relative z-10" style="top: 0px;">mCPR DAN UNMET NEED</span>
-                                </div>
-                            </div>
-                            </div>
-                            <div class="flex flex-wrap justify-center gap-12 px-2 relative z-10">
-                                
-                                <!-- mCPR -->
-                                <div class="gold-card p-2 w-[210px] h-[210px] flex items-center justify-center" style="border-radius: 9999px;">
-                                    <div class="bg-teal-900 w-full h-full flex flex-col items-center justify-center p-4 border border-yellow-400/50" style="border-radius: 9999px;">
-                                        <div class="shift-up-export w-full flex flex-col items-center">
-                                            <div class="font-black text-lg text-yellow-300 mb-1">mCPR</div>
-                                            <div class="text-[10px] text-center mb-2 text-gray-300 border-b border-teal-700 pb-2 w-full px-1">
-                                                PUS = {{ number_format($d['mcpr_unmet']['mcpr']['pus'] ?? 0, 0, ',', '.') }}<br>
-                                                PA Mod = {{ number_format($d['mcpr_unmet']['mcpr']['pa_modern'] ?? 0, 0, ',', '.') }}
-                                            </div>
-                                            <div class="font-bold text-[9px] text-white">Persentase</div>
-                                            <div class="font-black text-yellow-300 text-base mt-1">{{ number_format($d['mcpr_unmet']['mcpr']['persentase'] ?? 0, 2, ',', '.') }}%</div>
-                                        </div>
-                                    </div>
-                                </div>
-                                
-                                <!-- Unmet -->
-                                <div class="gold-card p-2 w-[210px] h-[210px] flex items-center justify-center" style="border-radius: 9999px;">
-                                    <div class="bg-teal-900 w-full h-full flex flex-col items-center justify-center p-4 border border-yellow-400/50" style="border-radius: 9999px;">
-                                        <div class="shift-up-export w-full flex flex-col items-center">
-                                            <div class="font-black text-lg text-yellow-300 mb-1 text-center leading-tight">UNMET<br>NEED</div>
-                                            <div class="text-[10px] text-center mb-2 text-gray-300 border-b border-teal-700 pb-2 w-full px-1 mt-1">
-                                                PUS = {{ number_format($d['mcpr_unmet']['unmet_need']['pus'] ?? 0, 0, ',', '.') }}<br>
-                                                UN = {{ number_format($d['mcpr_unmet']['unmet_need']['un'] ?? 0, 0, ',', '.') }}
-                                            </div>
-                                            <div class="font-bold text-[9px] text-white">Persentase</div>
-                                            <div class="font-black text-yellow-300 text-base mt-1">{{ number_format($d['mcpr_unmet']['unmet_need']['persentase'] ?? 0, 2, ',', '.') }}%</div>
-                                        </div>
-                                    </div>
-                                </div>
-
-                            </div>
-                        </div>
+                        @include('laporan-capaian-program')
 
                     @else
                         <div class="text-center py-32 text-yellow-300 font-bold text-2xl drop-shadow-md">Data Capaian Program tidak tersedia untuk periode ini</div>
@@ -875,7 +673,7 @@
                 target.style.margin = '0';
                 target.style.borderRadius = '0';
                 target.style.backgroundColor = '#F4F7FB';
-                target.style.paddingBottom = '40px'; // Secukupnya agar footer tidak mepet
+                target.style.paddingBottom = '32px'; // Secukupnya agar footer tidak mepet
                 target.style.overflow = 'visible';
                 target.classList.remove('sm:mx-4', 'mt-4', 'overflow-hidden');
                 
@@ -902,6 +700,11 @@
                         onclone: function(clonedDoc) {
                             clonedDoc.body.classList.add('exporting');
 
+                            const pc = clonedDoc.getElementById('posterContent');
+                            if (pc) {
+                                pc.style.backgroundColor = '#F4F7FB';
+                            }
+
                             // Fix drop-shadows
                             const drops = clonedDoc.querySelectorAll('[class*="drop-shadow"]');
                             drops.forEach(d => { d.style.filter = 'none'; });
@@ -910,8 +713,8 @@
                             const goldCards = clonedDoc.querySelectorAll('.gold-card');
                             goldCards.forEach(card => { card.style.boxShadow = 'none'; });
                             
-                            // Hide blur effects
-                            const blurs = clonedDoc.querySelectorAll('[class*="blur-"]');
+                            // Hide decorative background blur elements (NOT content containers with backdrop-blur)
+                            const blurs = clonedDoc.querySelectorAll('.blur-sm, .blur-md, .blur-lg, .blur-xl, .blur-2xl, .blur-3xl');
                             blurs.forEach(b => {
                                 if (b.style) b.style.display = 'none';
                             });
