@@ -8,6 +8,10 @@ Route::get('/update-k0-sppg', function () {
     return view('update-k0-sppg', ['title' => 'Update K0 SPPG']);
 });
 
+Route::get('/update-r1-sppg', function () {
+    return view('update-r1-sppg', ['title' => 'Update R1 SPPG']);
+});
+
 use App\Models\User;
 use Illuminate\Http\Request;
 use App\Models\DashboardPage;
@@ -228,19 +232,30 @@ Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 
 // ======= LAPORAN CAPAIAN =======
 Route::get('/laporan-capaian', function (Request $request) {
-    $defaultDate = now()->subMonth();
-    $bulan = $request->get('bulan', $defaultDate->month);
-    $tahun = $request->get('tahun', $defaultDate->year);
+    $availableMonths = LaporanCapaian::selectRaw('DISTINCT bulan, tahun')
+        ->orderByDesc('tahun')
+        ->orderByDesc('bulan')
+        ->get();
+
+    if ($request->has('bulan') && $request->has('tahun')) {
+        $bulan = $request->get('bulan');
+        $tahun = $request->get('tahun');
+    } else {
+        $latestAvailable = $availableMonths->first();
+        if ($latestAvailable) {
+            $bulan = $latestAvailable->bulan;
+            $tahun = $latestAvailable->tahun;
+        } else {
+            $defaultDate = now()->subMonth();
+            $bulan = $defaultDate->month;
+            $tahun = $defaultDate->year;
+        }
+    }
 
     $laporans = LaporanCapaian::where('bulan', $bulan)
         ->where('tahun', $tahun)
         ->get()
         ->keyBy('tipe');
-
-    $availableMonths = LaporanCapaian::selectRaw('DISTINCT bulan, tahun')
-        ->orderByDesc('tahun')
-        ->orderByDesc('bulan')
-        ->get();
 
     return view('laporan-capaian', [
         'title'           => 'Laporan Capaian',

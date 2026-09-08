@@ -51,10 +51,18 @@
                 <span class="max-w-0 overflow-hidden opacity-0 group-hover:max-w-[200px] group-hover:opacity-100 group-hover:ml-2 transition-all duration-300 ease-in-out font-medium text-sm whitespace-nowrap">Laporan Capaian</span>
             </x-nav-link>
 
-            <x-nav-link href="/update-k0-sppg" :active="request()->is('update-k0-sppg')" class="group !w-auto !px-3 flex items-center overflow-hidden transition-all duration-300 ease-in-out">
-                <i class="fa-solid fa-file-pen text-2xl shrink-0"></i>
-                <span class="max-w-0 overflow-hidden opacity-0 group-hover:max-w-[200px] group-hover:opacity-100 group-hover:ml-2 transition-all duration-300 ease-in-out font-medium text-sm whitespace-nowrap">Update K0 SPPG</span>
-            </x-nav-link>
+            <div class="relative flex items-center h-full group">
+                <button class="!w-auto !px-3 flex items-center overflow-hidden transition-all duration-300 ease-in-out inline-flex items-center justify-center h-10 rounded-xl text-slate-700 hover:bg-black/10 group-hover:bg-black/10 {{ request()->is('update-k0-sppg') || request()->is('update-r1-sppg') ? 'bg-black/10' : '' }}">
+                    <i class="fa-solid fa-file-pen text-2xl shrink-0"></i>
+                    <span class="max-w-0 overflow-hidden opacity-0 group-hover:max-w-[200px] group-hover:opacity-100 group-hover:ml-2 transition-all duration-300 ease-in-out font-medium text-sm whitespace-nowrap">Update SPPG</span>
+                </button>
+                <div class="absolute top-[40px] left-0 pt-[20px] pb-2 opacity-0 invisible translate-y-2 group-hover:opacity-100 group-hover:visible group-hover:translate-y-0 transition-all duration-300 z-50 min-w-[200px]">
+                    <div class="bg-white rounded-xl shadow-lg border p-2 flex flex-col gap-1 w-full">
+                        <a href="/update-k0-sppg" class="px-3 py-2 text-sm font-medium rounded-lg transition hover:bg-gray-100 {{ request()->is('update-k0-sppg') ? 'bg-gray-100 text-blue-600' : 'text-gray-700' }}">K0 SPPG</a>
+                        <a href="/update-r1-sppg" class="px-3 py-2 text-sm font-medium rounded-lg transition hover:bg-gray-100 {{ request()->is('update-r1-sppg') ? 'bg-gray-100 text-blue-600' : 'text-gray-700' }}">R1 SPPG</a>
+                    </div>
+                </div>
+            </div>
         @endif
 
         @auth
@@ -225,10 +233,19 @@
                 <span class="font-medium text-sm">Laporan Capaian</span>
             </x-nav-link>
             
-            <x-nav-link href="/update-k0-sppg" :active="request()->is('update-k0-sppg')" class="!w-full !justify-start px-4 gap-3">
-                <i class="fa-solid fa-file-pen text-xl w-6 text-center"></i>
-                <span class="font-medium text-sm">Update K0 SPPG</span>
-            </x-nav-link>
+            <div x-data="{ openSppg: false }" class="w-full">
+                <button @click="openSppg = !openSppg" class="inline-flex items-center justify-center h-10 rounded-xl text-slate-700 transition hover:bg-black/10 !w-full !justify-start px-4 gap-3 {{ request()->is('update-k0-sppg') || request()->is('update-r1-sppg') ? 'bg-black/10' : '' }}">
+                    <i class="fa-solid fa-file-pen text-xl w-6 text-center"></i>
+                    <div class="flex-1 flex items-center justify-between">
+                        <span class="font-medium text-sm">Update SPPG</span>
+                        <i class="fa-solid fa-chevron-down text-xs transition-transform duration-300" :class="openSppg ? 'rotate-180' : ''"></i>
+                    </div>
+                </button>
+                <div x-show="openSppg" x-transition class="pl-12 pr-4 py-1 flex flex-col gap-1" style="display: none;">
+                    <a href="/update-k0-sppg" class="px-3 py-2 text-sm font-medium rounded-lg transition hover:bg-gray-100 {{ request()->is('update-k0-sppg') ? 'bg-gray-100 text-blue-600' : 'text-gray-700' }}">K0 SPPG</a>
+                    <a href="/update-r1-sppg" class="px-3 py-2 text-sm font-medium rounded-lg transition hover:bg-gray-100 {{ request()->is('update-r1-sppg') ? 'bg-gray-100 text-blue-600' : 'text-gray-700' }}">R1 SPPG</a>
+                </div>
+            </div>
         @endif
         
         @auth
