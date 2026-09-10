@@ -153,8 +153,9 @@
             line-height: 1.25 !important;
         }
 
-        /* Capaian Program Export Enhancements */
-        body.exporting #capaianProgramRoot {
+        /* Capaian Program & Elsimil Export Enhancements */
+        body.exporting #capaianProgramRoot,
+        body.exporting #capaianElsimilRoot {
             width: 100% !important;
             max-width: 100% !important;
             padding: 0 !important;
@@ -256,54 +257,13 @@
                     @endif
                 @elseif(request('tipe') == 'elsimil')
                     @if(!isset($laporans['elsimil']))
-                        <div class="text-center py-32 text-yellow-300 font-bold text-2xl drop-shadow-md">Data Capaian Elsimil tidak tersedia untuk periode ini</div>
+                        <div class="text-center py-32 text-slate-400 font-bold text-2xl drop-shadow-sm">Data Capaian Elsimil tidak tersedia untuk periode ini</div>
                     @else
                         @php
                             $d = $laporans['elsimil']->data;
                         @endphp
                         
-                        <!-- Elsimil Layout -->
-                        <div class="grid grid-cols-1 md:grid-cols-2 gap-10 md:gap-8 lg:gap-12 mt-12 px-2 md:px-6 pb-10">
-                            <!-- CHART CATIN -->
-                            <div class="relative mt-4">
-                                <div class="absolute -top-[25px] -left-[20px] w-20 h-20 rounded-full border-4 border-yellow-400 flex items-center justify-center z-20 overflow-hidden" style="background: radial-gradient(circle at center, #064e3b, #022c22); box-shadow: 0 5px 15px rgba(0,0,0,0.6), inset 0 0 10px rgba(250, 204, 21, 0.4);">
-                                    <img src="{{ asset('public/image/catin_icon_3d.png') }}?v={{ time() }}" alt="Catin" class="w-full h-full object-cover">
-                                </div>
-                                <div class="absolute -top-[15px] left-[50px] border-2 border-yellow-400 rounded-lg px-4 py-1 z-10 flex flex-col justify-center" style="background: linear-gradient(to bottom, #022c22, #064e3b); box-shadow: 0 5px 10px rgba(0,0,0,0.5); min-height: 48px;">
-                                    <div class="text-yellow-300 text-xs font-semibold leading-none mb-1">Trend</div>
-                                    <div class="text-white font-black text-sm md:text-base leading-none uppercase">JUMLAH CATIN TERDAMPINGI</div>
-                                </div>
-                                <div class="gold-card h-full p-[3px]">
-                                    <div class="dark-green-card p-4 pt-16 h-full flex flex-col rounded-[9px]" style="min-height: 350px;">
-                                        <div class="w-full grow relative">
-                                            <canvas id="catinChart"></canvas>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <!-- CHART BUMIL -->
-                            <div class="relative mt-4">
-                                <div class="absolute -top-[25px] -left-[20px] w-20 h-20 rounded-full border-4 border-yellow-400 flex items-center justify-center z-20 overflow-hidden" style="background: radial-gradient(circle at center, #064e3b, #022c22); box-shadow: 0 5px 15px rgba(0,0,0,0.6), inset 0 0 10px rgba(250, 204, 21, 0.4);">
-                                    <img src="{{ asset('public/image/bumil_icon_3d.png') }}?v={{ time() }}" alt="Bumil" class="w-full h-full object-cover">
-                                </div>
-                                <div class="absolute -top-[15px] left-[50px] border-2 border-yellow-400 rounded-lg px-4 py-1 z-10 flex flex-col justify-center" style="background: linear-gradient(to bottom, #022c22, #064e3b); box-shadow: 0 5px 10px rgba(0,0,0,0.5); min-height: 48px;">
-                                    <div class="text-yellow-300 text-xs font-semibold leading-none mb-1">Trend</div>
-                                    <div class="text-white font-black text-sm md:text-base leading-none uppercase">JUMLAH BUMIL TERDAMPINGI</div>
-                                </div>
-                                <div class="gold-card h-full p-[3px]">
-                                    <div class="dark-green-card p-4 pt-16 h-full flex flex-col rounded-[9px]" style="min-height: 350px;">
-                                        <div class="w-full grow relative">
-                                            <canvas id="bumilChart"></canvas>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <script>
-                            window.elsimilData = @json($d);
-                        </script>
+                        @include('laporan-capaian-elsimil')
                     @endif
                 @elseif(request('tipe') == 'quick_win')
                     <!-- Laporan Quick Win -->
@@ -765,123 +725,5 @@
                     window.scrollTo(origScrollX, origScrollY);
                 }
             }
-    </script>
-
-    <!-- Elsimil Chart Setup -->
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            if (window.elsimilData) {
-                const pointLabelsPlugin = {
-                    id: 'pointLabels',
-                    afterDatasetsDraw(chart) {
-                        const { ctx } = chart;
-                        ctx.font = 'bold 13px Poppins';
-                        ctx.textAlign = 'center';
-                        ctx.textBaseline = 'bottom';
-                        
-                        chart.data.datasets.forEach((dataset, i) => {
-                            const meta = chart.getDatasetMeta(i);
-                            meta.data.forEach((point, index) => {
-                                const value = dataset.data[index];
-                                const percentage = dataset.percentages ? dataset.percentages[index] : '';
-
-                                ctx.fillStyle = '#fde047';
-                                ctx.fillText(value.toLocaleString('id-ID'), point.x, point.y - 12);
-
-                                if (percentage) {
-                                    if (percentage.includes('-')) {
-                                        ctx.fillStyle = '#fca5a5';
-                                        ctx.fillText('▼ ' + percentage.replace('-', ''), point.x, point.y - 28);
-                                    } else {
-                                        ctx.fillStyle = '#6ee7b7';
-                                        ctx.fillText('▲ ' + percentage.replace('+', ''), point.x, point.y - 28);
-                                    }
-                                }
-                            });
-                        });
-                    }
-                };
-
-                Chart.register(pointLabelsPlugin);
-
-                const commonOptions = {
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    layout: { padding: { top: 80, right: 45, left: 35, bottom: 10 } },
-                    plugins: { legend: { display: false }, tooltip: { enabled: false }, pointLabels: true },
-                    scales: {
-                        x: { grid: { display: false, drawBorder: true, color: '#ffffff' }, ticks: { color: '#ffffff', font: { family: 'Poppins', size: 13, weight: 'bold' } } },
-                        y: { display: false, min: 0 }
-                    },
-                    elements: {
-                        line: { tension: 0.4 },
-                        point: { radius: 5, backgroundColor: '#ffffff', borderWidth: 2, borderColor: '#0284c7', hoverRadius: 7 }
-                    }
-                };
-
-                const initElsimilChart = (canvasId, dataObj, color, gradientStart, gradientEnd) => {
-                    const canvas = document.getElementById(canvasId);
-                    if (!canvas) return;
-                    const ctx = canvas.getContext('2d');
-                    
-                    let gradient = ctx.createLinearGradient(0, 0, 0, 400);
-                    gradient.addColorStop(0, gradientStart);
-                    gradient.addColorStop(1, gradientEnd);
-
-                    const monthNames = ['Jan', 'Feb', 'Mar', 'Apr', 'Mei', 'Jun', 'Jul', 'Agu', 'Sep', 'Okt', 'Nov', 'Des'];
-                    const labels = Object.keys(dataObj).map(m => monthNames[parseInt(m) - 1]);
-                    const dataPoints = Object.values(dataObj);
-                    
-                    const percentages = [];
-                    for (let i = 0; i < dataPoints.length; i++) {
-                        if (i === 0) {
-                            percentages.push('');
-                        } else {
-                            const prev = dataPoints[i - 1];
-                            const curr = dataPoints[i];
-                            if (prev === 0) {
-                                percentages.push('');
-                            } else {
-                                const diff = ((curr - prev) / prev) * 100;
-                                let formatted = diff.toFixed(1) + '%';
-                                if (diff > 0) formatted = '+' + formatted;
-                                percentages.push(formatted);
-                            }
-                        }
-                    }
-
-                    // adjust max y to prevent top text clipping
-                    const maxVal = Math.max(...dataPoints.map(Number));
-                    const options = JSON.parse(JSON.stringify(commonOptions));
-                    options.scales.y.max = maxVal + (maxVal * 0.5); // Add 50% headroom
-                    options.layout.padding.top = 85; 
-                    options.clip = false;
-                    options.elements.point.borderColor = color;
-
-                    new Chart(ctx, {
-                        type: 'line',
-                        data: {
-                            labels: labels,
-                            datasets: [{
-                                data: dataPoints,
-                                percentages: percentages,
-                                borderColor: color,
-                                backgroundColor: gradient,
-                                borderWidth: 3,
-                                fill: true,
-                            }]
-                        },
-                        options: options
-                    });
-                };
-
-                if (window.elsimilData.catin) {
-                    initElsimilChart('catinChart', window.elsimilData.catin, '#38bdf8', 'rgba(56, 189, 248, 0.5)', 'rgba(6, 78, 59, 0)');
-                }
-                if (window.elsimilData.bumil) {
-                    initElsimilChart('bumilChart', window.elsimilData.bumil, '#f472b6', 'rgba(244, 114, 182, 0.5)', 'rgba(6, 78, 59, 0)');
-                }
-            }
-        });
     </script>
 </x-layout>
