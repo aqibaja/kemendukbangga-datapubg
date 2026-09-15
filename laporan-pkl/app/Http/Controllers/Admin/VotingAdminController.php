@@ -43,6 +43,8 @@ class VotingAdminController extends Controller
             'golongan_3_name' => $request->golongan_3_name,
             'is_popup_active' => $request->has('is_popup_active'),
             'is_result_visible' => $request->has('is_result_visible'),
+            'popup_inactive_at' => $request->popup_inactive_at ?: null,
+            'result_visible_at' => $request->result_visible_at ?: null,
         ]);
 
         return redirect()->back()->with('success', 'Setting Voting berhasil diupdate.');

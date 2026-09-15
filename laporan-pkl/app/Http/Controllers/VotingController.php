@@ -25,6 +25,11 @@ class VotingController extends Controller
     public function dashboard(Request $request)
     {
         $setting = VotingSetting::firstOrCreate(['id' => 1]);
+        
+        $isResultVisible = $setting->is_result_visible;
+        if ($setting->result_visible_at && now()->timezone('Asia/Jakarta') >= \Carbon\Carbon::parse($setting->result_visible_at, 'Asia/Jakarta')) {
+            $isResultVisible = true;
+        }
 
         // Stats
         $totalPerwakilan = Employee::count();
@@ -41,7 +46,7 @@ class VotingController extends Controller
         $golongan3 = $candidates->where('golongan', 3)->values();
 
         return view('voting.voting-dashboard', compact(
-            'setting', 'totalPerwakilan', 'totalPkb', 'votedPerwakilan', 'votedPkb',
+            'setting', 'isResultVisible', 'totalPerwakilan', 'totalPkb', 'votedPerwakilan', 'votedPkb',
             'golongan1', 'golongan2', 'golongan3'
         ));
     }
@@ -72,7 +77,12 @@ class VotingController extends Controller
         // Cache selama 10 detik untuk mengurangi query DB saat banyak pengunjung polling
         $isActive = Cache::remember('voting_popup_active', 10, function () {
             $setting = VotingSetting::firstOrCreate(['id' => 1]);
-            return $setting->is_popup_active;
+            
+            $active = $setting->is_popup_active;
+            if ($setting->popup_inactive_at && now()->timezone('Asia/Jakarta') >= \Carbon\Carbon::parse($setting->popup_inactive_at, 'Asia/Jakarta')) {
+                $active = false;
+            }
+            return $active;
         });
         return response()->json(['is_popup_active' => $isActive]);
     }

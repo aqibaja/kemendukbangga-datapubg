@@ -257,7 +257,7 @@
 
                                     <!-- Candidate Avatar / Photo -->
                                     <div class="w-28 h-28 sm:w-32 sm:h-32 rounded-3xl mb-4 mt-3 overflow-hidden relative border-4 {{ $isWinner ? 'border-[#DFA53A] ring-4 ring-[#DFA53A]/20' : 'border-slate-100' }} shadow-md bg-slate-100 flex-shrink-0">
-                                        @if($setting->is_result_visible)
+                                        @if($isResultVisible)
                                             @if($candidate->foto)
                                                 <img src="{{ asset('laporan-pkl/storage/app/public/' . $candidate->foto) }}" onerror="this.parentElement.innerHTML='<div class=\'w-full h-full flex items-center justify-center bg-slate-100 text-slate-300\'><i class=\'fas fa-user-tie text-4xl\'></i></div>';" class="w-full h-full object-cover">
                                             @else
@@ -275,7 +275,7 @@
 
                                     <!-- Candidate Info -->
                                     <div class="text-center w-full mb-4 flex-1 flex flex-col justify-start">
-                                        @if($setting->is_result_visible)
+                                        @if($isResultVisible)
                                             <h4 class="font-black text-slate-900 text-lg sm:text-xl leading-snug mb-1 line-clamp-2">
                                                 {{ $candidate->nama }}
                                             </h4>

@@ -396,6 +396,17 @@ Route::get('/jalankan-migrasi', function() {
                 });
                 $messages[] = "✅ Kolom 'voter_name', 'user_agent', 'device_cookie_id' pada 'voting_votes' terverifikasi.";
             }
+            if (\Illuminate\Support\Facades\Schema::hasTable('voting_settings')) {
+                \Illuminate\Support\Facades\Schema::table('voting_settings', function (\Illuminate\Database\Schema\Blueprint $table) {
+                    if (!\Illuminate\Support\Facades\Schema::hasColumn('voting_settings', 'popup_inactive_at')) {
+                        $table->timestamp('popup_inactive_at')->nullable()->after('is_popup_active');
+                    }
+                    if (!\Illuminate\Support\Facades\Schema::hasColumn('voting_settings', 'result_visible_at')) {
+                        $table->timestamp('result_visible_at')->nullable()->after('is_result_visible');
+                    }
+                });
+                $messages[] = "✅ Kolom jadwal otomatis ditambahkan ke 'voting_settings'.";
+            }
         } catch (\Throwable $e) {
             $messages[] = "⚠️ Skema auto-fix: " . $e->getMessage();
         }
@@ -670,6 +681,52 @@ Route::get('/kirim-ulang-votes', function() {
     return "✅ <b>{$dispatched} vote</b> berhasil dimasukkan ke antrian!<br><br>"
          . "Sekarang buka <a href='/proses-queue'>/proses-queue</a> untuk mengirimkan ke Google Sheets.<br>"
          . "<small style='color:gray'>⚠️ Catatan: Ini akan mengirim ulang SEMUA vote ke Sheets, termasuk yang sudah ada. Hapus duplikat di Sheets secara manual jika perlu.</small>";
+});
+
+Route::get('/simulasi-voting/{jumlah}', function($jumlah) {
+    if (auth()->user()->id_role != 1) abort(403);
+    
+    $jumlah = min(intval($jumlah), 500); // max 500
+    $apiUrl = env('VOTING_ASN_KEREN_SCRIPT_URL');
+    
+    $kandidat1 = \App\Models\VotingCandidate::where('golongan', 1)->first();
+    $kandidat2 = \App\Models\VotingCandidate::where('golongan', 2)->first();
+    $kandidat3 = \App\Models\VotingCandidate::where('golongan', 3)->first();
+
+    if(!$kandidat1 || !$kandidat2 || !$kandidat3) return 'Kandidat belum lengkap';
+
+    for ($i = 1; $i <= $jumlah; $i++) {
+        $nama = "SIMULASI VOTER $i " . \Illuminate\Support\Str::random(4);
+        
+        \App\Models\VotingVote::create([
+            'voter_name'           => $nama,
+            'voter_type'           => 'perwakilan',
+            'voter_employee_id'    => null,
+            'candidate_golongan_1' => $kandidat1->id,
+            'candidate_golongan_2' => $kandidat2->id,
+            'candidate_golongan_3' => $kandidat3->id,
+            'ip_address'           => '127.0.0.1',
+            'user_agent'           => 'Simulasi Load Test',
+            'device_cookie_id'     => 'simulasi-' . \Illuminate\Support\Str::uuid(),
+        ]);
+
+        if (!empty($apiUrl)) {
+            \App\Jobs\SendVotingToGoogleSheets::dispatch(
+                $apiUrl, $nama, 'perwakilan',
+                $kandidat1->nama, $kandidat2->nama, $kandidat3->nama,
+                '127.0.0.1', now()->timezone('Asia/Jakarta')->format('d/m/Y H:i:s')
+            );
+        }
+    }
+    
+    return "✅ Berhasil memasukkan <b>$jumlah</b> data simulasi ke database dan antrian (queue).<br><br>"
+         . "Sekarang silakan buka <a href='/proses-queue' target='_blank'>/proses-queue</a> untuk memproses antriannya.";
+});
+
+Route::get('/hapus-simulasi', function() {
+    if (auth()->user()->id_role != 1) abort(403);
+    $deleted = \App\Models\VotingVote::where('voter_name', 'like', 'SIMULASI VOTER%')->delete();
+    return "🗑️ Berhasil menghapus <b>$deleted</b> data simulasi dari database.";
 });
 
 }); // End of Admin Utility Routes

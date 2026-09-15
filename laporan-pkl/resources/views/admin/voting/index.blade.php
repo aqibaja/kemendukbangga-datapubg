@@ -49,20 +49,28 @@
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
                         <div>
                             <label class="block text-sm font-semibold text-gray-700 mb-1">Tampilkan Popup di Halaman Utama</label>
-                            <label class="relative inline-flex items-center cursor-pointer">
+                            <label class="relative inline-flex items-center cursor-pointer mb-2">
                                 <input type="checkbox" name="is_popup_active" value="1" class="sr-only peer" {{ $setting->is_popup_active ? 'checked' : '' }}>
                                 <div class="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-blue-600"></div>
                                 <span class="ml-3 text-sm font-medium text-gray-900">Aktif</span>
                             </label>
+                            <div class="mt-2 bg-gray-50 p-3 rounded-lg border border-gray-100">
+                                <label class="block text-xs font-semibold text-gray-500 mb-1">Atau NON-AKTIFKAN OTOMATIS pada waktu:</label>
+                                <input type="datetime-local" name="popup_inactive_at" value="{{ $setting->popup_inactive_at ? \Carbon\Carbon::parse($setting->popup_inactive_at)->format('Y-m-d\TH:i') : '' }}" class="w-full text-sm px-3 py-2 border border-gray-300 rounded focus:ring-blue-500 focus:border-blue-500">
+                            </div>
                         </div>
                         <div>
                             <label class="block text-sm font-semibold text-gray-700 mb-1">Tampilkan Dashboard Hasil Voting</label>
-                            <label class="relative inline-flex items-center cursor-pointer">
+                            <label class="relative inline-flex items-center cursor-pointer mb-2">
                                 <input type="checkbox" name="is_result_visible" value="1" class="sr-only peer" {{ $setting->is_result_visible ? 'checked' : '' }}>
                                 <div class="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-green-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-green-600"></div>
                                 <span class="ml-3 text-sm font-medium text-gray-900">Aktif</span>
                             </label>
-                            <p class="text-xs text-gray-500 mt-1">Jika aktif, hasil voting bisa dilihat oleh publik di <a href="{{ route('voting.dashboard') }}" target="_blank" class="text-blue-500 hover:underline">/voting/dashboard</a>.</p>
+                            <div class="mt-2 bg-gray-50 p-3 rounded-lg border border-gray-100">
+                                <label class="block text-xs font-semibold text-gray-500 mb-1">Atau AKTIFKAN OTOMATIS pada waktu:</label>
+                                <input type="datetime-local" name="result_visible_at" value="{{ $setting->result_visible_at ? \Carbon\Carbon::parse($setting->result_visible_at)->format('Y-m-d\TH:i') : '' }}" class="w-full text-sm px-3 py-2 border border-gray-300 rounded focus:ring-green-500 focus:border-green-500">
+                            </div>
+                            <p class="text-xs text-gray-500 mt-2">Jika aktif, hasil voting bisa dilihat oleh publik di <a href="{{ route('voting.dashboard') }}" target="_blank" class="text-blue-500 hover:underline">/voting/dashboard</a>.</p>
                         </div>
                     </div>
 

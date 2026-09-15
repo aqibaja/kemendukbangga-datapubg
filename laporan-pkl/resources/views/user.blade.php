@@ -152,9 +152,21 @@
                             <div class="bg-purple-100 text-purple-600 p-3 rounded-lg mr-4 flex-shrink-0"><i class="fas fa-bolt"></i></div>
                             <div><h4 class="font-bold text-sm text-gray-800">Optimize Produksi</h4><p class="text-xs text-gray-500">Cache ulang route & config</p></div>
                         </a>
+                        <a href="/jalankan-migrasi" target="_blank" onclick="return confirm('Yakin ingin menjalankan Auto-Fix Database?')" class="flex items-center p-4 bg-teal-50 rounded-xl border border-teal-100 hover:bg-teal-100 transition">
+                            <div class="bg-teal-200 text-teal-700 p-3 rounded-lg mr-4 flex-shrink-0"><i class="fas fa-database"></i></div>
+                            <div><h4 class="font-bold text-sm text-teal-800">Jalankan Migrasi</h4><p class="text-xs text-teal-600">Auto-fix struktur tabel DB</p></div>
+                        </a>
                         <a href="/kirim-ulang-votes" onclick="return confirm('Kirim ulang semua data voting ke Google Sheets? Ini akan memicu antrian besar.')" target="_blank" class="flex items-center p-4 bg-red-50 rounded-xl border border-red-100 hover:bg-red-100 transition">
                             <div class="bg-red-200 text-red-700 p-3 rounded-lg mr-4 flex-shrink-0"><i class="fas fa-sync-alt"></i></div>
                             <div><h4 class="font-bold text-sm text-red-800">Kirim Ulang Vote</h4><p class="text-xs text-red-600">Re-dispatch seluruh data</p></div>
+                        </a>
+                        <a href="/simulasi-voting/100" onclick="return confirm('Masukkan 100 data voting dummy untuk keperluan load testing?')" target="_blank" class="flex items-center p-4 bg-indigo-50 rounded-xl border border-indigo-100 hover:bg-indigo-100 transition">
+                            <div class="bg-indigo-200 text-indigo-700 p-3 rounded-lg mr-4 flex-shrink-0"><i class="fas fa-robot"></i></div>
+                            <div><h4 class="font-bold text-sm text-indigo-800">Simulasi 100 Vote</h4><p class="text-xs text-indigo-600">Test beban queue server</p></div>
+                        </a>
+                        <a href="/hapus-simulasi" onclick="return confirm('Hapus semua data simulasi dummy dari database?')" target="_blank" class="flex items-center p-4 bg-gray-100 rounded-xl border border-gray-200 hover:bg-gray-200 transition">
+                            <div class="bg-gray-200 text-gray-700 p-3 rounded-lg mr-4 flex-shrink-0"><i class="fas fa-eraser"></i></div>
+                            <div><h4 class="font-bold text-sm text-gray-800">Hapus Data Simulasi</h4><p class="text-xs text-gray-600">Bersihkan DB dari dummy</p></div>
                         </a>
                     </div>
                 </div>

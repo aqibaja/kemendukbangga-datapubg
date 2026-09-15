@@ -23,12 +23,7 @@
         .blob-2 { bottom: -15%; right: -10%; width: 620px; height: 620px; background: #FEF3C7; animation-delay: -5s; }
         .blob-3 { top: 35%; left: 50%; width: 440px; height: 440px; background: #BAE6FD; animation-delay: -10s; }
 
-        .nip-input {
-            letter-spacing: 0.25em;
-            font-size: 1.5rem;
-            font-family: 'SF Mono', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
-        }
-
+        /* nip-input styles replaced with responsive Tailwind classes */
         /* Glassmorphism Input */
         .glass-input {
             background: rgba(255, 255, 255, 0.8);
@@ -131,8 +126,8 @@
                     </div>
                 </div>
 
-                <!-- Stepper Dots & Labels -->
-                <div class="grid grid-cols-6 gap-1 text-center">
+                <!-- Stepper Dots & Labels (Hidden on mobile) -->
+                <div class="hidden sm:grid grid-cols-6 gap-1 text-center">
                     <div class="flex flex-col items-center">
                         <span class="text-[10px] sm:text-[11px] font-bold tracking-wider transition-colors duration-300" :class="step >= 1 ? 'text-[#2B82C9] font-black' : 'text-slate-400'">IDENTITAS</span>
                     </div>
@@ -158,7 +153,7 @@
         <!-- ================================ -->
         <!-- WIZARD CONTAINER                 -->
         <!-- ================================ -->
-        <div class="max-w-4xl w-full relative z-10 min-h-[520px]">
+        <div class="max-w-5xl w-full relative z-10 min-h-[520px]">
 
             <!-- ================================ -->
             <!-- STEP 1: Identitas / Pilih Nama   -->
@@ -271,7 +266,7 @@
                                 @keydown.enter="verifyNipAndNext"
                                 maxlength="30"
                                 placeholder="Masukkan NIP Anda"
-                                class="nip-input glass-input w-full px-6 py-4 sm:py-5 rounded-2xl text-center text-slate-900 font-bold focus:border-[#4CA3E6] focus:ring-4 focus:ring-[#4CA3E6]/15 transition-all duration-300"
+                                class="glass-input w-full px-4 sm:px-6 py-4 sm:py-5 rounded-2xl text-center text-slate-900 font-bold font-mono text-base sm:text-xl lg:text-2xl tracking-[0.1em] sm:tracking-[0.25em] focus:border-[#4CA3E6] focus:ring-4 focus:ring-[#4CA3E6]/15 transition-all duration-300"
                             >
                             <p class="text-[11px] text-slate-400 mt-2 text-center">Pastikan digit NIP sesuai dengan database kepegawaian BKKBN.</p>
                         </div>
@@ -334,13 +329,19 @@
                                 </div>
 
                                 <!-- Candidate Image -->
-                                <div class="w-full bg-gradient-to-b from-slate-100 to-slate-200/50 rounded-2xl mb-4 overflow-hidden relative border border-slate-100 shadow-inner" style="padding-top: 100%;">
-                                    <img x-show="c.foto" :src="'{{ asset('laporan-pkl/storage/app/public') }}/' + c.foto" x-on:error="c.foto = null" class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105">
+                                <div class="w-full bg-slate-100 rounded-2xl mb-4 overflow-hidden relative border border-slate-200 shadow-inner group/image aspect-[4/5] flex items-center justify-center">
+                                    <img x-show="c.foto" :src="'{{ asset('laporan-pkl/storage/app/public') }}/' + c.foto" x-on:error="c.foto = null" class="absolute inset-0 w-full h-full object-contain p-2 sm:p-3 transition-transform duration-700 group-hover:scale-105">
                                     <div x-show="!c.foto" class="absolute inset-0 w-full h-full flex flex-col items-center justify-center bg-gradient-to-b from-slate-50 to-slate-100 text-slate-300">
                                         <i class="fas fa-user-tie text-5xl sm:text-6xl text-slate-300/80 mb-1"></i>
                                         <span class="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Kandidat ASN</span>
                                     </div>
-                                    <div class="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                                    <div class="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none"></div>
+                                    
+                                    <!-- Zoom Button (Pill) -->
+                                    <button type="button" x-show="c.foto" @click.stop="zoomedImage = '{{ asset('laporan-pkl/storage/app/public') }}/' + c.foto" class="absolute bottom-3 right-3 sm:bottom-4 sm:right-4 bg-slate-900/80 hover:bg-slate-900 backdrop-blur-md text-white text-xs sm:text-sm font-bold px-3 py-1.5 sm:px-4 sm:py-2 rounded-full shadow-[0_8px_16px_rgba(0,0,0,0.25)] flex items-center gap-2 transition-all duration-300 transform hover:scale-105 hover:-translate-y-0.5 z-30 border border-white/10" title="Perbesar Gambar">
+                                        <i class="fas fa-expand pointer-events-none"></i>
+                                        <span class="pointer-events-none">Perbesar</span>
+                                    </button>
                                 </div>
 
                                 <!-- Candidate Name & Details -->
@@ -411,13 +412,19 @@
                                 </div>
 
                                 <!-- Candidate Image -->
-                                <div class="w-full bg-gradient-to-b from-slate-100 to-slate-200/50 rounded-2xl mb-4 overflow-hidden relative border border-slate-100 shadow-inner" style="padding-top: 100%;">
-                                    <img x-show="c.foto" :src="'{{ asset('laporan-pkl/storage/app/public') }}/' + c.foto" x-on:error="c.foto = null" class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105">
+                                <div class="w-full bg-slate-100 rounded-2xl mb-4 overflow-hidden relative border border-slate-200 shadow-inner group/image aspect-[4/5] flex items-center justify-center">
+                                    <img x-show="c.foto" :src="'{{ asset('laporan-pkl/storage/app/public') }}/' + c.foto" x-on:error="c.foto = null" class="absolute inset-0 w-full h-full object-contain p-2 sm:p-3 transition-transform duration-700 group-hover:scale-105">
                                     <div x-show="!c.foto" class="absolute inset-0 w-full h-full flex flex-col items-center justify-center bg-gradient-to-b from-slate-50 to-slate-100 text-slate-300">
                                         <i class="fas fa-user-tie text-5xl sm:text-6xl text-slate-300/80 mb-1"></i>
                                         <span class="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Kandidat ASN</span>
                                     </div>
-                                    <div class="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                                    <div class="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none"></div>
+                                    
+                                    <!-- Zoom Button (Pill) -->
+                                    <button type="button" x-show="c.foto" @click.stop="zoomedImage = '{{ asset('laporan-pkl/storage/app/public') }}/' + c.foto" class="absolute bottom-3 right-3 sm:bottom-4 sm:right-4 bg-slate-900/80 hover:bg-slate-900 backdrop-blur-md text-white text-xs sm:text-sm font-bold px-3 py-1.5 sm:px-4 sm:py-2 rounded-full shadow-[0_8px_16px_rgba(0,0,0,0.25)] flex items-center gap-2 transition-all duration-300 transform hover:scale-105 hover:-translate-y-0.5 z-30 border border-white/10" title="Perbesar Gambar">
+                                        <i class="fas fa-expand pointer-events-none"></i>
+                                        <span class="pointer-events-none">Perbesar</span>
+                                    </button>
                                 </div>
 
                                 <!-- Candidate Name & Details -->
@@ -488,13 +495,19 @@
                                 </div>
 
                                 <!-- Candidate Image -->
-                                <div class="w-full bg-gradient-to-b from-slate-100 to-slate-200/50 rounded-2xl mb-4 overflow-hidden relative border border-slate-100 shadow-inner" style="padding-top: 100%;">
-                                    <img x-show="c.foto" :src="'{{ asset('laporan-pkl/storage/app/public') }}/' + c.foto" x-on:error="c.foto = null" class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105">
+                                <div class="w-full bg-slate-100 rounded-2xl mb-4 overflow-hidden relative border border-slate-200 shadow-inner group/image aspect-[4/5] flex items-center justify-center">
+                                    <img x-show="c.foto" :src="'{{ asset('laporan-pkl/storage/app/public') }}/' + c.foto" x-on:error="c.foto = null" class="absolute inset-0 w-full h-full object-contain p-2 sm:p-3 transition-transform duration-700 group-hover:scale-105">
                                     <div x-show="!c.foto" class="absolute inset-0 w-full h-full flex flex-col items-center justify-center bg-gradient-to-b from-slate-50 to-slate-100 text-slate-300">
                                         <i class="fas fa-user-tie text-5xl sm:text-6xl text-slate-300/80 mb-1"></i>
                                         <span class="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Kandidat ASN</span>
                                     </div>
-                                    <div class="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                                    <div class="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none"></div>
+                                    
+                                    <!-- Zoom Button (Pill) -->
+                                    <button type="button" x-show="c.foto" @click.stop="zoomedImage = '{{ asset('laporan-pkl/storage/app/public') }}/' + c.foto" class="absolute bottom-3 right-3 sm:bottom-4 sm:right-4 bg-slate-900/80 hover:bg-slate-900 backdrop-blur-md text-white text-xs sm:text-sm font-bold px-3 py-1.5 sm:px-4 sm:py-2 rounded-full shadow-[0_8px_16px_rgba(0,0,0,0.25)] flex items-center gap-2 transition-all duration-300 transform hover:scale-105 hover:-translate-y-0.5 z-30 border border-white/10" title="Perbesar Gambar">
+                                        <i class="fas fa-expand pointer-events-none"></i>
+                                        <span class="pointer-events-none">Perbesar</span>
+                                    </button>
                                 </div>
 
                                 <!-- Candidate Name & Details -->
@@ -642,8 +655,22 @@
                     </div>
                 </div>
             </div>
-            
         </div>
+        
+        <!-- Modal Zoom Image -->
+        <div x-show="zoomedImage" style="display: none;" class="fixed inset-0 z-[100] flex items-center justify-center p-4 sm:p-6" x-transition:enter="transition ease-out duration-300" x-transition:enter-start="opacity-0" x-transition:enter-end="opacity-100" x-transition:leave="transition ease-in duration-200" x-transition:leave-start="opacity-100" x-transition:leave-end="opacity-0">
+            <!-- Backdrop -->
+            <div class="absolute inset-0 bg-black/80 backdrop-blur-sm" @click="zoomedImage = null"></div>
+            
+            <!-- Image Container -->
+            <div class="relative w-full max-w-4xl max-h-[90vh] flex flex-col items-center justify-center z-10" @click.stop>
+                <button @click="zoomedImage = null" type="button" class="absolute -top-12 right-0 sm:-right-12 sm:top-0 text-white hover:text-rose-400 transition-colors w-10 h-10 flex items-center justify-center text-3xl">
+                    <i class="fas fa-times"></i>
+                </button>
+                <img :src="zoomedImage" class="w-full h-full max-h-[85vh] object-contain rounded-xl shadow-2xl bg-black/50" alt="Kandidat Zoom">
+            </div>
+        </div>
+
     </div>
 
     <!-- Logic Controller Script -->
@@ -666,6 +693,7 @@
                 checkError: '',
                 nipError: '',
                 submitError: '',
+                zoomedImage: null,
                 
                 init() {
                     fetch('{{ url('/api/voting/candidates') }}')
