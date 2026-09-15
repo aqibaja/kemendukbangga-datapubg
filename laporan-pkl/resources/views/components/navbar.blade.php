@@ -71,6 +71,10 @@
                     <i class="fa-solid fa-notes-medical text-2xl shrink-0"></i>
                     <span class="max-w-0 overflow-hidden opacity-0 group-hover:max-w-[150px] group-hover:opacity-100 group-hover:ml-2 transition-all duration-300 ease-in-out font-medium text-sm whitespace-nowrap">Izin & Sakit</span>
                 </x-nav-link>
+                <x-nav-link href="{{ route('admin.voting.index') }}" :active="request()->is('admin/voting*') || request()->is('admin/pkb-employees*')" class="group !w-auto !px-3 flex items-center overflow-hidden transition-all duration-300 ease-in-out">
+                    <i class="fa-solid fa-vote-yea text-2xl shrink-0"></i>
+                    <span class="max-w-0 overflow-hidden opacity-0 group-hover:max-w-[200px] group-hover:opacity-100 group-hover:ml-2 transition-all duration-300 ease-in-out font-medium text-sm whitespace-nowrap">Voting ASN KEREN</span>
+                </x-nav-link>
             @endif
             <x-nav-link href="/user" :active="request()->is('user')" class="group !w-auto !px-3 flex items-center overflow-hidden transition-all duration-300 ease-in-out">
                 <i class="fa-solid fa-gear text-2xl shrink-0"></i>
@@ -244,6 +248,10 @@
                 <x-nav-link href="/admin/leaves" :active="request()->is('admin/leaves*')" class="!w-full !justify-start px-4 gap-3">
                     <i class="fa-solid fa-notes-medical text-xl w-6 text-center"></i>
                     <span class="font-medium text-sm">Izin & Sakit</span>
+                </x-nav-link>
+                <x-nav-link href="{{ route('admin.voting.index') }}" :active="request()->is('admin/voting*') || request()->is('admin/pkb-employees*')" class="!w-full !justify-start px-4 gap-3">
+                    <i class="fa-solid fa-vote-yea text-xl w-6 text-center"></i>
+                    <span class="font-medium text-sm">Voting ASN KEREN</span>
                 </x-nav-link>
             @endif
             <x-nav-link href="/user" :active="request()->is('user')" class="!w-full !justify-start px-4 gap-3">

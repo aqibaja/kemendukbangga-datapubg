@@ -188,5 +188,96 @@
                 });
             });
         </script>
+        <!-- Modal Popup Voting Premium Kemendukbangga -->
+        <div x-data="{ showModal: false }" 
+             x-init="fetch('/api/voting/check-popup')
+                        .then(res => res.json())
+                        .then(data => { if(data.is_popup_active) setTimeout(() => showModal = true, 600) })" 
+             x-show="showModal"
+             style="display: none;"
+             class="fixed inset-0 z-[100] !m-0 flex items-center justify-center bg-slate-950/65 backdrop-blur-md p-4 sm:p-6"
+             x-transition:enter="transition ease-out duration-400"
+             x-transition:enter-start="opacity-0"
+             x-transition:enter-end="opacity-100"
+             x-transition:leave="transition ease-in duration-250"
+             x-transition:leave-start="opacity-100"
+             x-transition:leave-end="opacity-0">
+            
+            <div @click.outside="showModal = false" 
+                 class="bg-white/95 backdrop-blur-2xl rounded-[2.5rem] shadow-[0_25px_70px_rgba(76,163,230,0.25)] max-w-md w-full overflow-hidden relative border-2 border-white"
+                 x-transition:enter="transition ease-[cubic-bezier(0.34,1.56,0.64,1)] duration-500 transform"
+                 x-transition:enter-start="opacity-0 scale-90 translate-y-6"
+                 x-transition:enter-end="opacity-100 scale-100 translate-y-0"
+                 x-transition:leave="transition ease-in duration-250 transform"
+                 x-transition:leave-start="opacity-100 scale-100 translate-y-0"
+                 x-transition:leave-end="opacity-0 scale-90 translate-y-6">
+                
+                <!-- Ambient Glow Blobs inside Modal -->
+                <div class="absolute -top-20 -left-20 w-48 h-48 bg-[#4CA3E6]/25 rounded-full blur-3xl pointer-events-none"></div>
+                <div class="absolute -top-20 -right-20 w-48 h-48 bg-[#DFA53A]/25 rounded-full blur-3xl pointer-events-none"></div>
+
+                <!-- Close Button -->
+                <button @click="showModal = false" 
+                        class="absolute top-4 right-4 text-slate-400 hover:text-slate-700 bg-slate-100/90 hover:bg-slate-200/90 rounded-full w-9 h-9 flex items-center justify-center transition-all z-20 hover:rotate-90">
+                    <i class="fas fa-times text-sm"></i>
+                </button>
+
+                <div class="p-7 sm:p-9 text-center relative z-10">
+                    <!-- Logo Kemendukbangga in Floating Glow Badge -->
+                    <div class="relative inline-block mb-3">
+                        <div class="absolute -inset-2 bg-gradient-to-r from-[#4CA3E6]/30 via-[#DFA53A]/25 to-[#4CA3E6]/30 rounded-3xl blur-lg opacity-80 animate-pulse"></div>
+                        <div class="relative p-3 rounded-2xl bg-white shadow-md border border-slate-100 flex items-center justify-center">
+                            <img src="{{ asset('image/logoBKKBN.png') }}" 
+                                 onerror="this.onerror=null; this.src='{{ asset('public/image/logoBKKBN.png') }}';" 
+                                 alt="Logo Kemendukbangga" 
+                                 class="w-14 h-14 object-contain filter drop-shadow-sm">
+                        </div>
+                    </div>
+
+                    <!-- Category / Status Badge -->
+                    <div>
+                        <span class="inline-flex items-center gap-1.5 px-3.5 py-1 rounded-full text-[11px] font-black uppercase tracking-wider bg-gradient-to-r from-[#4CA3E6]/10 to-[#DFA53A]/15 text-[#2B82C9] border border-[#4CA3E6]/25 shadow-sm mb-2.5">
+                            <i class="fas fa-award text-[#DFA53A]"></i>
+                            PEMILIHAN RESMI BKKBN ACEH
+                        </span>
+                    </div>
+                    
+                    <h2 class="text-3xl sm:text-4xl font-black text-transparent bg-clip-text bg-gradient-to-r from-[#2B82C9] via-[#4CA3E6] to-[#DFA53A] mb-2 tracking-tight">
+                        Pilih ASN KEREN!
+                    </h2>
+                    <p class="text-slate-500 font-medium text-sm leading-relaxed mb-6">
+                        Mari berpartisipasi menentukan figur ASN berprestasi dan teladan di lingkungan Perwakilan BKKBN Aceh. Suara Anda sangat berarti!
+                    </p>
+
+                    <!-- Feature Highlights -->
+                    <div class="grid grid-cols-3 gap-2 mb-6 py-2.5 px-3 bg-slate-50/80 rounded-2xl border border-slate-100">
+                        <div class="flex flex-col items-center text-center">
+                            <i class="fas fa-shield-halved text-xs text-[#4CA3E6] mb-1"></i>
+                            <span class="text-[10px] font-bold text-slate-600">Rahasia & Aman</span>
+                        </div>
+                        <div class="flex flex-col items-center text-center border-x border-slate-200/80">
+                            <i class="fas fa-bolt text-xs text-[#DFA53A] mb-1"></i>
+                            <span class="text-[10px] font-bold text-slate-600">Cepat 1 Menit</span>
+                        </div>
+                        <div class="flex flex-col items-center text-center">
+                            <i class="fas fa-medal text-xs text-[#2B82C9] mb-1"></i>
+                            <span class="text-[10px] font-bold text-slate-600">3 Kategori</span>
+                        </div>
+                    </div>
+                    
+                    <!-- Action Buttons -->
+                    <div class="space-y-3">
+                        <a href="{{ route('voting.show') }}" class="w-full py-4 px-6 bg-gradient-to-r from-[#4CA3E6] via-[#3596E2] to-[#2B82C9] hover:from-[#3A8CC7] hover:to-[#1E6FA8] text-white font-black text-base rounded-2xl shadow-xl shadow-[#4CA3E6]/30 hover:shadow-2xl hover:shadow-[#4CA3E6]/40 transition-all transform hover:-translate-y-0.5 active:translate-y-0 flex items-center justify-center gap-2">
+                            <span>Ikuti Voting Sekarang</span>
+                            <i class="fas fa-arrow-right"></i>
+                        </a>
+                        <a href="{{ route('voting.dashboard') }}" class="w-full py-3.5 px-6 bg-white hover:bg-slate-50 text-slate-700 hover:text-[#2B82C9] font-bold text-sm rounded-2xl border border-slate-200/80 hover:border-[#4CA3E6]/40 transition-all flex items-center justify-center gap-2 shadow-sm">
+                            <i class="fas fa-chart-pie text-[#4CA3E6]"></i>
+                            <span>Lihat Hasil Sementara</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </x-layout>

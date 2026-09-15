@@ -28,6 +28,9 @@ use App\Http\Controllers\PublicLeaveController;
 use App\Http\Controllers\Admin\EmployeeController;
 use App\Http\Controllers\Admin\QrSessionController;
 use App\Http\Controllers\QrAttendanceController;
+use App\Http\Controllers\VotingController;
+use App\Http\Controllers\Admin\VotingAdminController;
+use App\Http\Controllers\Admin\PkbEmployeeController;
 Route::get('/', function (Request $request) {
     $dashboardPages = DashboardPage::withCount('views')->get();
     
@@ -212,6 +215,22 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/admin/leaves', [App\Http\Controllers\Admin\LeaveController::class, 'index'])->name('admin.leaves.index');
     Route::post('/admin/leaves', [App\Http\Controllers\Admin\LeaveController::class, 'store'])->name('admin.leaves.store');
     Route::delete('/admin/leaves/{leave}', [App\Http\Controllers\Admin\LeaveController::class, 'destroy'])->name('admin.leaves.destroy');
+
+    // Voting ASN KEREN Admin
+    Route::get('/admin/voting', [VotingAdminController::class, 'index'])->name('admin.voting.index');
+    Route::post('/admin/voting/settings', [VotingAdminController::class, 'updateSettings'])->name('admin.voting.settings');
+    Route::post('/admin/voting/candidates', [VotingAdminController::class, 'storeCandidates'])->name('admin.voting.candidates.store');
+    Route::delete('/admin/voting/candidates/{id}', [VotingAdminController::class, 'deleteCandidate'])->name('admin.voting.candidates.destroy');
+    Route::post('/admin/voting/toggle-popup', [VotingAdminController::class, 'togglePopup'])->name('admin.voting.toggle-popup');
+    Route::post('/admin/voting/toggle-result', [VotingAdminController::class, 'toggleResult'])->name('admin.voting.toggle-result');
+    Route::get('/admin/voting/voters', [VotingAdminController::class, 'votersList'])->name('admin.voting.voters');
+    Route::delete('/admin/voting/voters/{id}', [VotingAdminController::class, 'deleteVote'])->name('admin.voting.voters.destroy');
+    
+    // PKB Employees Admin
+    Route::get('/admin/pkb-employees', [PkbEmployeeController::class, 'index'])->name('admin.pkb.index');
+    Route::post('/admin/pkb-employees', [PkbEmployeeController::class, 'store'])->name('admin.pkb.store');
+    Route::put('/admin/pkb-employees/{id}', [PkbEmployeeController::class, 'update'])->name('admin.pkb.update');
+    Route::delete('/admin/pkb-employees/{id}', [PkbEmployeeController::class, 'destroy'])->name('admin.pkb.destroy');
 });
 
 // Presensi Publik (Scan QR)
@@ -225,6 +244,18 @@ Route::get('/login', function () {
 Route::post('/login', [AuthController::class, 'login'])->name('login.process');
 
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
+
+// ======= VOTING ASN KEREN (PUBLIC) =======
+Route::get('/voting', [VotingController::class, 'showVoting'])->name('voting.show');
+Route::post('/voting/submit', [VotingController::class, 'submitVote'])->name('voting.submit');
+Route::get('/voting/dashboard', [VotingController::class, 'dashboard'])->name('voting.dashboard');
+Route::get('/voting/dashboard/voters', [VotingController::class, 'voterStatus'])->name('voting.dashboard.voters');
+Route::view('/voting/success', 'voting.voting-success')->name('voting.success');
+Route::get('/api/voting/check-popup', [VotingController::class, 'checkPopup']);
+Route::get('/api/voting/voters', [VotingController::class, 'getVoterList']);
+Route::get('/api/voting/candidates', [VotingController::class, 'getCandidates']);
+Route::post('/api/voting/check-voted', [VotingController::class, 'checkVoted']);
+Route::post('/api/voting/verify-nip', [VotingController::class, 'verifyNip']);
 
 // ======= LAPORAN CAPAIAN =======
 Route::get('/laporan-capaian', function (Request $request) {
@@ -318,7 +349,9 @@ Route::get('/jalankan-migrasi', function() {
             'database/migrations/2026_07_06_091306_create_qr_sessions_table.php',
             'database/migrations/2026_07_06_091307_create_qr_attendances_table.php',
             'database/migrations/2026_07_07_020931_add_refresh_time_to_qr_sessions_table.php',
-            'database/migrations/2026_07_07_045226_add_end_time_to_qr_sessions_table.php'
+            'database/migrations/2026_07_07_045226_add_end_time_to_qr_sessions_table.php',
+            'database/migrations/2026_09_10_000001_create_voting_tables.php',
+            'database/migrations/2026_09_12_000001_add_nip_to_employees_and_pkb.php',
         ];
         
         foreach ($newMigrations as $path) {
@@ -336,6 +369,32 @@ Route::get('/jalankan-migrasi', function() {
                 }
             }
         }
+
+        // Auto-fix kolom voting jika tabel terlanjur dibuat tanpa kolom ini
+        try {
+            if (\Illuminate\Support\Facades\Schema::hasTable('voting_candidates') && !\Illuminate\Support\Facades\Schema::hasColumn('voting_candidates', 'urutan')) {
+                \Illuminate\Support\Facades\Schema::table('voting_candidates', function (\Illuminate\Database\Schema\Blueprint $table) {
+                    $table->integer('urutan')->default(0)->after('unsur');
+                });
+                $messages[] = "✅ Kolom 'urutan' berhasil ditambahkan ke 'voting_candidates'.";
+            }
+            if (\Illuminate\Support\Facades\Schema::hasTable('voting_votes')) {
+                \Illuminate\Support\Facades\Schema::table('voting_votes', function (\Illuminate\Database\Schema\Blueprint $table) {
+                    if (!\Illuminate\Support\Facades\Schema::hasColumn('voting_votes', 'voter_name')) {
+                        $table->string('voter_name')->nullable()->after('id');
+                    }
+                    if (!\Illuminate\Support\Facades\Schema::hasColumn('voting_votes', 'user_agent')) {
+                        $table->string('user_agent')->nullable()->after('ip_address');
+                    }
+                    if (!\Illuminate\Support\Facades\Schema::hasColumn('voting_votes', 'device_cookie_id')) {
+                        $table->string('device_cookie_id')->nullable()->after('user_agent');
+                    }
+                });
+                $messages[] = "✅ Kolom 'voter_name', 'user_agent', 'device_cookie_id' pada 'voting_votes' terverifikasi.";
+            }
+        } catch (\Throwable $e) {
+            $messages[] = "⚠️ Skema auto-fix: " . $e->getMessage();
+        }
         
         return '<b>Status Migrasi:</b><br><br>' . implode('<br>', $messages);
     } catch (\Throwable $e) {
@@ -351,3 +410,14 @@ Route::get('/bersihkan-cache', function() {
         return 'Terjadi Error: ' . $e->getMessage();
     }
 });
+
+Route::get('/cek-error', function() {
+    $logFile = storage_path('logs/laravel.log');
+    if (!file_exists($logFile)) {
+        return 'File log tidak ditemukan di: ' . $logFile;
+    }
+    $lines = file($logFile);
+    $lastLines = array_slice($lines, -80);
+    return '<pre style="background:#1e1e1e;color:#eee;padding:15px;border-radius:8px;font-size:12px;overflow:auto;line-height:1.5;">' . htmlspecialchars(implode('', $lastLines)) . '</pre>';
+});
+
