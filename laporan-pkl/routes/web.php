@@ -338,7 +338,11 @@ Route::middleware(['auth'])->group(function () {
     Route::delete('/laporan-capaian/{id}', [LaporanCapaianController::class, 'destroy'])->name('laporan-capaian.destroy');
 });
 
+// === ROUTE UTILITAS / SERVER (HANYA ADMIN) ===
+Route::middleware(['auth'])->group(function () {
+
 Route::get('/jalankan-migrasi', function() {
+    if (auth()->user()->id_role != 1) abort(403, 'Akses khusus Admin');
     try {
         $messages = [];
         
@@ -403,6 +407,7 @@ Route::get('/jalankan-migrasi', function() {
 });
 
 Route::get('/bersihkan-cache', function() {
+    if (auth()->user()->id_role != 1) abort(403, 'Akses khusus Admin');
     try {
         \Illuminate\Support\Facades\Artisan::call('optimize:clear');
         return 'Cache berhasil dibersihkan!';
@@ -411,7 +416,127 @@ Route::get('/bersihkan-cache', function() {
     }
 });
 
+Route::get('/optimize-produksi', function() {
+    if (auth()->user()->id_role != 1) abort(403, 'Akses khusus Admin');
+    try {
+        $results = [];
+
+        \Illuminate\Support\Facades\Artisan::call('config:cache');
+        $results[] = '✅ Config cache dibuat';
+
+        \Illuminate\Support\Facades\Artisan::call('route:cache');
+        $results[] = '✅ Route cache dibuat';
+
+        \Illuminate\Support\Facades\Artisan::call('view:cache');
+        $results[] = '✅ View cache dibuat';
+
+        \Illuminate\Support\Facades\Artisan::call('event:cache');
+        $results[] = '✅ Event cache dibuat';
+
+        // Cek tabel jobs (untuk Queue)
+        $jobsTableExists = \Illuminate\Support\Facades\Schema::hasTable('jobs');
+        if ($jobsTableExists) {
+            $results[] = '✅ Tabel <b>jobs</b> sudah ada — Queue siap digunakan!';
+        } else {
+            $results[] = '❌ Tabel <b>jobs</b> BELUM ADA — kunjungi <a href="/jalankan-migrasi">/jalankan-migrasi</a> dulu!';
+        }
+
+        // Cek tabel cache (untuk Cache::remember)
+        $cacheTableExists = \Illuminate\Support\Facades\Schema::hasTable('cache');
+        $results[] = $cacheTableExists
+            ? '✅ Tabel <b>cache</b> sudah ada'
+            : '⚠️ Tabel <b>cache</b> belum ada — kunjungi <a href="/jalankan-migrasi">/jalankan-migrasi</a>';
+
+        return '<b>Optimasi Produksi Selesai:</b><br><br>' . implode('<br>', $results) .
+               '<br><br><small style="color:gray">Selesai pada: ' . now()->timezone('Asia/Jakarta')->format('d/m/Y H:i:s') . ' WIB</small>';
+    } catch (\Throwable $e) {
+        return '❌ Error: ' . $e->getMessage();
+    }
+});
+
+Route::get('/buat-tabel-queue', function() {
+    if (auth()->user()->id_role != 1) abort(403, 'Akses khusus Admin');
+    $results = [];
+
+    // === TABEL CACHE ===
+    if (!\Illuminate\Support\Facades\Schema::hasTable('cache')) {
+        \Illuminate\Support\Facades\Schema::create('cache', function (\Illuminate\Database\Schema\Blueprint $table) {
+            $table->string('key')->primary();
+            $table->mediumText('value');
+            $table->integer('expiration');
+        });
+        $results[] = '✅ Tabel <b>cache</b> berhasil dibuat';
+    } else {
+        $results[] = '⏭️ Tabel <b>cache</b> sudah ada, dilewati';
+    }
+
+    if (!\Illuminate\Support\Facades\Schema::hasTable('cache_locks')) {
+        \Illuminate\Support\Facades\Schema::create('cache_locks', function (\Illuminate\Database\Schema\Blueprint $table) {
+            $table->string('key')->primary();
+            $table->string('owner');
+            $table->integer('expiration');
+        });
+        $results[] = '✅ Tabel <b>cache_locks</b> berhasil dibuat';
+    } else {
+        $results[] = '⏭️ Tabel <b>cache_locks</b> sudah ada, dilewati';
+    }
+
+    // === TABEL JOBS (Queue) ===
+    if (!\Illuminate\Support\Facades\Schema::hasTable('jobs')) {
+        \Illuminate\Support\Facades\Schema::create('jobs', function (\Illuminate\Database\Schema\Blueprint $table) {
+            $table->bigIncrements('id');
+            $table->string('queue')->index();
+            $table->longText('payload');
+            $table->unsignedTinyInteger('attempts');
+            $table->unsignedInteger('reserved_at')->nullable();
+            $table->unsignedInteger('available_at');
+            $table->unsignedInteger('created_at');
+        });
+        $results[] = '✅ Tabel <b>jobs</b> berhasil dibuat — Queue siap!';
+    } else {
+        $results[] = '⏭️ Tabel <b>jobs</b> sudah ada, dilewati';
+    }
+
+    if (!\Illuminate\Support\Facades\Schema::hasTable('job_batches')) {
+        \Illuminate\Support\Facades\Schema::create('job_batches', function (\Illuminate\Database\Schema\Blueprint $table) {
+            $table->string('id')->primary();
+            $table->string('name');
+            $table->integer('total_jobs');
+            $table->integer('pending_jobs');
+            $table->integer('failed_jobs');
+            $table->longText('failed_job_ids');
+            $table->mediumText('options')->nullable();
+            $table->integer('cancelled_at')->nullable();
+            $table->integer('created_at');
+            $table->integer('finished_at')->nullable();
+        });
+        $results[] = '✅ Tabel <b>job_batches</b> berhasil dibuat';
+    } else {
+        $results[] = '⏭️ Tabel <b>job_batches</b> sudah ada, dilewati';
+    }
+
+    if (!\Illuminate\Support\Facades\Schema::hasTable('failed_jobs')) {
+        \Illuminate\Support\Facades\Schema::create('failed_jobs', function (\Illuminate\Database\Schema\Blueprint $table) {
+            $table->id();
+            $table->string('uuid')->unique();
+            $table->text('connection');
+            $table->text('queue');
+            $table->longText('payload');
+            $table->longText('exception');
+            $table->timestamp('failed_at')->useCurrent();
+        });
+        $results[] = '✅ Tabel <b>failed_jobs</b> berhasil dibuat';
+    } else {
+        $results[] = '⏭️ Tabel <b>failed_jobs</b> sudah ada, dilewati';
+    }
+
+    return '<b>Hasil Pembuatan Tabel Queue & Cache:</b><br><br>' . implode('<br>', $results) .
+           '<br><br>✨ <b>Selesai!</b> Silakan kunjungi <a href="/optimize-produksi">/optimize-produksi</a> untuk verifikasi.' .
+           '<br><small style="color:gray">Selesai pada: ' . now()->timezone('Asia/Jakarta')->format('d/m/Y H:i:s') . ' WIB</small>';
+});
+
 Route::get('/cek-error', function() {
+    if (auth()->user()->id_role != 1) abort(403, 'Akses khusus Admin');
     $logFile = storage_path('logs/laravel.log');
     if (!file_exists($logFile)) {
         return 'File log tidak ditemukan di: ' . $logFile;
@@ -421,3 +546,130 @@ Route::get('/cek-error', function() {
     return '<pre style="background:#1e1e1e;color:#eee;padding:15px;border-radius:8px;font-size:12px;overflow:auto;line-height:1.5;">' . htmlspecialchars(implode('', $lastLines)) . '</pre>';
 });
 
+Route::get('/cek-queue', function() {
+    if (auth()->user()->id_role != 1) abort(403, 'Akses khusus Admin');
+    $jobs = \Illuminate\Support\Facades\DB::table('jobs')->get();
+    $failed = \Illuminate\Support\Facades\DB::table('failed_jobs')->get();
+
+    $html = '<b>Jobs Menunggu di Antrian: ' . $jobs->count() . '</b><br><br>';
+    foreach ($jobs as $job) {
+        $payload = json_decode($job->payload, true);
+        $jobClass = $payload['displayName'] ?? 'Unknown';
+        $html .= "🕐 ID: {$job->id} | Class: <b>{$jobClass}</b> | Attempts: {$job->attempts} | Created: " . date('d/m/Y H:i:s', $job->created_at) . '<br>';
+    }
+
+    $html .= '<br><b>Jobs Gagal: ' . $failed->count() . '</b><br><br>';
+    foreach ($failed as $job) {
+        $html .= "❌ UUID: {$job->uuid} | Gagal: {$job->failed_at}<br>";
+    }
+
+    $html .= '<br><a href="/proses-queue">👉 Klik di sini untuk proses antrian sekarang</a>';
+
+    return $html;
+});
+
+Route::get('/proses-queue', function() {
+    if (auth()->user()->id_role != 1) abort(403, 'Akses khusus Admin');
+    try {
+        set_time_limit(120); // maks 2 menit
+        \Illuminate\Support\Facades\Artisan::call('queue:work', [
+            '--stop-when-empty' => true,
+            '--max-jobs'        => 50,
+            '--timeout'         => 60,
+        ]);
+        $output = \Illuminate\Support\Facades\Artisan::output();
+        return '<b>Queue Worker selesai:</b><br><pre style="background:#1e1e1e;color:#eee;padding:15px;">' 
+            . htmlspecialchars($output ?: 'Semua job telah diproses (atau antrian kosong).') 
+            . '</pre>'
+            . '<br><a href="/cek-queue">Cek status antrian</a>';
+    } catch (\Throwable $e) {
+        return '❌ Error: ' . $e->getMessage();
+    }
+});
+
+Route::get('/diagnosa-voting', function() {
+    if (auth()->user()->id_role != 1) abort(403, 'Akses khusus Admin');
+    $results = [];
+
+    // Cek 1: Apakah Job file ada di server?
+    $jobFile = app_path('Jobs/SendVotingToGoogleSheets.php');
+    $results[] = file_exists($jobFile)
+        ? '✅ File <b>app/Jobs/SendVotingToGoogleSheets.php</b> ADA di server'
+        : '❌ File <b>app/Jobs/SendVotingToGoogleSheets.php</b> TIDAK ADA — belum diupload!';
+
+    $jobFile2 = app_path('Jobs/SendAttendanceToGoogleSheets.php');
+    $results[] = file_exists($jobFile2)
+        ? '✅ File <b>app/Jobs/SendAttendanceToGoogleSheets.php</b> ADA di server'
+        : '❌ File <b>app/Jobs/SendAttendanceToGoogleSheets.php</b> TIDAK ADA — belum diupload!';
+
+    // Cek 2: Apakah VotingController pakai Queue (versi baru)?
+    $controllerFile = app_path('Http/Controllers/VotingController.php');
+    $controllerContent = file_get_contents($controllerFile);
+    $usesQueue = str_contains($controllerContent, 'SendVotingToGoogleSheets::dispatch');
+    $results[] = $usesQueue
+        ? '✅ <b>VotingController</b> sudah pakai Queue (versi baru)'
+        : '❌ <b>VotingController</b> masih versi lama (Http::post langsung) — belum diupload!';
+
+    // Cek 3: Apakah class Job bisa di-load?
+    try {
+        if (class_exists(\App\Jobs\SendVotingToGoogleSheets::class)) {
+            $results[] = '✅ Class <b>SendVotingToGoogleSheets</b> berhasil di-load';
+        } else {
+            $results[] = '❌ Class <b>SendVotingToGoogleSheets</b> tidak bisa di-load (autoload belum diupdate?)';
+        }
+    } catch (\Throwable $e) {
+        $results[] = '❌ Error load class: ' . $e->getMessage();
+    }
+
+    // Cek 4: Apakah VOTING_ASN_KEREN_SCRIPT_URL ada?
+    $gasUrl = env('VOTING_ASN_KEREN_SCRIPT_URL');
+    $results[] = !empty($gasUrl)
+        ? '✅ <b>VOTING_ASN_KEREN_SCRIPT_URL</b> terkonfigurasi di .env'
+        : '❌ <b>VOTING_ASN_KEREN_SCRIPT_URL</b> kosong di .env server!';
+
+    // Cek 5: Total voting di DB
+    $totalVotes = \Illuminate\Support\Facades\DB::table('voting_votes')->count();
+    $results[] = "📊 Total voting di database: <b>{$totalVotes}</b> suara";
+
+    // Cek 6: Jobs table count
+    $pendingJobs = \Illuminate\Support\Facades\DB::table('jobs')->count();
+    $results[] = "🕐 Jobs di antrian sekarang: <b>{$pendingJobs}</b>";
+
+    return '<b>🔍 Diagnosa Voting System:</b><br><br>'. implode('<br>', $results) .
+           '<br><br><small style="color:gray">Dicek pada: ' . now()->timezone('Asia/Jakarta')->format('d/m/Y H:i:s') . ' WIB</small>';
+});
+
+Route::get('/kirim-ulang-votes', function() {
+    if (auth()->user()->id_role != 1) abort(403, 'Akses khusus Admin');
+    $apiUrl = env('VOTING_ASN_KEREN_SCRIPT_URL');
+    if (empty($apiUrl)) {
+        return '❌ VOTING_ASN_KEREN_SCRIPT_URL tidak terkonfigurasi di .env';
+    }
+
+    $votes = \App\Models\VotingVote::with(['candidate1', 'candidate2', 'candidate3'])->get();
+
+    if ($votes->isEmpty()) {
+        return '⚠️ Tidak ada data voting di database.';
+    }
+
+    $dispatched = 0;
+    foreach ($votes as $vote) {
+        \App\Jobs\SendVotingToGoogleSheets::dispatch(
+            $apiUrl,
+            $vote->voter_name ?? 'Tidak Diketahui',
+            $vote->voter_type ?? 'perwakilan',
+            $vote->candidate1 ? $vote->candidate1->nama : '',
+            $vote->candidate2 ? $vote->candidate2->nama : '',
+            $vote->candidate3 ? $vote->candidate3->nama : '',
+            $vote->ip_address ?? '',
+            $vote->created_at->timezone('Asia/Jakarta')->format('d/m/Y H:i:s'),
+        );
+        $dispatched++;
+    }
+
+    return "✅ <b>{$dispatched} vote</b> berhasil dimasukkan ke antrian!<br><br>"
+         . "Sekarang buka <a href='/proses-queue'>/proses-queue</a> untuk mengirimkan ke Google Sheets.<br>"
+         . "<small style='color:gray'>⚠️ Catatan: Ini akan mengirim ulang SEMUA vote ke Sheets, termasuk yang sudah ada. Hapus duplikat di Sheets secara manual jika perlu.</small>";
+});
+
+}); // End of Admin Utility Routes

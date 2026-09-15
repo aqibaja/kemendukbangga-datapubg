@@ -125,6 +125,39 @@
                         </table>
                     </div>
                 </div>
+
+                <!-- ================= SERVER UTILITIES ================= -->
+                <div class="bg-white rounded-2xl sm:rounded-3xl shadow-lg p-4 sm:p-6 lg:p-8">
+                    <h2 class="text-xl sm:text-2xl font-bold text-gray-800 mb-4"><i class="fas fa-server mr-2 text-red-500"></i> Alat Server & Utility</h2>
+                    <p class="text-gray-500 mb-6 text-sm">Gunakan alat ini untuk maintenance server. <b>Hati-hati!</b> Beberapa aksi dapat mempengaruhi performa website sementara.</p>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                        <a href="/diagnosa-voting" target="_blank" class="flex items-center p-4 bg-gray-50 rounded-xl border hover:bg-gray-100 transition">
+                            <div class="bg-blue-100 text-blue-600 p-3 rounded-lg mr-4 flex-shrink-0"><i class="fas fa-stethoscope"></i></div>
+                            <div><h4 class="font-bold text-sm text-gray-800">Diagnosa Sistem</h4><p class="text-xs text-gray-500">Cek status file & queue</p></div>
+                        </a>
+                        <a href="/cek-queue" target="_blank" class="flex items-center p-4 bg-gray-50 rounded-xl border hover:bg-gray-100 transition">
+                            <div class="bg-orange-100 text-orange-600 p-3 rounded-lg mr-4 flex-shrink-0"><i class="fas fa-list-ol"></i></div>
+                            <div><h4 class="font-bold text-sm text-gray-800">Status Antrian (Queue)</h4><p class="text-xs text-gray-500">Lihat data belum terkirim</p></div>
+                        </a>
+                        <a href="/proses-queue" target="_blank" class="flex items-center p-4 bg-gray-50 rounded-xl border hover:bg-gray-100 transition">
+                            <div class="bg-green-100 text-green-600 p-3 rounded-lg mr-4 flex-shrink-0"><i class="fas fa-play"></i></div>
+                            <div><h4 class="font-bold text-sm text-gray-800">Jalankan Queue Worker</h4><p class="text-xs text-gray-500">Proses antrian manual</p></div>
+                        </a>
+                        <a href="/bersihkan-cache" target="_blank" class="flex items-center p-4 bg-gray-50 rounded-xl border hover:bg-gray-100 transition">
+                            <div class="bg-yellow-100 text-yellow-600 p-3 rounded-lg mr-4 flex-shrink-0"><i class="fas fa-broom"></i></div>
+                            <div><h4 class="font-bold text-sm text-gray-800">Bersihkan Cache</h4><p class="text-xs text-gray-500">Wajib sblm deploy file baru</p></div>
+                        </a>
+                        <a href="/optimize-produksi" target="_blank" class="flex items-center p-4 bg-gray-50 rounded-xl border hover:bg-gray-100 transition">
+                            <div class="bg-purple-100 text-purple-600 p-3 rounded-lg mr-4 flex-shrink-0"><i class="fas fa-bolt"></i></div>
+                            <div><h4 class="font-bold text-sm text-gray-800">Optimize Produksi</h4><p class="text-xs text-gray-500">Cache ulang route & config</p></div>
+                        </a>
+                        <a href="/kirim-ulang-votes" onclick="return confirm('Kirim ulang semua data voting ke Google Sheets? Ini akan memicu antrian besar.')" target="_blank" class="flex items-center p-4 bg-red-50 rounded-xl border border-red-100 hover:bg-red-100 transition">
+                            <div class="bg-red-200 text-red-700 p-3 rounded-lg mr-4 flex-shrink-0"><i class="fas fa-sync-alt"></i></div>
+                            <div><h4 class="font-bold text-sm text-red-800">Kirim Ulang Vote</h4><p class="text-xs text-red-600">Re-dispatch seluruh data</p></div>
+                        </a>
+                    </div>
+                </div>
             @endif
 
             <!-- ================= DATA HALAMAN TABLE ================= -->

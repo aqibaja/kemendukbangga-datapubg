@@ -2,14 +2,15 @@
 
 namespace App\Http\Controllers;
 
+use App\Jobs\SendVotingToGoogleSheets;
 use App\Models\Employee;
 use App\Models\PkbEmployee;
 use App\Models\VotingCandidate;
 use App\Models\VotingSetting;
 use App\Models\VotingVote;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Cookie;
-use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Str;
 
@@ -68,8 +69,12 @@ class VotingController extends Controller
 
     public function checkPopup()
     {
-        $setting = VotingSetting::firstOrCreate(['id' => 1]);
-        return response()->json(['is_popup_active' => $setting->is_popup_active]);
+        // Cache selama 10 detik untuk mengurangi query DB saat banyak pengunjung polling
+        $isActive = Cache::remember('voting_popup_active', 10, function () {
+            $setting = VotingSetting::firstOrCreate(['id' => 1]);
+            return $setting->is_popup_active;
+        });
+        return response()->json(['is_popup_active' => $isActive]);
     }
 
     public function getVoterList(Request $request)
@@ -193,30 +198,24 @@ class VotingController extends Controller
         //     return response()->json(['success' => false, 'message' => 'Perangkat ini sudah digunakan untuk voting.'], 400);
         // }
 
-        // Kirim data ke Google Sheets via GAS
-        try {
-            $apiUrl = env('VOTING_ASN_KEREN_SCRIPT_URL');
-            if (!empty($apiUrl)) {
-                $candidate1 = VotingCandidate::find($request->candidate_golongan_1);
-                $candidate2 = VotingCandidate::find($request->candidate_golongan_2);
-                $candidate3 = VotingCandidate::find($request->candidate_golongan_3);
-                
-                $gasResponse = Http::timeout(15)->post($apiUrl, [
-                    'action'               => 'submit_vote',
-                    'voter_name'           => $request->voter_name,
-                    'voter_type'           => $request->voter_type,
-                    'candidate_golongan_1' => $candidate1 ? $candidate1->nama : '',
-                    'candidate_golongan_2' => $candidate2 ? $candidate2->nama : '',
-                    'candidate_golongan_3' => $candidate3 ? $candidate3->nama : '',
-                    'ip_address'           => $request->ip(),
-                    'timestamp'            => now()->timezone('Asia/Jakarta')->format('d/m/Y H:i:s'),
-                ]);
+        // Kirim data ke Google Sheets via Queue Job (benar-benar async/background)
+        // Entry Process LANGSUNG BEBAS setelah dispatch, tidak menunggu GAS sama sekali
+        $apiUrl = env('VOTING_ASN_KEREN_SCRIPT_URL');
+        if (!empty($apiUrl)) {
+            $candidate1 = VotingCandidate::find($request->candidate_golongan_1);
+            $candidate2 = VotingCandidate::find($request->candidate_golongan_2);
+            $candidate3 = VotingCandidate::find($request->candidate_golongan_3);
 
-                Log::info('GAS response: ' . $gasResponse->body());
-            }
-        } catch (\Exception $e) {
-            // GAS gagal tidak menghalangi voting tetap tersimpan di DB
-            Log::error('Failed to send voting to GSheet: ' . $e->getMessage());
+            SendVotingToGoogleSheets::dispatch(
+                $apiUrl,
+                $request->voter_name,
+                $request->voter_type,
+                $candidate1 ? $candidate1->nama : '',
+                $candidate2 ? $candidate2->nama : '',
+                $candidate3 ? $candidate3->nama : '',
+                $request->ip(),
+                now()->timezone('Asia/Jakarta')->format('d/m/Y H:i:s'),
+            );
         }
 
         $deviceCookieId = Str::uuid()->toString();

@@ -795,7 +795,19 @@
                             candidate_golongan_3: this.selection.gol3,
                         })
                     })
-                    .then(res => res.json())
+                    .then(res => {
+                        // Tangani HTTP error secara eksplisit (419 CSRF, 500 Server Error, dll)
+                        if (res.status === 419) {
+                            throw new Error('Sesi Anda telah habis. Silakan refresh halaman dan coba lagi.');
+                        }
+                        if (res.status === 500) {
+                            throw new Error('Terjadi kesalahan di server (500). Silakan hubungi admin.');
+                        }
+                        if (!res.ok) {
+                            throw new Error(`Server menolak permintaan (kode: ${res.status}). Silakan coba lagi.`);
+                        }
+                        return res.json();
+                    })
                     .then(data => {
                         this.isSubmitting = false;
                         if (data.success) {
@@ -804,11 +816,13 @@
                             this.submitError = data.message || 'Gagal menyimpan data voting.';
                         }
                     })
-                    .catch(() => {
+                    .catch((err) => {
                         this.isSubmitting = false;
-                        this.submitError = 'Koneksi terputus saat menyimpan. Silakan coba lagi.';
+                        // Tampilkan pesan spesifik jika ada, atau pesan koneksi generik
+                        this.submitError = err.message || 'Koneksi terputus saat menyimpan. Silakan coba lagi.';
                     });
                 }
+
             }
         }
     </script>
