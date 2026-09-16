@@ -16,8 +16,10 @@ class VotingAdminController extends Controller
     public function index()
     {
         $setting = VotingSetting::firstOrCreate(['id' => 1]);
-        $candidates = VotingCandidate::orderBy('golongan')->orderBy('urutan')->get();
-        
+        $candidates = VotingCandidate::withCount(['votes1', 'votes2', 'votes3'])
+            ->orderBy('golongan')
+            ->orderBy('urutan')
+            ->get();
         $stats = [
             'total_perwakilan' => Employee::count(),
             'total_pkb' => PkbEmployee::count(),

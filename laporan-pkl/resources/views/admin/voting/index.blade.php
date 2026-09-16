@@ -122,8 +122,13 @@
                                 
                                 <div class="bg-gray-50 p-4 rounded-xl border relative">
                                     @if($candidate)
+                                        <div class="absolute top-2 left-2">
+                                            <span class="bg-blue-100 text-blue-800 text-xs font-bold px-2 py-1 rounded shadow-sm border border-blue-200">
+                                                <i class="fas fa-vote-yea mr-1"></i> {{ $candidate->votes1_count + $candidate->votes2_count + $candidate->votes3_count }} Suara
+                                            </span>
+                                        </div>
                                         <div class="absolute top-2 right-2">
-                                            <button type="button" onclick="if(confirm('Hapus kandidat ini?')) document.getElementById('delete-form-{{$candidate->id}}').submit();" class="text-red-500 hover:text-red-700 p-1">
+                                            <button type="button" onclick="if(confirm('Hapus kandidat ini?')) document.getElementById('delete-form-{{$candidate->id}}').submit();" class="text-red-500 hover:text-red-700 p-1 bg-white rounded-full shadow-sm border">
                                                 <i class="fas fa-trash"></i>
                                             </button>
                                         </div>
@@ -132,7 +137,7 @@
                                     <input type="hidden" name="candidates[{{$id}}][golongan]" value="{{ $gol }}">
                                     <input type="hidden" name="candidates[{{$id}}][urutan]" value="{{ $index }}">
                                     
-                                    <div class="mb-3">
+                                    <div class="mb-3 {{ $candidate ? 'mt-6' : '' }}">
                                         <label class="block text-xs font-semibold text-gray-700 mb-1">Nama Kandidat</label>
                                         <input type="text" name="candidates[{{$id}}][nama]" value="{{ $candidate ? $candidate->nama : '' }}" class="w-full px-3 py-1.5 text-sm border rounded focus:outline-none focus:ring-1 focus:ring-blue-500" placeholder="Nama..." required>
                                     </div>
