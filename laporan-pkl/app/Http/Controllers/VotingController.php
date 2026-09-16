@@ -61,30 +61,101 @@ class VotingController extends Controller
         $perwakilan = Employee::orderBy('nama')->get()->map(function($emp) use ($votedPerwakilanIds) {
             $emp->has_voted = in_array($emp->id, $votedPerwakilanIds);
             return $emp;
-        });
+        })->sortBy(function($emp) {
+            return ($emp->has_voted ? 1 : 0) . '_' . $emp->nama;
+        })->values();
 
         // Ambil semua PkbEmployee (PKB) dan set status
         $pkb = PkbEmployee::orderBy('nama')->get()->map(function($emp) use ($votedPkbIds) {
             $emp->has_voted = in_array($emp->id, $votedPkbIds);
             return $emp;
-        });
+        })->sortBy(function($emp) {
+            return ($emp->has_voted ? 1 : 0) . '_' . $emp->nama;
+        })->values();
 
         return view('voting.voting-voters-status', compact('perwakilan', 'pkb'));
     }
 
+    public function exportUnvoted()
+    {
+        $votedPerwakilanIds = VotingVote::where('voter_type', 'perwakilan')->pluck('voter_employee_id')->toArray();
+        $votedPkbIds = VotingVote::where('voter_type', 'pkb')->pluck('voter_pkb_id')->toArray();
+
+        $perwakilanBelum = Employee::orderBy('nama')->get()->filter(function($emp) use ($votedPerwakilanIds) {
+            return !in_array($emp->id, $votedPerwakilanIds);
+        });
+
+        $pkbBelum = PkbEmployee::orderBy('nama')->get()->filter(function($emp) use ($votedPkbIds) {
+            return !in_array($emp->id, $votedPkbIds);
+        });
+
+        // Group PKB by kabupaten
+        $pkbGrouped = [];
+        foreach ($pkbBelum as $emp) {
+            $kab = $emp->kabupaten ?: 'Belum Ada Kabupaten';
+            if (!isset($pkbGrouped[$kab])) {
+                $pkbGrouped[$kab] = [];
+            }
+            $pkbGrouped[$kab][] = $emp->nama;
+        }
+        ksort($pkbGrouped);
+
+        $content = "# Rekapitulasi Pegawai Belum Voting
+
+";
+        
+        $content .= "## 1. Pegawai PKB (Berdasarkan Kabupaten)
+";
+        foreach ($pkbGrouped as $kab => $names) {
+            sort($names);
+            $content .= "### " . $kab . " (" . count($names) . " Orang)
+";
+            foreach ($names as $i => $nama) {
+                $content .= ($i + 1) . ". " . $nama . "
+";
+            }
+            $content .= "
+";
+        }
+
+        $content .= "## 2. Pegawai Perwakilan (" . $perwakilanBelum->count() . " Orang)
+";
+        $i = 1;
+        foreach ($perwakilanBelum as $emp) {
+            $content .= $i . ". " . $emp->nama . "
+";
+            $i++;
+        }
+
+        return response($content)
+            ->header('Content-Type', 'text/plain')
+            ->header('Content-Disposition', 'attachment; filename="rekap_belum_voting.txt"');
+    }
+
+
     public function checkPopup()
     {
         // Cache selama 10 detik untuk mengurangi query DB saat banyak pengunjung polling
-        $isActive = Cache::remember('voting_popup_active', 10, function () {
+        $data = Cache::remember('voting_popup_data_v2', 10, function () {
             $setting = VotingSetting::firstOrCreate(['id' => 1]);
             
             $active = $setting->is_popup_active;
             if ($setting->popup_inactive_at && now()->timezone('Asia/Jakarta') >= \Carbon\Carbon::parse($setting->popup_inactive_at, 'Asia/Jakarta')) {
                 $active = false;
             }
-            return $active;
+
+            $resultVisible = $setting->is_result_visible;
+            if ($setting->result_visible_at && now()->timezone('Asia/Jakarta') >= \Carbon\Carbon::parse($setting->result_visible_at, 'Asia/Jakarta')) {
+                $resultVisible = true;
+            }
+
+            return [
+                'is_popup_active' => $active,
+                'is_result_visible' => $resultVisible
+            ];
         });
-        return response()->json(['is_popup_active' => $isActive]);
+        
+        return response()->json($data);
     }
 
     public function getVoterList(Request $request)

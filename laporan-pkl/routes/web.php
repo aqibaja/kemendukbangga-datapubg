@@ -250,6 +250,7 @@ Route::get('/voting', [VotingController::class, 'showVoting'])->name('voting.sho
 Route::post('/voting/submit', [VotingController::class, 'submitVote'])->name('voting.submit');
 Route::get('/voting/dashboard', [VotingController::class, 'dashboard'])->name('voting.dashboard');
 Route::get('/voting/dashboard/voters', [VotingController::class, 'voterStatus'])->name('voting.dashboard.voters');
+Route::get('/voting/dashboard/voters/export', [VotingController::class, 'exportUnvoted'])->name('voting.dashboard.voters.export');
 Route::view('/voting/success', 'voting.voting-success')->name('voting.success');
 Route::get('/api/voting/check-popup', [VotingController::class, 'checkPopup']);
 Route::get('/api/voting/voters', [VotingController::class, 'getVoterList']);

@@ -53,29 +53,35 @@
             <div class="bg-white/85 backdrop-blur-xl rounded-[2.5rem] shadow-[0_15px_40px_rgba(76,163,230,0.08)] p-6 sm:p-8 border border-white">
                 
                 <!-- Controls: Tabs & Search -->
-                <div class="flex flex-col sm:flex-row justify-between items-center gap-4 mb-8">
+                <div class="flex flex-col lg:flex-row justify-between items-center gap-4 mb-8">
                     <!-- Segmented Tabs -->
-                    <div class="flex bg-slate-100/90 p-1.5 rounded-2xl w-full sm:w-auto border border-slate-200/60 shadow-inner">
+                    <div class="flex flex-col sm:flex-row bg-slate-100/90 p-1.5 rounded-2xl w-full lg:w-auto border border-slate-200/60 shadow-inner gap-1">
                         <button @click="tab = 'perwakilan'" 
                                 :class="tab === 'perwakilan' ? 'bg-gradient-to-r from-[#4CA3E6] to-[#2B82C9] text-white shadow-md' : 'text-slate-500 hover:text-slate-800'" 
-                                class="flex-1 sm:flex-none px-6 py-2.5 rounded-xl font-black text-sm transition-all duration-300 flex items-center justify-center gap-2">
+                                class="flex-1 px-4 sm:px-6 py-3 sm:py-2.5 rounded-xl font-black text-sm transition-all duration-300 flex items-center justify-center gap-2">
                             <i class="fas fa-building"></i>
                             <span>Perwakilan</span>
                             <span class="text-xs px-2 py-0.5 rounded-full" :class="tab === 'perwakilan' ? 'bg-white/20 text-white' : 'bg-slate-200 text-slate-600'">{{ $perwakilan->count() }}</span>
                         </button>
                         <button @click="tab = 'pkb'" 
                                 :class="tab === 'pkb' ? 'bg-gradient-to-r from-[#DFA53A] to-[#F3C76A] text-white shadow-md' : 'text-slate-500 hover:text-slate-800'" 
-                                class="flex-1 sm:flex-none px-6 py-2.5 rounded-xl font-black text-sm transition-all duration-300 flex items-center justify-center gap-2">
+                                class="flex-1 px-4 sm:px-6 py-3 sm:py-2.5 rounded-xl font-black text-sm transition-all duration-300 flex items-center justify-center gap-2">
                             <i class="fas fa-users"></i>
                             <span>PKB / PLKB</span>
                             <span class="text-xs px-2 py-0.5 rounded-full" :class="tab === 'pkb' ? 'bg-white/20 text-white' : 'bg-slate-200 text-slate-600'">{{ $pkb->count() }}</span>
                         </button>
                     </div>
 
-                    <!-- Live Search Box -->
-                    <div class="relative w-full sm:w-80">
-                        <i class="fas fa-search absolute left-4 top-1/2 -translate-y-1/2 text-slate-400"></i>
-                        <input type="text" x-model="search" placeholder="Cari nama atau unsur..." class="w-full pl-11 pr-4 py-3 bg-white border border-slate-200/90 rounded-2xl text-sm font-medium focus:outline-none focus:border-[#4CA3E6] focus:ring-4 focus:ring-[#4CA3E6]/15 transition shadow-sm">
+                    <!-- Live Search Box & Export -->
+                    <div class="flex flex-col sm:flex-row gap-3 w-full lg:w-auto">
+                        <div class="relative w-full sm:w-72">
+                            <i class="fas fa-search absolute left-4 top-1/2 -translate-y-1/2 text-slate-400"></i>
+                            <input type="text" x-model="search" placeholder="Cari nama atau unsur..." class="w-full pl-11 pr-4 py-3 bg-white border border-slate-200/90 rounded-2xl text-sm font-medium focus:outline-none focus:border-[#4CA3E6] focus:ring-4 focus:ring-[#4CA3E6]/15 transition shadow-sm">
+                        </div>
+                        <a href="{{ route('voting.dashboard.voters.export') }}" class="w-full sm:w-auto px-5 py-3 bg-[#2B82C9] hover:bg-[#1E6FA8] text-white rounded-2xl text-sm font-bold shadow-sm transition-all flex items-center justify-center gap-2 whitespace-nowrap">
+                            <i class="fas fa-file-export"></i>
+                            <span>Rekap Belum Memilih</span>
+                        </a>
                     </div>
                 </div>
 
@@ -123,16 +129,16 @@
                                 <tr class="bg-slate-50/80 border-b border-slate-200/70 text-slate-500 text-xs font-black uppercase tracking-wider">
                                     <th class="py-4 px-5 w-16 text-center">No</th>
                                     <th class="py-4 px-5">Nama Karyawan PKB</th>
-                                    <th class="py-4 px-5">Wilayah / Unsur</th>
+                                    <th class="py-4 px-5">Kabupaten</th>
                                     <th class="py-4 px-5 w-44 text-center">Status Suara</th>
                                 </tr>
                             </thead>
                             <tbody class="divide-y divide-slate-100">
                                 @foreach($pkb as $index => $emp)
-                                    <tr class="hover:bg-amber-50/40 transition-colors" x-show="'{{ strtolower($emp->nama) }}'.includes(search.toLowerCase()) || '{{ strtolower($emp->unsur) }}'.includes(search.toLowerCase())">
+                                    <tr class="hover:bg-amber-50/40 transition-colors" x-show="'{{ strtolower($emp->nama) }}'.includes(search.toLowerCase()) || '{{ strtolower($emp->kabupaten) }}'.includes(search.toLowerCase())">
                                         <td class="py-3.5 px-5 text-center text-xs font-bold text-slate-400">{{ $loop->iteration }}</td>
                                         <td class="py-3.5 px-5 font-black text-slate-900 text-sm">{{ $emp->nama }}</td>
-                                        <td class="py-3.5 px-5 text-xs text-slate-500 font-medium">{{ $emp->unsur ?? '-' }}</td>
+                                        <td class="py-3.5 px-5 text-xs text-slate-500 font-medium">{{ $emp->kabupaten ?? '-' }}</td>
                                         <td class="py-3.5 px-5 text-center">
                                             @if($emp->has_voted)
                                                 <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-black bg-emerald-50 text-emerald-600 border border-emerald-200">

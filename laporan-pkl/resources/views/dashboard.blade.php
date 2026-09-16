@@ -189,10 +189,13 @@
             });
         </script>
         <!-- Modal Popup Voting Premium Kemendukbangga -->
-        <div x-data="{ showModal: false }" 
+        <div x-data="{ showModal: false, isResultVisible: false }" 
              x-init="fetch('/api/voting/check-popup')
                         .then(res => res.json())
-                        .then(data => { if(data.is_popup_active) setTimeout(() => showModal = true, 600) })" 
+                        .then(data => { 
+                            isResultVisible = data.is_result_visible;
+                            if(data.is_popup_active) setTimeout(() => showModal = true, 600) 
+                        })" 
              x-show="showModal"
              style="display: none;"
              class="fixed inset-0 z-[100] !m-0 flex items-center justify-center bg-slate-950/65 backdrop-blur-md p-4 sm:p-6"
@@ -242,15 +245,13 @@
                         </span>
                     </div>
                     
-                    <h2 class="text-3xl sm:text-4xl font-black text-transparent bg-clip-text bg-gradient-to-r from-[#2B82C9] via-[#4CA3E6] to-[#DFA53A] mb-2 tracking-tight">
-                        Pilih ASN KEREN!
+                    <h2 class="text-3xl sm:text-4xl font-black text-transparent bg-clip-text bg-gradient-to-r from-[#2B82C9] via-[#4CA3E6] to-[#DFA53A] mb-2 tracking-tight" x-text="isResultVisible ? 'Voting Telah Berakhir!' : 'Pilih ASN KEREN!'">
                     </h2>
-                    <p class="text-slate-500 font-medium text-sm leading-relaxed mb-6">
-                        Mari berpartisipasi menentukan figur ASN berprestasi dan teladan di lingkungan Perwakilan BKKBN Aceh. Suara Anda sangat berarti!
+                    <p class="text-slate-500 font-medium text-sm leading-relaxed mb-6" x-text="isResultVisible ? 'Terima kasih atas partisipasi Anda. Hasil akhir dari pemilihan ASN KEREN Perwakilan BKKBN Aceh sudah dapat dilihat.' : 'Mari berpartisipasi menentukan figur ASN berprestasi dan teladan di lingkungan Perwakilan BKKBN Aceh. Suara Anda sangat berarti!'">
                     </p>
 
                     <!-- Feature Highlights -->
-                    <div class="grid grid-cols-3 gap-2 mb-6 py-2.5 px-3 bg-slate-50/80 rounded-2xl border border-slate-100">
+                    <div x-show="!isResultVisible" class="grid grid-cols-3 gap-2 mb-6 py-2.5 px-3 bg-slate-50/80 rounded-2xl border border-slate-100">
                         <div class="flex flex-col items-center text-center">
                             <i class="fas fa-shield-halved text-xs text-[#4CA3E6] mb-1"></i>
                             <span class="text-[10px] font-bold text-slate-600">Rahasia & Aman</span>
@@ -267,13 +268,13 @@
                     
                     <!-- Action Buttons -->
                     <div class="space-y-3">
-                        <a href="{{ route('voting.show') }}" class="w-full py-4 px-6 bg-gradient-to-r from-[#4CA3E6] via-[#3596E2] to-[#2B82C9] hover:from-[#3A8CC7] hover:to-[#1E6FA8] text-white font-black text-base rounded-2xl shadow-xl shadow-[#4CA3E6]/30 hover:shadow-2xl hover:shadow-[#4CA3E6]/40 transition-all transform hover:-translate-y-0.5 active:translate-y-0 flex items-center justify-center gap-2">
+                        <a x-show="!isResultVisible" href="{{ route('voting.show') }}" class="w-full py-4 px-6 bg-gradient-to-r from-[#4CA3E6] via-[#3596E2] to-[#2B82C9] hover:from-[#3A8CC7] hover:to-[#1E6FA8] text-white font-black text-base rounded-2xl shadow-xl shadow-[#4CA3E6]/30 hover:shadow-2xl hover:shadow-[#4CA3E6]/40 transition-all transform hover:-translate-y-0.5 active:translate-y-0 flex items-center justify-center gap-2">
                             <span>Ikuti Voting Sekarang</span>
                             <i class="fas fa-arrow-right"></i>
                         </a>
                         <a href="{{ route('voting.dashboard') }}" class="w-full py-3.5 px-6 bg-white hover:bg-slate-50 text-slate-700 hover:text-[#2B82C9] font-bold text-sm rounded-2xl border border-slate-200/80 hover:border-[#4CA3E6]/40 transition-all flex items-center justify-center gap-2 shadow-sm">
                             <i class="fas fa-chart-pie text-[#4CA3E6]"></i>
-                            <span>Lihat Hasil Sementara</span>
+                            <span x-text="isResultVisible ? 'Lihat Hasil Voting' : 'Lihat Hasil Sementara'"></span>
                         </a>
                     </div>
                 </div>
