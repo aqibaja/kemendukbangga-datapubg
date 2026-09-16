@@ -42,8 +42,8 @@
                 <div class="relative inline-block mb-4">
                     <div class="absolute -inset-2 bg-gradient-to-r from-[#4CA3E6]/35 via-[#DFA53A]/25 to-[#4CA3E6]/35 rounded-3xl blur-xl opacity-75 animate-pulse"></div>
                     <div class="relative p-3 sm:p-3.5 rounded-3xl bg-white/90 backdrop-blur-xl border border-white shadow-[0_12px_30px_rgba(76,163,230,0.18)] flex items-center justify-center">
-                        <img src="{{ asset('image/logo-kemendukbangga.png') }}" 
-                             onerror="this.onerror=null; this.src='{{ asset('public/image/logo-kemendukbangga.png') }}';" 
+                        <img src="{{ asset('image/logoBKKBN.png') }}" 
+                             onerror="this.onerror=null; this.src='{{ asset('public/image/logoBKKBN.png') }}';" 
                              alt="Logo Kemendukbangga" 
                              class="w-14 h-14 sm:w-16 sm:h-16 object-contain filter drop-shadow-sm">
                     </div>
