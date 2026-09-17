@@ -165,7 +165,7 @@ class VotingController extends Controller
             // Jangan kirim NIP ke frontend untuk keamanan
             $voters = Employee::orderBy('nama')->get(['id', 'nama', 'unsur']);
         } else {
-            $voters = PkbEmployee::orderBy('nama')->get(['id', 'nama', 'unsur']);
+            $voters = PkbEmployee::orderBy('nama')->get(['id', 'nama', 'kabupaten as unsur']);
         }
         return response()->json($voters);
     }

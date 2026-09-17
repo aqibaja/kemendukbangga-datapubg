@@ -99,7 +99,7 @@
                             </thead>
                             <tbody class="divide-y divide-slate-100">
                                 @foreach($perwakilan as $index => $emp)
-                                    <tr class="hover:bg-blue-50/40 transition-colors" x-show="'{{ strtolower($emp->nama) }}'.includes(search.toLowerCase()) || '{{ strtolower($emp->unsur) }}'.includes(search.toLowerCase())">
+                                    <tr class="hover:bg-blue-50/40 transition-colors" x-show="'{{ addslashes(strtolower($emp->nama ?? '')) }}'.includes(search.toLowerCase()) || '{{ addslashes(strtolower($emp->unsur ?? '')) }}'.includes(search.toLowerCase())">
                                         <td class="py-3.5 px-5 text-center text-xs font-bold text-slate-400">{{ $loop->iteration }}</td>
                                         <td class="py-3.5 px-5 font-black text-slate-900 text-sm">{{ $emp->nama }}</td>
                                         <td class="py-3.5 px-5 text-xs text-slate-500 font-medium">{{ $emp->unsur ?? '-' }}</td>
@@ -135,7 +135,7 @@
                             </thead>
                             <tbody class="divide-y divide-slate-100">
                                 @foreach($pkb as $index => $emp)
-                                    <tr class="hover:bg-amber-50/40 transition-colors" x-show="'{{ strtolower($emp->nama) }}'.includes(search.toLowerCase()) || '{{ strtolower($emp->kabupaten) }}'.includes(search.toLowerCase())">
+                                    <tr class="hover:bg-amber-50/40 transition-colors" x-show="'{{ addslashes(strtolower($emp->nama ?? '')) }}'.includes(search.toLowerCase()) || '{{ addslashes(strtolower($emp->kabupaten ?? '')) }}'.includes(search.toLowerCase())">
                                         <td class="py-3.5 px-5 text-center text-xs font-bold text-slate-400">{{ $loop->iteration }}</td>
                                         <td class="py-3.5 px-5 font-black text-slate-900 text-sm">{{ $emp->nama }}</td>
                                         <td class="py-3.5 px-5 text-xs text-slate-500 font-medium">{{ $emp->kabupaten ?? '-' }}</td>
