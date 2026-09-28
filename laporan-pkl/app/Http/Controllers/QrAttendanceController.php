@@ -155,7 +155,7 @@ class QrAttendanceController extends Controller
         ]);
 
         // Kirim ke Google Sheets via Queue (benar-benar background, Entry Process langsung bebas)
-        $apiUrl = env('QR_ATTENDANCE_SCRIPT_URL');
+        $apiUrl = config('services.google_script.qr_attendance');
         if (!empty($apiUrl)) {
             SendAttendanceToGoogleSheets::dispatch(
                 $apiUrl,

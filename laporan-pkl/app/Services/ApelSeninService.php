@@ -125,7 +125,7 @@ class ApelSeninService
             return Cache::get($cacheKey);
         }
 
-        $apiUrl = env('APEL_SENIN_SCRIPT_URL');
+        $apiUrl = config('services.google_script.apel_senin');
         $rows   = [];
 
         if (!empty($apiUrl)) {

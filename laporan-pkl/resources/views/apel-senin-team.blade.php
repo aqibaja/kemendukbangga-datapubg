@@ -1,9 +1,11 @@
 <x-layout>
     <x-slot:title>{{ $title }}</x-slot:title>
 
+
+
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
-    <div class="max-w-5xl mx-auto space-y-6 animate-[fadeIn_0.5s_ease-out]">
+    <div class="max-w-5xl mx-auto space-y-6 animate-[fadeIn_0.5s_ease-out] print:hidden">
 
         {{-- ===== BREADCRUMB & BACK ===== --}}
         <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 text-sm text-gray-500">
@@ -18,6 +20,13 @@
                 <span>/</span>
                 <span class="text-emerald-600 font-bold truncate max-w-[200px]">{{ $team }}</span>
             </div>
+            
+            <button onclick="window.print()" class="hidden sm:inline-flex items-center px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-xl transition-colors font-bold shadow-sm ml-auto">
+                <i class="fas fa-file-pdf mr-2"></i> Print Daftar Hadir
+            </button>
+            <button onclick="window.print()" class="sm:hidden mt-2 w-full justify-center inline-flex items-center px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-xl transition-colors font-bold shadow-sm">
+                <i class="fas fa-file-pdf mr-2"></i> Print Daftar Hadir
+            </button>
         </div>
 
         {{-- ===== HERO HEADER TIM ===== --}}
@@ -388,4 +397,97 @@
     });
     </script>
     @endif
+
+    <!-- PRINT ONLY SECTION -->
+    <div class="hidden print:block w-full bg-white text-black pt-4 font-serif">
+        <h2 class="text-center font-bold text-xl mb-4 uppercase">Rekapitulasi Kehadiran Apel Senin</h2>
+        
+        <div class="mb-6">
+            <table class="w-auto text-sm">
+                <tr>
+                    <td class="pr-4 py-1 font-semibold">Tim Kerja</td>
+                    <td class="pr-2 py-1">:</td>
+                    <td class="py-1">{{ $team }}</td>
+                </tr>
+                <tr>
+                    <td class="pr-4 py-1 font-semibold">Periode / Tanggal</td>
+                    <td class="pr-2 py-1">:</td>
+                    <td class="py-1">
+                        @if($selectedDate)
+                            {{ $apelDates[$selectedDate] ?? $selectedDate }}
+                        @else
+                            Semua Tanggal (Akumulasi {{ $totalApel }} Apel)
+                        @endif
+                    </td>
+                </tr>
+            </table>
+        </div>
+
+        <table class="w-full border-collapse border border-black text-sm">
+            <thead>
+                <tr>
+                    <th class="border border-black px-2 py-2 w-12 text-center">No</th>
+                    <th class="border border-black px-4 py-2 text-left">Nama Pegawai</th>
+                    @if($selectedDate)
+                        <th class="border border-black px-4 py-2 text-center">Status</th>
+                    @else
+                        <th class="border border-black px-4 py-2 text-center">Hadir</th>
+                        <th class="border border-black px-4 py-2 text-center">Persentase</th>
+                    @endif
+                </tr>
+            </thead>
+            <tbody>
+                @if($selectedDate)
+                    @php
+                        $printNo = 1;
+                    @endphp
+                    @if(isset($csvMembers) && count($csvMembers) > 0)
+                        @foreach($csvMembers as $member)
+                            @php 
+                                $hadir = isset($hadirSet[$normKey($member)]);
+                                $leaveStatus = null;
+                                if (!$hadir && isset($leaves[$member])) {
+                                    $leaveStatus = $leaves[$member]->keterangan;
+                                }
+                            @endphp
+                            <tr>
+                                <td class="border border-black px-2 py-1.5 text-center">{{ $printNo++ }}</td>
+                                <td class="border border-black px-4 py-1.5">{{ $member }}</td>
+                                <td class="border border-black px-4 py-1.5 text-center">
+                                    {{ $hadir ? 'Hadir' : ($leaveStatus ? $leaveStatus : 'Tidak Hadir') }}
+                                </td>
+                            </tr>
+                        @endforeach
+                    @endif
+                    @if(isset($tambahanHadir) && count($tambahanHadir) > 0)
+                        @foreach($tambahanHadir as $a)
+                            <tr>
+                                <td class="border border-black px-2 py-1.5 text-center">{{ $printNo++ }}</td>
+                                <td class="border border-black px-4 py-1.5">{{ $a['nama'] }}</td>
+                                <td class="border border-black px-4 py-1.5 text-center">Hadir (Luar Daftar)</td>
+                            </tr>
+                        @endforeach
+                    @endif
+                @else
+                    @foreach($rankings as $index => $person)
+                        <tr>
+                            <td class="border border-black px-2 py-1.5 text-center">{{ $index + 1 }}</td>
+                            <td class="border border-black px-4 py-1.5">{{ $person['nama'] }}</td>
+                            <td class="border border-black px-4 py-1.5 text-center">{{ $person['attended_count'] }} kali</td>
+                            <td class="border border-black px-4 py-1.5 text-center">{{ $person['percentage'] }}%</td>
+                        </tr>
+                    @endforeach
+                @endif
+            </tbody>
+        </table>
+    </div>
+    <!-- END PRINT ONLY SECTION -->
+
+    <style>
+        @media print {
+            body { background: white !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+            @page { margin: 1.5cm; }
+            header, nav, footer { display: none !important; }
+        }
+    </style>
 </x-layout>

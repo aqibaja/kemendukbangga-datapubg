@@ -288,7 +288,7 @@ class VotingController extends Controller
 
         // Kirim data ke Google Sheets via Queue Job (benar-benar async/background)
         // Entry Process LANGSUNG BEBAS setelah dispatch, tidak menunggu GAS sama sekali
-        $apiUrl = env('VOTING_ASN_KEREN_SCRIPT_URL');
+        $apiUrl = config('services.google_script.voting_asn_keren');
         if (!empty($apiUrl)) {
             $candidate1 = VotingCandidate::find($request->candidate_golongan_1);
             $candidate2 = VotingCandidate::find($request->candidate_golongan_2);

@@ -35,4 +35,10 @@ return [
         ],
     ],
 
+    'google_script' => [
+        'qr_attendance' => env('QR_ATTENDANCE_SCRIPT_URL'),
+        'apel_senin' => env('APEL_SENIN_SCRIPT_URL'),
+        'voting_asn_keren' => env('VOTING_ASN_KEREN_SCRIPT_URL'),
+    ],
+
 ];

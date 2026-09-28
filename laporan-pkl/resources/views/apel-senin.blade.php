@@ -22,7 +22,123 @@
 
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
-    <div class="max-w-7xl mx-auto space-y-8 animate-[fadeIn_0.5s_ease-out]">
+    <!-- PRINT ONLY SECTION -->
+    <div class="hidden print:block w-full bg-white text-black pt-4 font-serif">
+        <h2 class="text-center font-bold text-xl mb-4 uppercase">Rekapitulasi Kehadiran Apel Senin</h2>
+        
+        <div class="mb-6">
+            <table class="w-auto text-sm">
+                <tr>
+                    <td class="pr-4 py-1 font-semibold">Periode / Tanggal</td>
+                    <td class="pr-2 py-1">:</td>
+                    <td class="py-1">
+                        @if($selectedDate && $selectedDate !== 'all')
+                            {{ $apelDates[$selectedDate] ?? $selectedDate }}
+                        @else
+                            Semua Tanggal (Akumulasi {{ count($apelDates) }} Apel)
+                        @endif
+                    </td>
+                </tr>
+            </table>
+        </div>
+
+        @inject('apelService', 'App\Services\ApelSeninService')
+        @php
+            $leaves = collect();
+            $queryDate = $selectedDate && $selectedDate !== 'all' ? $selectedDate : null;
+            if ($queryDate) {
+                $leaves = \App\Models\EmployeeLeave::where('tanggal', $queryDate)->get()->keyBy('nama');
+            }
+            $normKey = fn($n) => strtoupper(preg_replace('/[^A-Z0-9]/i', '', explode(',', $n)[0]));
+        @endphp
+
+        @forelse($teamsStats ?? [] as $teamName => $data)
+            @php
+                $normalizedTeamName = $apelService->normalizeTeamName($teamName);
+                $csvMembers = \App\Services\ApelSeninService::getTeamMembers($normalizedTeamName);
+            @endphp
+            
+            <h3 class="font-bold text-base mt-6 mb-2">{{ $teamName }}</h3>
+            <table class="w-full border-collapse border border-black text-sm mb-4">
+                <thead>
+                    <tr>
+                        <th class="border border-black px-2 py-2 w-12 text-center">No</th>
+                        <th class="border border-black px-4 py-2 text-left">Nama Pegawai</th>
+                        @if($queryDate)
+                            <th class="border border-black px-4 py-2 text-center">Status</th>
+                        @else
+                            <th class="border border-black px-4 py-2 text-center">Hadir</th>
+                            <th class="border border-black px-4 py-2 text-center">Persentase</th>
+                        @endif
+                    </tr>
+                </thead>
+                <tbody>
+                    @if($queryDate)
+                        @php
+                            $attendees = $apelService->getAttendeesByTeam($normalizedTeamName, $queryDate);
+                            $hadirSet = collect($attendees)->mapWithKeys(fn($a) => [$normKey($a['nama']) => true])->toArray();
+                            $csvSet = collect($csvMembers)->mapWithKeys(fn($m) => [$normKey($m) => true])->toArray();
+                            $tambahanHadir = collect($attendees)->filter(fn($a) => !isset($csvSet[$normKey($a['nama'])]))->values();
+                            $printNo = 1;
+                        @endphp
+                        @if(count($csvMembers) > 0)
+                            @foreach($csvMembers as $member)
+                                @php 
+                                    $hadir = isset($hadirSet[$normKey($member)]);
+                                    $leaveStatus = null;
+                                    if (!$hadir && isset($leaves[$member])) {
+                                        $leaveStatus = $leaves[$member]->keterangan;
+                                    }
+                                @endphp
+                                <tr>
+                                    <td class="border border-black px-2 py-1 text-center">{{ $printNo++ }}</td>
+                                    <td class="border border-black px-4 py-1">{{ $member }}</td>
+                                    <td class="border border-black px-4 py-1 text-center">
+                                        {{ $hadir ? 'Hadir' : ($leaveStatus ? $leaveStatus : 'Tidak Hadir') }}
+                                    </td>
+                                </tr>
+                            @endforeach
+                        @endif
+                        @if(count($tambahanHadir) > 0)
+                            @foreach($tambahanHadir as $a)
+                                <tr>
+                                    <td class="border border-black px-2 py-1 text-center">{{ $printNo++ }}</td>
+                                    <td class="border border-black px-4 py-1">{{ $a['nama'] }}</td>
+                                    <td class="border border-black px-4 py-1 text-center">Hadir (Luar Daftar)</td>
+                                </tr>
+                            @endforeach
+                        @endif
+                        @if(count($csvMembers) == 0 && count($tambahanHadir) == 0)
+                            <tr>
+                                <td colspan="3" class="border border-black px-4 py-2 text-center">Tidak ada data</td>
+                            </tr>
+                        @endif
+                    @else
+                        @php
+                            $rankings = $apelService->getMemberRankingByTeam($normalizedTeamName);
+                        @endphp
+                        @forelse($rankings as $index => $person)
+                            <tr>
+                                <td class="border border-black px-2 py-1 text-center">{{ $index + 1 }}</td>
+                                <td class="border border-black px-4 py-1">{{ $person['nama'] }}</td>
+                                <td class="border border-black px-4 py-1 text-center">{{ $person['attended_count'] }} kali</td>
+                                <td class="border border-black px-4 py-1 text-center">{{ $person['percentage'] }}%</td>
+                            </tr>
+                        @empty
+                            <tr>
+                                <td colspan="4" class="border border-black px-4 py-2 text-center">Tidak ada data</td>
+                            </tr>
+                        @endforelse
+                    @endif
+                </tbody>
+            </table>
+        @empty
+            <div class="text-center italic mt-10">Tidak ada data tim kerja.</div>
+        @endforelse
+    </div>
+    <!-- END PRINT ONLY SECTION -->
+
+    <div class="max-w-7xl mx-auto space-y-8 animate-[fadeIn_0.5s_ease-out] print:hidden">
 
         {{-- ===== HEADER ===== --}}
         <div class="relative overflow-hidden rounded-3xl bg-gradient-to-br from-emerald-600 via-teal-700 to-green-900 p-8 sm:p-12 text-white shadow-[0_20px_50px_rgba(16,185,129,0.4)] transition-transform hover:scale-[1.01] duration-500 group">
@@ -54,8 +170,11 @@
             </div>
         </div>
 
-        {{-- ===== TOMBOL SYNC ===== --}}
-        <div class="flex justify-end -mt-4 relative z-40">
+        {{-- ===== TOMBOL SYNC & EXPORT ===== --}}
+        <div class="flex flex-wrap justify-end gap-3 -mt-4 relative z-40">
+            <button onclick="window.print()" class="px-5 py-2.5 bg-blue-600 hover:bg-blue-700 text-white rounded-xl font-bold text-sm shadow-lg hover:shadow-xl transition-all flex items-center group">
+                <i class="fas fa-file-pdf mr-2"></i> Print Daftar Hadir
+            </button>
             <a href="{{ route('apel-senin', ['_sync' => 1]) }}" class="px-5 py-2.5 bg-emerald-500 hover:bg-emerald-600 text-white rounded-xl font-bold text-sm shadow-lg hover:shadow-xl transition-all flex items-center group">
                 <i class="fas fa-sync-alt mr-2 group-hover:rotate-180 transition-transform duration-500"></i> Sinkronisasi Data (Hapus Cache)
             </a>
@@ -381,4 +500,12 @@
         window.location.href = currentUrl.toString();
     }, 120000);
     </script>
+    
+    <style>
+        @media print {
+            body { background: white !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+            @page { margin: 1.5cm; }
+            header, nav, footer { display: none !important; }
+        }
+    </style>
 </x-layout>
