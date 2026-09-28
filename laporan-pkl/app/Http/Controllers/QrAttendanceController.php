@@ -2,14 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Jobs\SendAttendanceToGoogleSheets;
 use App\Models\Employee;
 use App\Models\QrAttendance;
 use App\Models\QrSession;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Cookie;
 use Illuminate\Support\Str;
-
-use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
 
 class QrAttendanceController extends Controller
@@ -63,7 +63,10 @@ class QrAttendanceController extends Controller
             return $this->errorView('Perangkat HP Anda sudah digunakan untuk mengisi presensi pada kegiatan ini.');
         }
 
-        $employees = Employee::orderBy('nama')->get();
+        // Cache daftar employee selama 5 menit untuk hemat query DB saat ramai
+        $employees = Cache::remember('employee_list_ordered', 300, function () {
+            return Employee::orderBy('nama')->get();
+        });
 
         return view('qr_attendance.scan', [
             'session' => $session,
@@ -151,22 +154,17 @@ class QrAttendanceController extends Controller
             'user_agent' => $request->userAgent(),
         ]);
 
-        // Send to Google Sheets directly
-        try {
-            $apiUrl = env('QR_ATTENDANCE_SCRIPT_URL');
-            if (!empty($apiUrl)) {
-                Http::post($apiUrl, [
-                    'action' => 'add_attendance',
-                    'event_name' => $session->title,
-                    'employee_name' => $employee->nama,
-                    'employee_unsur' => $employee->unsur ?? 'Tidak Diketahui',
-                    'employee_city' => $employee->kabupaten_kota ?? 'Tidak Diketahui',
-                    'timestamp' => now()->timezone('Asia/Jakarta')->toDateTimeString()
-                ]);
-            }
-        } catch (\Exception $e) {
-            // We ignore errors here so the user still gets a success message
-            Log::error('Failed to send attendance to GSheet: ' . $e->getMessage());
+        // Kirim ke Google Sheets via Queue (benar-benar background, Entry Process langsung bebas)
+        $apiUrl = env('QR_ATTENDANCE_SCRIPT_URL');
+        if (!empty($apiUrl)) {
+            SendAttendanceToGoogleSheets::dispatch(
+                $apiUrl,
+                $session->title,
+                $employee->nama,
+                $employee->unsur ?? 'Tidak Diketahui',
+                $employee->kabupaten_kota ?? 'Tidak Diketahui',
+                now()->timezone('Asia/Jakarta')->toDateTimeString(),
+            );
         }
 
         // Set Cookie (expires in 12 hours = 720 minutes)

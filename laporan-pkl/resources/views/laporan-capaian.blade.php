@@ -270,310 +270,307 @@
                     @php
                         $qw = $laporans['quick_win'] ?? null;
                         $d = $qw ? $qw->data : [];
+                        
+                        // Helper formatter
+                        $fmt = function($v) { 
+                            $v = floatval($v); 
+                            return (floor($v) == $v) ? number_format($v, 0, ',', '.') : number_format($v, 2, ',', '.'); 
+                        };
                     @endphp
-                    <div class="grid grid-cols-1 xl:grid-cols-2 gap-4 xl:gap-4 mt-6 px-2 xl:px-4 pb-6 max-w-[1400px] w-full mx-auto">
-                        <!-- 1. Lansia Berdaya (SIDAYA) -->
-                        <!-- 1. SIDAYA (Lansia Berdaya) -->
-                        <div class="relative bg-gradient-to-br from-teal-900 via-[#022c22] to-emerald-950 rounded-[30px] border-4 border-yellow-400 shadow-[4px_4px_0px_#fde047] p-4 sm:p-5 overflow-hidden">
-                            
-                            <!-- Title Ribbon Left -->
-                            <div class="absolute top-6 -left-2 bg-yellow-400 text-teal-900 font-black px-4 sm:px-6 py-1.5 text-sm sm:text-base uppercase shadow-xl border-y-4 border-r-4 border-teal-900 z-20">
-                                1. SIDAYA (Lansia Berdaya)
-                                <div class="absolute -bottom-3 left-0 w-3 h-3 bg-yellow-600" style="clip-path: polygon(0 0, 100% 0, 100% 100%);"></div>
-                            </div>
 
-                            <div class="flex flex-col lg:flex-row items-center gap-4 xl:gap-4 pt-10 lg:pt-12">
-                                <!-- Image Area (Left) -->
-                                <div class="w-full md:w-2/5 flex justify-center relative group">
-                                    <img src="{{ asset('public/image/qw_sidaya.png') }}" class="w-32 h-32 sm:w-40 sm:h-40 lg:w-48 lg:h-48 xl:w-40 xl:h-40 2xl:w-48 2xl:h-48 object-contain relative z-10 transform hover:scale-105 hover:rotate-3 transition-transform duration-500 drop-shadow-[0_20px_30px_rgba(0,0,0,0.8)] rounded-2xl shadow-[0_10px_20px_rgba(0,0,0,0.5)] border-2 border-teal-800/50" alt="SIDAYA">
-                                </div>
-                                
-                                <!-- Stats Area (Right) -->
-                                <div class="w-full md:w-3/5 flex flex-col gap-8">
-                                    
-                                    <div class="relative pl-6 border-l-4 border-cyan-400">
-                                        <h3 class="text-cyan-300 font-black text-base sm:text-lg uppercase tracking-widest mb-1">Pemeriksaan Kesehatan</h3>
-                                        <div class="flex flex-wrap justify-between items-end gap-4">
-                                            <div class="flex gap-2 sm:gap-3">
-                                                <div>
-                                                    <span class="block text-teal-300 text-xs sm:text-sm font-bold uppercase tracking-wider mb-1">Target</span>
-                                                    <span class="block text-white font-black text-lg sm:text-xl">{{ number_format($d['sidaya']['pemeriksaan_kesehatan']['target'] ?? 0, 0, ',', '.') }}</span>
-                                                </div>
-                                                <div>
-                                                    <span class="block text-teal-300 text-xs sm:text-sm font-bold uppercase tracking-wider mb-1">Capaian</span>
-                                                    <span class="block text-cyan-400 font-black text-lg sm:text-xl">{{ number_format($d['sidaya']['pemeriksaan_kesehatan']['capaian'] ?? 0, 0, ',', '.') }}</span>
-                                                </div>
-                                            </div>
-                                            <div class="text-right flex-1 sm:flex-none flex justify-end items-end gap-2">
-                                                <span class="block text-yellow-400 font-black text-4xl sm:text-5xl 2xl:text-6xl drop-shadow-[0_4px_4px_rgba(0,0,0,0.8)] leading-none">{{ number_format((float)($d['sidaya']['pemeriksaan_kesehatan']['persentase'] ?? 0), 0, ',', '.') }}</span>
-                                                <span class="block text-yellow-400 text-lg sm:text-xl font-black mb-1">
-                                                    @php
-                                                        $pctStr = number_format((float)($d['sidaya']['pemeriksaan_kesehatan']['persentase'] ?? 0), 2, ',', '.');
-                                                        $dec = substr($pctStr, -3);
-                                                        if($dec == ',00') echo '%'; else echo $dec.'%';
-                                                    @endphp
-                                                </span>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <div class="relative pl-6 border-l-4 border-emerald-400">
-                                        <h3 class="text-emerald-300 font-black text-base sm:text-lg uppercase tracking-widest mb-1">Kader BKL Terlatih PJP</h3>
-                                        <div class="flex flex-wrap justify-between items-end gap-4">
-                                            <div class="flex gap-2 sm:gap-3">
-                                                <div>
-                                                    <span class="block text-teal-300 text-xs sm:text-sm font-bold uppercase tracking-wider mb-1">Target</span>
-                                                    <span class="block text-white font-black text-lg sm:text-xl">{{ number_format($d['sidaya']['pelatihan_pjp']['target'] ?? 0, 0, ',', '.') }}</span>
-                                                </div>
-                                                <div>
-                                                    <span class="block text-teal-300 text-xs sm:text-sm font-bold uppercase tracking-wider mb-1">Capaian</span>
-                                                    <span class="block text-emerald-400 font-black text-lg sm:text-xl">{{ number_format($d['sidaya']['pelatihan_pjp']['capaian'] ?? 0, 0, ',', '.') }}</span>
-                                                </div>
-                                            </div>
-                                            <div class="text-right flex-1 sm:flex-none flex justify-end items-end gap-2">
-                                                <span class="block text-yellow-400 font-black text-4xl sm:text-5xl 2xl:text-6xl drop-shadow-[0_4px_4px_rgba(0,0,0,0.8)] leading-none">{{ number_format((float)($d['sidaya']['pelatihan_pjp']['persentase'] ?? 0), 0, ',', '.') }}</span>
-                                                <span class="block text-yellow-400 text-lg sm:text-xl font-black mb-1">
-                                                    @php
-                                                        $pctStr2 = number_format((float)($d['sidaya']['pelatihan_pjp']['persentase'] ?? 0), 2, ',', '.');
-                                                        $dec2 = substr($pctStr2, -3);
-                                                        if($dec2 == ',00') echo '%'; else echo $dec2.'%';
-                                                    @endphp
-                                                </span>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <div class="relative pl-6 border-l-4 border-purple-400">
-                                        <h3 class="text-purple-300 font-black text-base sm:text-lg uppercase tracking-widest mb-1">Peserta Sekolah Lansia</h3>
-                                        <div class="flex flex-wrap justify-between items-end gap-4">
-                                            <div class="flex gap-2 sm:gap-3">
-                                                <div>
-                                                    <span class="block text-teal-300 text-xs sm:text-sm font-bold uppercase tracking-wider mb-1">Target</span>
-                                                    <span class="block text-white font-black text-lg sm:text-xl">{{ number_format($d['sidaya']['sekolah_lansia']['target'] ?? 0, 0, ',', '.') }}</span>
-                                                </div>
-                                                <div>
-                                                    <span class="block text-teal-300 text-xs sm:text-sm font-bold uppercase tracking-wider mb-1">Capaian</span>
-                                                    <span class="block text-purple-400 font-black text-lg sm:text-xl">{{ number_format($d['sidaya']['sekolah_lansia']['capaian'] ?? 0, 0, ',', '.') }}</span>
-                                                </div>
-                                            </div>
-                                            <div class="text-right flex-1 sm:flex-none flex justify-end items-end gap-2">
-                                                <span class="block text-yellow-400 font-black text-4xl sm:text-5xl 2xl:text-6xl drop-shadow-[0_4px_4px_rgba(0,0,0,0.8)] leading-none">{{ number_format((float)($d['sidaya']['sekolah_lansia']['persentase'] ?? 0), 0, ',', '.') }}</span>
-                                                <span class="block text-yellow-400 text-lg sm:text-xl font-black mb-1">
-                                                    @php
-                                                        $pctStr3 = number_format((float)($d['sidaya']['sekolah_lansia']['persentase'] ?? 0), 2, ',', '.');
-                                                        $dec3 = substr($pctStr3, -3);
-                                                        if($dec3 == ',00') echo '%'; else echo $dec3.'%';
-                                                    @endphp
-                                                </span>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                </div>
-                            </div>
+                    <!-- DASHBOARD CONTAINER -->
+                    <div class="mb-2 text-[var(--text)] w-full max-w-[1440px] mx-auto px-4 sm:px-6 relative">
+                        
+                        <!-- WATERMARK BACKGROUND -->
+                        <div class="absolute inset-0 pointer-events-none z-[0] flex items-center justify-center overflow-hidden">
+                            <img src="{{ asset('public/image/logoBKKBN.png') }}" class="w-[60%] max-w-[800px] object-contain opacity-[0.05]" alt="Watermark BKKBN">
                         </div>
 
-                        <!-- 2. GATI (Gerakan Ayah Teladan) -->
-                        <div class="relative bg-gradient-to-bl from-teal-900 via-[#022c22] to-[#011a14] rounded-[30px] border-4 border-yellow-400 shadow-[-4px_4px_0px_#fde047] p-4 sm:p-5 overflow-hidden">
-                            
-                            <!-- Title Ribbon Right -->
-                            <div class="absolute top-6 -right-2 bg-yellow-400 text-teal-900 font-black px-4 sm:px-6 py-1.5 text-sm sm:text-base uppercase shadow-xl border-y-4 border-l-4 border-teal-900 z-20">
-                                2. GATI (Gerakan Ayah Teladan)
-                                <div class="absolute -bottom-3 right-0 w-3 h-3 bg-yellow-600" style="clip-path: polygon(0 0, 100% 0, 0 100%);"></div>
-                            </div>
-                            
-                            <div class="flex flex-col lg:flex-row-reverse items-center gap-4 xl:gap-4 pt-10 lg:pt-12">
-                                <!-- Image Area (Right) -->
-                                <div class="w-full md:w-2/5 flex justify-center relative group">
-                                    <img src="{{ asset('public/image/qw_gati.png') }}" class="w-32 h-32 sm:w-40 sm:h-40 lg:w-48 lg:h-48 xl:w-40 xl:h-40 2xl:w-48 2xl:h-48 object-contain relative z-10 transform hover:-scale-x-105 hover:rotate-3 transition-transform duration-500 drop-shadow-[0_20px_30px_rgba(0,0,0,0.8)] rounded-2xl shadow-[0_10px_20px_rgba(0,0,0,0.5)] border-2 border-teal-800/50" alt="GATI">
-                                </div>
-                                
-                                <!-- Stats Area (Left) -->
-                                <div class="w-full md:w-3/5 flex flex-col gap-3 relative z-10">
-                                    <h3 class="text-yellow-300 font-black text-lg sm:text-xl uppercase tracking-widest border-b-2 border-teal-700/50 pb-2 mb-2">Fasilitasi Edukasi GATI</h3>
-                                    
-                                    <div class="grid grid-cols-3 gap-2 items-center mb-2">
-                                        <div>
-                                            <span class="block text-teal-400 text-[10px] font-bold uppercase tracking-wider mb-1">Target</span>
-                                            <span class="block text-white font-black text-lg sm:text-xl">{{ number_format($d['gati']['edukasi']['target'] ?? 0, 0, ',', '.') }}</span>
-                                        </div>
-                                        <div class="relative">
-                                            <span class="relative block text-yellow-400 text-[10px] font-bold uppercase tracking-wider mb-1">Capaian</span>
-                                            <span class="relative block text-yellow-300 font-black text-lg sm:text-xl drop-shadow-md">{{ number_format($d['gati']['edukasi']['total'] ?? 0, 0, ',', '.') }}</span>
-                                        </div>
-                                        <div class="text-right flex justify-end items-end gap-1">
-                                            <span class="text-yellow-400 font-black text-4xl sm:text-5xl drop-shadow-md leading-none">{{ number_format((float)($d['gati']['edukasi']['persentase'] ?? 0), 0, ',', '.') }}</span>
-                                            <span class="text-yellow-400 text-base font-black">
-                                                @php
-                                                    $pctStrG = number_format((float)($d['gati']['edukasi']['persentase'] ?? 0), 2, ',', '.');
-                                                    $decG = substr($pctStrG, -3);
-                                                    if($decG == ',00') echo '%'; else echo $decG.'%';
-                                                @endphp
-                                            </span>
-                                        </div>
+                        <!-- 1. HERO SECTION -->
+                        <div class="bg-white rounded-[16px] shadow-sm border border-[var(--line)] overflow-hidden mb-6 relative z-10">
+                            <div class="relative z-10 px-6 py-8 md:px-10 flex flex-col md:flex-row items-center justify-between gap-6">
+                                <div class="flex-1">
+                                    <div class="flex items-center gap-3 mb-4">
+                                         <img src="{{ asset('public/image/logoBKKBN.png') }}" style="height: 56px;" alt="Watermark BKKBN">
+                                        <div class="leading-snug">
+                                                <div class="text-sm sm:text-base font-semibold text-slate-500 export-fix-text">Kementerian Kependudukan dan Pembangunan Keluarga/BKKBN</div>
+                                                <div class="text-base sm:text-lg font-extrabold text-teal-700 export-fix-text">Perwakilan BKKBN Provinsi Aceh</div>
+                                            </div>
                                     </div>
-                                    
-                                    <!-- Breakdown with large pills -->
-                                    <div class="bg-teal-950/80 p-3 sm:p-4 rounded-3xl border border-teal-800 backdrop-blur-sm">
-                                        <span class="block text-teal-300 text-xs font-bold uppercase tracking-widest text-center mb-2">Rincian Capaian per Program</span>
-                                        <div class="flex flex-wrap justify-center gap-3 sm:gap-4">
-                                            <div class="bg-gradient-to-br from-teal-800 to-teal-900 border-2 border-teal-500 rounded-2xl px-3 py-2 flex-1 min-w-[65px] text-center transform hover:-translate-y-1 transition-transform shadow-lg">
-                                                <span class="block text-teal-300 text-[9px] sm:text-[10px] font-bold uppercase mb-1">Kompak Tenan</span>
-                                                <span class="block text-white font-black text-base sm:text-lg">{{ number_format($d['gati']['edukasi']['kompak_tenan'] ?? 0, 0, ',', '.') }}</span>
-                                            </div>
-                                            <div class="bg-gradient-to-br from-teal-800 to-teal-900 border-2 border-cyan-500 rounded-2xl px-3 py-2 flex-1 min-w-[65px] text-center transform hover:-translate-y-1 transition-transform shadow-lg">
-                                                <span class="block text-cyan-300 text-[9px] sm:text-[10px] font-bold uppercase mb-1">Dekat</span>
-                                                <span class="block text-white font-black text-base sm:text-lg">{{ number_format($d['gati']['edukasi']['dekat'] ?? 0, 0, ',', '.') }}</span>
-                                            </div>
-                                            <div class="bg-gradient-to-br from-teal-800 to-teal-900 border-2 border-emerald-500 rounded-2xl px-3 py-2 flex-1 min-w-[65px] text-center transform hover:-translate-y-1 transition-transform shadow-lg">
-                                                <span class="block text-emerald-300 text-[9px] sm:text-[10px] font-bold uppercase mb-1">Sebaya</span>
-                                                <span class="block text-white font-black text-base sm:text-lg">{{ number_format($d['gati']['edukasi']['sebaya'] ?? 0, 0, ',', '.') }}</span>
-                                            </div>
+                                    <div style="display: inline-block; padding: 8px 16px; background: var(--canvas); color: var(--teal); font-size: 1.125rem; font-weight: 600; border-radius: 6px; border: 1px solid var(--line); margin-bottom: 16px; white-space: nowrap;">
+                                        <i class="fa-solid fa-calendar-alt export-shift-icon" style="vertical-align: middle; margin-top: -2px;"></i>
+                                        <span class="export-fix-text" style="vertical-align: middle; margin-left: 6px; display: inline-block;">Periode: {{ App\Models\LaporanCapaian::namaBulan($qw ? $qw->bulan : $bulan) }} {{ $qw ? $qw->tahun : $tahun }}</span>
+                                    </div>
+                                    <h1 class="text-3xl md:text-5xl lg:text-6xl font-extrabold text-[var(--navy)] mb-2 uppercase tracking-tight export-fix-text">LAPORAN QUICK WIN</h1>
+                                    <h2 class="text-2xl md:text-3xl lg:text-4xl font-bold text-[var(--teal)] mb-4 export-fix-text">KEMENDUKBANGGA (BKKBN)</h2>
+                                    <div class="flex flex-wrap gap-3 text-base text-[var(--muted)]">
+                                        <div style="display: inline-block; background: #f1f5f9; padding: 8px 14px; border-radius: 6px; white-space: nowrap;">
+                                            <span class="export-fix-text" style="display: inline-block;">Update data: {{ $qw ? $qw->updated_at->format('d M Y') : '-' }}</span>
+                                        </div>
+                                        <div style="display: inline-block; background: #f1f5f9; padding: 8px 14px; border-radius: 6px; white-space: nowrap;">
+                                            <span class="export-fix-text" style="display: inline-block;">Sumber: Perwakilan BKKBN Prov Aceh</span>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
 
-                        <!-- 3. TAMASYA -->
-                        <div class="relative bg-gradient-to-br from-[#022c22] via-teal-900 to-emerald-950 rounded-[30px] border-4 border-yellow-400 shadow-[4px_4px_0px_#fde047] p-4 sm:p-5 overflow-hidden">
-                            <div class="absolute top-6 -left-2 bg-yellow-400 text-teal-900 font-black px-4 sm:px-6 py-1.5 text-sm sm:text-base uppercase shadow-xl border-y-4 border-r-4 border-teal-900 z-20">
-                                3. TAMASYA (Taman Asuh Sayang Anak)
-                                <div class="absolute -bottom-3 left-0 w-3 h-3 bg-yellow-600" style="clip-path: polygon(0 0, 100% 0, 100% 100%);"></div>
-                            </div>
+                        <!-- 3. PANEL QUICK WIN (GRID 2x2) -->
+                        <div class="mb-4 mt-8 flex items-center justify-between border-b-2 border-[var(--navy)] pb-2 relative z-10">
+                            <h2 class="text-2xl font-extrabold text-[var(--navy)] uppercase tracking-tight export-fix-text">Ringkasan Empat Quick Win</h2>
+                        </div>
 
-                            <div class="flex flex-col lg:flex-row items-center gap-4 xl:gap-4 pt-10 lg:pt-12">
-                                <div class="w-full md:w-2/5 flex justify-center relative group">
-                                    <img src="{{ asset('public/image/qw_tamasya.png') }}" class="w-32 h-32 sm:w-40 sm:h-40 lg:w-48 lg:h-48 xl:w-40 xl:h-40 2xl:w-48 2xl:h-48 object-contain relative z-10 transform hover:-translate-y-2 hover:-rotate-2 transition-transform duration-500 drop-shadow-[0_20px_30px_rgba(0,0,0,0.8)] rounded-2xl shadow-[0_10px_20px_rgba(0,0,0,0.5)] border-2 border-teal-800/50" alt="TAMASYA">
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 pb-6 relative z-10">
+                            
+                            <!-- 1. SIDAYA -->
+                            <div class="export-card bg-white rounded-xl border border-slate-300 relative p-4 md:p-5 flex flex-col h-full shadow-sm">
+                                <div class="flex justify-between items-start mb-4 border-b-2 pb-3" style="border-color: var(--teal)">
+                                    <div class="flex-1 pr-2">
+                                        <h3 class="font-black text-[var(--navy)] text-2xl md:text-3xl mb-1 export-fix-text" style="line-height: 1.2;">SIDAYA</h3>
+                                        <div class="text-sm font-bold text-[var(--muted)] uppercase tracking-wide export-fix-text">Lansia Berdaya</div>
+                                    </div>
                                 </div>
                                 
-                                <div class="w-full md:w-3/5 flex flex-col gap-3 relative z-10">
-                                    
-                                    <!-- A: Jumlah TPA -->
-                                    <div class="bg-gradient-to-r from-yellow-400 to-amber-500 text-teal-900 p-4 sm:p-5 rounded-3xl shadow-2xl  relative overflow-hidden border-2 border-white">
-                                        <div class="absolute -right-4 -top-2 text-yellow-600/30 text-[90px] font-black leading-none pointer-events-none">{{ $d['tamasya']['jumlah_tpa'] ?? 0 }}</div>
-                                        <h3 class="font-black text-base sm:text-lg uppercase tracking-widest relative z-10">Jumlah TPA yang Ada</h3>
-                                        <span class="block text-4xl sm:text-5xl 2xl:text-6xl font-black relative z-10 drop-shadow-md">{{ number_format($d['tamasya']['jumlah_tpa'] ?? 0, 0, ',', '.') }}</span>
+                                <div class="flex flex-col lg:flex-row gap-4 items-center lg:items-start mb-2 flex-grow">
+                                    <div class="w-32 md:w-36 shrink-0 flex items-center justify-center">
+                                        <img src="{{ asset('public/image/qw_sidaya_new.png') }}" class="w-full h-auto object-contain hover:scale-105 transition-transform origin-center">
                                     </div>
-
-                                    <!-- B, C, D in a grid -->
-                                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 sm:gap-3">
-                                        <!-- B: 4 Layanan -->
-                                        <div class="border-2 border-blue-500/50 rounded-3xl p-5 bg-gradient-to-br from-teal-950/80 to-[#022c22]/80 backdrop-blur-sm relative overflow-hidden group hover:border-blue-400 transition-colors">
-                                            <h4 class="text-blue-300 font-black text-sm sm:text-base uppercase tracking-widest mb-2">4 Layanan Utama</h4>
-                                            <div class="flex justify-between items-center mb-2">
-                                                <span class="text-teal-200 text-xs sm:text-sm font-bold uppercase">Memenuhi</span>
-                                                <span class="text-blue-400 font-black text-lg sm:text-xl">{{ number_format($d['tamasya']['memenuhi_4_layanan']['memenuhi'] ?? 0, 0, ',', '.') }}</span>
+                                    
+                                    <div class="flex-1 flex flex-col gap-3 w-full">
+                                        <!-- Pemeriksaan Kesehatan -->
+                                        <div class="bg-slate-50 p-3 rounded-lg border border-slate-200" style="display: block;">
+                                            <div class="text-xs font-bold text-[var(--muted)] uppercase mb-1 export-fix-text">Pemeriksaan Kesehatan</div>
+                                            @php $pct1 = $d['sidaya']['pemeriksaan_kesehatan']['persentase'] ?? 0; @endphp
+                                            <div class="flex justify-between items-end mb-2">
+                                                <div class="font-black text-[var(--navy)] text-xl leading-none"><span class="export-fix-text">{{ $fmt($pct1) }}%</span></div>
+                                                <div class="text-[10px] sm:text-xs font-medium text-slate-500"><span class="export-fix-text">{{ number_format($d['sidaya']['pemeriksaan_kesehatan']['capaian'] ?? 0, 0, ',', '.') }} capai / {{ number_format($d['sidaya']['pemeriksaan_kesehatan']['target'] ?? 0, 0, ',', '.') }} target</span></div>
                                             </div>
-                                            <div class="flex justify-between items-center">
-                                                <span class="text-teal-200 text-xs sm:text-sm font-bold uppercase">Tidak Memenuhi</span>
-                                                <span class="text-rose-400 font-black text-lg sm:text-xl">{{ number_format($d['tamasya']['memenuhi_4_layanan']['tidak_memenuhi'] ?? 0, 0, ',', '.') }}</span>
+                                            <div class="w-full bg-slate-200 rounded-full h-1.5">
+                                                <div class="h-full rounded-full" style="background-color: var(--teal); width: {{ min($pct1, 100) }}%"></div>
                                             </div>
                                         </div>
                                         
-                                        <!-- C: Pelaporan -->
-                                        <div class="border-2 border-purple-500/50 rounded-3xl p-5 bg-gradient-to-br from-teal-950/80 to-[#022c22]/80 backdrop-blur-sm relative overflow-hidden group hover:border-purple-400 transition-colors">
-                                            <h4 class="text-purple-300 font-black text-sm sm:text-base uppercase tracking-widest mb-2">Status Pelaporan</h4>
-                                            <div class="flex justify-between items-center mb-2">
-                                                <span class="text-teal-200 text-xs sm:text-sm font-bold uppercase">Dilaporkan</span>
-                                                <span class="text-purple-400 font-black text-lg sm:text-xl">{{ number_format($d['tamasya']['status_pelaporan']['dilaporkan'] ?? 0, 0, ',', '.') }}</span>
+                                        <!-- Kader BKL Terlatih -->
+                                        <div class="bg-slate-50 p-3 rounded-lg border border-slate-200" style="display: block;">
+                                            <div class="text-xs font-bold text-[var(--muted)] uppercase mb-1 export-fix-text">Kader BKL Terlatih PJP</div>
+                                            @php $pct2 = $d['sidaya']['pelatihan_pjp']['persentase'] ?? 0; @endphp
+                                            <div class="flex justify-between items-end mb-2">
+                                                <div class="font-black text-[var(--navy)] text-xl leading-none"><span class="export-fix-text">{{ $fmt($pct2) }}%</span></div>
+                                                <div class="text-[10px] sm:text-xs font-medium text-slate-500"><span class="export-fix-text">{{ number_format($d['sidaya']['pelatihan_pjp']['capaian'] ?? 0, 0, ',', '.') }} capai / {{ number_format($d['sidaya']['pelatihan_pjp']['target'] ?? 0, 0, ',', '.') }} target</span></div>
                                             </div>
-                                            <div class="flex justify-between items-center">
-                                                <span class="text-teal-200 text-xs sm:text-sm font-bold uppercase">Belum Lapor</span>
-                                                <span class="text-rose-400 font-black text-lg sm:text-xl">{{ number_format($d['tamasya']['status_pelaporan']['tidak_dilaporkan'] ?? 0, 0, ',', '.') }}</span>
+                                            <div class="w-full bg-slate-200 rounded-full h-1.5">
+                                                <div class="h-full rounded-full" style="background-color: var(--teal); width: {{ min($pct2, 100) }}%"></div>
+                                            </div>
+                                        </div>
+
+                                        <!-- Peserta Sekolah Lansia -->
+                                        <div class="bg-slate-50 p-3 rounded-lg border border-slate-200" style="display: block;">
+                                            <div class="text-xs font-bold text-[var(--muted)] uppercase mb-1 export-fix-text">Peserta Sekolah Lansia</div>
+                                            @php $pct3 = $d['sidaya']['sekolah_lansia']['persentase'] ?? 0; @endphp
+                                            <div class="flex justify-between items-end mb-2">
+                                                <div class="font-black text-[var(--navy)] text-xl leading-none"><span class="export-fix-text">{{ $fmt($pct3) }}%</span></div>
+                                                <div class="text-[10px] sm:text-xs font-medium text-slate-500"><span class="export-fix-text">{{ number_format($d['sidaya']['sekolah_lansia']['capaian'] ?? 0, 0, ',', '.') }} capai / {{ number_format($d['sidaya']['sekolah_lansia']['target'] ?? 0, 0, ',', '.') }} target</span></div>
+                                            </div>
+                                            <div class="w-full bg-slate-200 rounded-full h-1.5">
+                                                <div class="h-full rounded-full" style="background-color: var(--teal); width: {{ min($pct3, 100) }}%"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- 2. GATI -->
+                            <div class="export-card bg-white rounded-xl border border-slate-300 relative p-4 md:p-5 flex flex-col h-full shadow-sm">
+                                <div class="flex justify-between items-start mb-4 border-b-2 pb-3" style="border-color: var(--cyan)">
+                                    <div class="flex-1 pr-2">
+                                        <h3 class="font-black text-[var(--navy)] text-2xl md:text-3xl mb-1 export-fix-text" style="line-height: 1.2;">GATI</h3>
+                                        <div class="text-sm font-bold text-[var(--muted)] uppercase tracking-wide export-fix-text">Gerakan Ayah Teladan</div>
+                                    </div>
+                                </div>
+                                
+                                <div class="flex flex-col lg:flex-row gap-4 items-center lg:items-start mb-2 flex-grow">
+                                    <div class="w-32 md:w-36 shrink-0 flex items-center justify-center">
+                                        <img src="{{ asset('public/image/qw_gati_new.png') }}" class="w-full h-auto object-contain hover:scale-105 transition-transform origin-center">
+                                    </div>
+                                    
+                                    <div class="flex-1 flex flex-col gap-3 w-full">
+                                        <div class="bg-slate-50 p-4 rounded-lg border border-slate-200" style="display: block;">
+                                            <div class="text-xs font-bold text-[var(--muted)] uppercase mb-1 export-fix-text">Fasilitasi Edukasi GATI</div>
+                                            @php $pctG = $d['gati']['edukasi']['persentase'] ?? 0; @endphp
+                                            <div class="flex justify-between items-end mb-2">
+                                                <div class="font-black text-[var(--navy)] text-3xl leading-none"><span class="export-fix-text">{{ $fmt($pctG) }}%</span></div>
+                                            </div>
+                                            <div class="text-xs font-medium text-slate-500 mb-2"><span class="export-fix-text">{{ number_format($d['gati']['edukasi']['total'] ?? 0, 0, ',', '.') }} capai / {{ number_format($d['gati']['edukasi']['target'] ?? 0, 0, ',', '.') }} target</span></div>
+                                            <div class="w-full bg-slate-200 rounded-full h-2">
+                                                <div class="h-full rounded-full" style="background-color: var(--cyan); width: {{ min($pctG, 100) }}%"></div>
                                             </div>
                                         </div>
                                         
-                                        <!-- D: Pemutakhiran -->
-                                        <div class="border-2 border-emerald-500/50 rounded-3xl p-5 bg-gradient-to-br from-teal-950/80 to-[#022c22]/80 backdrop-blur-sm sm:col-span-2 flex flex-col sm:flex-row justify-between items-center gap-4 group hover:border-emerald-400 transition-colors">
-                                            <div class="text-center sm:text-left">
-                                                <h4 class="text-emerald-300 font-black text-sm sm:text-base uppercase tracking-widest">Pemutakhiran Data</h4>
-                                                <span class="text-teal-400 text-xs font-semibold">Progres validasi & verifikasi</span>
+                                        <div class="grid grid-cols-3 gap-2 mt-1">
+                                            <div class="bg-slate-50 border border-slate-200 rounded-lg p-2 text-center" style="display: block;">
+                                                <div class="text-[10px] font-bold text-slate-500 uppercase mb-1 export-fix-text">Kompak Tenan</div>
+                                                <div class="font-black text-[var(--navy)] text-sm md:text-base"><span class="export-fix-text">{{ number_format($d['gati']['edukasi']['kompak_tenan'] ?? 0, 0, ',', '.') }}</span></div>
                                             </div>
-                                            <div class="flex gap-2 sm:gap-3">
-                                                <div class="text-center">
-                                                    <span class="block text-teal-200 text-xs font-bold uppercase tracking-wider mb-1">Sudah</span>
-                                                    <span class="text-white font-black text-xl sm:text-2xl">{{ number_format($d['tamasya']['pemutakhiran_data']['sudah'] ?? 0, 0, ',', '.') }}</span>
-                                                </div>
-                                                <div class="text-center">
-                                                    <span class="block text-teal-200 text-xs font-bold uppercase tracking-wider mb-1">Belum</span>
-                                                    <span class="text-rose-400 font-black text-xl sm:text-2xl">{{ number_format($d['tamasya']['pemutakhiran_data']['belum'] ?? 0, 0, ',', '.') }}</span>
-                                                </div>
+                                            <div class="bg-slate-50 border border-slate-200 rounded-lg p-2 text-center" style="display: block;">
+                                                <div class="text-[10px] font-bold text-slate-500 uppercase mb-1 export-fix-text">Dekat</div>
+                                                <div class="font-black text-[var(--navy)] text-sm md:text-base"><span class="export-fix-text">{{ number_format($d['gati']['edukasi']['dekat'] ?? 0, 0, ',', '.') }}</span></div>
+                                            </div>
+                                            <div class="bg-slate-50 border border-slate-200 rounded-lg p-2 text-center" style="display: block;">
+                                                <div class="text-[10px] font-bold text-slate-500 uppercase mb-1 export-fix-text">Sebaya</div>
+                                                <div class="font-black text-[var(--navy)] text-sm md:text-base"><span class="export-fix-text">{{ number_format($d['gati']['edukasi']['sebaya'] ?? 0, 0, ',', '.') }}</span></div>
                                             </div>
                                         </div>
                                     </div>
-
                                 </div>
                             </div>
-                        </div>
 
-                        <!-- 4. GENTING -->
-                        <div class="relative bg-gradient-to-bl from-[#022c22] via-teal-900 to-[#011a14] rounded-[30px] border-4 border-yellow-400 shadow-[-4px_4px_0px_#fde047] p-4 sm:p-5 overflow-hidden">
-                            <div class="absolute top-6 -right-2 bg-yellow-400 text-teal-900 font-black px-4 sm:px-6 py-1.5 text-sm sm:text-base uppercase shadow-xl border-y-4 border-l-4 border-teal-900 z-20">
-                                4. GENTING (Cegah Stunting)
-                                <div class="absolute -bottom-3 right-0 w-3 h-3 bg-yellow-600" style="clip-path: polygon(0 0, 100% 0, 0 100%);"></div>
-                            </div>
-                            
-                            <div class="flex flex-col lg:flex-row-reverse items-center gap-4 xl:gap-4 pt-10 lg:pt-12">
-                                <div class="w-full md:w-2/5 flex justify-center relative group">
-                                    <img src="{{ asset('public/image/qw_genting.png') }}" class="w-32 h-32 sm:w-40 sm:h-40 lg:w-48 lg:h-48 xl:w-40 xl:h-40 2xl:w-48 2xl:h-48 object-contain relative z-10 transform hover:scale-105 hover:-rotate-3 transition-transform duration-500 drop-shadow-[0_20px_30px_rgba(0,0,0,0.8)] rounded-2xl shadow-[0_10px_20px_rgba(0,0,0,0.5)] border-2 border-teal-800/50" alt="GENTING">
+                            <!-- 3. TAMASYA -->
+                            <div class="export-card bg-white rounded-xl border border-slate-300 relative p-4 md:p-5 flex flex-col h-full shadow-sm">
+                                <div class="flex justify-between items-start mb-4 border-b-2 pb-3" style="border-color: var(--orange)">
+                                    <div class="flex-1 pr-2">
+                                        <h3 class="font-black text-[var(--navy)] text-2xl md:text-3xl mb-1 export-fix-text" style="line-height: 1.2;">TAMASYA</h3>
+                                        <div class="text-sm font-bold text-[var(--muted)] uppercase tracking-wide export-fix-text">Taman Asuh Sayang Anak</div>
+                                    </div>
                                 </div>
                                 
-                                <div class="w-full md:w-3/5 flex flex-col gap-3 relative z-10">
-                                    
-                                    <div>
-                                        <h3 class="text-yellow-300 font-black text-lg sm:text-xl uppercase tracking-widest border-b-2 border-teal-700/50 pb-2 mb-2">Fasilitasi Program GENTING</h3>
-                                        <div class="grid grid-cols-3 gap-2 items-center mb-2">
-                                        <div>
-                                            <span class="block text-teal-400 text-[10px] font-bold uppercase tracking-wider mb-1">Target</span>
-                                            <span class="block text-white font-black text-lg sm:text-xl">{{ number_format($d['genting']['fasilitasi']['target'] ?? 0, 0, ',', '.') }}</span>
-                                        </div>
-                                        <div class="relative">
-                                            <span class="relative block text-yellow-400 text-[10px] font-bold uppercase tracking-wider mb-1">Bantuan</span>
-                                            <span class="relative block text-yellow-300 font-black text-lg sm:text-xl drop-shadow-md">{{ number_format($d['genting']['fasilitasi']['total'] ?? 0, 0, ',', '.') }}</span>
-                                        </div>
-                                        <div class="text-right flex justify-end items-end gap-1">
-                                            <span class="text-yellow-400 font-black text-4xl sm:text-5xl drop-shadow-md leading-none">{{ number_format((float)($d['genting']['fasilitasi']['persentase'] ?? 0), 0, ',', '.') }}</span>
-                                            <span class="text-yellow-400 text-base font-black">
-                                                @php
-                                                    $pctStrGen = number_format((float)($d['genting']['fasilitasi']['persentase'] ?? 0), 2, ',', '.');
-                                                    $decGen = substr($pctStrGen, -3);
-                                                    if($decGen == ',00') echo '%'; else echo $decGen.'%';
-                                                @endphp
-                                            </span>
+                                <div class="flex flex-col lg:flex-row gap-4 items-center lg:items-start mb-2 flex-grow">
+                                    <div class="w-32 md:w-36 shrink-0 flex flex-col items-center justify-center gap-4">
+                                        <img src="{{ asset('public/image/qw_tamasya_new.png') }}" class="w-full h-auto object-contain hover:scale-105 transition-transform origin-center">
+                                        
+                                        <div class="bg-slate-50 border border-slate-200 rounded-xl p-3 text-center w-full shadow-sm" style="display: block;">
+                                            <div class="text-[10px] font-bold text-[var(--muted)] uppercase mb-1 export-fix-text">Jumlah TPA</div>
+                                            <div class="font-black text-[var(--orange)] text-2xl md:text-3xl"><span class="export-fix-text">{{ number_format($d['tamasya']['jumlah_tpa'] ?? 0, 0, ',', '.') }}</span></div>
                                         </div>
                                     </div>
-
-                                        <div class="mt-8 bg-teal-950/80 p-3 sm:p-4 rounded-3xl border border-teal-800 backdrop-blur-sm shadow-xl">
-                                            <span class="block text-center text-teal-300 text-xs font-bold uppercase tracking-widest mb-2">Sebaran Rincian Bantuan Diberikan</span>
-                                            <div class="flex flex-wrap justify-center gap-3 sm:gap-4">
-                                                <div class="bg-[#022c22] border-2 border-emerald-500 rounded-2xl px-2 py-2 text-center flex-1 min-w-[60px] transform hover:-translate-y-1 transition-transform shadow-lg">
-                                                    <span class="block text-emerald-400 text-[9px] sm:text-[10px] font-black uppercase tracking-wider mb-1">Nutrisi</span>
-                                                    <span class="block text-white font-black text-base sm:text-lg">{{ number_format($d['genting']['fasilitasi']['nutrisi'] ?? 0, 0, ',', '.') }}</span>
-                                                </div>
-                                                <div class="bg-[#022c22] border-2 border-sky-500 rounded-2xl px-2 py-2 text-center flex-1 min-w-[60px] transform hover:-translate-y-1 transition-transform shadow-lg">
-                                                    <span class="block text-sky-400 text-[9px] sm:text-[10px] font-black uppercase tracking-wider mb-1">Sanitasi</span>
-                                                    <span class="block text-white font-black text-base sm:text-lg">{{ number_format($d['genting']['fasilitasi']['sanitasi'] ?? 0, 0, ',', '.') }}</span>
-                                                </div>
-                                                <div class="bg-[#022c22] border-2 border-blue-500 rounded-2xl px-2 py-2 text-center flex-1 min-w-[60px] transform hover:-translate-y-1 transition-transform shadow-lg">
-                                                    <span class="block text-blue-400 text-[9px] sm:text-[10px] font-black uppercase tracking-wider mb-1">Air Bersih</span>
-                                                    <span class="block text-white font-black text-base sm:text-lg">{{ number_format($d['genting']['fasilitasi']['air_bersih'] ?? 0, 0, ',', '.') }}</span>
-                                                </div>
-                                                <div class="bg-[#022c22] border-2 border-amber-500 rounded-2xl px-2 py-2 text-center flex-1 min-w-[60px] transform hover:-translate-y-1 transition-transform shadow-lg">
-                                                    <span class="block text-amber-400 text-[9px] sm:text-[10px] font-black uppercase tracking-wider mb-1">Rmh Layak</span>
-                                                    <span class="block text-white font-black text-base sm:text-lg">{{ number_format($d['genting']['fasilitasi']['rumah_layak'] ?? 0, 0, ',', '.') }}</span>
-                                                </div>
-                                                <div class="bg-[#022c22] border-2 border-purple-500 rounded-2xl px-2 py-2 text-center flex-1 min-w-[60px] transform hover:-translate-y-1 transition-transform shadow-lg">
-                                                    <span class="block text-purple-400 text-[9px] sm:text-[10px] font-black uppercase tracking-wider mb-1">Edukasi</span>
-                                                    <span class="block text-white font-black text-base sm:text-lg">{{ number_format($d['genting']['fasilitasi']['edukasi'] ?? 0, 0, ',', '.') }}</span>
-                                                </div>
+                                    
+                                    <div class="flex-1 flex flex-col gap-2 w-full">
+                                        <!-- 4 Layanan Utama -->
+                                        <div class="grid grid-cols-2 gap-2 bg-slate-50 p-3 rounded-lg border border-slate-200">
+                                            <div class="col-span-2 text-[11px] font-bold text-[var(--muted)] uppercase border-b border-slate-200 pb-1 mb-1 export-fix-text">4 Layanan Utama</div>
+                                            <div style="display: block;">
+                                                <div class="text-[9px] font-bold text-slate-500 uppercase export-fix-text">Memenuhi</div>
+                                                <div class="font-black text-[var(--navy)] text-base"><span class="export-fix-text">{{ number_format($d['tamasya']['memenuhi_4_layanan']['memenuhi'] ?? 0, 0, ',', '.') }}</span></div>
+                                            </div>
+                                            <div style="display: block;">
+                                                <div class="text-[9px] font-bold text-slate-500 uppercase export-fix-text">Tidak Memenuhi</div>
+                                                <div class="font-black text-[var(--navy)] text-base"><span class="export-fix-text">{{ number_format($d['tamasya']['memenuhi_4_layanan']['tidak_memenuhi'] ?? 0, 0, ',', '.') }}</span></div>
+                                            </div>
+                                        </div>
+                                        
+                                        <!-- Status Pelaporan -->
+                                        <div class="grid grid-cols-2 gap-2 bg-slate-50 p-3 rounded-lg border border-slate-200">
+                                            <div class="col-span-2 text-[11px] font-bold text-[var(--muted)] uppercase border-b border-slate-200 pb-1 mb-1 export-fix-text">Status Pelaporan</div>
+                                            <div style="display: block;">
+                                                <div class="text-[9px] font-bold text-slate-500 uppercase export-fix-text">Dilaporkan</div>
+                                                <div class="font-black text-[var(--navy)] text-base"><span class="export-fix-text">{{ number_format($d['tamasya']['status_pelaporan']['dilaporkan'] ?? 0, 0, ',', '.') }}</span></div>
+                                            </div>
+                                            <div style="display: block;">
+                                                <div class="text-[9px] font-bold text-slate-500 uppercase export-fix-text">Belum Lapor</div>
+                                                <div class="font-black text-[var(--navy)] text-base"><span class="export-fix-text">{{ number_format($d['tamasya']['status_pelaporan']['tidak_dilaporkan'] ?? 0, 0, ',', '.') }}</span></div>
+                                            </div>
+                                        </div>
+                                        
+                                        <!-- Pemutakhiran Data -->
+                                        <div class="grid grid-cols-2 gap-2 bg-slate-50 p-3 rounded-lg border border-slate-200">
+                                            <div class="col-span-2 text-[11px] font-bold text-[var(--muted)] uppercase border-b border-slate-200 pb-1 mb-1 export-fix-text">Pemutakhiran Data</div>
+                                            <div style="display: block;">
+                                                <div class="text-[9px] font-bold text-slate-500 uppercase export-fix-text">Sudah</div>
+                                                <div class="font-black text-[var(--navy)] text-base"><span class="export-fix-text">{{ number_format($d['tamasya']['pemutakhiran_data']['sudah'] ?? 0, 0, ',', '.') }}</span></div>
+                                            </div>
+                                            <div style="display: block;">
+                                                <div class="text-[9px] font-bold text-slate-500 uppercase export-fix-text">Belum</div>
+                                                <div class="font-black text-[var(--navy)] text-base"><span class="export-fix-text">{{ number_format($d['tamasya']['pemutakhiran_data']['belum'] ?? 0, 0, ',', '.') }}</span></div>
                                             </div>
                                         </div>
                                     </div>
+                                </div>
+                            </div>
 
+                            <!-- 4. GENTING -->
+                            <div class="export-card bg-white rounded-xl border border-slate-300 relative p-4 md:p-5 flex flex-col h-full shadow-sm">
+                                <div class="flex justify-between items-start mb-4 border-b-2 pb-3" style="border-color: var(--red)">
+                                    <div class="flex-1 pr-2">
+                                        <h3 class="font-black text-[var(--navy)] text-2xl md:text-3xl mb-1 export-fix-text" style="line-height: 1.2;">GENTING</h3>
+                                        <div class="text-sm font-bold text-[var(--muted)] uppercase tracking-wide export-fix-text">Cegah Stunting</div>
+                                    </div>
+                                </div>
+                                
+                                <div class="flex flex-col lg:flex-row gap-4 items-center lg:items-start mb-2 flex-grow">
+                                    <div class="w-32 md:w-36 shrink-0 flex items-center justify-center">
+                                        <img src="{{ asset('public/image/qw_genting_new.png') }}" class="w-full h-auto object-contain hover:scale-105 transition-transform origin-center">
+                                    </div>
+                                    
+                                    <div class="flex-1 flex flex-col gap-3 w-full">
+                                        <div class="bg-slate-50 p-4 rounded-lg border border-slate-200" style="display: block;">
+                                            <div class="text-xs font-bold text-[var(--muted)] uppercase mb-1 export-fix-text">Fasilitasi Program GENTING</div>
+                                            @php $pctGen = $d['genting']['fasilitasi']['persentase'] ?? 0; @endphp
+                                            <div class="flex justify-between items-end mb-2">
+                                                <div class="font-black text-[var(--navy)] text-3xl leading-none"><span class="export-fix-text">{{ $fmt($pctGen) }}%</span></div>
+                                            </div>
+                                            <div class="text-xs font-medium text-slate-500 mb-2"><span class="export-fix-text">{{ number_format($d['genting']['fasilitasi']['total'] ?? 0, 0, ',', '.') }} bantuan / {{ number_format($d['genting']['fasilitasi']['target'] ?? 0, 0, ',', '.') }} target</span></div>
+                                            <div class="w-full bg-slate-200 rounded-full h-2">
+                                                <div class="h-full rounded-full" style="background-color: var(--red); width: {{ min($pctGen, 100) }}%"></div>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="text-[11px] font-bold text-center text-slate-500 uppercase mt-2 mb-1 export-fix-text">Sebaran Rincian Bantuan</div>
+                                        <div class="grid grid-cols-3 sm:grid-cols-5 gap-1 md:gap-2">
+                                            <div class="bg-slate-50 border border-slate-200 rounded-lg py-2 px-1 text-center" style="display: block;">
+                                                <div class="text-[9px] font-bold text-slate-500 uppercase mb-1 export-fix-text">Nutrisi</div>
+                                                <div class="font-black text-[var(--navy)] text-sm"><span class="export-fix-text">{{ number_format($d['genting']['fasilitasi']['nutrisi'] ?? 0, 0, ',', '.') }}</span></div>
+                                            </div>
+                                            <div class="bg-slate-50 border border-slate-200 rounded-lg py-2 px-1 text-center" style="display: block;">
+                                                <div class="text-[9px] font-bold text-slate-500 uppercase mb-1 export-fix-text">Sanitasi</div>
+                                                <div class="font-black text-[var(--navy)] text-sm"><span class="export-fix-text">{{ number_format($d['genting']['fasilitasi']['sanitasi'] ?? 0, 0, ',', '.') }}</span></div>
+                                            </div>
+                                            <div class="bg-slate-50 border border-slate-200 rounded-lg py-2 px-1 text-center" style="display: block;">
+                                                <div class="text-[9px] font-bold text-slate-500 uppercase mb-1 export-fix-text">Air Bersih</div>
+                                                <div class="font-black text-[var(--navy)] text-sm"><span class="export-fix-text">{{ number_format($d['genting']['fasilitasi']['air_bersih'] ?? 0, 0, ',', '.') }}</span></div>
+                                            </div>
+                                            <div class="bg-slate-50 border border-slate-200 rounded-lg py-2 px-1 text-center" style="display: block;">
+                                                <div class="text-[9px] font-bold text-slate-500 uppercase mb-1 export-fix-text">Rmh Layak</div>
+                                                <div class="font-black text-[var(--navy)] text-sm"><span class="export-fix-text">{{ number_format($d['genting']['fasilitasi']['rumah_layak'] ?? 0, 0, ',', '.') }}</span></div>
+                                            </div>
+                                            <div class="bg-slate-50 border border-slate-200 rounded-lg py-2 px-1 text-center" style="display: block;">
+                                                <div class="text-[9px] font-bold text-slate-500 uppercase mb-1 export-fix-text">Edukasi</div>
+                                                <div class="font-black text-[var(--navy)] text-sm"><span class="export-fix-text">{{ number_format($d['genting']['fasilitasi']['edukasi'] ?? 0, 0, ',', '.') }}</span></div>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
+
+                        <!-- 4. FOOTER RESMI -->
+                        <div class="bg-[var(--navy)] text-white rounded-xl mt-8 shadow-sm px-8 py-6 flex items-center justify-between relative z-10">
+                            <!-- KIRI: Logo -->
+                            <div class="flex-1 flex justify-start shrink-0">
+                                <img src="{{ asset('public/image/logo-putih.png') }}" class="h-16 lg:h-20 object-contain drop-shadow-sm" alt="BKKBN Logo Putih">
+                            </div>
+
+                            <!-- TENGAH: Judul -->
+                            <div class="flex-[1.5] flex flex-col items-center text-center px-6 border-x-2 border-white/20">
+                                <div class="font-bold text-base lg:text-lg tracking-wide export-fix-text">LAPORAN QUICK WIN</div>
+                                <div class="text-sm text-blue-200 opacity-90 mt-1.5"><span class="export-fix-text">Dicetak pada {{ date('d/m/Y H:i') }}</span></div>
+                            </div>
+
+                            <!-- KANAN: Info Kontak -->
+                            <div class="flex-1 flex flex-col items-end gap-1.5 text-xs lg:text-sm shrink-0">
+                                <div style="white-space: nowrap;">
+                                    <i class="fa-solid fa-headset text-blue-400 export-shift-icon text-sm lg:text-base" style="vertical-align: middle; margin-right: 6px;"></i>
+                                    <span style="vertical-align: middle;"><span class="export-fix-text">Pengaduan <span class="text-yellow-400 font-bold">085361209387</span></span></span>
+                                </div>
+                                <div style="white-space: nowrap;">
+                                    <i class="fa-solid fa-globe text-blue-400 export-shift-icon text-sm lg:text-base" style="vertical-align: middle; margin-right: 6px;"></i>
+                                    <span class="text-blue-200" style="vertical-align: middle;"><span class="export-fix-text">aceh.kemendukbangga.go.id</span></span>
+                                </div>
+                                <div style="white-space: nowrap;">
+                                    <i class="fa-brands fa-instagram text-blue-400 export-shift-icon text-sm lg:text-base" style="vertical-align: middle; margin-right: 6px;"></i>
+                                    <span class="text-blue-200" style="vertical-align: middle;"><span class="export-fix-text">kemendukbangga_bkkbnaceh</span></span>
+                                </div>
+                            </div>
+                        </div>
+
                     </div>
                 @endif
 

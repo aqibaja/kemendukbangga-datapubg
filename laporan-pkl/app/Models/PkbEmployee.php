@@ -4,17 +4,16 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Employee extends Model
+class PkbEmployee extends Model
 {
     protected $fillable = [
         'nama',
         'nip',
         'unsur',
-        'kabupaten_kota',
     ];
 
-    public function qrAttendances()
+    public function votes()
     {
-        return $this->hasMany(QrAttendance::class);
+        return $this->hasMany(VotingVote::class, 'voter_pkb_id');
     }
 }
