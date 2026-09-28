@@ -24,11 +24,18 @@ class VotingController extends Controller
 
     public function dashboard(Request $request)
     {
+        // TODO: hapus dd() ini setelah update berhasil
+        dd('TESTING UPDATE FILE: Jika Anda melihat tulisan ini, berarti file VotingController.php yang baru BERHASIL terbaca oleh server. Hapus baris dd() ini jika sudah berhasil.');
+        
         $setting = VotingSetting::firstOrCreate(['id' => 1]);
         
         $isResultVisible = $setting->is_result_visible;
         if ($setting->result_visible_at && now()->timezone('Asia/Jakarta') >= \Carbon\Carbon::parse($setting->result_visible_at, 'Asia/Jakarta')) {
             $isResultVisible = true;
+        }
+
+        if (!$isResultVisible) {
+            return redirect()->route('voting.show')->with('error', 'Dashboard hasil voting saat ini sedang ditutup atau dirahasiakan.');
         }
 
         // Stats

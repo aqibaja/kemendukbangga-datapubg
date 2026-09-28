@@ -281,4 +281,151 @@
             </div>
         </div>
     </div>
+
+    <!-- ================= FLOATING CONTACT US WHATSAPP WIDGET ================= -->
+    <style>
+        @keyframes waPopIn {
+            0% {
+                opacity: 0;
+                transform: translateY(40px) scale(0.6);
+            }
+            60% {
+                opacity: 1;
+                transform: translateY(-8px) scale(1.05);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+
+        @keyframes waFloatWiggle {
+            0%, 100% {
+                transform: translateY(0px) rotate(0deg);
+            }
+            20% {
+                transform: translateY(-8px) rotate(0deg);
+            }
+            40% {
+                transform: translateY(0px) rotate(0deg);
+            }
+            55% {
+                transform: translateY(-5px) rotate(0deg);
+            }
+            70% {
+                transform: translateY(0px) rotate(0deg);
+            }
+            78% {
+                transform: translateY(-9px) rotate(-6deg) scale(1.04);
+            }
+            84% {
+                transform: translateY(-9px) rotate(6deg) scale(1.04);
+            }
+            90% {
+                transform: translateY(-5px) rotate(-3deg) scale(1.02);
+            }
+            96% {
+                transform: translateY(-2px) rotate(2deg) scale(1.01);
+            }
+        }
+
+        @keyframes waPulseGlow {
+            0%, 100% {
+                transform: scale(0.9);
+                opacity: 0.3;
+            }
+            50% {
+                transform: scale(1.2);
+                opacity: 0.65;
+            }
+        }
+    </style>
+
+    <div x-data="{ 
+             isHidden: sessionStorage.getItem('hide_wa_contact') === 'true',
+             closeWidget() {
+                 this.isHidden = true;
+                 sessionStorage.setItem('hide_wa_contact', 'true');
+             }
+         }"
+         x-show="!isHidden"
+         x-transition:leave="transition ease-in duration-250 transform"
+         x-transition:leave-start="opacity-100 scale-100 translate-y-0"
+         x-transition:leave-end="opacity-0 scale-75 translate-y-4"
+         class="fixed bottom-4 right-3 sm:bottom-6 sm:right-6 z-40 select-none pointer-events-auto"
+         style="animation: waPopIn 0.8s cubic-bezier(0.34, 1.56, 0.64, 1) both 0.4s;">
+        
+        <!-- Relative Wrapper -->
+        <div class="relative group">
+            <!-- Close Button ('x') -->
+            <button type="button"
+                    @click.stop="closeWidget()"
+                    class="absolute -top-1.5 -right-1 sm:-top-2 sm:-right-2 w-6 h-6 sm:w-7 sm:h-7 bg-slate-800/85 hover:bg-slate-950 text-white rounded-full flex items-center justify-center shadow-lg border border-white/40 backdrop-blur-md transition-all duration-200 hover:scale-110 active:scale-90 z-50 cursor-pointer"
+                    title="Tutup / Sembunyikan"
+                    aria-label="Tutup logo WhatsApp">
+                <i class="fas fa-times text-[10px] sm:text-xs"></i>
+            </button>
+
+            <a id="floatingContactWa"
+               href="https://web.whatsapp.com/send?phone=6285361209387&text=Halo%20Admin%2C%20saya%20ingin%20bertanya%20terkait%20layanan."
+               target="_blank"
+               rel="noopener noreferrer"
+               class="relative flex flex-col items-end cursor-pointer decoration-transparent focus:outline-none"
+               title="Hubungi Kami via WhatsApp">
+
+                <!-- Image Wrapper with Glow & Floating/Wiggle Animation -->
+                <div class="relative flex items-center justify-center transition-transform duration-300 hover:scale-105 active:scale-95">
+                    <!-- Pulsing Green Halo Behind Image -->
+                    <div class="absolute inset-0 bg-emerald-400/35 rounded-full blur-xl -z-10"
+                         style="animation: waPulseGlow 3s ease-in-out infinite;"></div>
+
+                    <!-- Main Mascot Image -->
+                    <img src="{{ asset('public/image/contact_us.png') }}"
+                         onerror="this.onerror=null; this.src='{{ asset('image/contact_us.png') }}';"
+                         alt="Contact Us WhatsApp"
+                         class="w-32 sm:w-44 md:w-52 h-auto object-contain drop-shadow-[0_10px_20px_rgba(0,0,0,0.18)] hover:drop-shadow-[0_15px_25px_rgba(37,211,102,0.35)] transition-all duration-300"
+                         style="animation: waFloatWiggle 6s ease-in-out infinite;">
+                </div>
+            </a>
+        </div>
+    </div>
+
+    <!-- WhatsApp Redirect Handler (Desktop -> WhatsApp Web, Mobile -> WhatsApp App) -->
+    <script>
+        (function() {
+            const phone = '6285361209387';
+            const defaultText = encodeURIComponent('Halo Admin, saya ingin bertanya terkait layanan.');
+            const btn = document.getElementById('floatingContactWa');
+            
+            // Check if user is on mobile
+            const isMobileDevice = () => {
+                const ua = navigator.userAgent || navigator.vendor || window.opera;
+                return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(ua)
+                    || (window.innerWidth <= 768 && ('ontouchstart' in window || navigator.maxTouchPoints > 0));
+            };
+
+            if (btn) {
+                if (isMobileDevice()) {
+                    btn.href = `whatsapp://send?phone=${phone}&text=${defaultText}`;
+                    btn.target = '_self';
+                } else {
+                    btn.href = `https://web.whatsapp.com/send?phone=${phone}&text=${defaultText}`;
+                    btn.target = '_blank';
+                }
+
+                btn.addEventListener('click', function(e) {
+                    if (isMobileDevice()) {
+                        e.preventDefault();
+                        // Open native WhatsApp App directly on mobile
+                        window.location.href = `whatsapp://send?phone=${phone}&text=${defaultText}`;
+                        
+                        // Fallback to web/api in case WhatsApp protocol handler isn't registered
+                        setTimeout(function() {
+                            window.location.href = `https://api.whatsapp.com/send?phone=${phone}&text=${defaultText}`;
+                        }, 1200);
+                    }
+                });
+            }
+        })();
+    </script>
 </x-layout>

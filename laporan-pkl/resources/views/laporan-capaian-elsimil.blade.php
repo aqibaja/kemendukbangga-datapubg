@@ -79,135 +79,11 @@
                 </div>
             </div>
             <div class="shrink-0 px-2 flex justify-center items-center">
-                <img src="{{ $img('image/elsimil_hero_3d.jpg') }}" style="height: 240px; max-height: 240px;" class="object-contain drop-shadow-md rounded-2xl" alt="Ilustrasi Capaian Elsimil">
+                <img src="{{ $img('image/elsimil_hero_3d.png') }}" style="height: 240px; max-height: 240px;" class="object-contain drop-shadow-md rounded-2xl" alt="Ilustrasi Capaian Elsimil">
             </div>
         </div>
     </div>
 
-    <!-- 2. RINGKASAN CAPAIAN UTAMA (KPI CARDS) -->
-    <div class="mb-4 mt-8 flex items-center border-b-2 border-slate-200 pb-2.5 relative z-10">
-        <div class="w-2.5 h-6 rounded-full bg-[var(--teal)] mr-3"></div>
-        <h2 class="text-xl md:text-2xl font-black text-[var(--navy)] uppercase tracking-tight export-fix-text">RINGKASAN PENDAMPINGAN HINGGA {{ strtoupper(App\Models\LaporanCapaian::namaBulan($bulanAktif)) }}</h2>
-    </div>
-
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-5 mb-8 relative z-10">
-        <!-- CARD 1: CATIN -->
-        <div class="bg-white rounded-2xl border border-slate-100 shadow-[0_4px_16px_rgb(0,0,0,0.06)] hover:shadow-[0_8px_24px_rgb(0,0,0,0.1)] transition-all duration-300 flex flex-col justify-between p-5 relative overflow-hidden">
-            <div class="absolute top-0 left-0 right-0 h-1.5 bg-[#0284c7]"></div>
-            <div>
-                <div class="flex items-center justify-between gap-3 mb-4">
-                    <div class="flex items-center gap-3">
-                        <div class="w-14 h-14 rounded-2xl bg-sky-50 border border-sky-100 flex items-center justify-center p-1 shrink-0 shadow-sm">
-                            <img src="{{ $img('image/catin_icon_3d.png') }}" class="w-full h-full object-contain drop-shadow-sm" alt="Catin Icon">
-                        </div>
-                        <div>
-                            <div class="text-[11px] font-bold text-sky-600 uppercase tracking-wider">Calon Pengantin</div>
-                            <h3 class="font-black text-[var(--navy)] text-base sm:text-lg leading-tight uppercase">CATIN TERDAMPINGI</h3>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="my-2">
-                    <div class="text-[11px] font-bold text-slate-400 uppercase tracking-wider mb-1">Total Capaian Periode Ini</div>
-                    <div class="text-4xl sm:text-5xl font-black text-[#0284c7] leading-none export-fix-text">
-                        {{ number_format($catinCurrent, 0, ',', '.') }}
-                        <span class="text-xl sm:text-2xl text-slate-500 font-bold">Jiwa</span>
-                    </div>
-                </div>
-            </div>
-
-            <div class="mt-4 pt-3 border-t border-slate-100 flex items-center justify-between text-xs">
-                @if($catinGrowth !== null)
-                    <div class="flex items-center gap-1.5 font-bold {{ $catinGrowth >= 0 ? 'text-emerald-600' : 'text-rose-600' }}">
-                        <i class="fa-solid {{ $catinGrowth >= 0 ? 'fa-arrow-trend-up' : 'fa-arrow-trend-down' }}"></i>
-                        <span>{{ $catinGrowth >= 0 ? '+' : '' }}{{ $fmt($catinGrowth) }}% MoM</span>
-                    </div>
-                    <span class="text-slate-400 font-medium">dibanding bulan lalu</span>
-                @else
-                    <span class="text-slate-400 font-medium">Bulan awal pelaporan</span>
-                @endif
-            </div>
-        </div>
-
-        <!-- CARD 2: BUMIL -->
-        <div class="bg-white rounded-2xl border border-slate-100 shadow-[0_4px_16px_rgb(0,0,0,0.06)] hover:shadow-[0_8px_24px_rgb(0,0,0,0.1)] transition-all duration-300 flex flex-col justify-between p-5 relative overflow-hidden">
-            <div class="absolute top-0 left-0 right-0 h-1.5 bg-[#e11d48]"></div>
-            <div>
-                <div class="flex items-center justify-between gap-3 mb-4">
-                    <div class="flex items-center gap-3">
-                        <div class="w-14 h-14 rounded-2xl bg-rose-50 border border-rose-100 flex items-center justify-center p-1 shrink-0 shadow-sm">
-                            <img src="{{ $img('image/bumil_icon_3d.png') }}" class="w-full h-full object-contain drop-shadow-sm" alt="Bumil Icon">
-                        </div>
-                        <div>
-                            <div class="text-[11px] font-bold text-rose-600 uppercase tracking-wider">Ibu Hamil</div>
-                            <h3 class="font-black text-[var(--navy)] text-base sm:text-lg leading-tight uppercase">BUMIL TERDAMPINGI</h3>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="my-2">
-                    <div class="text-[11px] font-bold text-slate-400 uppercase tracking-wider mb-1">Total Capaian Periode Ini</div>
-                    <div class="text-4xl sm:text-5xl font-black text-[#e11d48] leading-none export-fix-text">
-                        {{ number_format($bumilCurrent, 0, ',', '.') }}
-                        <span class="text-xl sm:text-2xl text-slate-500 font-bold">Jiwa</span>
-                    </div>
-                </div>
-            </div>
-
-            <div class="mt-4 pt-3 border-t border-slate-100 flex items-center justify-between text-xs">
-                @if($bumilGrowth !== null)
-                    <div class="flex items-center gap-1.5 font-bold {{ $bumilGrowth >= 0 ? 'text-emerald-600' : 'text-rose-600' }}">
-                        <i class="fa-solid {{ $bumilGrowth >= 0 ? 'fa-arrow-trend-up' : 'fa-arrow-trend-down' }}"></i>
-                        <span>{{ $bumilGrowth >= 0 ? '+' : '' }}{{ $fmt($bumilGrowth) }}% MoM</span>
-                    </div>
-                    <span class="text-slate-400 font-medium">dibanding bulan lalu</span>
-                @else
-                    <span class="text-slate-400 font-medium">Bulan awal pelaporan</span>
-                @endif
-            </div>
-        </div>
-
-        <!-- CARD 3: TOTAL AKUMULASI (EXECUTIVE GRADIENT) -->
-        <div class="rounded-2xl relative p-5 sm:p-6 flex flex-col justify-between text-white overflow-hidden shadow-[0_8px_24px_rgb(0,0,0,0.12)] bg-gradient-to-br from-[var(--navy)] via-[#083b6f] to-teal-800">
-            <div class="absolute -right-10 -top-10 w-44 h-44 bg-white opacity-10 rounded-full blur-2xl"></div>
-            
-            <div>
-                <div class="flex items-center justify-between mb-4">
-                    <div class="flex items-center gap-2.5">
-                        <div class="w-10 h-10 rounded-xl bg-white/15 border border-white/20 flex items-center justify-center text-yellow-300 text-lg">
-                            <i class="fa-solid fa-users-viewfinder"></i>
-                        </div>
-                        <div>
-                            <div class="text-[10px] font-bold text-teal-200 uppercase tracking-wider">Akumulasi Sasaran</div>
-                            <h3 class="font-black text-xl leading-none uppercase tracking-wide">TOTAL TERDAMPINGI</h3>
-                        </div>
-                    </div>
-                    <span class="text-[10px] font-black uppercase tracking-wider px-2.5 py-1 rounded-lg bg-white/20 text-white border border-white/25">TPK Aceh</span>
-                </div>
-
-                <div class="my-2">
-                    <div class="text-[11px] font-semibold text-blue-200 uppercase tracking-wider mb-1">Catin + Ibu Hamil</div>
-                    <div class="text-4xl sm:text-5xl font-black text-white leading-none export-fix-text drop-shadow-md">
-                        {{ number_format($totalTerdampingi, 0, ',', '.') }}
-                        <span class="text-xl sm:text-2xl text-blue-200 font-bold">Sasaran</span>
-                    </div>
-                </div>
-            </div>
-
-            <div class="mt-4 pt-3 border-t border-white/15 flex items-center justify-between text-xs text-blue-100">
-                <div class="flex items-center gap-2">
-                    <span class="font-bold text-white">Catin:</span> {{ number_format($catinCurrent, 0, ',', '.') }}
-                    <span class="opacity-60">|</span>
-                    <span class="font-bold text-white">Bumil:</span> {{ number_format($bumilCurrent, 0, ',', '.') }}
-                </div>
-                @if($totalGrowth !== null)
-                    <div class="font-bold text-yellow-300">
-                        {{ $totalGrowth >= 0 ? '+' : '' }}{{ $fmt($totalGrowth) }}%
-                    </div>
-                @endif
-            </div>
-        </div>
-    </div>
 
     <!-- 3. GRAFIK TREN PENDAMPINGAN (2 CHARTS) -->
     <div class="mb-4 mt-8 flex items-center border-b-2 border-slate-200 pb-2.5 relative z-10">
@@ -219,9 +95,9 @@
         <!-- CHART CARD 1: CATIN -->
         <div class="bg-white rounded-2xl border border-slate-200/80 shadow-[0_4px_20px_rgba(0,0,0,0.06)] p-5 sm:p-6 flex flex-col justify-between">
             <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-slate-100">
-                <div class="flex items-center gap-3.5">
-                    <div class="w-14 h-14 rounded-2xl bg-sky-50 border border-sky-100 flex items-center justify-center p-1.5 shadow-sm shrink-0">
-                        <img src="{{ $img('image/catin_icon_3d.png') }}" class="w-full h-full object-contain" alt="Catin Icon">
+                <div class="flex items-center gap-4">
+                    <div class="w-20 h-20 sm:w-24 sm:h-24 rounded-2xl bg-sky-50 border border-sky-100 flex items-center justify-center p-1 shadow-md shrink-0 transition-transform hover:scale-105">
+                        <img src="{{ $img('image/catin_icon_3d.png') }}" class="w-full h-full object-contain drop-shadow-sm" alt="Catin Icon">
                     </div>
                     <div>
                         <div class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-md bg-sky-100 text-[#0284c7] font-extrabold text-[10px] uppercase tracking-wider mb-1">
@@ -254,9 +130,9 @@
         <!-- CHART CARD 2: BUMIL -->
         <div class="bg-white rounded-2xl border border-slate-200/80 shadow-[0_4px_20px_rgba(0,0,0,0.06)] p-5 sm:p-6 flex flex-col justify-between">
             <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-slate-100">
-                <div class="flex items-center gap-3.5">
-                    <div class="w-14 h-14 rounded-2xl bg-rose-50 border border-rose-100 flex items-center justify-center p-1.5 shadow-sm shrink-0">
-                        <img src="{{ $img('image/bumil_icon_3d.png') }}" class="w-full h-full object-contain" alt="Bumil Icon">
+                <div class="flex items-center gap-4">
+                    <div class="w-20 h-20 sm:w-24 sm:h-24 rounded-2xl bg-rose-50 border border-rose-100 flex items-center justify-center p-1 shadow-md shrink-0 transition-transform hover:scale-105">
+                        <img src="{{ $img('image/bumil_icon_3d.png') }}" class="w-full h-full object-contain drop-shadow-sm" alt="Bumil Icon">
                     </div>
                     <div>
                         <div class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-md bg-rose-100 text-[#e11d48] font-extrabold text-[10px] uppercase tracking-wider mb-1">
@@ -287,98 +163,7 @@
         </div>
     </div>
 
-    <!-- 4. TABEL REKAPITULASI CAPAIAN PER BULAN -->
-    <div class="mb-4 mt-8 flex items-center border-b-2 border-slate-200 pb-2.5 relative z-10">
-        <div class="w-2.5 h-6 rounded-full bg-[var(--teal)] mr-3"></div>
-        <h2 class="text-xl md:text-2xl font-black text-[var(--navy)] uppercase tracking-tight export-fix-text">REKAPITULASI DATA BULANAN ELSIMIL TAHUN {{ $tahunAktif }}</h2>
-    </div>
 
-    <div class="bg-white rounded-2xl border border-slate-200/80 shadow-[0_4px_20px_rgba(0,0,0,0.06)] overflow-hidden mb-8 relative z-10">
-        <div class="overflow-x-auto">
-            <table class="w-full text-left text-sm">
-                <thead>
-                    <tr class="bg-slate-50 border-b border-slate-200 text-slate-600 font-bold uppercase text-xs">
-                        <th class="py-3.5 px-4 text-center w-16">No</th>
-                        <th class="py-3.5 px-4">Bulan</th>
-                        <th class="py-3.5 px-4 text-right">Catin Terdampingi</th>
-                        <th class="py-3.5 px-4 text-center">Tren Catin</th>
-                        <th class="py-3.5 px-4 text-right">Bumil Terdampingi</th>
-                        <th class="py-3.5 px-4 text-center">Tren Bumil</th>
-                        <th class="py-3.5 px-4 text-right">Total Terdampingi</th>
-                    </tr>
-                </thead>
-                <tbody class="divide-y divide-slate-100">
-                    @php
-                        // Urutkan bulan yang ada data
-                        $allMonths = array_unique(array_merge(array_keys($catinData), array_keys($bumilData)));
-                        sort($allMonths, SORT_NUMERIC);
-                        $no = 1;
-                        $prevC = null;
-                        $prevB = null;
-                    @endphp
-
-                    @forelse($allMonths as $m)
-                        @php
-                            $cVal = $catinData[(string)$m] ?? $catinData[$m] ?? 0;
-                            $bVal = $bumilData[(string)$m] ?? $bumilData[$m] ?? 0;
-                            $tot = $cVal + $bVal;
-
-                            $cGrowth = ($prevC !== null && $prevC > 0) ? (($cVal - $prevC) / $prevC) * 100 : null;
-                            $bGrowth = ($prevB !== null && $prevB > 0) ? (($bVal - $prevB) / $prevB) * 100 : null;
-
-                            $isCurrentMonth = ($m == $bulanAktif);
-                        @endphp
-                        <tr class="{{ $isCurrentMonth ? 'bg-teal-50/60 font-semibold' : 'hover:bg-slate-50/80' }} transition-colors">
-                            <td class="py-3.5 px-4 text-center text-slate-400 font-bold">{{ $no++ }}</td>
-                            <td class="py-3.5 px-4">
-                                <div class="flex items-center gap-2">
-                                    <span class="font-bold text-slate-800">{{ $monthNames[$m] ?? "Bulan $m" }}</span>
-                                    @if($isCurrentMonth)
-                                        <span class="px-2 py-0.5 rounded text-[10px] font-black uppercase bg-teal-100 text-teal-800 border border-teal-200">Periode Ini</span>
-                                    @endif
-                                </div>
-                            </td>
-                            <td class="py-3.5 px-4 text-right font-black text-[#0284c7]">
-                                {{ number_format($cVal, 0, ',', '.') }}
-                            </td>
-                            <td class="py-3.5 px-4 text-center">
-                                @if($cGrowth !== null)
-                                    <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-xs font-bold {{ $cGrowth >= 0 ? 'bg-emerald-50 text-emerald-700' : 'bg-rose-50 text-rose-700' }}">
-                                        {{ $cGrowth >= 0 ? '+' : '' }}{{ $fmt($cGrowth) }}%
-                                    </span>
-                                @else
-                                    <span class="text-slate-300 text-xs">-</span>
-                                @endif
-                            </td>
-                            <td class="py-3.5 px-4 text-right font-black text-[#e11d48]">
-                                {{ number_format($bVal, 0, ',', '.') }}
-                            </td>
-                            <td class="py-3.5 px-4 text-center">
-                                @if($bGrowth !== null)
-                                    <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-xs font-bold {{ $bGrowth >= 0 ? 'bg-emerald-50 text-emerald-700' : 'bg-rose-50 text-rose-700' }}">
-                                        {{ $bGrowth >= 0 ? '+' : '' }}{{ $fmt($bGrowth) }}%
-                                    </span>
-                                @else
-                                    <span class="text-slate-300 text-xs">-</span>
-                                @endif
-                            </td>
-                            <td class="py-3.5 px-4 text-right font-black text-[var(--navy)] text-base">
-                                {{ number_format($tot, 0, ',', '.') }}
-                            </td>
-                        </tr>
-                        @php
-                            $prevC = $cVal;
-                            $prevB = $bVal;
-                        @endphp
-                    @empty
-                        <tr>
-                            <td colspan="7" class="py-8 text-center text-slate-400">Belum ada data bulanan yang diinput untuk tahun {{ $tahunAktif }}.</td>
-                        </tr>
-                    @endforelse
-                </tbody>
-            </table>
-        </div>
-    </div>
 
     <!-- 5. FOOTER RESMI (IDENTIK DENGAN CAPAIAN PROGRAM) -->
     <div class="bg-[var(--navy)] text-white rounded-2xl mt-8 shadow-sm px-6 py-5 sm:px-8 sm:py-6 flex items-center justify-between z-10 relative">
