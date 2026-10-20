@@ -28,6 +28,9 @@ use App\Http\Controllers\PublicLeaveController;
 use App\Http\Controllers\Admin\EmployeeController;
 use App\Http\Controllers\Admin\QrSessionController;
 use App\Http\Controllers\QrAttendanceController;
+use App\Models\VotingSetting;
+use App\Models\Innovation;
+use App\Http\Controllers\Admin\InnovationController;
 use App\Http\Controllers\VotingController;
 use App\Http\Controllers\Admin\VotingAdminController;
 use App\Http\Controllers\Admin\PkbEmployeeController;
@@ -134,6 +137,13 @@ Route::get('/user', function () {
     // Ambil presentation links untuk admin
     $presentationLinks = $authUser->id_role == 1 ? \App\Models\PresentationLink::all() : collect();
 
+    // Ambil inovasi website untuk admin
+    $innovations = $authUser->id_role == 1
+        ? (\Illuminate\Support\Facades\Schema::hasTable('innovations')
+            ? Innovation::orderBy('order', 'asc')->orderBy('id', 'asc')->get()
+            : collect())
+        : collect();
+
     // Ambil laporan capaian
     $laporanCapaian = $authUser->id_role == 1
         ? LaporanCapaian::latest()->get()
@@ -145,6 +155,7 @@ Route::get('/user', function () {
         'users' => $users,
         'authUser' => $authUser,
         'presentationLinks' => $presentationLinks,
+        'innovations' => $innovations,
         'laporanCapaian' => $laporanCapaian,
     ]);
 });
@@ -194,6 +205,12 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/user/update', [UserController::class, 'update'])->name('user.update');
     Route::delete('/user/{id}', [UserController::class, 'destroy'])->name('user.destroy');
     Route::post('/presentation-link/{id}', [UserController::class, 'updatePresentationLink'])->name('presentation-link.update');
+
+    // Manajemen Inovasi Website
+    Route::post('/admin/innovations', [InnovationController::class, 'store'])->name('admin.innovations.store');
+    Route::post('/admin/innovations/{id}/update', [InnovationController::class, 'update'])->name('admin.innovations.update');
+    Route::delete('/admin/innovations/{id}', [InnovationController::class, 'destroy'])->name('admin.innovations.destroy');
+    Route::post('/admin/innovations/{id}/toggle', [InnovationController::class, 'toggleActive'])->name('admin.innovations.toggle');
     
     // Master Pegawai
     Route::get('/admin/employees', [EmployeeController::class, 'index'])->name('admin.employees.index');
@@ -357,6 +374,7 @@ Route::get('/jalankan-migrasi', function() {
             'database/migrations/2026_07_07_045226_add_end_time_to_qr_sessions_table.php',
             'database/migrations/2026_09_10_000001_create_voting_tables.php',
             'database/migrations/2026_09_12_000001_add_nip_to_employees_and_pkb.php',
+            'database/migrations/2026_10_12_000001_create_innovations_table.php',
         ];
         
         foreach ($newMigrations as $path) {

@@ -65,6 +65,7 @@
                         <th class="border border-black px-2 py-2 w-12 text-center">No</th>
                         <th class="border border-black px-4 py-2 text-left">Nama Pegawai</th>
                         @if($queryDate)
+                            <th class="border border-black px-4 py-2 text-center">Waktu Absen</th>
                             <th class="border border-black px-4 py-2 text-center">Status</th>
                         @else
                             <th class="border border-black px-4 py-2 text-center">Hadir</th>
@@ -76,7 +77,8 @@
                     @if($queryDate)
                         @php
                             $attendees = $apelService->getAttendeesByTeam($normalizedTeamName, $queryDate);
-                            $hadirSet = collect($attendees)->mapWithKeys(fn($a) => [$normKey($a['nama']) => true])->toArray();
+                            $attendeesByNormKey = collect($attendees)->keyBy(fn($a) => $normKey($a['nama']));
+                            $hadirSet = $attendeesByNormKey->map(fn() => true)->toArray();
                             $csvSet = collect($csvMembers)->mapWithKeys(fn($m) => [$normKey($m) => true])->toArray();
                             $tambahanHadir = collect($attendees)->filter(fn($a) => !isset($csvSet[$normKey($a['nama'])]))->values();
                             $printNo = 1;
@@ -84,15 +86,25 @@
                         @if(count($csvMembers) > 0)
                             @foreach($csvMembers as $member)
                                 @php 
-                                    $hadir = isset($hadirSet[$normKey($member)]);
+                                    $attData = $attendeesByNormKey->get($normKey($member));
+                                    $hadir = !is_null($attData);
                                     $leaveStatus = null;
                                     if (!$hadir && isset($leaves[$member])) {
                                         $leaveStatus = $leaves[$member]->keterangan;
+                                    }
+                                    $waktuAbsen = null;
+                                    if ($hadir && !empty($attData['timestamp'])) {
+                                        try {
+                                            $waktuAbsen = \Carbon\Carbon::parse($attData['timestamp'])->format('H:i:s') . ' WIB';
+                                        } catch (\Exception $e) {
+                                            $waktuAbsen = !empty($attData['waktu']) ? ($attData['waktu'] . ' WIB') : null;
+                                        }
                                     }
                                 @endphp
                                 <tr>
                                     <td class="border border-black px-2 py-1 text-center">{{ $printNo++ }}</td>
                                     <td class="border border-black px-4 py-1">{{ $member }}</td>
+                                    <td class="border border-black px-4 py-1 text-center font-mono">{{ $waktuAbsen ?? '-' }}</td>
                                     <td class="border border-black px-4 py-1 text-center">
                                         {{ $hadir ? 'Hadir' : ($leaveStatus ? $leaveStatus : 'Tidak Hadir') }}
                                     </td>
@@ -101,16 +113,27 @@
                         @endif
                         @if(count($tambahanHadir) > 0)
                             @foreach($tambahanHadir as $a)
+                                @php
+                                    $waktuA = null;
+                                    if (!empty($a['timestamp'])) {
+                                        try {
+                                            $waktuA = \Carbon\Carbon::parse($a['timestamp'])->format('H:i:s') . ' WIB';
+                                        } catch (\Exception $e) {
+                                            $waktuA = !empty($a['waktu']) ? ($a['waktu'] . ' WIB') : null;
+                                        }
+                                    }
+                                @endphp
                                 <tr>
                                     <td class="border border-black px-2 py-1 text-center">{{ $printNo++ }}</td>
                                     <td class="border border-black px-4 py-1">{{ $a['nama'] }}</td>
+                                    <td class="border border-black px-4 py-1 text-center font-mono">{{ $waktuA ?? '-' }}</td>
                                     <td class="border border-black px-4 py-1 text-center">Hadir (Luar Daftar)</td>
                                 </tr>
                             @endforeach
                         @endif
                         @if(count($csvMembers) == 0 && count($tambahanHadir) == 0)
                             <tr>
-                                <td colspan="3" class="border border-black px-4 py-2 text-center">Tidak ada data</td>
+                                <td colspan="4" class="border border-black px-4 py-2 text-center">Tidak ada data</td>
                             </tr>
                         @endif
                     @else

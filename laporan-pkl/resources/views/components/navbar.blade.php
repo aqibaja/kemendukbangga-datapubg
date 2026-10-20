@@ -14,6 +14,9 @@
         $presentationLinks = \App\Models\PresentationLink::all()->keyBy('key');
         $apelSenin = $presentationLinks->get('apel_senin')?->url ?? 'https://s.id/APELYOK';
         $zoomPresensi = $presentationLinks->get('zoom_presensi')?->url ?? 'https://forms.gle/XkWbaiBoRmqTBAd9A';
+        $innovations = \Illuminate\Support\Facades\Schema::hasTable('innovations')
+            ? \App\Models\Innovation::where('is_active', true)->orderBy('order', 'asc')->orderBy('id', 'asc')->get()
+            : collect();
     @endphp
 
     {{-- NAV ICON TENGAH (DESKTOP) --}}
@@ -28,6 +31,81 @@
                 <i class="fa-solid fa-circle-info text-2xl shrink-0"></i>
                 <span class="max-w-0 overflow-hidden opacity-0 group-hover:max-w-[150px] group-hover:opacity-100 group-hover:ml-2 transition-all duration-300 ease-in-out font-medium text-sm whitespace-nowrap">Informasi</span>
             </x-nav-link>
+
+            {{-- MENU INOVASI DENGAN HOVER DROPDOWN --}}
+            <div class="relative group"
+                 x-data="{ openInovasi: false, timeout: null }"
+                 @mouseenter="clearTimeout(timeout); openInovasi = true"
+                 @mouseleave="timeout = setTimeout(() => { openInovasi = false }, 200)"
+                 @click.outside="openInovasi = false">
+                <button type="button"
+                        @click="openInovasi = !openInovasi"
+                        :class="openInovasi ? 'bg-black/10' : ''"
+                        class="inline-flex items-center justify-center w-10 h-10 rounded-xl text-slate-700 transition hover:bg-black/10 group !w-auto !px-3 flex items-center overflow-hidden transition-all duration-300 ease-in-out focus:outline-none cursor-pointer">
+                    <i class="fa-solid fa-lightbulb text-2xl shrink-0"></i>
+                    <span class="max-w-0 overflow-hidden opacity-0 group-hover:max-w-[150px] group-hover:opacity-100 group-hover:ml-2 transition-all duration-300 ease-in-out font-medium text-sm whitespace-nowrap flex items-center gap-1"
+                          :class="openInovasi ? '!max-w-[150px] !opacity-100 !ml-2' : ''">
+                        <span>Inovasi</span>
+                        <i class="fa-solid fa-chevron-down text-[10px] transition-transform duration-200"
+                           :class="openInovasi ? 'rotate-180' : ''"></i>
+                    </span>
+                </button>
+
+                {{-- SUB MENU DROPDOWN LIST INOVASI WEBSITE --}}
+                <div x-show="openInovasi"
+                     x-transition:enter="transition ease-out duration-200"
+                     x-transition:enter-start="opacity-0 translate-y-2 scale-95"
+                     x-transition:enter-end="opacity-100 translate-y-0 scale-100"
+                     x-transition:leave="transition ease-in duration-150"
+                     x-transition:leave-start="opacity-100 translate-y-0 scale-100"
+                     x-transition:leave-end="opacity-0 translate-y-2 scale-95"
+                     style="display: none;"
+                     class="absolute left-1/2 -translate-x-1/2 top-full pt-2 z-50 w-72 sm:w-80">
+                    <div class="bg-white/95 backdrop-blur-md rounded-2xl shadow-2xl border border-slate-200/90 p-2 overflow-hidden ring-1 ring-black/5">
+                        <!-- Header Dropdown -->
+                        <div class="px-3 py-2 border-b border-slate-100 flex items-center justify-between mb-1">
+                            <div class="flex items-center gap-2">
+                                <span class="w-2 h-2 rounded-full bg-amber-500 animate-pulse"></span>
+                                <span class="text-xs font-bold uppercase tracking-wider text-slate-600">Inovasi Website</span>
+                            </div>
+                            <span class="text-[10px] font-semibold text-slate-500 bg-slate-100 px-2 py-0.5 rounded-full">{{ $innovations->count() }} Website</span>
+                        </div>
+
+                        <!-- Daftar Inovasi -->
+                        <div class="max-h-[320px] overflow-y-auto space-y-1 py-1 pr-0.5">
+                            @forelse($innovations as $inno)
+                                <a href="{{ $inno->url }}" target="_blank" rel="noopener noreferrer"
+                                   class="group/item flex items-center justify-between gap-3 px-3 py-2.5 rounded-xl hover:bg-gradient-to-r hover:from-amber-50/60 hover:to-orange-50/60 border border-transparent hover:border-amber-200/50 transition-all duration-200">
+                                    <div class="flex items-center gap-3 min-w-0">
+                                        <div class="w-8 h-8 rounded-lg bg-amber-100 text-amber-600 flex items-center justify-center shrink-0 group-hover/item:bg-amber-500 group-hover/item:text-white transition-colors duration-200 shadow-sm">
+                                            <i class="{{ $inno->icon ?: 'fa-solid fa-lightbulb' }} text-sm"></i>
+                                        </div>
+                                        <div class="min-w-0">
+                                            <div class="text-xs sm:text-sm font-semibold text-slate-800 group-hover/item:text-amber-600 truncate transition-colors">
+                                                {{ $inno->title }}
+                                            </div>
+                                            @if($inno->description)
+                                                <div class="text-[11px] text-slate-500 truncate group-hover/item:text-slate-600">
+                                                    {{ $inno->description }}
+                                                </div>
+                                            @endif
+                                        </div>
+                                    </div>
+                                    <i class="fa-solid fa-arrow-up-right-from-square text-xs text-slate-400 group-hover/item:text-amber-600 group-hover/item:translate-x-0.5 group-hover/item:-translate-y-0.5 transition-all shrink-0"></i>
+                                </a>
+                            @empty
+                                <div class="py-6 px-4 text-center">
+                                    <div class="w-10 h-10 mx-auto rounded-full bg-slate-100 text-slate-400 flex items-center justify-center mb-2">
+                                        <i class="fa-solid fa-lightbulb text-lg"></i>
+                                    </div>
+                                    <p class="text-xs font-medium text-slate-600">Belum ada inovasi</p>
+                                    <p class="text-[11px] text-slate-400 mt-0.5">Link inovasi dapat ditambahkan dari Dashboard Admin</p>
+                                </div>
+                            @endforelse
+                        </div>
+                    </div>
+                </div>
+            </div>
 
             <x-nav-link href="/contact" :active="request()->is('contact')" class="group !w-auto !px-3 flex items-center overflow-hidden transition-all duration-300 ease-in-out">
                 <i class="fa-solid fa-envelope text-2xl shrink-0"></i>
@@ -206,6 +284,35 @@
                 <i class="fa-solid fa-circle-info text-xl w-6 text-center"></i>
                 <span class="font-medium text-sm">Informasi</span>
             </x-nav-link>
+
+            {{-- MENU INOVASI MOBILE --}}
+            <div x-data="{ openInovasiMobile: false }" class="w-full">
+                <button @click="openInovasiMobile = !openInovasiMobile"
+                        type="button"
+                        class="w-full flex items-center justify-between px-4 py-2 rounded-xl text-slate-700 hover:bg-black/10 transition">
+                    <div class="flex items-center gap-3">
+                        <i class="fa-solid fa-lightbulb text-xl w-6 text-center text-amber-500"></i>
+                        <span class="font-medium text-sm">Inovasi</span>
+                    </div>
+                    <i class="fa-solid fa-chevron-down text-xs transition-transform duration-200"
+                       :class="openInovasiMobile ? 'rotate-180' : ''"></i>
+                </button>
+                
+                <div x-show="openInovasiMobile" x-transition class="mt-1 pl-3 pr-2 py-1 space-y-1 bg-slate-50 rounded-xl border border-slate-100">
+                    @forelse($innovations as $inno)
+                        <a href="{{ $inno->url }}" target="_blank" rel="noopener noreferrer"
+                           class="flex items-center justify-between gap-2 px-3 py-2 rounded-lg text-xs font-medium text-slate-700 hover:text-amber-600 hover:bg-white transition">
+                            <div class="flex items-center gap-2 truncate">
+                                <i class="{{ $inno->icon ?: 'fa-solid fa-lightbulb' }} text-amber-500 text-xs shrink-0"></i>
+                                <span class="truncate">{{ $inno->title }}</span>
+                            </div>
+                            <i class="fa-solid fa-arrow-up-right-from-square text-[10px] text-slate-400 shrink-0"></i>
+                        </a>
+                    @empty
+                        <div class="px-3 py-2 text-xs text-slate-400 italic">Belum ada inovasi</div>
+                    @endforelse
+                </div>
+            </div>
             
             <x-nav-link href="/contact" :active="request()->is('contact')" class="!w-full !justify-start px-4 gap-3">
                 <i class="fa-solid fa-envelope text-xl w-6 text-center"></i>

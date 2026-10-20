@@ -66,6 +66,107 @@
                     </div>
                 </div>
 
+                <!-- ================= MANAJEMEN INOVASI WEBSITE ================= -->
+                <div class="bg-white rounded-2xl sm:rounded-3xl shadow-lg p-4 sm:p-6 lg:p-8" id="section-inovasi">
+                    <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-6">
+                        <div>
+                            <div class="flex items-center gap-2.5">
+                                <span class="p-2.5 rounded-xl bg-amber-100 text-amber-600 shadow-sm">
+                                    <i class="fa-solid fa-lightbulb text-xl"></i>
+                                </span>
+                                <div>
+                                    <h2 class="text-xl sm:text-2xl font-bold text-gray-800">Manajemen Inovasi Website</h2>
+                                    <p class="text-xs sm:text-sm text-gray-500">Kelola link inovasi yang tampil pada hover dropdown menu 'Inovasi' di navbar</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <button onclick="openAddInnovation()"
+                            class="w-full sm:w-auto px-5 py-2.5 bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-600 hover:to-amber-700 text-white rounded-xl shadow-md hover:shadow-lg transition text-sm sm:text-base font-semibold flex items-center justify-center gap-2">
+                            <i class="fa-solid fa-plus text-xs"></i>
+                            Tambah Inovasi
+                        </button>
+                    </div>
+
+                    <!-- Search Bar Inovasi -->
+                    <div class="mb-4">
+                        <input type="text" id="searchInnovation" onkeyup="searchTable('searchInnovation', 'innovationTableBody')"
+                            placeholder="Cari inovasi berdasarkan nama atau link..."
+                            class="w-full px-3 sm:px-4 py-2.5 text-sm sm:text-base border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-amber-500 shadow-sm">
+                    </div>
+
+                    <div class="overflow-x-auto max-h-[440px] overflow-y-auto border border-slate-200 rounded-xl">
+                        <table class="w-full text-xs sm:text-sm text-left border-collapse min-w-[700px]">
+                            <thead class="bg-slate-50 sticky top-0 border-b border-slate-200 z-10">
+                                <tr>
+                                    <th class="p-3 font-semibold text-slate-700 w-12 text-center">No</th>
+                                    <th class="p-3 font-semibold text-slate-700">Nama Inovasi</th>
+                                    <th class="p-3 font-semibold text-slate-700">Link URL Website</th>
+                                    <th class="p-3 font-semibold text-slate-700">Deskripsi</th>
+                                    <th class="p-3 font-semibold text-slate-700 text-center w-20">Urutan</th>
+                                    <th class="p-3 font-semibold text-slate-700 text-center w-28">Status</th>
+                                    <th class="p-3 font-semibold text-slate-700 text-center w-36">Aksi</th>
+                                </tr>
+                            </thead>
+                            <tbody id="innovationTableBody">
+                                @forelse ($innovations as $inno)
+                                    <tr class="border-b border-slate-100 hover:bg-slate-50/80 transition" data-innovation-id="{{ $inno->id }}">
+                                        <td class="p-3 text-center text-slate-500 font-medium">{{ $loop->iteration }}</td>
+                                        <td class="p-3 font-semibold text-slate-800">
+                                            <div class="flex items-center gap-2.5">
+                                                <span class="w-7 h-7 rounded-lg bg-amber-50 text-amber-600 flex items-center justify-center shrink-0 border border-amber-100">
+                                                    <i class="{{ $inno->icon ?: 'fa-solid fa-lightbulb' }} text-xs"></i>
+                                                </span>
+                                                <span class="truncate max-w-[200px]" title="{{ $inno->title }}">{{ $inno->title }}</span>
+                                            </div>
+                                        </td>
+                                        <td class="p-3 text-blue-600">
+                                            <a href="{{ $inno->url }}" target="_blank" rel="noopener noreferrer" 
+                                               class="inline-flex items-center gap-1.5 hover:underline break-all max-w-[240px] truncate"
+                                               title="{{ $inno->url }}">
+                                                <span>{{ $inno->url }}</span>
+                                                <i class="fa-solid fa-arrow-up-right-from-square text-[10px] text-slate-400 shrink-0"></i>
+                                            </a>
+                                        </td>
+                                        <td class="p-3 text-slate-500 max-w-[200px] truncate" title="{{ $inno->description }}">
+                                            {{ $inno->description ?: '-' }}
+                                        </td>
+                                        <td class="p-3 text-center font-medium text-slate-700">
+                                            {{ $inno->order }}
+                                        </td>
+                                        <td class="p-3 text-center">
+                                            <button type="button" onclick="toggleInnovationStatus({{ $inno->id }})"
+                                                id="status_badge_{{ $inno->id }}"
+                                                class="px-2.5 py-1 rounded-full text-xs font-semibold cursor-pointer transition border {{ $inno->is_active ? 'bg-emerald-50 text-emerald-700 border-emerald-200 hover:bg-emerald-100' : 'bg-slate-100 text-slate-500 border-slate-200 hover:bg-slate-200' }}"
+                                                title="Klik untuk mengubah status aktif/nonaktif">
+                                                {{ $inno->is_active ? '● Aktif' : '○ Nonaktif' }}
+                                            </button>
+                                        </td>
+                                        <td class="p-3 text-center">
+                                            <div class="flex items-center justify-center gap-1.5">
+                                                <button onclick="editInnovation({{ json_encode($inno) }})"
+                                                    class="px-2.5 py-1 bg-blue-500 hover:bg-blue-600 text-white rounded-lg text-xs font-medium transition flex items-center gap-1">
+                                                    <i class="fa-solid fa-pen-to-square text-[10px]"></i> Edit
+                                                </button>
+                                                <button onclick="deleteInnovation({{ $inno->id }})"
+                                                    class="px-2.5 py-1 bg-red-500 hover:bg-red-600 text-white rounded-lg text-xs font-medium transition flex items-center gap-1">
+                                                    <i class="fa-solid fa-trash-can text-[10px]"></i> Hapus
+                                                </button>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                @empty
+                                    <tr id="emptyInnovationRow">
+                                        <td colspan="7" class="p-6 text-center text-slate-400 italic">
+                                            Belum ada data inovasi. Klik tombol "+ Tambah Inovasi" untuk menambahkan.
+                                        </td>
+                                    </tr>
+                                @endforelse
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
                 <!-- ================= USER TABLE (MANAGEMENT) ================= -->
                 <div class="bg-white rounded-2xl sm:rounded-3xl shadow-lg p-4 sm:p-6">
 
@@ -549,6 +650,100 @@
                 </div>
             </div>
 
+            <!-- ================= ADD INNOVATION POPUP ================= -->
+            <div id="addInnovationPanel" class="fixed inset-0 bg-black/50 hidden items-center justify-center z-50 p-4">
+                <div class="bg-[#e5e9f0] w-full max-w-[520px] max-h-[90vh] rounded-2xl sm:rounded-3xl p-6 sm:p-8 relative overflow-y-auto shadow-2xl">
+                    <button onclick="closeAddInnovation()" type="button" class="absolute top-3 right-3 sm:top-4 sm:right-4 text-xl sm:text-2xl text-slate-500 hover:text-slate-800">✕</button>
+                    <h2 class="text-center text-base sm:text-lg font-bold text-gray-800 mb-6">
+                        TAMBAH INOVASI WEBSITE BARU
+                    </h2>
+                    <form id="addInnovationForm" method="POST" action="{{ route('admin.innovations.store') }}">
+                        @csrf
+                        <label class="text-xs sm:text-sm font-semibold text-gray-700 block mb-1">Nama Inovasi / Website <span class="text-red-500">*</span></label>
+                        <input name="title" required class="w-full bg-white border border-slate-300 rounded-lg p-2.5 mb-3 text-sm focus:outline-none focus:ring-2 focus:ring-amber-500" placeholder="Contoh: SiPantau Stunting">
+
+                        <label class="text-xs sm:text-sm font-semibold text-gray-700 block mb-1">Link URL Website <span class="text-red-500">*</span></label>
+                        <input name="url" type="url" required class="w-full bg-white border border-slate-300 rounded-lg p-2.5 mb-3 text-sm focus:outline-none focus:ring-2 focus:ring-amber-500" placeholder="https://sipantau.bkkbn.go.id">
+
+                        <label class="text-xs sm:text-sm font-semibold text-gray-700 block mb-1">Deskripsi Singkat (Opsional)</label>
+                        <textarea name="description" rows="2" class="w-full bg-white border border-slate-300 rounded-lg p-2.5 mb-3 text-sm focus:outline-none focus:ring-2 focus:ring-amber-500" placeholder="Sistem Pemantauan Stunting Terpadu..."></textarea>
+
+                        <div class="grid grid-cols-2 gap-3 mb-4">
+                            <div>
+                                <label class="text-xs sm:text-sm font-semibold text-gray-700 block mb-1">Urutan (Order)</label>
+                                <input name="order" type="number" value="0" class="w-full bg-white border border-slate-300 rounded-lg p-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-amber-500">
+                            </div>
+                            <div>
+                                <label class="text-xs sm:text-sm font-semibold text-gray-700 block mb-1">Icon FontAwesome</label>
+                                <input name="icon" value="fa-solid fa-lightbulb" class="w-full bg-white border border-slate-300 rounded-lg p-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-amber-500" placeholder="fa-solid fa-lightbulb">
+                            </div>
+                        </div>
+
+                        <div class="flex items-center gap-2 mb-6">
+                            <input type="checkbox" name="is_active" id="add_is_active" value="1" checked class="w-4 h-4 text-amber-600 rounded">
+                            <label for="add_is_active" class="text-xs sm:text-sm font-semibold text-gray-700 cursor-pointer">Status Aktif (Tampilkan di Menu Navbar)</label>
+                        </div>
+
+                        <div class="flex flex-col sm:flex-row justify-center gap-3">
+                            <button type="submit" class="w-full sm:w-auto bg-amber-500 hover:bg-amber-600 text-white font-medium px-6 py-2.5 rounded-xl transition text-sm sm:text-base">
+                                Simpan Inovasi
+                            </button>
+                            <button type="button" onclick="closeAddInnovation()" class="w-full sm:w-auto bg-gray-400 hover:bg-gray-500 text-white font-medium px-6 py-2.5 rounded-xl transition text-sm sm:text-base">
+                                Batal
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <!-- ================= EDIT INNOVATION POPUP ================= -->
+            <div id="editInnovationPanel" class="fixed inset-0 bg-black/50 hidden items-center justify-center z-50 p-4">
+                <div class="bg-[#e5e9f0] w-full max-w-[520px] max-h-[90vh] rounded-2xl sm:rounded-3xl p-6 sm:p-8 relative overflow-y-auto shadow-2xl">
+                    <button onclick="closeEditInnovation()" type="button" class="absolute top-3 right-3 sm:top-4 sm:right-4 text-xl sm:text-2xl text-slate-500 hover:text-slate-800">✕</button>
+                    <h2 class="text-center text-base sm:text-lg font-bold text-gray-800 mb-6">
+                        EDIT INOVASI WEBSITE
+                    </h2>
+                    <form id="editInnovationForm" method="POST">
+                        @csrf
+                        <input type="hidden" id="edit_innovation_id" name="id">
+
+                        <label class="text-xs sm:text-sm font-semibold text-gray-700 block mb-1">Nama Inovasi / Website <span class="text-red-500">*</span></label>
+                        <input id="edit_innovation_title" name="title" required class="w-full bg-white border border-slate-300 rounded-lg p-2.5 mb-3 text-sm focus:outline-none focus:ring-2 focus:ring-amber-500">
+
+                        <label class="text-xs sm:text-sm font-semibold text-gray-700 block mb-1">Link URL Website <span class="text-red-500">*</span></label>
+                        <input id="edit_innovation_url" name="url" type="url" required class="w-full bg-white border border-slate-300 rounded-lg p-2.5 mb-3 text-sm focus:outline-none focus:ring-2 focus:ring-amber-500">
+
+                        <label class="text-xs sm:text-sm font-semibold text-gray-700 block mb-1">Deskripsi Singkat (Opsional)</label>
+                        <textarea id="edit_innovation_desc" name="description" rows="2" class="w-full bg-white border border-slate-300 rounded-lg p-2.5 mb-3 text-sm focus:outline-none focus:ring-2 focus:ring-amber-500"></textarea>
+
+                        <div class="grid grid-cols-2 gap-3 mb-4">
+                            <div>
+                                <label class="text-xs sm:text-sm font-semibold text-gray-700 block mb-1">Urutan (Order)</label>
+                                <input id="edit_innovation_order" name="order" type="number" class="w-full bg-white border border-slate-300 rounded-lg p-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-amber-500">
+                            </div>
+                            <div>
+                                <label class="text-xs sm:text-sm font-semibold text-gray-700 block mb-1">Icon FontAwesome</label>
+                                <input id="edit_innovation_icon" name="icon" class="w-full bg-white border border-slate-300 rounded-lg p-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-amber-500">
+                            </div>
+                        </div>
+
+                        <div class="flex items-center gap-2 mb-6">
+                            <input type="checkbox" name="is_active" id="edit_innovation_active" value="1" class="w-4 h-4 text-amber-600 rounded">
+                            <label for="edit_innovation_active" class="text-xs sm:text-sm font-semibold text-gray-700 cursor-pointer">Status Aktif (Tampilkan di Menu Navbar)</label>
+                        </div>
+
+                        <div class="flex flex-col sm:flex-row justify-center gap-3">
+                            <button type="submit" class="w-full sm:w-auto bg-amber-500 hover:bg-amber-600 text-white font-medium px-6 py-2.5 rounded-xl transition text-sm sm:text-base">
+                                Simpan Perubahan
+                            </button>
+                            <button type="button" onclick="closeEditInnovation()" class="w-full sm:w-auto bg-gray-400 hover:bg-gray-500 text-white font-medium px-6 py-2.5 rounded-xl transition text-sm sm:text-base">
+                                Batal
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
             <script>
                 const editPageForm = document.getElementById('editPageForm');
                 editPageForm.addEventListener('submit', function(e) {
@@ -800,6 +995,161 @@
                 function togglePassword(id, btn) {
                     const input = document.getElementById(id);
                     input.type = input.type === 'password' ? 'text' : 'password';
+                }
+
+                // ================= FUNCTIONS INOVASI WEBSITE =================
+                function openAddInnovation() {
+                    const panel = document.getElementById('addInnovationPanel');
+                    panel.classList.remove('hidden');
+                    panel.classList.add('flex');
+                }
+
+                function closeAddInnovation() {
+                    const panel = document.getElementById('addInnovationPanel');
+                    panel.classList.add('hidden');
+                    panel.classList.remove('flex');
+                }
+
+                function editInnovation(data) {
+                    document.getElementById('edit_innovation_id').value = data.id;
+                    document.getElementById('edit_innovation_title').value = data.title;
+                    document.getElementById('edit_innovation_url').value = data.url;
+                    document.getElementById('edit_innovation_desc').value = data.description || '';
+                    document.getElementById('edit_innovation_order').value = data.order || 0;
+                    document.getElementById('edit_innovation_icon').value = data.icon || 'fa-solid fa-lightbulb';
+                    document.getElementById('edit_innovation_active').checked = !!data.is_active;
+
+                    const panel = document.getElementById('editInnovationPanel');
+                    panel.classList.remove('hidden');
+                    panel.classList.add('flex');
+                }
+
+                function closeEditInnovation() {
+                    const panel = document.getElementById('editInnovationPanel');
+                    panel.classList.add('hidden');
+                    panel.classList.remove('flex');
+                }
+
+                // Submit Add Innovation via AJAX
+                const addInnovationForm = document.getElementById('addInnovationForm');
+                if (addInnovationForm) {
+                    addInnovationForm.addEventListener('submit', function(e) {
+                        e.preventDefault();
+                        const formData = new FormData(this);
+
+                        fetch("{{ route('admin.innovations.store') }}", {
+                            method: 'POST',
+                            headers: {
+                                'X-CSRF-TOKEN': '{{ csrf_token() }}',
+                                'Accept': 'application/json'
+                            },
+                            body: formData
+                        })
+                        .then(res => res.json())
+                        .then(data => {
+                            if (data.success) {
+                                alert('Inovasi website berhasil ditambahkan!');
+                                location.reload();
+                            } else {
+                                alert(data.message || 'Gagal menambahkan inovasi');
+                            }
+                        })
+                        .catch(err => {
+                            console.error(err);
+                            alert('Terjadi kesalahan saat menyimpan inovasi');
+                        });
+                    });
+                }
+
+                // Submit Edit Innovation via AJAX
+                const editInnovationForm = document.getElementById('editInnovationForm');
+                if (editInnovationForm) {
+                    editInnovationForm.addEventListener('submit', function(e) {
+                        e.preventDefault();
+                        const id = document.getElementById('edit_innovation_id').value;
+                        const formData = new FormData(this);
+
+                        fetch(`/admin/innovations/${id}/update`, {
+                            method: 'POST',
+                            headers: {
+                                'X-CSRF-TOKEN': '{{ csrf_token() }}',
+                                'Accept': 'application/json'
+                            },
+                            body: formData
+                        })
+                        .then(res => res.json())
+                        .then(data => {
+                            if (data.success) {
+                                alert('Inovasi website berhasil diperbarui!');
+                                location.reload();
+                            } else {
+                                alert(data.message || 'Gagal update inovasi');
+                            }
+                        })
+                        .catch(err => {
+                            console.error(err);
+                            alert('Terjadi kesalahan saat memperbarui inovasi');
+                        });
+                    });
+                }
+
+                // Delete Innovation
+                function deleteInnovation(id) {
+                    if (!confirm('Apakah Anda yakin ingin menghapus inovasi ini?')) return;
+
+                    fetch(`/admin/innovations/${id}`, {
+                        method: 'DELETE',
+                        headers: {
+                            'X-CSRF-TOKEN': '{{ csrf_token() }}',
+                            'Accept': 'application/json'
+                        }
+                    })
+                    .then(res => res.json())
+                    .then(data => {
+                        if (data.success) {
+                            const row = document.querySelector(`#innovationTableBody tr[data-innovation-id="${id}"]`);
+                            if (row) row.remove();
+                            alert('Inovasi berhasil dihapus!');
+                        } else {
+                            alert(data.message || 'Gagal menghapus inovasi');
+                        }
+                    })
+                    .catch(err => {
+                        console.error(err);
+                        alert('Terjadi kesalahan saat menghapus inovasi');
+                    });
+                }
+
+                // Toggle Status Active
+                function toggleInnovationStatus(id) {
+                    fetch(`/admin/innovations/${id}/toggle`, {
+                        method: 'POST',
+                        headers: {
+                            'X-CSRF-TOKEN': '{{ csrf_token() }}',
+                            'Accept': 'application/json'
+                        }
+                    })
+                    .then(res => res.json())
+                    .then(data => {
+                        if (data.success) {
+                            const badge = document.getElementById(`status_badge_${id}`);
+                            if (badge) {
+                                if (data.is_active) {
+                                    badge.className = 'px-2.5 py-1 rounded-full text-xs font-semibold cursor-pointer transition border bg-emerald-50 text-emerald-700 border-emerald-200 hover:bg-emerald-100';
+                                    badge.innerText = '● Aktif';
+                                } else {
+                                    badge.className = 'px-2.5 py-1 rounded-full text-xs font-semibold cursor-pointer transition border bg-slate-100 text-slate-500 border-slate-200 hover:bg-slate-200';
+                                    badge.innerText = '○ Nonaktif';
+                                }
+                            }
+                        } else {
+                            alert(data.message || 'Gagal mengubah status');
+                        }
+                    })
+                    .catch(err => {
+                        console.error(err);
+                        alert('Terjadi kesalahan saat mengubah status inovasi');
+                    });
                 }
             </script>
         </div>

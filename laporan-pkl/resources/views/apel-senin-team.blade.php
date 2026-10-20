@@ -182,8 +182,9 @@
                 // Helper normalisasi nama untuk pencocokan presisi (mengabaikan titik, koma, spasi & gelar)
                 $normKey = fn($n) => strtoupper(preg_replace('/[^A-Z0-9]/i', '', explode(',', $n)[0]));
 
-                // Daftar nama yang hadir pada tanggal ini (lookup key ter-normalisasi)
-                $hadirSet = collect($attendees)->mapWithKeys(fn($a) => [$normKey($a['nama']) => true])->toArray();
+                // Map data kehadiran berdasarkan normalized name
+                $attendeesByNormKey = collect($attendees)->keyBy(fn($a) => $normKey($a['nama']));
+                $hadirSet = $attendeesByNormKey->map(fn() => true)->toArray();
 
                 // Set anggota resmi dari CSV/TeamMembers
                 $csvSet = collect($csvMembers)->mapWithKeys(fn($m) => [$normKey($m) => true])->toArray();
@@ -246,28 +247,55 @@
 
             @if($totalAnggota > 0)
             {{-- Tabel daftar anggota resmi + status --}}
-            <div class="overflow-hidden rounded-2xl border border-gray-100 mb-4">
+            <div class="overflow-x-auto rounded-2xl border border-gray-100 mb-4 shadow-sm bg-white">
                 <table class="w-full text-sm">
                     <thead>
                         <tr class="bg-emerald-50 text-emerald-700">
-                            <th class="px-4 py-3 text-left font-bold text-xs uppercase tracking-wider w-10">No</th>
+                            <th class="px-4 py-3 text-left font-bold text-xs uppercase tracking-wider w-12">No</th>
                             <th class="px-4 py-3 text-left font-bold text-xs uppercase tracking-wider">Nama Anggota</th>
+                            <th class="px-4 py-3 text-center font-bold text-xs uppercase tracking-wider w-36 sm:w-44">Waktu Absen</th>
                             <th class="px-4 py-3 text-center font-bold text-xs uppercase tracking-wider w-28">Status</th>
                         </tr>
                     </thead>
                     <tbody class="divide-y divide-gray-50">
                         @foreach($csvMembers as $i => $member)
                             @php 
-                                $hadir = isset($hadirSet[$normKey($member)]);
+                                $attData = $attendeesByNormKey->get($normKey($member));
+                                $hadir = !is_null($attData);
                                 $leaveStatus = null;
                                 if (!$hadir && isset($leaves[$member])) {
                                     $leaveStatus = $leaves[$member]->keterangan;
+                                }
+
+                                $waktuAbsen = null;
+                                if ($hadir && !empty($attData['timestamp'])) {
+                                    try {
+                                        $waktuAbsen = \Carbon\Carbon::parse($attData['timestamp'])->format('H:i:s');
+                                    } catch (\Exception $e) {
+                                        $waktuAbsen = $attData['waktu'] ?? null;
+                                    }
                                 }
                             @endphp
                             <tr class="hover:bg-slate-50 transition-colors {{ $hadir ? '' : ($leaveStatus ? 'opacity-80' : 'opacity-60') }}">
                                 <td class="px-4 py-3 text-gray-400 font-medium">{{ $i + 1 }}</td>
                                 <td class="px-4 py-3 font-semibold {{ $hadir ? 'text-gray-800' : ($leaveStatus ? 'text-gray-600' : 'text-gray-500') }}">
-                                    {{ $member }}
+                                    <div>{{ $member }}</div>
+                                    @if($hadir && $waktuAbsen)
+                                        <div class="sm:hidden text-xs text-emerald-600 font-mono mt-0.5 flex items-center gap-1 font-normal">
+                                            <i class="far fa-clock text-[10px]"></i> {{ $waktuAbsen }} WIB
+                                        </div>
+                                    @endif
+                                </td>
+                                <td class="px-4 py-3 text-center">
+                                    @if($hadir && $waktuAbsen)
+                                        <span class="inline-flex items-center gap-1.5 font-mono text-xs font-bold text-emerald-700 bg-emerald-50 px-2.5 py-1 rounded-lg border border-emerald-200/70 shadow-xs" title="Waktu Absen: {{ $waktuAbsen }} WIB">
+                                            <i class="far fa-clock text-emerald-500 text-[11px]"></i>
+                                            <span>{{ $waktuAbsen }}</span>
+                                            <span class="text-[10px] text-emerald-600/80 font-sans font-semibold">WIB</span>
+                                        </span>
+                                    @else
+                                        <span class="text-xs text-gray-400 font-medium">-</span>
+                                    @endif
                                 </td>
                                 <td class="px-4 py-3 text-center">
                                     @if($hadir)
@@ -307,14 +335,33 @@
                 </div>
                 <div class="space-y-1.5">
                     @foreach($tambahanHadir as $a)
+                    @php
+                        $waktuA = null;
+                        if (!empty($a['timestamp'])) {
+                            try {
+                                $waktuA = \Carbon\Carbon::parse($a['timestamp'])->format('H:i:s');
+                            } catch (\Exception $e) {
+                                $waktuA = $a['waktu'] ?? null;
+                            }
+                        }
+                    @endphp
                     <div class="flex items-center gap-3 px-4 py-2.5 bg-amber-50 rounded-xl border border-amber-100">
                         <i class="fas fa-user text-amber-400 text-xs"></i>
                         <span class="text-sm font-semibold text-gray-700">{{ $a['nama'] }}</span>
-                        @if($totalAnggota > 0)
-                            <span class="ml-auto text-[10px] text-amber-600 font-bold uppercase tracking-wider">Tamu / Baru</span>
-                        @else
-                            <span class="ml-auto text-[10px] text-emerald-600 font-bold uppercase tracking-wider"><i class="fas fa-check"></i> Hadir</span>
-                        @endif
+                        <div class="ml-auto flex items-center gap-2">
+                            @if($waktuA)
+                                <span class="inline-flex items-center gap-1.5 font-mono text-xs font-bold text-amber-800 bg-amber-100/80 px-2.5 py-1 rounded-lg border border-amber-200/80 shadow-xs" title="Waktu Absen: {{ $waktuA }} WIB">
+                                    <i class="far fa-clock text-amber-600 text-[11px]"></i>
+                                    <span>{{ $waktuA }}</span>
+                                    <span class="text-[10px] text-amber-700 font-sans font-semibold">WIB</span>
+                                </span>
+                            @endif
+                            @if($totalAnggota > 0)
+                                <span class="text-[10px] text-amber-600 font-bold uppercase tracking-wider">Tamu / Baru</span>
+                            @else
+                                <span class="text-[10px] text-emerald-600 font-bold uppercase tracking-wider"><i class="fas fa-check"></i> Hadir</span>
+                            @endif
+                        </div>
                     </div>
                     @endforeach
                 </div>
@@ -429,6 +476,7 @@
                     <th class="border border-black px-2 py-2 w-12 text-center">No</th>
                     <th class="border border-black px-4 py-2 text-left">Nama Pegawai</th>
                     @if($selectedDate)
+                        <th class="border border-black px-4 py-2 text-center">Waktu Absen</th>
                         <th class="border border-black px-4 py-2 text-center">Status</th>
                     @else
                         <th class="border border-black px-4 py-2 text-center">Hadir</th>
@@ -444,15 +492,25 @@
                     @if(isset($csvMembers) && count($csvMembers) > 0)
                         @foreach($csvMembers as $member)
                             @php 
-                                $hadir = isset($hadirSet[$normKey($member)]);
+                                $attData = $attendeesByNormKey->get($normKey($member));
+                                $hadir = !is_null($attData);
                                 $leaveStatus = null;
                                 if (!$hadir && isset($leaves[$member])) {
                                     $leaveStatus = $leaves[$member]->keterangan;
+                                }
+                                $waktuAbsen = null;
+                                if ($hadir && !empty($attData['timestamp'])) {
+                                    try {
+                                        $waktuAbsen = \Carbon\Carbon::parse($attData['timestamp'])->format('H:i:s') . ' WIB';
+                                    } catch (\Exception $e) {
+                                        $waktuAbsen = !empty($attData['waktu']) ? ($attData['waktu'] . ' WIB') : null;
+                                    }
                                 }
                             @endphp
                             <tr>
                                 <td class="border border-black px-2 py-1.5 text-center">{{ $printNo++ }}</td>
                                 <td class="border border-black px-4 py-1.5">{{ $member }}</td>
+                                <td class="border border-black px-4 py-1.5 text-center font-mono">{{ $waktuAbsen ?? '-' }}</td>
                                 <td class="border border-black px-4 py-1.5 text-center">
                                     {{ $hadir ? 'Hadir' : ($leaveStatus ? $leaveStatus : 'Tidak Hadir') }}
                                 </td>
@@ -461,9 +519,20 @@
                     @endif
                     @if(isset($tambahanHadir) && count($tambahanHadir) > 0)
                         @foreach($tambahanHadir as $a)
+                            @php
+                                $waktuA = null;
+                                if (!empty($a['timestamp'])) {
+                                    try {
+                                        $waktuA = \Carbon\Carbon::parse($a['timestamp'])->format('H:i:s') . ' WIB';
+                                    } catch (\Exception $e) {
+                                        $waktuA = !empty($a['waktu']) ? ($a['waktu'] . ' WIB') : null;
+                                    }
+                                }
+                            @endphp
                             <tr>
                                 <td class="border border-black px-2 py-1.5 text-center">{{ $printNo++ }}</td>
                                 <td class="border border-black px-4 py-1.5">{{ $a['nama'] }}</td>
+                                <td class="border border-black px-4 py-1.5 text-center font-mono">{{ $waktuA ?? '-' }}</td>
                                 <td class="border border-black px-4 py-1.5 text-center">Hadir (Luar Daftar)</td>
                             </tr>
                         @endforeach

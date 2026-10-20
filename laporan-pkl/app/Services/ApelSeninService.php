@@ -380,15 +380,22 @@ class ApelSeninService
             $seen[$key] = true;
 
             $tanggal = '';
+            $waktu   = '';
+            $jam     = '';
             if (!empty($item['timestamp'])) {
                 try {
-                    $tanggal = Carbon::parse($item['timestamp'])->locale('id')->isoFormat('D MMMM YYYY');
+                    $parsed  = Carbon::parse($item['timestamp'])->locale('id');
+                    $tanggal = $parsed->isoFormat('D MMMM YYYY');
+                    $waktu   = $parsed->format('H:i:s');
+                    $jam     = $parsed->format('H:i');
                 } catch (\Exception $e) {}
             }
 
             $result[] = [
                 'nama'       => $nama,
                 'tanggal'    => $tanggal,
+                'waktu'      => $waktu,
+                'jam'        => $jam,
                 'keterangan' => $item['keterangan'] ?? '',
                 'timestamp'  => $item['timestamp'] ?? '',
             ];
