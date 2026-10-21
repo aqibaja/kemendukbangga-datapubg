@@ -206,7 +206,7 @@
                         @if(request('tipe', 'pengendalian_lapangan') == 'pengendalian_lapangan')
                             LAPORAN CAPAIAN PROGRAM PENGENDALIAN LAPANGAN<br>
                         @elseif(request('tipe') == 'capaian_program')
-                            LAPORAN CAPAIAN PROGRAM<br>
+                            LAPORAN PELAYANAN KONTRASEPSI<br>
                         @elseif(request('tipe') == 'elsimil')
                             LAPORAN CAPAIAN ELSIMIL<br>
                         @elseif(request('tipe') == 'quick_win')
@@ -220,7 +220,7 @@
                     <form method="GET" action="/laporan-capaian" class="print:hidden mt-6 bg-white/80 backdrop-blur-md p-3 rounded-2xl flex flex-wrap justify-center items-center gap-2 border border-slate-200 shadow-lg">
                         <select name="tipe" class="bg-white text-slate-800 border border-slate-300 rounded-lg px-3 py-1.5 text-sm font-bold focus:outline-none focus:ring-2 focus:ring-teal-400">
                             <option value="pengendalian_lapangan" {{ request('tipe', 'pengendalian_lapangan') == 'pengendalian_lapangan' ? 'selected' : '' }}>Pengendalian Lapangan</option>
-                            <option value="capaian_program" {{ request('tipe') == 'capaian_program' ? 'selected' : '' }}>Capaian Program</option>
+                            <option value="capaian_program" {{ request('tipe') == 'capaian_program' ? 'selected' : '' }}>Pelayanan Kontrasepsi</option>
                             <option value="elsimil" {{ request('tipe') == 'elsimil' ? 'selected' : '' }}>Capaian Elsimil</option>
                             <option value="quick_win" {{ request('tipe') == 'quick_win' ? 'selected' : '' }}>Laporan Quick Win</option>
                         </select>
@@ -253,7 +253,7 @@
                         @include('laporan-capaian-program')
 
                     @else
-                        <div class="text-center py-32 text-yellow-300 font-bold text-2xl drop-shadow-md">Data Capaian Program tidak tersedia untuk periode ini</div>
+                        <div class="text-center py-32 text-yellow-300 font-bold text-2xl drop-shadow-md">Data Pelayanan Kontrasepsi tidak tersedia untuk periode ini</div>
                     @endif
                 @elseif(request('tipe') == 'elsimil')
                     @if(!isset($laporans['elsimil']))

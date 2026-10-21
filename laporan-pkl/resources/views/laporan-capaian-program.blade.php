@@ -40,7 +40,7 @@
                     <span style="vertical-align: middle; margin-left: 8px; display: inline-block;">Periode: {{ App\Models\LaporanCapaian::namaBulan($laporans['capaian_program']->bulan) }} {{ $laporans['capaian_program']->tahun }}</span>
                 </div>
                 <h1 class="text-3xl sm:text-4xl md:text-5xl font-black text-[var(--navy)] mb-1 uppercase tracking-tight export-fix-text leading-tight">LAPORAN CAPAIAN PROGRAM</h1>
-                <h2 class="text-2xl sm:text-3xl font-black text-[var(--teal)] mb-3.5 export-fix-text">BANGGA KENCANA</h2>
+                <h2 class="text-2xl sm:text-3xl font-black text-[var(--teal)] mb-3.5 export-fix-text">PELAYANAN KONTRASEPSI</h2>
                 <div class="flex flex-wrap gap-2.5 text-xs sm:text-sm text-[var(--muted)]">
                     <div style="display: inline-block; background: #f1f5f9; padding: 6px 14px; border-radius: 8px; white-space: nowrap;">
                         <span style="display: inline-block; font-weight: 700; color: #475569;">Update data: {{ $laporans['capaian_program']->updated_at->format('d M Y') }}</span>
@@ -411,7 +411,7 @@
 
         <!-- TENGAH: Judul -->
         <div class="flex-[1.5] flex flex-col items-center text-center px-4 border-x-2 border-white/20">
-            <div class="font-black text-base lg:text-lg tracking-wide uppercase">LAPORAN CAPAIAN PROGRAM</div>
+            <div class="font-black text-base lg:text-lg tracking-wide uppercase">LAPORAN PELAYANAN KONTRASEPSI</div>
             <div class="text-xs text-blue-200 opacity-90 mt-1">Dicetak pada {{ date('d/m/Y H:i') }}</div>
         </div>
 

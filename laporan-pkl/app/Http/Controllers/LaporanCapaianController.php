@@ -119,7 +119,7 @@ class LaporanCapaianController extends Controller
 
         return match ($tipe) {
             'pengendalian_lapangan' => "Capaian Pengendalian Lapangan KemendukBangga BKKBN Prov Aceh Bulan {$namaBulan} Tahun {$tahun}",
-            'capaian_program'      => "Laporan Capaian Program Kemendukbangga / BKKBN Prov Aceh {$namaBulan} Tahun {$tahun}",
+            'capaian_program'      => "Laporan Pelayanan Kontrasepsi Kemendukbangga / BKKBN Prov Aceh {$namaBulan} Tahun {$tahun}",
             'elsimil'              => "Laporan Capaian ELSIMIL Kemendukbangga BKKBN Prov Aceh Hingga {$namaBulan} {$tahun}",
             'quick_win'            => "Laporan Quick Win Kemendukbangga / BKKBN Provinsi Aceh {$namaBulan} Tahun {$tahun}",
             default                => "Laporan Capaian {$namaBulan} {$tahun}",

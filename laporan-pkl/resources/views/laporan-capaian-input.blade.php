@@ -42,7 +42,7 @@
                                     Capaian Pengendalian Lapangan
                                 </option>
                                 <option value="capaian_program" {{ ($laporan->tipe ?? '') == 'capaian_program' ? 'selected' : '' }}>
-                                    Laporan Capaian Program
+                                    Pelayanan Kontrasepsi
                                 </option>
                                 <option value="elsimil" {{ ($laporan->tipe ?? '') == 'elsimil' ? 'selected' : '' }}>
                                     Laporan Capaian ELSIMIL

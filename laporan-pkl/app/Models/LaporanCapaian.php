@@ -40,8 +40,9 @@ class LaporanCapaian extends Model
     {
         $labels = [
             'pengendalian_lapangan' => 'Capaian Pengendalian Lapangan',
-            'capaian_program'      => 'Laporan Capaian Program',
+            'capaian_program'      => 'Pelayanan Kontrasepsi',
             'elsimil'              => 'Laporan Capaian ELSIMIL',
+            'quick_win'            => 'Laporan Quick Win',
         ];
         return $labels[$tipe] ?? $tipe;
     }
